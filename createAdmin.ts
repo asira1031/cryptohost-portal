@@ -8,7 +8,7 @@ async function main() {
   const password = process.env.ADMIN_PASSWORD || "ChangeMeNow123!";
   const fullName = process.env.ADMIN_NAME || "CryptoHost Admin";
 
-  const existing = await prisma.User.findUnique({
+  const existing = await prisma.user.findUnique({
     where: { email },
   });
 
@@ -19,7 +19,7 @@ async function main() {
 
   const passwordHash = await bcrypt.hash(password, 12);
 
-  await prisma.User.create({
+  await prisma.user.create({
     data: {
       email,
       passwordHash,
