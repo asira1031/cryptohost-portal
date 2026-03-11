@@ -8,18 +8,35 @@ async function main() {
   const password = process.env.ADMIN_PASSWORD || "ChangeMeNow123!";
   const fullName = process.env.ADMIN_NAME || "CryptoHost Admin";
 
-  const existing = await prisma.user.findUnique({ where: { email } });
+  const existing = await prisma.User.findUnique({
+    where: { email },
+  });
+
   if (existing) {
     console.log("Admin already exists:", email);
     return;
   }
 
   const passwordHash = await bcrypt.hash(password, 12);
-  await prisma.user.create({
-    data: { email, passwordHash, fullName, role: "ADMIN", status: "ACTIVE" },
+
+  await prisma.User.create({
+    data: {
+      email,
+      passwordHash,
+      fullName,
+      role: "ADMIN",
+      status: "ACTIVE",
+    },
   });
 
   console.log("Admin created:", email);
 }
 
-main().finally(async () => prisma.$disconnect());
+main()
+  .catch((error) => {
+    console.error("Error creating admin:", error);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
