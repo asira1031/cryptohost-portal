@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  reference   String   @unique
+  senderName  String?
+  senderEmail String?
+  declaredAmt String?
+  currency    String?
+  network     String?
+  token       String?
+  txHash      String?
+  status      String   @default("ON_HOLD")
+  fileName    String?
+  filePath    String?
+  createdAt   DateTime @default(now())
+
+  rawReport   String?
+}
+model Payment {
+  id        String   @id
+  amount    Float
+  currency  String
+  status    String
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "TX-001",
+    "date": "2026-02-09 11:20",
+    "network": "ETH",
+    "token": "USDT",
+    "from": "0xc97B...A20E",
+    "to": "0xc471...99cd",
+    "amount": 2.00,
+    "status": "CONFIRMED",
+    "txHash": "0xabc123..."
+  },
+  {
+    "id": "TX-002",
+    "date": "2026-02-09 12:05",
+    "network": "BNB",
+    "token": "USDT",
+    "from": "0x9c46...abcd",
+    "to": "0x164D...050d",
+    "amount": 1.00,
+    "status": "ON HOLD",
+    "txHash": "0xdef456..."
+  }
+]
