@@ -3,6 +3,6 @@ import { NextResponse } from "next/server";
 export async function POST() {
   return NextResponse.json({
     success: true,
-    message: "Payment create route is working.",
+    message: "Gateway payment create route is working.",
   });
 }
