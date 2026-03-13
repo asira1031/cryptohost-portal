@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #061225;
+  color: white;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* link colors */
+a {
+  color: #facc15;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fde047;
+}
