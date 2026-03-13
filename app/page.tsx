@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 export default function HomePage() {
@@ -5,116 +7,130 @@ export default function HomePage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#ececec",
-        fontFamily: "Arial, sans-serif",
+        background: "#031B34",
+        color: "white",
+        fontFamily: "Arial",
+        padding: "60px 20px",
       }}
     >
-      {/* TOP BAR */}
+      <h1 style={{ textAlign: "center", fontSize: "42px", marginBottom: "50px" }}>
+        Choose Your CryptoHost Subscription
+      </h1>
+
       <div
         style={{
-          background: "#2d66d3",
-          color: "white",
-          height: "86px",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 28px",
+          gap: "40px",
+          justifyContent: "center",
+          flexWrap: "wrap",
         }}
       >
-        <div style={{ fontSize: "26px", fontWeight: "bold" }}>
-          Asira CryptoHost
-        </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-          <Link
-            href="/login"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              fontSize: "16px",
-            }}
-          >
-            Log In
-          </Link>
-
-          <Link
-            href="/register"
-            style={{
-              background: "#1f4fb0",
-              color: "white",
-              textDecoration: "none",
-              padding: "12px 22px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
-          >
-            Sign Up
-          </Link>
-        </div>
-      </div>
-
-      {/* LANDING CONTENT ONLY */}
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "80px auto",
-          padding: "0 20px",
-          textAlign: "center",
-        }}
-      >
-        <h1
+        {/* STARTER */}
+        <div
           style={{
-            fontSize: "64px",
-            color: "#0f172a",
-            marginBottom: "20px",
-            fontWeight: "bold",
+            border: "1px solid #3b4a6b",
+            borderRadius: "12px",
+            padding: "30px",
+            width: "300px",
           }}
         >
-          Asira CryptoHost Client Portal
-        </h1>
+          <h2>Starter Plan</h2>
+          <h3>$299</h3>
 
-        <p
+          <ul>
+            <li>Client Portal Dashboard</li>
+            <li>Upload transaction files</li>
+            <li>Transaction monitoring</li>
+            <li>Blockchain verification tracking</li>
+            <li>Secure encrypted data storage</li>
+            <li>Email support</li>
+          </ul>
+
+          <button
+            style={{
+              width: "100%",
+              marginTop: "20px",
+              padding: "10px",
+              background: "#d9d9d9",
+              border: "none",
+              borderRadius: "4px",
+            }}
+          >
+            Subscribe
+          </button>
+        </div>
+
+        {/* PROFESSIONAL */}
+        <div
           style={{
-            fontSize: "22px",
-            color: "#475569",
-            marginBottom: "40px",
+            border: "1px solid #3b4a6b",
+            borderRadius: "12px",
+            padding: "30px",
+            width: "300px",
           }}
         >
-          Secure client access for subscription, file upload, and result tracking.
-        </p>
+          <h2>Professional Plan</h2>
+          <h3>$499</h3>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: "18px" }}>
-          <Link
-            href="/register"
+          <ul>
+            <li>Everything in Starter</li>
+            <li>Priority transaction processing</li>
+            <li>Advanced monitoring dashboard</li>
+            <li>Upload multiple financial files</li>
+            <li>Faster blockchain updates</li>
+            <li>Priority support</li>
+          </ul>
+
+          <button
             style={{
-              background: "#2d66d3",
-              color: "white",
-              textDecoration: "none",
-              padding: "16px 28px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              fontSize: "18px",
+              width: "100%",
+              marginTop: "20px",
+              padding: "10px",
+              background: "#d9d9d9",
+              border: "none",
+              borderRadius: "4px",
             }}
           >
-            Sign Up
-          </Link>
-
-          <Link
-            href="/login"
-            style={{
-              background: "#e5e7eb",
-              color: "#111827",
-              textDecoration: "none",
-              padding: "16px 28px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              fontSize: "18px",
-            }}
-          >
-            Log In
-          </Link>
+            Subscribe
+          </button>
         </div>
+
+        {/* ENTERPRISE */}
+        <div
+          style={{
+            border: "1px solid #3b4a6b",
+            borderRadius: "12px",
+            padding: "30px",
+            width: "300px",
+          }}
+        >
+          <h2>Enterprise Plan</h2>
+          <h3>$999</h3>
+
+          <ul>
+            <li>Everything in Professional</li>
+            <li>VIP processing priority</li>
+            <li>Real-time blockchain tracking</li>
+            <li>Dedicated transaction monitoring</li>
+            <li>Enterprise security layer</li>
+            <li>Dedicated support assistance</li>
+          </ul>
+
+          <button
+            style={{
+              width: "100%",
+              marginTop: "20px",
+              padding: "10px",
+              background: "#d9d9d9",
+              border: "none",
+              borderRadius: "4px",
+            }}
+          >
+            Subscribe
+          </button>
+        </div>
+
       </div>
     </div>
   );
