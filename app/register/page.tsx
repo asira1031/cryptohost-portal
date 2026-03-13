@@ -1,137 +1,187 @@
 "use client";
 
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { supabase } from "@/lib/supabase";
+
 export default function RegisterPage() {
+  const router = useRouter();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    const reference = `CH-${Date.now()}`;
+    const subscription = "Not Active";
+
+    const { error } = await supabase.from("clients").insert([
+      {
+        name,
+        email,
+        password,
+        reference,
+        subscription,
+      },
+    ]);
+
+    setLoading(false);
+
+    if (error) {
+      setMessage(`Registration failed: ${error.message}`);
+      return;
+    }
+
+    setMessage("Registration successful!");
+    setTimeout(() => {
+      router.push("/login");
+    }, 1200);
+  }
+
   return (
-    <div
+    <main
       style={{
         minHeight: "100vh",
-        background: "#ececec",
+        background: "#eef2f7",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         fontFamily: "Arial, sans-serif",
+        padding: "24px",
       }}
     >
       <div
         style={{
-          background: "#2d66d3",
-          color: "white",
-          height: "86px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 28px",
-        }}
-      >
-        <div style={{ fontSize: "26px", fontWeight: "bold" }}>
-          Asira CryptoHost
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-          <a
-            href="/login"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              fontSize: "16px",
-            }}
-          >
-            Log In
-          </a>
-
-          <a
-            href="/register"
-            style={{
-              background: "#1f4fb0",
-              color: "white",
-              textDecoration: "none",
-              padding: "12px 22px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
-          >
-            Sign Up
-          </a>
-        </div>
-      </div>
-
-      <div
-        style={{
-          maxWidth: "1420px",
-          margin: "32px auto",
-          padding: "0 20px",
+          width: "100%",
+          maxWidth: "480px",
+          background: "#ffffff",
+          borderRadius: "16px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+          overflow: "hidden",
         }}
       >
         <div
           style={{
-            background: "white",
-            border: "1px solid #d1d5db",
-            borderRadius: "8px",
-            overflow: "hidden",
-            boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+            background: "#2f66d0",
+            color: "#ffffff",
+            padding: "18px 24px",
+            fontSize: "28px",
+            fontWeight: 700,
           }}
         >
-          <div
-            style={{
-              background: "#1697d5",
-              color: "white",
-              fontSize: "22px",
-              fontWeight: "bold",
-              padding: "18px 20px",
-            }}
-          >
-            Sign Up
-          </div>
+          Asira CryptoHost
+        </div>
 
-          <div style={{ padding: "24px 20px 28px" }}>
-            <p
+        <div style={{ padding: "28px 24px" }}>
+          <h1 style={{ marginTop: 0, marginBottom: "8px", fontSize: "30px", color: "#111827" }}>
+            Create Account
+          </h1>
+
+          <p style={{ marginTop: 0, marginBottom: "22px", color: "#6b7280" }}>
+            Register to access the CryptoHost client portal.
+          </p>
+
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: "16px" }}>
+              <label style={{ display: "block", marginBottom: "8px", fontWeight: 600, color: "#111827" }}>
+                Full Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                style={{
+                  width: "100%",
+                  padding: "12px 14px",
+                  borderRadius: "10px",
+                  border: "1px solid #d1d5db",
+                  fontSize: "16px",
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "16px" }}>
+              <label style={{ display: "block", marginBottom: "8px", fontWeight: 600, color: "#111827" }}>
+                Email
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                style={{
+                  width: "100%",
+                  padding: "12px 14px",
+                  borderRadius: "10px",
+                  border: "1px solid #d1d5db",
+                  fontSize: "16px",
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "18px" }}>
+              <label style={{ display: "block", marginBottom: "8px", fontWeight: 600, color: "#111827" }}>
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={{
+                  width: "100%",
+                  padding: "12px 14px",
+                  borderRadius: "10px",
+                  border: "1px solid #d1d5db",
+                  fontSize: "16px",
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
               style={{
-                color: "#334155",
-                fontSize: "18px",
-                marginBottom: "22px",
+                width: "100%",
+                background: "#2f66d0",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: "10px",
+                padding: "13px 16px",
+                fontSize: "16px",
+                fontWeight: 700,
+                cursor: "pointer",
               }}
             >
-              Create your secure Asira CryptoHost client account.
+              {loading ? "Creating Account..." : "Sign Up"}
+            </button>
+          </form>
+
+          {message && (
+            <p style={{ marginTop: "16px", color: message.includes("failed") ? "#dc2626" : "#16a34a" }}>
+              {message}
             </p>
+          )}
 
-            <form>
-              <div style={{ display: "grid", gap: "14px" }}>
-                <input type="text" placeholder="Full Name" style={inputStyle} />
-                <input type="email" placeholder="Email Address" style={inputStyle} />
-                <input type="password" placeholder="Password" style={inputStyle} />
-                <input type="text" placeholder="Company Name" style={inputStyle} />
-                <input type="text" placeholder="Wallet Address" style={inputStyle} />
-              </div>
-
-              <button type="submit" style={buttonStyle}>
-                Create Client Account
-              </button>
-            </form>
-          </div>
+          <p style={{ marginTop: "20px", color: "#6b7280" }}>
+            Already have an account?{" "}
+            <Link href="/login" style={{ color: "#2f66d0", fontWeight: 700, textDecoration: "none" }}>
+              Log in
+            </Link>
+          </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "15px 16px",
-  fontSize: "16px",
-  border: "1px solid #cbd5e1",
-  borderRadius: "6px",
-  outline: "none",
-  boxSizing: "border-box",
-  background: "white",
-};
-
-const buttonStyle: React.CSSProperties = {
-  marginTop: "18px",
-  width: "100%",
-  padding: "14px",
-  fontSize: "18px",
-  fontWeight: "bold",
-  background: "#2d66d3",
-  color: "white",
-  border: "none",
-  borderRadius: "6px",
-  cursor: "pointer",
-};
