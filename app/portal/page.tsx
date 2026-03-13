@@ -16,14 +16,8 @@ export default function HomePage() {
         padding: "24px",
       }}
     >
-      <div style={{ textAlign: "center", maxWidth: "950px" }}>
-        <h1
-          style={{
-            fontSize: "64px",
-            marginBottom: "16px",
-            fontWeight: 800,
-          }}
-        >
+      <div style={{ textAlign: "center", maxWidth: "900px" }}>
+        <h1 style={{ fontSize: "64px", marginBottom: "16px", fontWeight: 800 }}>
           Asira CryptoHost
         </h1>
 
@@ -76,6 +70,21 @@ export default function HomePage() {
             }}
           >
             Sign Up
+          </Link>
+
+          <Link
+            href="/dashboard"
+            style={{
+              background: "#d9d9d9",
+              color: "#111827",
+              padding: "14px 24px",
+              borderRadius: "10px",
+              textDecoration: "none",
+              fontWeight: 700,
+              fontSize: "18px",
+            }}
+          >
+            Dashboard
           </Link>
         </div>
       </div>
