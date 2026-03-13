@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "../lib/supabase";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -19,16 +19,11 @@ export default function RegisterPage() {
     setLoading(true);
     setMessage("");
 
-    const reference = `CH-${Date.now()}`;
-    const subscription = "Not Active";
-
     const { error } = await supabase.from("clients").insert([
       {
         name,
         email,
         password,
-        reference,
-        subscription,
       },
     ]);
 
@@ -40,6 +35,7 @@ export default function RegisterPage() {
     }
 
     setMessage("Registration successful!");
+
     setTimeout(() => {
       router.push("/login");
     }, 1200);
@@ -80,17 +76,37 @@ export default function RegisterPage() {
         </div>
 
         <div style={{ padding: "28px 24px" }}>
-          <h1 style={{ marginTop: 0, marginBottom: "8px", fontSize: "30px", color: "#111827" }}>
+          <h1
+            style={{
+              marginTop: 0,
+              marginBottom: "8px",
+              fontSize: "30px",
+              color: "#111827",
+            }}
+          >
             Create Account
           </h1>
 
-          <p style={{ marginTop: 0, marginBottom: "22px", color: "#6b7280" }}>
+          <p
+            style={{
+              marginTop: 0,
+              marginBottom: "22px",
+              color: "#6b7280",
+            }}
+          >
             Register to access the CryptoHost client portal.
           </p>
 
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: "16px" }}>
-              <label style={{ display: "block", marginBottom: "8px", fontWeight: 600, color: "#111827" }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: 600,
+                  color: "#111827",
+                }}
+              >
                 Full Name
               </label>
               <input
@@ -110,7 +126,14 @@ export default function RegisterPage() {
             </div>
 
             <div style={{ marginBottom: "16px" }}>
-              <label style={{ display: "block", marginBottom: "8px", fontWeight: 600, color: "#111827" }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: 600,
+                  color: "#111827",
+                }}
+              >
                 Email
               </label>
               <input
@@ -130,7 +153,14 @@ export default function RegisterPage() {
             </div>
 
             <div style={{ marginBottom: "18px" }}>
-              <label style={{ display: "block", marginBottom: "8px", fontWeight: 600, color: "#111827" }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: 600,
+                  color: "#111827",
+                }}
+              >
                 Password
               </label>
               <input
@@ -161,7 +191,8 @@ export default function RegisterPage() {
                 padding: "13px 16px",
                 fontSize: "16px",
                 fontWeight: 700,
-                cursor: "pointer",
+                cursor: loading ? "not-allowed" : "pointer",
+                opacity: loading ? 0.7 : 1,
               }}
             >
               {loading ? "Creating Account..." : "Sign Up"}
@@ -169,14 +200,26 @@ export default function RegisterPage() {
           </form>
 
           {message && (
-            <p style={{ marginTop: "16px", color: message.includes("failed") ? "#dc2626" : "#16a34a" }}>
+            <p
+              style={{
+                marginTop: "16px",
+                color: message.includes("failed") ? "#dc2626" : "#16a34a",
+              }}
+            >
               {message}
             </p>
           )}
 
           <p style={{ marginTop: "20px", color: "#6b7280" }}>
             Already have an account?{" "}
-            <Link href="/login" style={{ color: "#2f66d0", fontWeight: 700, textDecoration: "none" }}>
+            <Link
+              href="/login"
+              style={{
+                color: "#2f66d0",
+                fontWeight: 700,
+                textDecoration: "none",
+              }}
+            >
               Log in
             </Link>
           </p>
