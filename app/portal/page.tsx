@@ -1,96 +1,82 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function Portal() {
-
-  const router = useRouter();
-
-  const subscribe = (plan: string, price: number) => {
-    router.push(`/checkout?plan=${plan}&price=${price}`);
-  };
-
+export default function HomePage() {
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#0b1320",
+        background: "#031B34",
         color: "white",
-        padding: "40px",
-        fontFamily: "Arial",
+        fontFamily: "Arial, sans-serif",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "24px",
       }}
     >
-      <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
-        CryptoHost Client Portal
-      </h1>
-
-      <p style={{ color: "#9aa4c7" }}>
-        Secure subscription access for CryptoHost services
-      </p>
-
-      <div
-        style={{
-          marginTop: "40px",
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gap: "20px",
-        }}
-      >
-        {/* BASIC */}
-        <div
+      <div style={{ textAlign: "center", maxWidth: "950px" }}>
+        <h1
           style={{
-            background: "#111a2e",
-            padding: "25px",
-            borderRadius: "10px",
+            fontSize: "64px",
+            marginBottom: "16px",
+            fontWeight: 800,
           }}
         >
-          <h2>Basic Plan</h2>
-          <p>$299 / month</p>
+          Asira CryptoHost
+        </h1>
 
-          <button
-            onClick={() => subscribe("basic", 299)}
-            style={{ marginTop: "10px" }}
-          >
-            Subscribe
-          </button>
-        </div>
-
-        {/* PROFESSIONAL */}
-        <div
+        <p
           style={{
-            background: "#111a2e",
-            padding: "25px",
-            borderRadius: "10px",
+            fontSize: "24px",
+            lineHeight: 1.5,
+            color: "#cbd5e1",
+            marginBottom: "36px",
           }}
         >
-          <h2>Professional</h2>
-          <p>$499 / month</p>
+          Secure client portal for subscription management, file upload,
+          transaction monitoring, and professional dashboard access.
+        </p>
 
-          <button
-            onClick={() => subscribe("professional", 499)}
-            style={{ marginTop: "10px" }}
-          >
-            Subscribe
-          </button>
-        </div>
-
-        {/* ENTERPRISE */}
         <div
           style={{
-            background: "#111a2e",
-            padding: "25px",
-            borderRadius: "10px",
+            display: "flex",
+            gap: "16px",
+            justifyContent: "center",
+            flexWrap: "wrap",
           }}
         >
-          <h2>Enterprise</h2>
-          <p>$999 / month</p>
-
-          <button
-            onClick={() => subscribe("enterprise", 999)}
-            style={{ marginTop: "10px" }}
+          <Link
+            href="/login"
+            style={{
+              background: "transparent",
+              color: "white",
+              border: "1px solid #5c6f91",
+              padding: "14px 24px",
+              borderRadius: "10px",
+              textDecoration: "none",
+              fontWeight: 700,
+              fontSize: "18px",
+            }}
           >
-            Subscribe
-          </button>
+            Login
+          </Link>
+
+          <Link
+            href="/register"
+            style={{
+              background: "#2f66d0",
+              color: "white",
+              padding: "14px 24px",
+              borderRadius: "10px",
+              textDecoration: "none",
+              fontWeight: 700,
+              fontSize: "18px",
+            }}
+          >
+            Sign Up
+          </Link>
         </div>
       </div>
     </div>
