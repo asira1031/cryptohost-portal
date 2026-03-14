@@ -19,26 +19,47 @@ export default function RegisterPage() {
     setLoading(true);
     setMessage("");
 
-    const { error } = await supabase.from("clients").insert([
-      {
-        name,
+    try {
+      // 1. Create real auth user in Supabase Authentication
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
-      },
-    ]);
+      });
 
-    setLoading(false);
+      if (authError) {
+        setMessage(`Registration failed: ${authError.message}`);
+        setLoading(false);
+        return;
+      }
 
-    if (error) {
-      setMessage(`Registration failed: ${error.message}`);
-      return;
+      // 2. Save extra profile info into clients table
+      const userId = authData.user?.id ?? null;
+
+      const { error: insertError } = await supabase.from("clients").insert([
+        {
+          id: userId,
+          name,
+          email,
+          password,
+        },
+      ]);
+
+      if (insertError) {
+        setMessage(`Profile save failed: ${insertError.message}`);
+        setLoading(false);
+        return;
+      }
+
+      setMessage("Registration successful! You can now log in.");
+
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+    } catch (err) {
+      setMessage("Something went wrong during registration.");
+    } finally {
+      setLoading(false);
     }
-
-    setMessage("Registration successful!");
-
-    setTimeout(() => {
-      router.push("/login");
-    }, 1200);
   }
 
   return (
@@ -203,7 +224,7 @@ export default function RegisterPage() {
             <p
               style={{
                 marginTop: "16px",
-                color: message.includes("failed") ? "#dc2626" : "#16a34a",
+                color: message.toLowerCase().includes("failed") ? "#dc2626" : "#16a34a",
               }}
             >
               {message}
