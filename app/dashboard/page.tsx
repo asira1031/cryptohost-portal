@@ -1,129 +1,132 @@
-<div
-  style={{
-    background: "#031B34",
-    padding: "40px",
-    borderRadius: "10px",
-    marginTop: "20px",
-  }}
->
-  <h2 style={{ color: "white", marginBottom: "30px" }}>
-    Choose Your CryptoHost Subscription
-  </h2>
+"use client";
 
-  <div
-    style={{
-      display: "flex",
-      gap: "30px",
-      flexWrap: "wrap",
-      justifyContent: "center",
-    }}
-  >
-    {/* Starter */}
-    <div
+import Link from "next/link";
+
+export default function DashboardPage() {
+  return (
+    <main
       style={{
-        background: "#021526",
-        padding: "30px",
-        borderRadius: "10px",
-        width: "300px",
-        color: "white",
+        minHeight: "100vh",
+        background: "#eef2f7",
+        fontFamily: "Arial, sans-serif",
+        padding: "30px 20px",
       }}
     >
-      <h3>Starter Plan</h3>
-      <h2>$299</h2>
-
-      <ul>
-        <li>Client Portal Dashboard</li>
-        <li>Upload transaction files</li>
-        <li>Transaction monitoring</li>
-        <li>Blockchain verification tracking</li>
-        <li>Secure encrypted data storage</li>
-        <li>Email support</li>
-      </ul>
-
-      <button
+      <div
         style={{
-          width: "100%",
-          marginTop: "20px",
-          padding: "12px",
-          borderRadius: "6px",
-          background: "#d1d5db",
-          border: "none",
+          maxWidth: "1200px",
+          margin: "0 auto",
         }}
       >
-        Subscribe
-      </button>
-    </div>
+        <div
+          style={{
+            background: "#2f66d0",
+            color: "#ffffff",
+            padding: "18px 24px",
+            borderRadius: "14px 14px 0 0",
+            fontSize: "28px",
+            fontWeight: 700,
+          }}
+        >
+          Asira CryptoHost Dashboard
+        </div>
 
-    {/* Professional */}
-    <div
-      style={{
-        background: "#021526",
-        padding: "30px",
-        borderRadius: "10px",
-        width: "300px",
-        color: "white",
-      }}
-    >
-      <h3>Professional Plan</h3>
-      <h2>$499</h2>
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "0 0 14px 14px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+            padding: "30px 24px",
+          }}
+        >
+          <h1
+            style={{
+              marginTop: 0,
+              marginBottom: "10px",
+              fontSize: "34px",
+              color: "#111827",
+            }}
+          >
+            Welcome to Your Dashboard
+          </h1>
 
-      <ul>
-        <li>Everything in Starter</li>
-        <li>Priority transaction processing</li>
-        <li>Advanced monitoring dashboard</li>
-        <li>Upload multiple financial files</li>
-        <li>Faster blockchain updates</li>
-        <li>Priority support</li>
-      </ul>
+          <p
+            style={{
+              marginTop: 0,
+              marginBottom: "28px",
+              color: "#6b7280",
+              fontSize: "18px",
+            }}
+          >
+            Manage your CryptoHost subscription, upload files, and monitor transactions securely.
+          </p>
 
-      <button
-        style={{
-          width: "100%",
-          marginTop: "20px",
-          padding: "12px",
-          borderRadius: "6px",
-          background: "#d1d5db",
-          border: "none",
-        }}
-      >
-        Subscribe
-      </button>
-    </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "20px",
+            }}
+          >
+            <div
+              style={{
+                background: "#f8fafc",
+                border: "1px solid #dbe2ea",
+                borderRadius: "12px",
+                padding: "22px",
+              }}
+            >
+              <h2 style={{ marginTop: 0, color: "#111827" }}>Subscription</h2>
+              <p style={{ color: "#6b7280" }}>
+                Choose your plan before file upload is enabled.
+              </p>
+              <Link
+                href="/subscribe"
+                style={{
+                  display: "inline-block",
+                  marginTop: "12px",
+                  background: "#2f66d0",
+                  color: "#ffffff",
+                  padding: "12px 18px",
+                  borderRadius: "8px",
+                  textDecoration: "none",
+                  fontWeight: 700,
+                }}
+              >
+                Choose Subscription
+              </Link>
+            </div>
 
-    {/* Enterprise */}
-    <div
-      style={{
-        background: "#021526",
-        padding: "30px",
-        borderRadius: "10px",
-        width: "300px",
-        color: "white",
-      }}
-    >
-      <h3>Enterprise Plan</h3>
-      <h2>$999</h2>
+            <div
+              style={{
+                background: "#f8fafc",
+                border: "1px solid #dbe2ea",
+                borderRadius: "12px",
+                padding: "22px",
+              }}
+            >
+              <h2 style={{ marginTop: 0, color: "#111827" }}>File Upload</h2>
+              <p style={{ color: "#6b7280" }}>
+                Upload financial or transaction files after subscription activation.
+              </p>
+            </div>
 
-      <ul>
-        <li>Everything in Professional</li>
-        <li>VIP processing priority</li>
-        <li>Real-time blockchain tracking</li>
-        <li>Dedicated transaction monitoring</li>
-        <li>Enterprise security layer</li>
-        <li>Dedicated support assistance</li>
-      </ul>
-
-      <button
-        style={{
-          width: "100%",
-          marginTop: "20px",
-          padding: "12px",
-          borderRadius: "6px",
-          background: "#d1d5db",
-          border: "none",
-        }}
-      >
-        Subscribe
-      </button>
-    </div>
-  </div>
-</div>
+            <div
+              style={{
+                background: "#f8fafc",
+                border: "1px solid #dbe2ea",
+                borderRadius: "12px",
+                padding: "22px",
+              }}
+            >
+              <h2 style={{ marginTop: 0, color: "#111827" }}>Transaction Monitor</h2>
+              <p style={{ color: "#6b7280" }}>
+                Track processing updates, verification status, and dashboard activity.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
