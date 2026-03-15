@@ -52,98 +52,215 @@ export default function SubscriptionPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#ececec",
+        backgroundImage: "url('/bitcoin.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         fontFamily: "Arial, sans-serif",
+        position: "relative",
       }}
     >
       <div
         style={{
-          background: "#2d66d3",
-          color: "white",
-          padding: "22px 28px",
-          fontSize: "22px",
-          fontWeight: "bold",
+          position: "absolute",
+          inset: 0,
+          background: "rgba(0, 22, 48, 0.78)",
+        }}
+      />
+
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          minHeight: "100vh",
+          padding: "24px",
         }}
       >
-        Subscription Plans
-      </div>
-
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "30px 20px" }}>
-        <p style={{ marginBottom: "30px", fontSize: "17px", color: "#222" }}>
-          Select a subscription plan and payment method to activate your
-          CryptoHost client portal access.
-        </p>
-
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "24px",
+            maxWidth: "1280px",
+            margin: "0 auto",
           }}
         >
-          {plans.map((plan) => (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "40px",
+              flexWrap: "wrap",
+              gap: "16px",
+            }}
+          >
             <div
-              key={plan.id}
               style={{
-                background: "white",
-                borderRadius: "14px",
-                boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-                padding: "28px",
-                border: "1px solid #d9d9d9",
+                color: "#ffffff",
+                fontSize: "24px",
+                fontWeight: "bold",
               }}
             >
-              <h2
-                style={{
-                  margin: "0 0 12px 0",
-                  fontSize: "24px",
-                  color: "#2d66d3",
-                }}
-              >
-                {plan.name}
-              </h2>
-
-              <div
-                style={{
-                  fontSize: "38px",
-                  fontWeight: "bold",
-                  color: "#111",
-                  marginBottom: "18px",
-                }}
-              >
-                ${plan.price}
-              </div>
-
-              <ul
-                style={{
-                  paddingLeft: "20px",
-                  marginBottom: "24px",
-                  color: "#333",
-                  lineHeight: "1.8",
-                }}
-              >
-                {plan.description.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-
-              <button
-                onClick={() => handleChoosePlan(plan)}
-                style={{
-                  width: "100%",
-                  background: "#2d66d3",
-                  color: "white",
-                  border: "none",
-                  padding: "14px 18px",
-                  borderRadius: "8px",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
-              >
-                Choose Plan
-              </button>
+              Asira CryptoHost
             </div>
-          ))}
+
+            <div
+              style={{
+                display: "flex",
+                gap: "12px",
+                flexWrap: "wrap",
+              }}
+            >
+              <a
+                href="/login"
+                style={{
+                  textDecoration: "none",
+                  background: "rgba(255,255,255,0.08)",
+                  color: "#ffffff",
+                  padding: "12px 20px",
+                  borderRadius: "10px",
+                  fontWeight: "bold",
+                  border: "1px solid rgba(255,255,255,0.25)",
+                }}
+              >
+                Login
+              </a>
+
+              <a
+                href="/signup"
+                style={{
+                  textDecoration: "none",
+                  background: "#3568cf",
+                  color: "#ffffff",
+                  padding: "12px 20px",
+                  borderRadius: "10px",
+                  fontWeight: "bold",
+                }}
+              >
+                Sign Up
+              </a>
+
+              <a
+                href="/dashboard"
+                style={{
+                  textDecoration: "none",
+                  background: "#ffffff",
+                  color: "#111827",
+                  padding: "12px 20px",
+                  borderRadius: "10px",
+                  fontWeight: "bold",
+                }}
+              >
+                Dashboard
+              </a>
+            </div>
+          </div>
+
+          <div
+            style={{
+              textAlign: "center",
+              marginBottom: "44px",
+            }}
+          >
+            <h1
+              style={{
+                color: "#ffffff",
+                fontSize: "64px",
+                fontWeight: "bold",
+                margin: "0 0 16px 0",
+                lineHeight: 1.1,
+              }}
+            >
+              Choose Your CryptoHost Subscription
+            </h1>
+
+            <p
+              style={{
+                color: "rgba(255,255,255,0.88)",
+                fontSize: "22px",
+                maxWidth: "900px",
+                margin: "0 auto",
+                lineHeight: 1.6,
+              }}
+            >
+              Select a secure subscription plan for blockchain payment
+              verification, transaction monitoring, client portal access, and
+              financial file processing.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: "28px",
+              alignItems: "stretch",
+            }}
+          >
+            {plans.map((plan) => (
+              <div
+                key={plan.id}
+                style={{
+                  background: "rgba(0, 24, 56, 0.88)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  borderRadius: "18px",
+                  padding: "28px",
+                  boxShadow: "0 12px 30px rgba(0,0,0,0.18)",
+                  backdropFilter: "blur(4px)",
+                }}
+              >
+                <h2
+                  style={{
+                    color: "#ffffff",
+                    marginTop: 0,
+                    marginBottom: "14px",
+                    fontSize: "22px",
+                  }}
+                >
+                  {plan.name}
+                </h2>
+
+                <div
+                  style={{
+                    color: "#ffffff",
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    marginBottom: "20px",
+                  }}
+                >
+                  ${plan.price}
+                </div>
+
+                <ul
+                  style={{
+                    color: "rgba(255,255,255,0.92)",
+                    lineHeight: 1.9,
+                    paddingLeft: "22px",
+                    marginBottom: "28px",
+                  }}
+                >
+                  {plan.description.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => handleChoosePlan(plan)}
+                  style={{
+                    width: "100%",
+                    background: "#ffffff",
+                    color: "#111827",
+                    border: "none",
+                    padding: "16px 18px",
+                    borderRadius: "10px",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  }}
+                >
+                  Choose Plan
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
