@@ -1,223 +1,98 @@
 "use client";
 
-import Link from "next/link";
-
 export default function HomePage() {
   return (
-    <div
+    <main
       style={{
         minHeight: "100vh",
-        background: "#031B34",
-        color: "white",
+        backgroundImage: "url('/bitcoin.jpeg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
         fontFamily: "Arial, sans-serif",
-        padding: "30px 20px 60px",
+        position: "relative",
       }}
     >
+      {/* Dark overlay */}
       <div
         style={{
-          maxWidth: "1400px",
-          margin: "0 auto",
+          position: "absolute",
+          inset: 0,
+          background: "rgba(0, 22, 48, 0.75)",
+        }}
+      />
+
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          textAlign: "center",
+          color: "#fff",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "40px",
-            flexWrap: "wrap",
-            gap: "16px",
-          }}
-        >
-          <div style={{ fontSize: "28px", fontWeight: 700 }}>
-            Asira CryptoHost
-          </div>
-
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <Link
-              href="/login"
-              style={{
-                background: "transparent",
-                color: "white",
-                border: "1px solid #5c6f91",
-                padding: "10px 18px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 600,
-              }}
-            >
-              Login
-            </Link>
-
-            <Link
-              href="/register"
-              style={{
-                background: "#2f66d0",
-                color: "white",
-                border: "none",
-                padding: "10px 18px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 600,
-              }}
-            >
-              Sign Up
-            </Link>
-
-            <Link
-              href="/dashboard"
-              style={{
-                background: "#d9d9d9",
-                color: "#111827",
-                border: "none",
-                padding: "10px 18px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 600,
-              }}
-            >
-              Dashboard
-            </Link>
-          </div>
-        </div>
-
         <h1
           style={{
-            textAlign: "center",
-            fontSize: "56px",
-            marginBottom: "50px",
-            fontWeight: 800,
+            fontSize: "60px",
+            marginBottom: "20px",
+            fontWeight: "bold",
           }}
         >
-          Choose Your CryptoHost Subscription
+          Asira CryptoHost
         </h1>
+
+        <p
+          style={{
+            fontSize: "22px",
+            marginBottom: "40px",
+            maxWidth: "700px",
+          }}
+        >
+          Secure blockchain transaction processing, financial file validation,
+          and digital asset conversion infrastructure.
+        </p>
 
         <div
           style={{
             display: "flex",
-            gap: "40px",
+            gap: "20px",
             justifyContent: "center",
-            flexWrap: "wrap",
           }}
         >
-          <div
+          <a
+            href="/signup"
             style={{
-              border: "1px solid #3b4a6b",
-              borderRadius: "16px",
-              padding: "36px",
-              width: "380px",
+              background: "#3568cf",
+              color: "#fff",
+              padding: "16px 32px",
+              borderRadius: "10px",
+              textDecoration: "none",
+              fontWeight: "bold",
+              fontSize: "18px",
             }}
           >
-            <h2 style={{ fontSize: "28px", marginBottom: "18px" }}>Starter Plan</h2>
-            <h3 style={{ fontSize: "24px", marginBottom: "24px" }}>$299</h3>
+            Sign Up
+          </a>
 
-            <ul style={{ lineHeight: 1.5, fontSize: "18px", marginBottom: "30px" }}>
-              <li>Client Portal Dashboard</li>
-              <li>Upload transaction files</li>
-              <li>Transaction monitoring</li>
-              <li>Blockchain verification tracking</li>
-              <li>Secure encrypted data storage</li>
-              <li>Email support</li>
-            </ul>
-
-            <Link
-              href="/register"
-              style={{
-                display: "block",
-                width: "100%",
-                marginTop: "20px",
-                padding: "14px",
-                background: "#d9d9d9",
-                color: "#111827",
-                borderRadius: "6px",
-                textAlign: "center",
-                textDecoration: "none",
-                fontWeight: 600,
-              }}
-            >
-              Subscribe
-            </Link>
-          </div>
-
-          <div
+          <a
+            href="/login"
             style={{
-              border: "1px solid #3b4a6b",
-              borderRadius: "16px",
-              padding: "36px",
-              width: "380px",
+              background: "#ffffff",
+              color: "#111827",
+              padding: "16px 32px",
+              borderRadius: "10px",
+              textDecoration: "none",
+              fontWeight: "bold",
+              fontSize: "18px",
             }}
           >
-            <h2 style={{ fontSize: "28px", marginBottom: "18px" }}>Professional Plan</h2>
-            <h3 style={{ fontSize: "24px", marginBottom: "24px" }}>$499</h3>
-
-            <ul style={{ lineHeight: 1.5, fontSize: "18px", marginBottom: "30px" }}>
-              <li>Everything in Starter</li>
-              <li>Priority transaction processing</li>
-              <li>Advanced monitoring dashboard</li>
-              <li>Upload multiple financial files</li>
-              <li>Faster blockchain updates</li>
-              <li>Priority support</li>
-            </ul>
-
-            <Link
-              href="/register"
-              style={{
-                display: "block",
-                width: "100%",
-                marginTop: "20px",
-                padding: "14px",
-                background: "#d9d9d9",
-                color: "#111827",
-                borderRadius: "6px",
-                textAlign: "center",
-                textDecoration: "none",
-                fontWeight: 600,
-              }}
-            >
-              Subscribe
-            </Link>
-          </div>
-
-          <div
-            style={{
-              border: "1px solid #3b4a6b",
-              borderRadius: "16px",
-              padding: "36px",
-              width: "380px",
-            }}
-          >
-            <h2 style={{ fontSize: "28px", marginBottom: "18px" }}>Enterprise Plan</h2>
-            <h3 style={{ fontSize: "24px", marginBottom: "24px" }}>$999</h3>
-
-            <ul style={{ lineHeight: 1.5, fontSize: "18px", marginBottom: "30px" }}>
-              <li>Everything in Professional</li>
-              <li>VIP processing priority</li>
-              <li>Real-time blockchain tracking</li>
-              <li>Dedicated transaction monitoring</li>
-              <li>Enterprise security layer</li>
-              <li>Dedicated support assistance</li>
-            </ul>
-
-            <Link
-              href="/register"
-              style={{
-                display: "block",
-                width: "100%",
-                marginTop: "20px",
-                padding: "14px",
-                background: "#d9d9d9",
-                color: "#111827",
-                borderRadius: "6px",
-                textAlign: "center",
-                textDecoration: "none",
-                fontWeight: 600,
-              }}
-            >
-              Subscribe
-            </Link>
-          </div>
+            Log In
+          </a>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
