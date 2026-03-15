@@ -1,22 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/app/lib/supabase";
 
+type SelectedPlan = {
+  id: string;
+  name: string;
+  price: number;
+  description: string[];
+};
+
 export default function RegisterPage() {
   const router = useRouter();
 
+  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const savedPlan = localStorage.getItem("selectedPlan");
+    if (savedPlan) {
+      try {
+        setSelectedPlan(JSON.parse(savedPlan));
+      } catch {
+        setSelectedPlan(null);
+      }
+    }
+  }, []);
+
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
+
+    if (!selectedPlan) {
+      setMessage("Please select a subscription plan first.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -26,6 +51,8 @@ export default function RegisterPage() {
         options: {
           data: {
             full_name: fullName.trim(),
+            subscription_plan: selectedPlan.name,
+            subscription_amount: selectedPlan.price,
           },
         },
       });
@@ -48,8 +75,8 @@ export default function RegisterPage() {
         id: user.id,
         full_name: fullName.trim(),
         email: email.trim(),
-        subscription_plan: "Starter",
-        subscription_amount: 10,
+        subscription_plan: selectedPlan.name,
+        subscription_amount: selectedPlan.price,
       });
 
       if (profileError) {
@@ -116,13 +143,71 @@ export default function RegisterPage() {
           <p
             style={{
               marginTop: "12px",
-              marginBottom: "30px",
+              marginBottom: "20px",
               fontSize: "17px",
               color: "#6b7280",
             }}
           >
             Register to access the CryptoHost client portal.
           </p>
+
+          {selectedPlan && (
+            <div
+              style={{
+                background: "#eef4ff",
+                border: "1px solid #c7d7ff",
+                borderRadius: "14px",
+                padding: "16px",
+                marginBottom: "24px",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  color: "#3568cf",
+                  marginBottom: "6px",
+                }}
+              >
+                SELECTED PLAN
+              </div>
+              <div
+                style={{
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                  color: "#111827",
+                }}
+              >
+                {selectedPlan.name}
+              </div>
+              <div
+                style={{
+                  fontSize: "18px",
+                  color: "#111827",
+                  marginTop: "4px",
+                }}
+              >
+                ${selectedPlan.price}
+              </div>
+            </div>
+          )}
+
+          {!selectedPlan && (
+            <div
+              style={{
+                background: "#fff4e5",
+                border: "1px solid #f3d19c",
+                borderRadius: "14px",
+                padding: "16px",
+                marginBottom: "24px",
+                color: "#8a5a00",
+                fontSize: "15px",
+              }}
+            >
+              No subscription plan selected yet. Please go back to the
+              subscription page and choose a plan first.
+            </div>
+          )}
 
           <form onSubmit={handleRegister}>
             <label
@@ -214,7 +299,7 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !selectedPlan}
               style={{
                 width: "100%",
                 padding: "16px",
@@ -224,8 +309,8 @@ export default function RegisterPage() {
                 borderRadius: "12px",
                 fontSize: "18px",
                 fontWeight: "bold",
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.8 : 1,
+                cursor: loading || !selectedPlan ? "not-allowed" : "pointer",
+                opacity: loading || !selectedPlan ? 0.8 : 1,
               }}
             >
               {loading ? "Signing Up..." : "Sign Up"}
