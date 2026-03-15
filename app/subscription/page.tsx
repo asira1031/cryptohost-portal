@@ -1,6 +1,53 @@
 "use client";
 
+const plans = [
+  {
+    id: "starter",
+    name: "Starter Plan",
+    price: 99,
+    description: [
+      "Client portal dashboard",
+      "Upload transaction files",
+      "Basic transaction monitoring",
+      "Blockchain verification tracking",
+      "Secure encrypted data storage",
+      "Email support",
+    ],
+  },
+  {
+    id: "professional",
+    name: "Professional Plan",
+    price: 199,
+    description: [
+      "Everything in Starter",
+      "Priority transaction processing",
+      "Advanced monitoring dashboard",
+      "Multiple file upload support",
+      "Faster blockchain updates",
+      "Priority support",
+    ],
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise Plan",
+    price: 299,
+    description: [
+      "Everything in Professional",
+      "Full client transaction suite",
+      "Dedicated processing lane",
+      "High-priority file handling",
+      "Enhanced compliance support",
+      "Premium account assistance",
+    ],
+  },
+];
+
 export default function SubscriptionPage() {
+  const handleChoosePlan = (plan: (typeof plans)[0]) => {
+    localStorage.setItem("selectedPlan", JSON.stringify(plan));
+    window.location.href = `/signup?plan=${plan.id}`;
+  };
+
   return (
     <div
       style={{
@@ -21,8 +68,8 @@ export default function SubscriptionPage() {
         Subscription Plans
       </div>
 
-      <div style={{ padding: "30px" }}>
-        <p style={{ marginBottom: "30px", fontSize: "17px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "30px 20px" }}>
+        <p style={{ marginBottom: "30px", fontSize: "17px", color: "#222" }}>
           Select a subscription plan and payment method to activate your
           CryptoHost client portal access.
         </p>
@@ -31,114 +78,74 @@ export default function SubscriptionPage() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "22px",
+            gap: "24px",
           }}
         >
-          <div style={card}>
-            <h2>Starter</h2>
-            <h1 style={price}>$99</h1>
-            <p>Basic portal access for single file processing.</p>
+          {plans.map((plan) => (
+            <div
+              key={plan.id}
+              style={{
+                background: "white",
+                borderRadius: "14px",
+                boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+                padding: "28px",
+                border: "1px solid #d9d9d9",
+              }}
+            >
+              <h2
+                style={{
+                  margin: "0 0 12px 0",
+                  fontSize: "24px",
+                  color: "#2d66d3",
+                }}
+              >
+                {plan.name}
+              </h2>
 
-            <div style={features}>
-              <p>• Access to CryptoHost dashboard</p>
-              <p>• Secure file upload</p>
-              <p>• Basic transaction monitoring</p>
-              <p>• Standard processing queue</p>
-              <p>• Email support</p>
+              <div
+                style={{
+                  fontSize: "38px",
+                  fontWeight: "bold",
+                  color: "#111",
+                  marginBottom: "18px",
+                }}
+              >
+                ${plan.price}
+              </div>
+
+              <ul
+                style={{
+                  paddingLeft: "20px",
+                  marginBottom: "24px",
+                  color: "#333",
+                  lineHeight: "1.8",
+                }}
+              >
+                {plan.description.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+
+              <button
+                onClick={() => handleChoosePlan(plan)}
+                style={{
+                  width: "100%",
+                  background: "#2d66d3",
+                  color: "white",
+                  border: "none",
+                  padding: "14px 18px",
+                  borderRadius: "8px",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                Choose Plan
+              </button>
             </div>
-
-            <PaymentBox />
-            <button style={button}>Choose Starter</button>
-          </div>
-
-          <div style={card}>
-            <h2>Professional</h2>
-            <h1 style={price}>$199</h1>
-            <p>Recommended for active clients processing multiple files.</p>
-
-            <div style={features}>
-              <p>• Everything in Starter</p>
-              <p>• Multiple file uploads</p>
-              <p>• Higher processing allowance</p>
-              <p>• Faster validation queue</p>
-              <p>• Advanced transaction monitor</p>
-              <p>• Priority support</p>
-            </div>
-
-            <PaymentBox />
-            <button style={button}>Choose Professional</button>
-          </div>
-
-          <div style={card}>
-            <h2>Enterprise</h2>
-            <h1 style={price}>$299</h1>
-            <p>Full CryptoHost platform access for large file operations.</p>
-
-            <div style={features}>
-              <p>• Everything in Professional</p>
-              <p>• Unlimited file uploads</p>
-              <p>• Priority processing queue</p>
-              <p>• Real-time transaction monitoring</p>
-              <p>• Dedicated support channel</p>
-              <p>• Best for high value transactions</p>
-            </div>
-
-            <PaymentBox />
-            <button style={button}>Choose Enterprise</button>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
-  );
-}
-
-const card = {
-  background: "white",
-  padding: "24px",
-  borderRadius: "12px",
-  boxShadow: "0 0 8px rgba(0,0,0,0.1)",
-};
-
-const price = {
-  color: "#2d66d3",
-  fontSize: "48px",
-};
-
-const features = {
-  marginTop: "15px",
-  lineHeight: "1.8",
-};
-
-const button = {
-  marginTop: "18px",
-  width: "100%",
-  padding: "14px",
-  background: "#2d66d3",
-  color: "white",
-  border: "none",
-  borderRadius: "8px",
-  fontSize: "16px",
-  fontWeight: "bold",
-  cursor: "pointer",
-};
-
-function PaymentBox() {
-  return (
-    <div
-      style={{
-        marginTop: "18px",
-        padding: "14px",
-        border: "1px solid #d9e0ea",
-        borderRadius: "10px",
-        background: "#f8fafc",
-        fontSize: "14px",
-        lineHeight: "1.8",
-      }}
-    >
-      <p><b>PayPal:</b> Available</p>
-      <p><b>USDT:</b> 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd</p>
-      <p><b>BNB:</b> 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd</p>
-      <p><b>ETH:</b> 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd</p>
     </div>
   );
 }
