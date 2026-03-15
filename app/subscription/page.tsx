@@ -1,101 +1,45 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function SubscriptionPage() {
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.paypal.com/sdk/js?client-id=BA48ggEiAiLcG_4Y13TIpawdZ8bis2Zrmg4cN_vewZSeOnnaFB3aHXtBHnecACam-5CxH9HZJiEMSis&components=hosted-buttons&disable-funding=venmo&currency=PHP";
+    script.async = true;
+
+    script.onload = () => {
+      // @ts-ignore
+      if (window.paypal) {
+        // @ts-ignore
+        window.paypal.HostedButtons({
+          hostedButtonId: "DBWVXD8UBUEZS",
+        }).render("#paypal-container-DBWVXD8UBUEZS");
+      }
+    };
+
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <div
       style={{
         minHeight: "100vh",
         background: "#0a0a0a",
         color: "white",
-        fontFamily: "Arial, sans-serif",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        fontFamily: "Arial",
       }}
     >
-      <div
-        style={{
-          background: "#111",
-          padding: "50px",
-          borderRadius: "10px",
-          textAlign: "center",
-          maxWidth: "500px",
-          boxShadow: "0px 0px 20px rgba(0,0,0,0.6)",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "32px",
-            marginBottom: "20px",
-          }}
-        >
-          CryptoHost Client Portal
-        </h1>
+      <div style={{ textAlign: "center" }}>
+        <h1>CryptoHost Processing Service</h1>
+        <p>Secure payment for CryptoHost infrastructure services.</p>
 
-        <p
-          style={{
-            fontSize: "16px",
-            lineHeight: "1.6",
-            marginBottom: "30px",
-          }}
-        >
-          Subscribe to access the CryptoHost infrastructure, secure transaction
-          monitoring dashboard, and blockchain transaction processing tools.
-        </p>
+        <div id="paypal-container-DBWVXD8UBUEZS"></div>
 
-        <div
-          style={{
-            background: "#1a1a1a",
-            padding: "25px",
-            borderRadius: "8px",
-            marginBottom: "30px",
-          }}
-        >
-          <h2
-            style={{
-              fontSize: "22px",
-              marginBottom: "10px",
-            }}
-          >
-            Monthly Subscription
-          </h2>
-
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: "bold",
-              marginBottom: "20px",
-            }}
-          >
-            $50 / month
-          </p>
-
-          <a
-            href="YOUR_PAYPAL_SUBSCRIPTION_LINK"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              background: "#ffc439",
-              color: "#111",
-              padding: "14px 28px",
-              borderRadius: "6px",
-              fontWeight: "bold",
-              textDecoration: "none",
-              display: "inline-block",
-            }}
-          >
-            Subscribe with PayPal
-          </a>
-        </div>
-
-        <p
-          style={{
-            fontSize: "13px",
-            opacity: "0.7",
-          }}
-        >
-          Secure payment powered by PayPal Business
-        </p>
       </div>
     </div>
   );
