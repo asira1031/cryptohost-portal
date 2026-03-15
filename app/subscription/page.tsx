@@ -45,7 +45,7 @@ const plans = [
 export default function SubscriptionPage() {
   const handleChoosePlan = (plan: (typeof plans)[0]) => {
     localStorage.setItem("selectedPlan", JSON.stringify(plan));
-    window.location.href = "/signup";
+    window.location.href = `/payment?plan=${plan.id}`;
   };
 
   return (
