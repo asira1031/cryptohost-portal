@@ -85,7 +85,7 @@ export default function RegisterPage() {
         return;
       }
 
-      router.push("/login");
+      router.push("/payment");
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Unknown error occurred.";
