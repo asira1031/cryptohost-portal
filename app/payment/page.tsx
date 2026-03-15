@@ -1,37 +1,41 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function PaymentPage() {
-  const params = useSearchParams();
   const router = useRouter();
 
-  const plan = params.get("plan");
+  const [plan, setPlan] = useState("starter");
+  const [method, setMethod] = useState<"" | "paypal" | "crypto">("");
+  const [cryptoType, setCryptoType] = useState("USDT ERC20");
+  const [txHash, setTxHash] = useState("");
+  const [receiptName, setReceiptName] = useState("");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlPlan = params.get("plan");
+      if (urlPlan === "starter" || urlPlan === "professional" || urlPlan === "enterprise") {
+        setPlan(urlPlan);
+      }
+    }
+  }, []);
 
   const planLabel =
     plan === "starter"
       ? "Starter Plan"
       : plan === "professional"
       ? "Professional Plan"
-      : plan === "enterprise"
-      ? "Enterprise Plan"
-      : "Starter Plan";
+      : "Enterprise Plan";
 
   const price =
     plan === "starter"
       ? "$99"
       : plan === "professional"
       ? "$199"
-      : plan === "enterprise"
-      ? "$299"
-      : "$99";
-
-  const [method, setMethod] = useState<"" | "paypal" | "crypto">("");
-  const [cryptoType, setCryptoType] = useState("USDT ERC20");
-  const [txHash, setTxHash] = useState("");
-  const [receiptName, setReceiptName] = useState("");
-  const [message, setMessage] = useState("");
+      : "$299";
 
   const walletAddress = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
 
@@ -117,8 +121,7 @@ export default function PaymentPage() {
               color: "#6b7280",
             }}
           >
-            Choose your payment method and submit your payment proof to activate
-            your CryptoHost subscription.
+            Choose your payment method and submit your payment proof to activate your CryptoHost subscription.
           </p>
 
           <div
@@ -232,8 +235,7 @@ export default function PaymentPage() {
                 </h3>
 
                 <p style={{ color: "#6b7280" }}>
-                  Complete your PayPal payment first, then upload your receipt
-                  below.
+                  Complete your PayPal payment first, then upload your receipt below.
                 </p>
 
                 <a
