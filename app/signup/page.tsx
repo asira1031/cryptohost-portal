@@ -1,357 +1,57 @@
-"use client";
-
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/app/lib/supabase";
 
-type SelectedPlan = {
-  id: string;
+type Plan = {
   name: string;
   price: number;
-  description: string[];
 };
 
-export default function RegisterPage() {
-  const router = useRouter();
+const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
-  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+useEffect(() => {
+  const storedPlan = localStorage.getItem("selectedPlan");
+  if (storedPlan) {
+    setSelectedPlan(JSON.parse(storedPlan));
+  }
+}, []);
+<div
+  style={{
+    background: "#f0f4ff",
+    border: "2px solid #3568cf",
+    padding: "20px",
+    borderRadius: "12px",
+    marginBottom: "20px",
+  }}
+>
+  <p
+    style={{
+      fontSize: "12px",
+      color: "#3568cf",
+      fontWeight: "bold",
+      marginBottom: "8px",
+      letterSpacing: "1px",
+    }}
+  >
+    SELECTED SUBSCRIPTION
+  </p>
 
-  useEffect(() => {
-    const savedPlan = localStorage.getItem("selectedPlan");
-    if (savedPlan) {
-      try {
-        setSelectedPlan(JSON.parse(savedPlan));
-      } catch {
-        setSelectedPlan(null);
-      }
-    }
-  }, []);
+  <h2
+    style={{
+      margin: "0",
+      fontSize: "26px",
+      color: "#1a1a1a",
+    }}
+  >
+    {selectedPlan?.name}
+  </h2>
 
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setMessage("");
-
-    if (!selectedPlan) {
-      setMessage("Please select a subscription plan first.");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: {
-          data: {
-            full_name: fullName.trim(),
-            subscription_plan: selectedPlan.name,
-            subscription_amount: selectedPlan.price,
-          },
-        },
-      });
-
-      if (error) {
-        setMessage(`Registration failed: ${error.message}`);
-        setLoading(false);
-        return;
-      }
-
-      const user = data.user ?? data.session?.user;
-
-      if (!user) {
-        setMessage("Registration succeeded, but no user session was returned.");
-        setLoading(false);
-        return;
-      }
-
-      const { error: profileError } = await supabase.from("clients").upsert({
-        id: user.id,
-        full_name: fullName.trim(),
-        email: email.trim(),
-        subscription_plan: selectedPlan.name,
-        subscription_amount: selectedPlan.price,
-      });
-
-      if (profileError) {
-        setMessage(`Profile save failed: ${profileError.message}`);
-        setLoading(false);
-        return;
-      }
-
-      router.push("/payment");
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Unknown error occurred.";
-      setMessage(`Registration failed: ${errorMessage}`);
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#dfe5eb",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "Arial, sans-serif",
-        padding: "24px",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "600px",
-          background: "#ffffff",
-          borderRadius: "20px",
-          overflow: "hidden",
-          boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-        }}
-      >
-        <div
-          style={{
-            background: "#3568cf",
-            color: "#ffffff",
-            fontSize: "34px",
-            fontWeight: "bold",
-            padding: "24px 30px",
-          }}
-        >
-          Asira CryptoHost
-        </div>
-
-        <div style={{ padding: "34px 30px 36px" }}>
-          <h1
-            style={{
-              margin: 0,
-              fontSize: "34px",
-              fontWeight: "bold",
-              color: "#111827",
-            }}
-          >
-            Create Account
-          </h1>
-
-          <p
-            style={{
-              marginTop: "12px",
-              marginBottom: "20px",
-              fontSize: "17px",
-              color: "#6b7280",
-            }}
-          >
-            Register to access the CryptoHost client portal.
-          </p>
-
-          {selectedPlan && (
-            <div
-              style={{
-                background: "#eef4ff",
-                border: "1px solid #c7d7ff",
-                borderRadius: "14px",
-                padding: "16px",
-                marginBottom: "24px",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "13px",
-                  fontWeight: "bold",
-                  color: "#3568cf",
-                  marginBottom: "6px",
-                }}
-              >
-                SELECTED PLAN
-              </div>
-              <div
-                style={{
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  color: "#111827",
-                }}
-              >
-                {selectedPlan.name}
-              </div>
-              <div
-                style={{
-                  fontSize: "18px",
-                  color: "#111827",
-                  marginTop: "4px",
-                }}
-              >
-                ${selectedPlan.price}
-              </div>
-            </div>
-          )}
-
-          {!selectedPlan && (
-            <div
-              style={{
-                background: "#fff4e5",
-                border: "1px solid #f3d19c",
-                borderRadius: "14px",
-                padding: "16px",
-                marginBottom: "24px",
-                color: "#8a5a00",
-                fontSize: "15px",
-              }}
-            >
-              No subscription plan selected yet. Please go back to the
-              subscription page and choose a plan first.
-            </div>
-          )}
-
-          <form onSubmit={handleRegister}>
-            <label
-              style={{
-                display: "block",
-                fontWeight: "bold",
-                fontSize: "17px",
-                marginBottom: "8px",
-                color: "#111827",
-              }}
-            >
-              Full Name
-            </label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              placeholder="Enter your full name"
-              style={{
-                width: "100%",
-                padding: "16px",
-                borderRadius: "12px",
-                border: "1px solid #cbd5e1",
-                marginBottom: "22px",
-                fontSize: "16px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
-            />
-
-            <label
-              style={{
-                display: "block",
-                fontWeight: "bold",
-                fontSize: "17px",
-                marginBottom: "8px",
-                color: "#111827",
-              }}
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Enter your email"
-              style={{
-                width: "100%",
-                padding: "16px",
-                borderRadius: "12px",
-                border: "1px solid #cbd5e1",
-                marginBottom: "22px",
-                fontSize: "16px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
-            />
-
-            <label
-              style={{
-                display: "block",
-                fontWeight: "bold",
-                fontSize: "17px",
-                marginBottom: "8px",
-                color: "#111827",
-              }}
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Enter your password"
-              style={{
-                width: "100%",
-                padding: "16px",
-                borderRadius: "12px",
-                border: "1px solid #cbd5e1",
-                marginBottom: "24px",
-                fontSize: "16px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
-            />
-
-            <button
-              type="submit"
-              disabled={loading || !selectedPlan}
-              style={{
-                width: "100%",
-                padding: "16px",
-                background: "#3568cf",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "12px",
-                fontSize: "18px",
-                fontWeight: "bold",
-                cursor: loading || !selectedPlan ? "not-allowed" : "pointer",
-                opacity: loading || !selectedPlan ? 0.8 : 1,
-              }}
-            >
-              {loading ? "Signing Up..." : "Sign Up"}
-            </button>
-          </form>
-
-          {message && (
-            <p
-              style={{
-                marginTop: "18px",
-                marginBottom: "0",
-                color: "red",
-                fontSize: "16px",
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {message}
-            </p>
-          )}
-
-          <p
-            style={{
-              marginTop: "26px",
-              color: "#6b7280",
-              fontSize: "16px",
-            }}
-          >
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              style={{
-                color: "#3568cf",
-                fontWeight: "bold",
-                textDecoration: "none",
-              }}
-            >
-              Log in
-            </Link>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+  <p
+    style={{
+      fontSize: "32px",
+      fontWeight: "bold",
+      color: "#3568cf",
+      marginTop: "5px",
+    }}
+  >
+    ${selectedPlan?.price}
+  </p>
+</div>
