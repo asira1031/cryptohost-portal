@@ -34,13 +34,9 @@ export default function SubscriptionPage() {
             gap: "22px",
           }}
         >
-
-{/* STARTER */}
-
           <div style={card}>
             <h2>Starter</h2>
             <h1 style={price}>$99</h1>
-
             <p>Basic portal access for single file processing.</p>
 
             <div style={features}>
@@ -52,16 +48,12 @@ export default function SubscriptionPage() {
             </div>
 
             <PaymentBox />
-
             <button style={button}>Choose Starter</button>
           </div>
-
-{/* PROFESSIONAL */}
 
           <div style={card}>
             <h2>Professional</h2>
             <h1 style={price}>$199</h1>
-
             <p>Recommended for active clients processing multiple files.</p>
 
             <div style={features}>
@@ -74,16 +66,12 @@ export default function SubscriptionPage() {
             </div>
 
             <PaymentBox />
-
             <button style={button}>Choose Professional</button>
           </div>
-
-{/* ENTERPRISE */}
 
           <div style={card}>
             <h2>Enterprise</h2>
             <h1 style={price}>$299</h1>
-
             <p>Full CryptoHost platform access for large file operations.</p>
 
             <div style={features}>
@@ -96,10 +84,8 @@ export default function SubscriptionPage() {
             </div>
 
             <PaymentBox />
-
             <button style={button}>Choose Enterprise</button>
           </div>
-
         </div>
       </div>
     </div>
