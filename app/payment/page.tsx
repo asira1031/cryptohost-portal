@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/app/lib/supabase";
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -10,14 +11,20 @@ export default function PaymentPage() {
   const [method, setMethod] = useState<"" | "paypal" | "crypto">("");
   const [cryptoType, setCryptoType] = useState("USDT ERC20");
   const [txHash, setTxHash] = useState("");
+  const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptName, setReceiptName] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const urlPlan = params.get("plan");
-      if (urlPlan === "starter" || urlPlan === "professional" || urlPlan === "enterprise") {
+      if (
+        urlPlan === "starter" ||
+        urlPlan === "professional" ||
+        urlPlan === "enterprise"
+      ) {
         setPlan(urlPlan);
       }
     }
@@ -40,14 +47,14 @@ export default function PaymentPage() {
   const walletAddress = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
 
   const handleReceiptUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setReceiptName(file.name);
-    }
+    const file = e.target.files?.[0] || null;
+    setReceiptFile(file);
+    setReceiptName(file ? file.name : "");
   };
 
-  const handleSubmitProof = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitProof = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setMessage("");
 
     if (!method) {
       setMessage("Please choose a payment method.");
@@ -55,19 +62,86 @@ export default function PaymentPage() {
     }
 
     if (method === "crypto" && !txHash.trim()) {
-      setMessage("Please paste your transaction hash.");
+      setMessage("Please paste your crypto transaction hash.");
       return;
     }
 
-    if (method === "paypal" && !receiptName) {
+    if (method === "paypal" && !receiptFile) {
       setMessage("Please upload your PayPal receipt.");
       return;
     }
 
-    setMessage("Payment proof submitted successfully.");
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1000);
+    setLoading(true);
+
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        setMessage("Please log in first before submitting payment proof.");
+        setLoading(false);
+        return;
+      }
+
+      let receiptUrl: string | null = null;
+
+      if (method === "paypal" && receiptFile) {
+        const fileExt = receiptFile.name.split(".").pop();
+        const filePath = `${user.id}/${Date.now()}.${fileExt}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("payment-receipts")
+          .upload(filePath, receiptFile, {
+            upsert: true,
+          });
+
+        if (uploadError) {
+          setMessage(`Receipt upload failed: ${uploadError.message}`);
+          setLoading(false);
+          return;
+        }
+
+        const { data: publicData } = supabase.storage
+          .from("payment-receipts")
+          .getPublicUrl(filePath);
+
+        receiptUrl = publicData.publicUrl;
+      }
+
+      const { error: insertError } = await supabase.from("payment_proofs").insert({
+        user_id: user.id,
+        plan_id: plan,
+        plan_name: planLabel,
+        amount: price,
+        payment_method: method,
+        wallet_type: method === "crypto" ? cryptoType : null,
+        tx_hash: method === "crypto" ? txHash.trim() : null,
+        receipt_url: receiptUrl,
+        status: "pending",
+      });
+
+      if (insertError) {
+        setMessage(`Saving payment proof failed: ${insertError.message}`);
+        setLoading(false);
+        return;
+      }
+
+      setMessage(
+        "Payment proof submitted successfully. Your subscription is now pending verification."
+      );
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1200);
+    } catch (error) {
+      const msg =
+        error instanceof Error ? error.message : "Unknown error occurred.";
+      setMessage(`Payment proof submission failed: ${msg}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -121,7 +195,8 @@ export default function PaymentPage() {
               color: "#6b7280",
             }}
           >
-            Choose your payment method and submit your payment proof to activate your CryptoHost subscription.
+            Choose your payment method and submit your payment proof to activate
+            your CryptoHost subscription.
           </p>
 
           <div
@@ -235,7 +310,8 @@ export default function PaymentPage() {
                 </h3>
 
                 <p style={{ color: "#6b7280" }}>
-                  Complete your PayPal payment first, then upload your receipt below.
+                  Complete your PayPal payment first, then upload your receipt
+                  below.
                 </p>
 
                 <a
@@ -384,6 +460,7 @@ export default function PaymentPage() {
 
             <button
               type="submit"
+              disabled={loading}
               style={{
                 width: "100%",
                 padding: "16px",
@@ -393,10 +470,11 @@ export default function PaymentPage() {
                 borderRadius: "12px",
                 fontSize: "18px",
                 fontWeight: "bold",
-                cursor: "pointer",
+                cursor: loading ? "not-allowed" : "pointer",
+                opacity: loading ? 0.8 : 1,
               }}
             >
-              Submit Payment Proof
+              {loading ? "Submitting..." : "Submit Payment Proof"}
             </button>
           </form>
 
@@ -407,6 +485,7 @@ export default function PaymentPage() {
                 color: "#3568cf",
                 fontWeight: "bold",
                 textAlign: "center",
+                whiteSpace: "pre-wrap",
               }}
             >
               {message}
