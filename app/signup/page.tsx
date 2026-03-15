@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Plan = {
+  id?: string;
   name: string;
   price: number;
 };
@@ -21,8 +22,7 @@ export default function SignupPage() {
     if (storedPlan) {
       try {
         setSelectedPlan(JSON.parse(storedPlan));
-      } catch (error) {
-        console.error("Invalid selectedPlan in localStorage:", error);
+      } catch {
         setSelectedPlan(null);
       }
     }
@@ -30,7 +30,18 @@ export default function SignupPage() {
 
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push("/payment");
+
+    const planId =
+      selectedPlan?.id ||
+      (selectedPlan?.name?.toLowerCase().includes("starter")
+        ? "starter"
+        : selectedPlan?.name?.toLowerCase().includes("professional")
+        ? "professional"
+        : selectedPlan?.name?.toLowerCase().includes("enterprise")
+        ? "enterprise"
+        : "starter");
+
+    router.push(`/payment?plan=${planId}`);
   };
 
   return (
@@ -48,7 +59,7 @@ export default function SignupPage() {
       <div
         style={{
           width: "100%",
-          maxWidth: "600px",
+          maxWidth: "680px",
           background: "#ffffff",
           borderRadius: "20px",
           overflow: "hidden",
@@ -249,26 +260,6 @@ export default function SignupPage() {
               Sign Up
             </button>
           </form>
-
-          <p
-            style={{
-              marginTop: "26px",
-              color: "#6b7280",
-              fontSize: "16px",
-            }}
-          >
-            Already have an account?{" "}
-            <a
-              href="/login"
-              style={{
-                color: "#3568cf",
-                fontWeight: "bold",
-                textDecoration: "none",
-              }}
-            >
-              Log in
-            </a>
-          </p>
         </div>
       </div>
     </div>
