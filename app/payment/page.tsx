@@ -27,8 +27,8 @@ export default function PaymentPage() {
       ? "$299"
       : "$99";
 
-  const [method, setMethod] = useState<"paypal" | "crypto" | "">("");
-  const [cryptoType, setCryptoType] = useState<"USDT ERC20" | "ETH ERC20" | "BNB BEP20">("USDT ERC20");
+  const [method, setMethod] = useState<"" | "paypal" | "crypto">("");
+  const [cryptoType, setCryptoType] = useState("USDT ERC20");
   const [txHash, setTxHash] = useState("");
   const [receiptName, setReceiptName] = useState("");
   const [message, setMessage] = useState("");
@@ -42,7 +42,7 @@ export default function PaymentPage() {
     }
   };
 
-  const handleSubmitProof = (e: React.FormEvent) => {
+  const handleSubmitProof = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!method) {
@@ -117,7 +117,8 @@ export default function PaymentPage() {
               color: "#6b7280",
             }}
           >
-            Choose your payment method and submit your payment proof to activate your CryptoHost subscription.
+            Choose your payment method and submit your payment proof to activate
+            your CryptoHost subscription.
           </p>
 
           <div
@@ -173,7 +174,9 @@ export default function PaymentPage() {
                 marginBottom: "20px",
               }}
             >
-              <h3 style={{ marginTop: 0, color: "#111827" }}>Choose Payment Method</h3>
+              <h3 style={{ marginTop: 0, color: "#111827" }}>
+                Choose Payment Method
+              </h3>
 
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                 <button
@@ -182,7 +185,10 @@ export default function PaymentPage() {
                   style={{
                     padding: "12px 16px",
                     borderRadius: "8px",
-                    border: method === "paypal" ? "2px solid #3568cf" : "1px solid #cbd5e1",
+                    border:
+                      method === "paypal"
+                        ? "2px solid #3568cf"
+                        : "1px solid #cbd5e1",
                     background: method === "paypal" ? "#e8f0ff" : "#ffffff",
                     cursor: "pointer",
                     fontWeight: "bold",
@@ -197,7 +203,10 @@ export default function PaymentPage() {
                   style={{
                     padding: "12px 16px",
                     borderRadius: "8px",
-                    border: method === "crypto" ? "2px solid #3568cf" : "1px solid #cbd5e1",
+                    border:
+                      method === "crypto"
+                        ? "2px solid #3568cf"
+                        : "1px solid #cbd5e1",
                     background: method === "crypto" ? "#e8f0ff" : "#ffffff",
                     cursor: "pointer",
                     fontWeight: "bold",
@@ -218,9 +227,13 @@ export default function PaymentPage() {
                   marginBottom: "20px",
                 }}
               >
-                <h3 style={{ marginTop: 0, color: "#111827" }}>PayPal Payment</h3>
+                <h3 style={{ marginTop: 0, color: "#111827" }}>
+                  PayPal Payment
+                </h3>
+
                 <p style={{ color: "#6b7280" }}>
-                  Complete your PayPal payment first, then upload your receipt below.
+                  Complete your PayPal payment first, then upload your receipt
+                  below.
                 </p>
 
                 <a
@@ -252,9 +265,21 @@ export default function PaymentPage() {
                   >
                     Upload PayPal Receipt
                   </label>
-                  <input type="file" accept=".jpg,.jpeg,.png,.pdf" onChange={handleReceiptUpload} />
+
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    onChange={handleReceiptUpload}
+                  />
+
                   {receiptName && (
-                    <p style={{ marginTop: "8px", color: "#3568cf", fontWeight: "bold" }}>
+                    <p
+                      style={{
+                        marginTop: "8px",
+                        color: "#3568cf",
+                        fontWeight: "bold",
+                      }}
+                    >
                       Uploaded: {receiptName}
                     </p>
                   )}
@@ -272,7 +297,9 @@ export default function PaymentPage() {
                   marginBottom: "20px",
                 }}
               >
-                <h3 style={{ marginTop: 0, color: "#111827" }}>Crypto Wallet Payment</h3>
+                <h3 style={{ marginTop: 0, color: "#111827" }}>
+                  Crypto Wallet Payment
+                </h3>
 
                 <label
                   style={{
@@ -287,9 +314,7 @@ export default function PaymentPage() {
 
                 <select
                   value={cryptoType}
-                  onChange={(e) =>
-                    setCryptoType(e.target.value as "USDT ERC20" | "ETH ERC20" | "BNB BEP20")
-                  }
+                  onChange={(e) => setCryptoType(e.target.value)}
                   style={{
                     width: "100%",
                     padding: "14px",
@@ -297,6 +322,7 @@ export default function PaymentPage() {
                     border: "1px solid #cbd5e1",
                     marginBottom: "16px",
                     fontSize: "16px",
+                    boxSizing: "border-box",
                   }}
                 >
                   <option>USDT ERC20</option>
@@ -314,6 +340,7 @@ export default function PaymentPage() {
                   >
                     Wallet Address
                   </div>
+
                   <div
                     style={{
                       color: "#3568cf",
@@ -335,6 +362,7 @@ export default function PaymentPage() {
                 >
                   Paste Transaction Hash
                 </label>
+
                 <input
                   type="text"
                   value={txHash}
