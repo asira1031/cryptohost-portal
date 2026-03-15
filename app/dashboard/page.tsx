@@ -81,7 +81,7 @@ export default function DashboardPage() {
                 Choose your plan before file upload is enabled.
               </p>
               <Link
-                href="/subscribe"
+                href="/subscription"
                 style={{
                   display: "inline-block",
                   marginTop: "12px",
