@@ -7,84 +7,102 @@ export default function HomePage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#031B34",
-        color: "white",
-        fontFamily: "Arial, sans-serif",
+        backgroundImage: "url('/bitcoin-bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "24px",
+        position: "relative",
+        fontFamily: "Arial, sans-serif",
       }}
     >
-      <div style={{ textAlign: "center", maxWidth: "900px" }}>
-        <h1 style={{ fontSize: "64px", marginBottom: "16px", fontWeight: 800 }}>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(0, 0, 0, 0.28)",
+        }}
+      />
+
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          textAlign: "center",
+          color: "white",
+          maxWidth: "900px",
+          padding: "40px 20px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "64px",
+            fontWeight: "bold",
+            marginBottom: "20px",
+            textShadow: "0 3px 10px rgba(0,0,0,0.45)",
+          }}
+        >
           Asira CryptoHost
         </h1>
 
         <p
           style={{
-            fontSize: "24px",
-            lineHeight: 1.5,
-            color: "#cbd5e1",
-            marginBottom: "36px",
+            fontSize: "18px",
+            lineHeight: "1.5",
+            marginBottom: "35px",
+            maxWidth: "850px",
+            marginInline: "auto",
+            textShadow: "0 2px 8px rgba(0,0,0,0.45)",
           }}
         >
-          Secure client portal for subscription management, file upload,
-          transaction monitoring, and professional dashboard access.
+          Secure blockchain transaction processing, financial file validation,
+          and digital asset conversion infrastructure.
         </p>
 
         <div
           style={{
             display: "flex",
-            gap: "16px",
             justifyContent: "center",
+            gap: "18px",
             flexWrap: "wrap",
           }}
         >
-          <Link
-            href="/login"
-            style={{
-              background: "transparent",
-              color: "white",
-              border: "1px solid #5c6f91",
-              padding: "14px 24px",
-              borderRadius: "10px",
-              textDecoration: "none",
-              fontWeight: 700,
-              fontSize: "18px",
-            }}
-          >
-            Login
+          <Link href="/register">
+            <button
+              style={{
+                background: "#3b6edc",
+                color: "white",
+                border: "none",
+                padding: "16px 34px",
+                borderRadius: "10px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+              }}
+            >
+              Sign Up
+            </button>
           </Link>
 
-          <Link
-            href="/register"
-            style={{
-              background: "#2f66d0",
-              color: "white",
-              padding: "14px 24px",
-              borderRadius: "10px",
-              textDecoration: "none",
-              fontWeight: 700,
-              fontSize: "18px",
-            }}
-          >
-            Sign Up
-          </Link>
-
-          <Link
-            href="/dashboard"
-            style={{
-              background: "#d9d9d9",
-              color: "#111827",
-              padding: "14px 24px",
-              borderRadius: "10px",
-              textDecoration: "none",
-              fontWeight: 700,
-              fontSize: "18px",
-            }}
-          >
-            Dashboard
+          <Link href="/login">
+            <button
+              style={{
+                background: "white",
+                color: "#111",
+                border: "none",
+                padding: "16px 34px",
+                borderRadius: "10px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+              }}
+            >
+              Log In
+            </button>
           </Link>
         </div>
       </div>
