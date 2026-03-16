@@ -1,216 +1,165 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/app/lib/supabase";
 
 export default function UploadPage() {
-  const router = useRouter();
-  const [file, setFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const router = useRouter();
 
-  const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setMessage("");
-
-    if (!file) {
-      setMessage("Please choose a file first.");
-      return;
-    }
-
-    setLoading(true);
-
+  const handleUpload = async () => {
     try {
+      setMessage("");
+
+      if (!selectedFile) {
+        setMessage("Please choose a file first.");
+        return;
+      }
+
+      setUploading(true);
+
       const {
         data: { user },
         error: userError,
       } = await supabase.auth.getUser();
 
       if (userError || !user) {
-        setMessage("Please log in first before uploading.");
-        setLoading(false);
+        setMessage("You must be logged in to upload a file.");
+        setUploading(false);
         return;
       }
 
-      const fileExt = file.name.split(".").pop();
-      const filePath = `${user.id}/${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
+      const clientEmail = user.email || "";
+      const clientName =
+        user.user_metadata?.full_name ||
+        user.user_metadata?.display_name ||
+        "";
+
+      const cleanName = selectedFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const filePath = `${user.id}/${Date.now()}_${cleanName}`;
 
       const { error: uploadError } = await supabase.storage
         .from("client-files")
-        .upload(filePath, file, {
-          upsert: true,
+        .upload(filePath, selectedFile, {
+          cacheControl: "3600",
+          upsert: false,
         });
 
       if (uploadError) {
-        setMessage(`File upload failed: ${uploadError.message}`);
-        setLoading(false);
+        setMessage(`Upload failed: ${uploadError.message}`);
+        setUploading(false);
         return;
       }
 
-      const { data: publicData } = supabase.storage
-        .from("client-files")
-        .getPublicUrl(filePath);
-
-      const fileUrl = publicData.publicUrl;
-
-      const { error: insertError } = await supabase.from("uploaded_files").insert({
+      const { error: dbError } = await supabase.from("uploaded_files").insert({
         user_id: user.id,
-        file_name: file.name,
-        file_url: fileUrl,
-        file_type: fileExt || "unknown",
-        status: "pending",
+        client_email: clientEmail,
+        client_name: clientName,
+        file_name: selectedFile.name,
+        file_path: filePath,
+        file_size: selectedFile.size,
+        file_type: selectedFile.type || "unknown",
+        bucket_name: "client-files",
+        status: "Uploaded",
       });
 
-      if (insertError) {
-        setMessage(`Saving uploaded file failed: ${insertError.message}`);
-        setLoading(false);
+      if (dbError) {
+        setMessage(`File uploaded but database save failed: ${dbError.message}`);
+        setUploading(false);
         return;
       }
 
-      setMessage("File uploaded successfully. Your file is now pending review.");
-      setFile(null);
+      setMessage("File uploaded successfully.");
 
       setTimeout(() => {
         router.push("/dashboard");
       }, 1200);
     } catch (error) {
-      const msg =
-        error instanceof Error ? error.message : "Unknown error occurred.";
-      setMessage(`Upload failed: ${msg}`);
+      setMessage("Something went wrong during upload.");
     } finally {
-      setLoading(false);
+      setUploading(false);
     }
   };
 
   return (
-    <main
+    <div
       style={{
         minHeight: "100vh",
-        background: "#eef2f7",
-        fontFamily: "Arial, sans-serif",
+        background: "#0b1020",
+        color: "white",
         padding: "40px 20px",
+        fontFamily: "Arial, sans-serif",
       }}
     >
       <div
         style={{
-          maxWidth: "760px",
+          maxWidth: "700px",
           margin: "0 auto",
-          background: "#ffffff",
-          borderRadius: "18px",
-          overflow: "hidden",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+          background: "#121933",
+          padding: "30px",
+          borderRadius: "16px",
+          boxShadow: "0 0 20px rgba(0,0,0,0.3)",
         }}
       >
-        <div
+        <h1 style={{ fontSize: "30px", marginBottom: "10px" }}>
+          Upload Financial File
+        </h1>
+
+        <p style={{ color: "#b8c1ec", marginBottom: "25px" }}>
+          Upload your transaction file securely to CryptoHost.
+        </p>
+
+        <input
+          type="file"
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              setSelectedFile(e.target.files[0]);
+            }
+          }}
           style={{
-            background: "#3568cf",
-            color: "#ffffff",
-            padding: "24px 30px",
-            fontSize: "32px",
+            display: "block",
+            width: "100%",
+            marginBottom: "20px",
+            padding: "12px",
+            background: "#1e2747",
+            border: "1px solid #2d3b6b",
+            borderRadius: "8px",
+            color: "white",
+          }}
+        />
+
+        <button
+          onClick={handleUpload}
+          disabled={uploading}
+          style={{
+            background: uploading ? "#666" : "#f4b400",
+            color: "#111",
+            border: "none",
+            padding: "14px 24px",
+            borderRadius: "8px",
             fontWeight: "bold",
+            cursor: uploading ? "not-allowed" : "pointer",
           }}
         >
-          CryptoHost File Upload
-        </div>
+          {uploading ? "Uploading..." : "Submit File"}
+        </button>
 
-        <div style={{ padding: "32px 30px 36px" }}>
-          <h1
-            style={{
-              margin: 0,
-              fontSize: "34px",
-              fontWeight: "bold",
-              color: "#111827",
-            }}
-          >
-            Upload Your File
-          </h1>
-
+        {message && (
           <p
             style={{
-              marginTop: "12px",
-              marginBottom: "24px",
-              fontSize: "17px",
-              color: "#6b7280",
+              marginTop: "20px",
+              color: message.toLowerCase().includes("failed")
+                ? "#ff9b9b"
+                : "#8ef0a7",
             }}
           >
-            Upload your financial, transaction, or supporting file for CryptoHost review and processing.
+            {message}
           </p>
-
-          <form onSubmit={handleUpload}>
-            <div
-              style={{
-                background: "#f8fafc",
-                border: "1px solid #dbe2ea",
-                borderRadius: "12px",
-                padding: "20px",
-                marginBottom: "20px",
-              }}
-            >
-              <label
-                style={{
-                  display: "block",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
-                  color: "#111827",
-                }}
-              >
-                Choose File
-              </label>
-
-              <input
-                type="file"
-                onChange={(e) => setFile(e.target.files?.[0] || null)}
-              />
-
-              {file && (
-                <p
-                  style={{
-                    marginTop: "12px",
-                    color: "#3568cf",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Selected: {file.name}
-                </p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                width: "100%",
-                padding: "16px",
-                background: "#3568cf",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "12px",
-                fontSize: "18px",
-                fontWeight: "bold",
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.8 : 1,
-              }}
-            >
-              {loading ? "Uploading..." : "Submit File"}
-            </button>
-          </form>
-
-          {message && (
-            <p
-              style={{
-                marginTop: "16px",
-                color: "#3568cf",
-                fontWeight: "bold",
-                textAlign: "center",
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {message}
-            </p>
-          )}
-        </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 }
