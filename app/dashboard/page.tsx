@@ -109,6 +109,21 @@ export default function DashboardPage() {
               <p style={{ color: "#6b7280" }}>
                 Upload financial or transaction files after subscription activation.
               </p>
+              <Link
+                href="/upload"
+                style={{
+                  display: "inline-block",
+                  marginTop: "12px",
+                  background: "#2f66d0",
+                  color: "#ffffff",
+                  padding: "12px 18px",
+                  borderRadius: "8px",
+                  textDecoration: "none",
+                  fontWeight: 700,
+                }}
+              >
+                Upload File
+              </Link>
             </div>
 
             <div
