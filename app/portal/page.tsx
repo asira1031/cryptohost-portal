@@ -19,14 +19,6 @@ export default function HomePage() {
       }}
     >
       <div
-  style={{
-    position: "absolute",
-    inset: 0,
-    background: "rgba(0,0,0,0.08)",
-  }}
-/>
-
-      <div
         style={{
           position: "relative",
           zIndex: 1,
