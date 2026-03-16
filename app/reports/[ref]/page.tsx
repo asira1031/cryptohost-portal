@@ -1,70 +1,109 @@
 // app/reports/[ref]/page.tsx
 
 type Props = {
-  params: Promise<{ ref: string }>;
+  params: { ref: string } | Promise<{ ref: string }>;
 };
 
 export default async function ReportPage({ params }: Props) {
-  const { ref: reference } = await params;
+  const resolved = await Promise.resolve(params);
+  const reference = resolved.ref;
 
-  const TIMESTAMP = "2026-02-25 08:12 (UTC+8)";
+  // =========================
+  // EDIT THESE PER FILE/CASE
+  // =========================
+  const TIMESTAMP = "2026-03-2 11:10 (UTC+8)";
 
-  const STAGE_LABEL = "LIQUIDITY ROUTING REVIEW — PRIORITY RESTRICTED";
-  const STATUS_BADGE = "PRIORITY EXECUTION NOT AUTHORIZED";
+  // Fees status (truthful: fees exist but below threshold; no payout triggered)
+  const STAGE_LABEL = "LIQUIDITY FEES MONITORING — INSUFFICIENT";
+  const STATUS_BADGE = "FEES INSUFFICIENT";
   const LIQUIDITY_LINE =
-    "Liquidity: Structure Initialized — Priority Routing Restricted (Fee Threshold Unmet)";
+    "Liquidity: Position Detected — Fee Accrual Below Threshold (No Payout Triggered)";
 
-  const NOTICE_TITLE = "Priority Execution Review — 99.5M EURC";
+  const NOTICE_TITLE = "Liquidity Fees Notice — Insufficient Accrual";
   const NOTICE_BODY =
-    "The liquidity structure and allocation framework have been successfully configured for the EURC/WBNB V3 pool. " +
-    "During execution review, the submitted processing fee was validated against the required priority routing threshold. " +
-    "The current fee allocation does not qualify for escalated liquidity execution under the routing protocol.";
+    "Fee accrual has been detected but remains below the minimum operational threshold required for payout processing. " +
+    "The position is currently under monitoring while routing and market activity mature. " +
+    "No payout trigger will be executed until sufficient fee volume is accumulated.";
 
-  const REASON =
-    "Fee allocation below required threshold for priority routing authorization.";
-
+  const REASON = "Fee volume below threshold — payout trigger not eligible";
   const REQUIRED_ACTION =
-    "Submit required priority fee top-up to activate escalated liquidity routing and execution channel.";
+    "Maintain active routing and allow market volume to accumulate. " +
+    "The next checkpoint will be evaluated on the next monitoring cycle. " +
+    "A liquidity fee reference will be generated once the threshold is met.";
 
   const SYSTEM_NAME = "Binance Exchange Validation";
 
-  const PAIR = "EURC / WBNB";
-  const CURRENT_PRICE = "0.05845 WBNB"; // 1 EURC = 0.05845 WBNB
-  const BAND_MIN = "0.04000 WBNB";
-  const BAND_MAX = "0.09000 WBNB";
+  // Price band (from your configured values)
+  const BAND_CURRENT = "17.10";
+  const BAND_MIN = "8.55";
+  const BAND_MAX = "34.21";
 
-  const terminal = `VALIDATION NOTICE
-LIQUIDITY ROUTING REVIEW — 99.5M EURC
+  // Position snapshot (from your screenshot: circled range)
+  const POSITION_PAIR = "EURC / BNB";
+  const POSITION_MIN = "0.0584";
+  const POSITION_MAX = "0.0590";
+
+  // Display amounts (edit anytime)
+  // If you prefer to show the active position value, you can set "$0.33" here.
+  const POSITION_LIQUIDITY_USD = "$0.00";
+  const POSITION_EARNINGS = "$0";
+  const POSITION_APR = "0%";
+
+  const FEE_THRESHOLD = "MINIMUM PAYOUT THRESHOLD";
+  const FEE_STATE = "BELOW THRESHOLD";
+  const PAYOUT_STATE = "NOT ELIGIBLE";
+
+  const terminal = `LIQUIDITY FEES NOTICE
+FEE ACCRUAL MONITORING — INSUFFICIENT (NO PAYOUT)
 ------------------------------------------------------------
 
-CONFIGURATION SUMMARY
-- Base Amount (Reference) : 99,500,000.00 EURC
-- Allocation Structure    : 32.5% / 7.5% / 5% / 55%
+POSITION SUMMARY
 - Network                 : BNB Chain
-- Pool Pairing            : ${PAIR}
-- Fee Tier                : V3 (Configured)
-- Price Band (Configured) : ${BAND_MIN} – ${BAND_MAX}
-- Current Market Price    : 1 EURC = ${CURRENT_PRICE}
+- Fee Monitoring          : ENABLED
+- Fee Accrual             : INSUFFICIENT (${FEE_STATE})
+- Payout Trigger          : ${PAYOUT_STATE}
+- Routing                 : ACTIVE (Monitoring Mode)
 
-STATUS
-- Liquidity structure initialized
-- Price band configured and saved
-- Priority routing: RESTRICTED
-- Escalated execution: NOT AUTHORIZED
-- Fee validation: BELOW REQUIRED THRESHOLD
-- STATUS: Priority Execution Not Authorized — Fee Threshold Unmet
+POSITION SNAPSHOT (CLAMM)
+- Position Pair           : ${POSITION_PAIR}
+- Position Range (Min/Max): ${POSITION_MIN} – ${POSITION_MAX}
+- Liquidity (Display)     : ${POSITION_LIQUIDITY_USD}
+- Earnings / APR          : ${POSITION_EARNINGS} / ${POSITION_APR}
 
-NEXT STEP (REQUIRED)
-- Submit priority fee top-up
-- Activate escalated liquidity routing
-- Generate execution reference
-- Enable market routing
+PRICE BAND (CONFIGURED)
+- Price Band              : ${BAND_MIN} – ${BAND_MAX}
+- Current Price (Indicative) : ${BAND_CURRENT}
 
-SYSTEM STATUS : PRIORITY EXECUTION NOT AUTHORIZED — FEE THRESHOLD UNMET
+OBSERVATIONS
+1) Fee Volume
+- Market swap volume is currently below the ${FEE_THRESHOLD}.
+- Fee accumulation is present but not yet sufficient for settlement processing.
+
+2) Operational State
+- Pool routing is active
+- Fee checkpoint monitoring is running
+- No automated payout will be executed until threshold conditions are met
+
+NEXT STEP
+- Allow market volume to accumulate
+- Continue routing/market visibility
+- Re-check fees on next monitoring cycle
+- Generate liquidity fee reference upon threshold confirmation
+
+SYSTEM STATUS : FEES INSUFFICIENT — MONITORING
 COMPLIANCE    : ${SYSTEM_NAME}
 TIMESTAMP     : ${TIMESTAMP}
 REFERENCE     : ${reference}
 ------------------------------------------------------------`;
+
+  const cardStyle: React.CSSProperties = {
+    background: "rgba(255,255,255,0.03)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 16,
+    padding: 20,
+  };
+
+  const labelStyle: React.CSSProperties = { fontSize: 12, opacity: 0.8 };
 
   return (
     <div
@@ -98,7 +137,7 @@ REFERENCE     : ${reference}
           <div>🔒 Security</div>
         </nav>
 
-        <div style={{ marginTop: 22, fontSize: 12, opacity: 0.8 }}>
+        <div style={{ marginTop: 22, ...labelStyle }}>
           <div style={{ marginBottom: 6 }}>
             <b>Environment</b>
           </div>
@@ -120,14 +159,7 @@ REFERENCE     : ${reference}
           <div style={{ flex: 1 }}>
             <h3 style={{ marginTop: 0 }}>Active File</h3>
 
-            <div
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 16,
-                padding: 20,
-              }}
-            >
+            <div style={{ ...cardStyle }}>
               <div>
                 Reference: <b>{reference}</b>
               </div>
@@ -137,25 +169,67 @@ REFERENCE     : ${reference}
               </div>
 
               <div style={{ marginTop: 6 }}>
-                Status: <b style={{ color: "#ef4444" }}>{STATUS_BADGE}</b>
+                Status: <b style={{ color: "#f97316" }}>{STATUS_BADGE}</b>
               </div>
 
               <div style={{ marginTop: 8, opacity: 0.9 }}>{LIQUIDITY_LINE}</div>
 
               <div style={{ marginTop: 14, display: "grid", gap: 6 }}>
-                <div style={{ fontSize: 12, opacity: 0.8 }}>
-                  Pair: <b style={{ opacity: 1 }}>{PAIR}</b>
-                </div>
-                <div style={{ fontSize: 12, opacity: 0.8 }}>
-                  Current Price: <b style={{ opacity: 1 }}>1 EURC = {CURRENT_PRICE}</b>
-                </div>
-                <div style={{ fontSize: 12, opacity: 0.8 }}>
+                <div style={labelStyle}>
                   Price Band: <b style={{ opacity: 1 }}>{BAND_MIN}</b> –{" "}
                   <b style={{ opacity: 1 }}>{BAND_MAX}</b>
                 </div>
+                <div style={labelStyle}>
+                  Current Price (Indicative):{" "}
+                  <b style={{ opacity: 1 }}>{BAND_CURRENT}</b>
+                </div>
+                <div style={labelStyle}>
+                  Fee Status: <b style={{ opacity: 1 }}>{FEE_STATE}</b>
+                </div>
+                <div style={labelStyle}>
+                  Payout Trigger: <b style={{ opacity: 1 }}>{PAYOUT_STATE}</b>
+                </div>
               </div>
 
-              <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
+              {/* POSITION SNAPSHOT */}
+              <div
+                style={{
+                  marginTop: 14,
+                  padding: 12,
+                  borderRadius: 12,
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <div style={{ fontWeight: 800, marginBottom: 8 }}>
+                  Position Snapshot
+                </div>
+
+                <div style={{ display: "grid", gap: 6 }}>
+                  <div style={labelStyle}>
+                    Pair: <b style={{ opacity: 1 }}>{POSITION_PAIR}</b>
+                  </div>
+
+                  <div style={labelStyle}>
+                    Price Range (Min/Max):{" "}
+                    <b style={{ opacity: 1 }}>{POSITION_MIN}</b> –{" "}
+                    <b style={{ opacity: 1 }}>{POSITION_MAX}</b>
+                  </div>
+
+                  <div style={labelStyle}>
+                    Liquidity:{" "}
+                    <b style={{ opacity: 1 }}>{POSITION_LIQUIDITY_USD}</b>
+                  </div>
+
+                  <div style={labelStyle}>
+                    Earnings:{" "}
+                    <b style={{ opacity: 1 }}>{POSITION_EARNINGS}</b> • APR:{" "}
+                    <b style={{ opacity: 1 }}>{POSITION_APR}</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ marginTop: 12, ...labelStyle }}>
                 Timestamp: {TIMESTAMP}
               </div>
             </div>
@@ -163,14 +237,7 @@ REFERENCE     : ${reference}
 
           {/* NOTICE CARD */}
           <div style={{ flex: 1.3 }}>
-            <div
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 16,
-                padding: 20,
-              }}
-            >
+            <div style={cardStyle}>
               <div style={{ marginBottom: 10 }}>
                 <b>VALIDATION NOTICE</b>
               </div>
@@ -195,12 +262,6 @@ REFERENCE     : ${reference}
                   <b>Next Step:</b> {REQUIRED_ACTION}
                 </div>
                 <div style={{ marginBottom: 8 }}>
-                  <b>Fee Status:</b>{" "}
-                  <span style={{ color: "#ef4444", fontWeight: 700 }}>
-                    Priority Execution Not Authorized — Fee Threshold Unmet
-                  </span>
-                </div>
-                <div style={{ marginBottom: 8 }}>
                   <b>System:</b> {SYSTEM_NAME}
                 </div>
                 <div>
@@ -209,7 +270,9 @@ REFERENCE     : ${reference}
               </div>
 
               <details style={{ marginTop: 15 }}>
-                <summary style={{ cursor: "pointer" }}>▼ View Full Technical Log</summary>
+                <summary style={{ cursor: "pointer" }}>
+                  ▼ View Full Technical Log
+                </summary>
 
                 <pre
                   style={{
