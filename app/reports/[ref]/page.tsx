@@ -8,12 +8,8 @@ export default async function ReportPage({ params }: Props) {
   const resolved = await Promise.resolve(params);
   const reference = resolved.ref;
 
-  // =========================
-  // EDIT THESE PER FILE/CASE
-  // =========================
   const TIMESTAMP = "2026-03-2 11:10 (UTC+8)";
 
-  // Fees status (truthful: fees exist but below threshold; no payout triggered)
   const STAGE_LABEL = "LIQUIDITY FEES MONITORING — INSUFFICIENT";
   const STATUS_BADGE = "FEES INSUFFICIENT";
   const LIQUIDITY_LINE =
@@ -33,18 +29,14 @@ export default async function ReportPage({ params }: Props) {
 
   const SYSTEM_NAME = "Binance Exchange Validation";
 
-  // Price band (from your configured values)
   const BAND_CURRENT = "17.10";
   const BAND_MIN = "8.55";
   const BAND_MAX = "34.21";
 
-  // Position snapshot (from your screenshot: circled range)
   const POSITION_PAIR = "EURC / BNB";
   const POSITION_MIN = "0.0584";
   const POSITION_MAX = "0.0590";
 
-  // Display amounts (edit anytime)
-  // If you prefer to show the active position value, you can set "$0.33" here.
   const POSITION_LIQUIDITY_USD = "$0.00";
   const POSITION_EARNINGS = "$0";
   const POSITION_APR = "0%";
@@ -103,7 +95,10 @@ REFERENCE     : ${reference}
     padding: 20,
   };
 
-  const labelStyle: React.CSSProperties = { fontSize: 12, opacity: 0.8 };
+  const labelStyle: React.CSSProperties = {
+    fontSize: 12,
+    opacity: 0.8,
+  };
 
   return (
     <div
@@ -115,7 +110,6 @@ REFERENCE     : ${reference}
         fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, Arial",
       }}
     >
-      {/* LEFT SIDEBAR */}
       <aside
         style={{
           width: 270,
@@ -146,7 +140,6 @@ REFERENCE     : ${reference}
         </div>
       </aside>
 
-      {/* MAIN CONTENT */}
       <main style={{ flex: 1, padding: 30 }}>
         <div style={{ fontSize: 26, fontWeight: 800 }}>Welcome, Client</div>
 
@@ -155,11 +148,10 @@ REFERENCE     : ${reference}
         </div>
 
         <div style={{ display: "flex", gap: 30, alignItems: "flex-start" }}>
-          {/* ACTIVE FILE */}
           <div style={{ flex: 1 }}>
             <h3 style={{ marginTop: 0 }}>Active File</h3>
 
-            <div style={{ ...cardStyle }}>
+            <div style={cardStyle}>
               <div>
                 Reference: <b>{reference}</b>
               </div>
@@ -191,13 +183,13 @@ REFERENCE     : ${reference}
                 </div>
               </div>
 
-              {/* POSITION SNAPSHOT */}
               <div
                 style={{
                   marginTop: 14,
                   padding: 12,
                   borderRadius: 12,
-                  background: "rgba(255,255,255,0.02)",
+                  background: "#000",
+                  color: "#c8ffcf",
                   border: "1px solid rgba(255,255,255,0.08)",
                 }}
               >
@@ -235,7 +227,6 @@ REFERENCE     : ${reference}
             </div>
           </div>
 
-          {/* NOTICE CARD */}
           <div style={{ flex: 1.3 }}>
             <div style={cardStyle}>
               <div style={{ marginBottom: 10 }}>
