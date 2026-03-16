@@ -52,93 +52,29 @@ export default function Dashboard() {
               fontSize: "16px",
             }}
           >
-            Manage your CryptoHost subscription, upload files, and monitor
-            transactions securely.
+            Upload your financial file and monitor transaction processing.
           </p>
 
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateColumns: "repeat(2, 1fr)",
               gap: "18px",
             }}
           >
+            {/* Upload */}
             <div
               style={{
                 border: "1px solid #d7dce5",
                 borderRadius: "12px",
                 padding: "20px",
-                minHeight: "170px",
                 background: "#fff",
               }}
             >
-              <h3
-                style={{
-                  margin: "0 0 18px 0",
-                  fontSize: "24px",
-                  color: "#0f172a",
-                }}
-              >
-                Subscription
-              </h3>
+              <h3 style={{ fontSize: "24px" }}>File Upload</h3>
 
-              <p
-                style={{
-                  margin: "0 0 22px 0",
-                  color: "#64748b",
-                  fontSize: "15px",
-                  lineHeight: "1.35",
-                }}
-              >
-                Choose your plan before file upload is enabled.
-              </p>
-
-              <Link href="/subscription">
-                <button
-                  style={{
-                    background: "#3b6edc",
-                    color: "white",
-                    border: "none",
-                    padding: "12px 18px",
-                    borderRadius: "8px",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                  }}
-                >
-                  Choose Subscription
-                </button>
-              </Link>
-            </div>
-
-            <div
-              style={{
-                border: "1px solid #d7dce5",
-                borderRadius: "12px",
-                padding: "20px",
-                minHeight: "170px",
-                background: "#fff",
-              }}
-            >
-              <h3
-                style={{
-                  margin: "0 0 18px 0",
-                  fontSize: "24px",
-                  color: "#0f172a",
-                }}
-              >
-                File Upload
-              </h3>
-
-              <p
-                style={{
-                  margin: "0 0 22px 0",
-                  color: "#64748b",
-                  fontSize: "15px",
-                  lineHeight: "1.35",
-                }}
-              >
-                Upload financial or transaction files after subscription
-                activation.
+              <p style={{ color: "#64748b" }}>
+                Upload financial or transaction files securely to the system.
               </p>
 
               <Link href="/upload">
@@ -150,6 +86,7 @@ export default function Dashboard() {
                     padding: "12px 18px",
                     borderRadius: "8px",
                     fontWeight: "bold",
+                    marginTop: "12px",
                     cursor: "pointer",
                   }}
                 >
@@ -158,35 +95,20 @@ export default function Dashboard() {
               </Link>
             </div>
 
+            {/* Monitor */}
             <div
               style={{
                 border: "1px solid #d7dce5",
                 borderRadius: "12px",
                 padding: "20px",
-                minHeight: "170px",
                 background: "#fff",
               }}
             >
-              <h3
-                style={{
-                  margin: "0 0 18px 0",
-                  fontSize: "24px",
-                  color: "#0f172a",
-                }}
-              >
-                Transaction Monitor
-              </h3>
+              <h3 style={{ fontSize: "24px" }}>Transaction Monitor</h3>
 
-              <p
-                style={{
-                  margin: 0,
-                  color: "#64748b",
-                  fontSize: "15px",
-                  lineHeight: "1.35",
-                }}
-              >
-                Track processing updates, verification status, and dashboard
-                activity.
+              <p style={{ color: "#64748b" }}>
+                Track processing updates and verification status of uploaded
+                files.
               </p>
             </div>
           </div>
