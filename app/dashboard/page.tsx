@@ -107,8 +107,7 @@ export default function Dashboard() {
               <h3 style={{ fontSize: "24px" }}>Transaction Monitor</h3>
 
               <p style={{ color: "#64748b" }}>
-                Track processing updates and verification status of uploaded
-                files.
+                Once paid, the Transaction Monitor activates.
               </p>
             </div>
           </div>
