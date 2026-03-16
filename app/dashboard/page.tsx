@@ -1,130 +1,118 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Dashboard() {
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#0b1220", color: "white" }}>
-
-      {/* SIDEBAR */}
-
-      <div style={{
-        width: "260px",
-        background: "#0f1b34",
-        padding: "30px",
-        borderRight: "1px solid #1f2b46"
-      }}>
-
-        <h2 style={{ marginBottom: "30px" }}>CryptoHost</h2>
-
-        <p>Dashboard</p>
-        <p>My Files</p>
-        <p>Liquidity</p>
-        <p>Blockchain</p>
-        <p>Security</p>
-
-        <div style={{ marginTop: "50px", fontSize: "12px", color: "#9ca3af" }}>
-          Environment
-          <br/>
-          Network: BNB Chain
-          <br/>
-          Mode: Verification Console
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#f4f6fb",
+        padding: "40px",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          background: "white",
+          borderRadius: "14px",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            background: "#3b6edc",
+            color: "white",
+            padding: "18px 24px",
+            fontWeight: "bold",
+            fontSize: "16px",
+          }}
+        >
+          Asira CryptoHost Dashboard
         </div>
 
-      </div>
+        <div style={{ padding: "30px 24px" }}>
+          <h1
+            style={{
+              margin: "0 0 10px 0",
+              fontSize: "28px",
+              color: "#0f172a",
+            }}
+          >
+            Welcome to Your Dashboard
+          </h1>
 
-      {/* MAIN AREA */}
+          <p
+            style={{
+              margin: "0 0 28px 0",
+              color: "#64748b",
+              fontSize: "16px",
+            }}
+          >
+            Upload your financial file and monitor transaction processing.
+          </p>
 
-      <div style={{ flex: 1, padding: "40px" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "18px",
+            }}
+          >
+            <div
+              style={{
+                border: "1px solid #d7dce5",
+                borderRadius: "12px",
+                padding: "20px",
+                background: "#fff",
+              }}
+            >
+              <h3 style={{ fontSize: "24px", color: "#0f172a" }}>File Upload</h3>
 
-        <h1>Welcome, Client</h1>
-        <p style={{ color: "#4ade80" }}>Status: System Online</p>
+              <p style={{ color: "#64748b" }}>
+                Upload financial or transaction files securely to the system.
+              </p>
 
-        <div style={{ display: "flex", gap: "30px", marginTop: "30px" }}>
+              <Link href="/upload">
+                <button
+                  style={{
+                    background: "#3b6edc",
+                    color: "white",
+                    border: "none",
+                    padding: "12px 18px",
+                    borderRadius: "8px",
+                    fontWeight: "bold",
+                    marginTop: "12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Upload File
+                </button>
+              </Link>
+            </div>
 
-          {/* ACTIVE FILE */}
+            <div
+              style={{
+                border: "1px solid #d7dce5",
+                borderRadius: "12px",
+                padding: "20px",
+                background: "#fff",
+              }}
+            >
+              <h3 style={{ fontSize: "24px", color: "#0f172a" }}>
+                Transaction Monitor
+              </h3>
 
-          <div style={{
-            background: "#111827",
-            padding: "25px",
-            borderRadius: "10px",
-            width: "420px"
-          }}>
-
-            <h3>Active File</h3>
-
-            <p><b>Reference:</b> CH-2026-LIVE</p>
-            <p><b>Stage:</b> LIQUIDITY CONFIGURATION — PRICE BAND SET</p>
-
-            <p style={{ color: "#facc15" }}>
-              <b>Status:</b> AWAITING CONFIRMATION
-            </p>
-
-            <p>
-              Liquidity Structure Initialized —
-              Price Band Configured
-              (Final Injection Pending Confirmation)
-            </p>
-
-            <p>
-              Price Band: 8.55 – 34.21
-            </p>
-
-            <p>
-              Current Price (Indicative): 17.10
-            </p>
-
-            <p style={{ fontSize: "12px", color: "#9ca3af" }}>
-              Timestamp: 2026-02-23 09:10 (UTC+8)
-            </p>
-
+              <p style={{ color: "#64748b" }}>
+                Once paid, the Transaction Monitor activates.
+              </p>
+            </div>
           </div>
-
-          {/* VALIDATION NOTICE */}
-
-          <div style={{
-            background: "#111827",
-            padding: "25px",
-            borderRadius: "10px",
-            width: "520px"
-          }}>
-
-            <h3>Validation Notice</h3>
-
-            <h2 style={{ marginTop: "10px" }}>
-              Liquidity Configuration Update — 99.5M EURC
-            </h2>
-
-            <p style={{ marginTop: "15px", color: "#d1d5db" }}>
-              The liquidity structure has been successfully initialized
-              and the price band has been configured within the designated
-              range. The position framework is aligned for activation.
-              Final capital injection will be completed upon confirmation,
-              after which the pool will proceed to full operational
-              activation.
-            </p>
-
-            <p style={{ marginTop: "20px" }}>
-              <b>Reason:</b> Liquidity structure initialized and band configuration completed.
-            </p>
-
-            <p>
-              <b>Next Step:</b> Provide confirmation to execute final capital injection
-              and enable market routing.
-            </p>
-
-            <p>
-              <b>System:</b> Binance Exchange Validation
-            </p>
-
-            <p>
-              <b>Timestamp:</b> 2026-02-23 09:10 (UTC+8)
-            </p>
-
-          </div>
-
         </div>
-
       </div>
-
     </div>
   );
 }
