@@ -1,44 +1,39 @@
 "use client";
 
+import Link from "next/link";
+
 export default function HomePage() {
   return (
-    <main
+    <div
       style={{
         minHeight: "100vh",
-        backgroundImage: "url('/bitcoin.jpeg')",
+        backgroundImage: "url('/bitcoin-bg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
-        fontFamily: "Arial, sans-serif",
+        justifyContent: "center",
         position: "relative",
+        fontFamily: "Arial, sans-serif",
       }}
     >
-      {/* Dark overlay */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "rgba(0, 22, 48, 0.75)",
-        }}
-      />
-
       <div
         style={{
           position: "relative",
           zIndex: 1,
           textAlign: "center",
-          color: "#fff",
+          color: "white",
+          maxWidth: "900px",
+          padding: "40px 20px",
         }}
       >
         <h1
           style={{
-            fontSize: "60px",
-            marginBottom: "20px",
+            fontSize: "64px",
             fontWeight: "bold",
+            marginBottom: "20px",
+            textShadow: "0 3px 10px rgba(0,0,0,0.45)",
           }}
         >
           Asira CryptoHost
@@ -46,9 +41,12 @@ export default function HomePage() {
 
         <p
           style={{
-            fontSize: "22px",
-            marginBottom: "40px",
-            maxWidth: "700px",
+            fontSize: "18px",
+            lineHeight: "1.5",
+            marginBottom: "35px",
+            maxWidth: "850px",
+            marginInline: "auto",
+            textShadow: "0 2px 8px rgba(0,0,0,0.45)",
           }}
         >
           Secure blockchain transaction processing, financial file validation,
@@ -58,41 +56,48 @@ export default function HomePage() {
         <div
           style={{
             display: "flex",
-            gap: "20px",
             justifyContent: "center",
+            gap: "18px",
+            flexWrap: "wrap",
           }}
         >
-          <a
-            href="/signup"
-            style={{
-              background: "#3568cf",
-              color: "#fff",
-              padding: "16px 32px",
-              borderRadius: "10px",
-              textDecoration: "none",
-              fontWeight: "bold",
-              fontSize: "18px",
-            }}
-          >
-            Sign Up
-          </a>
+          <Link href="/register">
+            <button
+              style={{
+                background: "#3b6edc",
+                color: "white",
+                border: "none",
+                padding: "16px 34px",
+                borderRadius: "10px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+              }}
+            >
+              Sign Up
+            </button>
+          </Link>
 
-          <a
-            href="/login"
-            style={{
-              background: "#ffffff",
-              color: "#111827",
-              padding: "16px 32px",
-              borderRadius: "10px",
-              textDecoration: "none",
-              fontWeight: "bold",
-              fontSize: "18px",
-            }}
-          >
-            Log In
-          </a>
+          <Link href="/login">
+            <button
+              style={{
+                background: "white",
+                color: "#111",
+                border: "none",
+                padding: "16px 34px",
+                borderRadius: "10px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+              }}
+            >
+              Log In
+            </button>
+          </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
