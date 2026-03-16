@@ -32,14 +32,9 @@ export default function UploadPage() {
         return;
       }
 
-      const clientEmail = user.email || "";
-      const clientName =
-        user.user_metadata?.full_name ||
-        user.user_metadata?.display_name ||
-        "";
-
+      const fileExt = selectedFile.name.split(".").pop();
       const cleanName = selectedFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-      const filePath = `${user.id}/${Date.now()}_${cleanName}`;
+      const filePath = `${user.id}/${Date.now()}-${cleanName}`;
 
       const { error: uploadError } = await supabase.storage
         .from("client-files")
@@ -56,13 +51,10 @@ export default function UploadPage() {
 
       const { error: dbError } = await supabase.from("uploaded_files").insert({
         user_id: user.id,
-        client_email: clientEmail,
-        client_name: clientName,
         file_name: selectedFile.name,
         file_path: filePath,
         file_size: selectedFile.size,
-        file_type: selectedFile.type || "unknown",
-        bucket_name: "client-files",
+        file_type: selectedFile.type || fileExt || "unknown",
         status: "Uploaded",
       });
 
@@ -73,6 +65,7 @@ export default function UploadPage() {
       }
 
       setMessage("File uploaded successfully.");
+      setSelectedFile(null);
 
       setTimeout(() => {
         router.push("/dashboard");
@@ -107,7 +100,6 @@ export default function UploadPage() {
         <h1 style={{ fontSize: "30px", marginBottom: "10px" }}>
           Upload Financial File
         </h1>
-
         <p style={{ color: "#b8c1ec", marginBottom: "25px" }}>
           Upload your transaction file securely to CryptoHost.
         </p>
@@ -148,16 +140,7 @@ export default function UploadPage() {
         </button>
 
         {message && (
-          <p
-            style={{
-              marginTop: "20px",
-              color: message.toLowerCase().includes("failed")
-                ? "#ff9b9b"
-                : "#8ef0a7",
-            }}
-          >
-            {message}
-          </p>
+          <p style={{ marginTop: "20px", color: "#8ef0a7" }}>{message}</p>
         )}
       </div>
     </div>
