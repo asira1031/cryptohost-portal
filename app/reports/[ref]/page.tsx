@@ -50,6 +50,9 @@ export default async function ReportPage({ params }: Props) {
   const GAS_STATE = "IN PROGRESS";
   const ROUTING_STATE = "ACTIVE";
 
+  // DEMO ONLY
+  const EXPLORER_URL = "#";
+
   const terminal = `99.5M LIQUIDITY PRIORITY MINT — EXECUTION QUEUE
 SMART CONTRACT ROUTING INITIALIZED
 ------------------------------------------------------------
@@ -167,13 +170,27 @@ REFERENCE     : ${reference}
     color,
   });
 
+  const buttonStyle: CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "10px 14px",
+    background: colors.yellow,
+    color: "#111",
+    borderRadius: 10,
+    fontWeight: 800,
+    textDecoration: "none",
+    border: "none",
+  };
+
   return (
     <div
       style={{
         minHeight: "100vh",
         background: colors.bg,
         color: colors.text,
-        fontFamily: "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+        fontFamily:
+          "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
       }}
     >
       <div style={{ display: "flex", minHeight: "100vh" }}>
@@ -268,7 +285,8 @@ REFERENCE     : ${reference}
                 {SYSTEM_STATUS}
               </div>
               <div style={{ marginTop: 8, fontSize: 13, color: colors.muted }}>
-                Real-time monitoring for liquidity queue, gas optimization, and mint readiness.
+                Real-time monitoring for liquidity queue, gas optimization, and mint
+                readiness.
               </div>
             </div>
           </div>
@@ -380,7 +398,9 @@ REFERENCE     : ${reference}
 
                 <div>
                   <div style={labelStyle}>Liquidity State</div>
-                  <div style={{ marginTop: 5, color: colors.text }}>{LIQUIDITY_LINE}</div>
+                  <div style={{ marginTop: 5, color: colors.text }}>
+                    {LIQUIDITY_LINE}
+                  </div>
                 </div>
               </div>
 
@@ -453,12 +473,16 @@ REFERENCE     : ${reference}
 
                   <div style={metricCard}>
                     <div style={labelStyle}>Liquidity</div>
-                    <div style={{ marginTop: 6, fontWeight: 800 }}>{POSITION_LIQUIDITY}</div>
+                    <div style={{ marginTop: 6, fontWeight: 800 }}>
+                      {POSITION_LIQUIDITY}
+                    </div>
                   </div>
 
                   <div style={metricCard}>
                     <div style={labelStyle}>State</div>
-                    <div style={{ marginTop: 6, fontWeight: 800 }}>{POSITION_STATE}</div>
+                    <div style={{ marginTop: 6, fontWeight: 800 }}>
+                      {POSITION_STATE}
+                    </div>
                   </div>
 
                   <div style={metricCard}>
@@ -530,6 +554,12 @@ REFERENCE     : ${reference}
                   <div style={metricCard}>
                     <div style={labelStyle}>System</div>
                     <div style={{ marginTop: 6, fontWeight: 700 }}>{SYSTEM_NAME}</div>
+
+                    <div style={{ marginTop: 12, display: "flex", gap: 10 }}>
+                      <a href={EXPLORER_URL} style={buttonStyle}>
+                        View on Explorer
+                      </a>
+                    </div>
                   </div>
 
                   <div style={metricCard}>
