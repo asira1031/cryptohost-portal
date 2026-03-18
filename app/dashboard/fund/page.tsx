@@ -6,7 +6,7 @@ export default function FundPage() {
   const [copied, setCopied] = useState(false);
 
   const walletAddress = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
-  const feeRate = 0.03; // ✅ 3% fee
+  const feeRate = 0.03;
 
   const copyAddress = () => {
     navigator.clipboard.writeText(walletAddress);
@@ -24,7 +24,6 @@ export default function FundPage() {
         💰 Fund Your Account
       </h1>
 
-      {/* DEPOSIT SECTION */}
       <div style={card}>
         <h2>Deposit USDT</h2>
 
@@ -43,7 +42,6 @@ export default function FundPage() {
         </button>
       </div>
 
-      {/* FEE SECTION */}
       <div style={card}>
         <h2>Platform Fee</h2>
         <p>
@@ -58,28 +56,31 @@ export default function FundPage() {
         </p>
       </div>
 
-      {/* INSTRUCTIONS */}
       <div style={card}>
         <h2>How to Fund</h2>
         <ol>
-          <li>Buy USDT from your preferred provider (Binance, Wallet, etc.)</li>
+          <li>Buy USDT from your preferred provider</li>
+          <li>Choose ERC20 or BEP20 carefully</li>
           <li>Send USDT to the wallet above</li>
           <li>Wait for blockchain confirmation</li>
           <li>Your balance will be updated automatically</li>
         </ol>
       </div>
 
-      {/* BUY BUTTON */}
       <div style={{ marginTop: "20px" }}>
-        <button style={buyBtn}>
+        <a
+          href="https://www.binance.com/en/buy-sell-crypto"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={buyLink}
+        >
           💳 Buy USDT (External Provider)
-        </button>
+        </a>
       </div>
     </div>
   );
 }
 
-// STYLES
 const card = {
   border: "1px solid #ddd",
   borderRadius: "10px",
@@ -105,12 +106,13 @@ const btn = {
   cursor: "pointer",
 };
 
-const buyBtn = {
+const buyLink = {
+  display: "inline-block",
   padding: "12px 25px",
   background: "#ffc439",
   color: "#111",
-  border: "none",
   borderRadius: "6px",
   fontWeight: "bold",
+  textDecoration: "none",
   cursor: "pointer",
 };
