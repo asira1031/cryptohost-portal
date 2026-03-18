@@ -6,7 +6,7 @@ export default function FundPage() {
   const [copied, setCopied] = useState(false);
 
   const walletAddress = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
-  const feeRate = 0.05;
+  const feeRate = 0.03; // ✅ 3% fee
 
   const copyAddress = () => {
     navigator.clipboard.writeText(walletAddress);
@@ -19,14 +19,15 @@ export default function FundPage() {
   const credited = exampleDeposit - fee;
 
   return (
-    <div style={{ padding: "30px", fontFamily: "Arial" }}>
+    <div style={{ fontFamily: "Arial" }}>
       <h1 style={{ fontSize: "28px", marginBottom: "20px" }}>
         💰 Fund Your Account
       </h1>
 
-      {/* WALLET SECTION */}
+      {/* DEPOSIT SECTION */}
       <div style={card}>
         <h2>Deposit USDT</h2>
+
         <p>Select Network:</p>
         <ul>
           <li>ERC20 (Ethereum)</li>
@@ -35,9 +36,7 @@ export default function FundPage() {
 
         <p style={{ marginTop: "10px" }}>Wallet Address:</p>
 
-        <div style={walletBox}>
-          {walletAddress}
-        </div>
+        <div style={walletBox}>{walletAddress}</div>
 
         <button onClick={copyAddress} style={btn}>
           {copied ? "Copied!" : "Copy Address"}
@@ -48,12 +47,12 @@ export default function FundPage() {
       <div style={card}>
         <h2>Platform Fee</h2>
         <p>
-          A <strong>5% processing fee</strong> is applied to all deposits.
+          A <strong>3% processing fee</strong> is applied to all deposits.
         </p>
 
         <h3>Example:</h3>
         <p>Deposit: {exampleDeposit} USDT</p>
-        <p>Fee (5%): {fee} USDT</p>
+        <p>Fee (3%): {fee} USDT</p>
         <p style={{ fontWeight: "bold", color: "green" }}>
           Credited Balance: {credited} USDT
         </p>
@@ -70,7 +69,7 @@ export default function FundPage() {
         </ol>
       </div>
 
-      {/* OPTIONAL BUTTON */}
+      {/* BUY BUTTON */}
       <div style={{ marginTop: "20px" }}>
         <button style={buyBtn}>
           💳 Buy USDT (External Provider)
