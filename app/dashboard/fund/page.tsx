@@ -1,118 +1,108 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createClient } from "../../lib/supabase";
+
+type Deposit = {
+  id: string;
+  amount: number;
+  currency: string;
+  network: string;
+  tx_hash: string | null;
+  status: string;
+  wallet_address: string | null;
+  created_at: string;
+};
 
 export default function FundPage() {
-  const [copied, setCopied] = useState(false);
+  const supabase = createClient();
 
-  const walletAddress = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
-  const feeRate = 0.03;
+  const [deposits, setDeposits] = useState<Deposit[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const copyAddress = () => {
-    navigator.clipboard.writeText(walletAddress);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  useEffect(() => {
+    async function loadDeposits() {
+      try {
+        const {
+          data: { session },
+          error: sessionError,
+        } = await supabase.auth.getSession();
 
-  const exampleDeposit = 1000;
-  const fee = exampleDeposit * feeRate;
-  const credited = exampleDeposit - fee;
+        if (sessionError) {
+          setError(sessionError.message);
+          setLoading(false);
+          return;
+        }
+
+        if (!session?.user) {
+          setError("No logged in user");
+          setLoading(false);
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("deposits")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          setError(error.message);
+        } else {
+          setDeposits(data || []);
+        }
+      } catch (err) {
+        setError("Failed to load deposits");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadDeposits();
+  }, [supabase]);
 
   return (
-    <div style={{ fontFamily: "Arial" }}>
-      <h1 style={{ fontSize: "28px", marginBottom: "20px" }}>
-        💰 Fund Your Account
-      </h1>
+    <div style={{ padding: 24 }}>
+      <h1>Deposit USDT</h1>
 
-      <div style={card}>
-        <h2>Deposit USDT</h2>
+      {loading && <p>Loading deposits...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <p>Select Network:</p>
-        <ul>
-          <li>ERC20 (Ethereum)</li>
-          <li>BEP20 (BNB Chain)</li>
-        </ul>
+      {!loading && !error && deposits.length === 0 && (
+        <p>No deposits found yet.</p>
+      )}
 
-        <p style={{ marginTop: "10px" }}>Wallet Address:</p>
-
-        <div style={walletBox}>{walletAddress}</div>
-
-        <button onClick={copyAddress} style={btn}>
-          {copied ? "Copied!" : "Copy Address"}
-        </button>
-      </div>
-
-      <div style={card}>
-        <h2>Platform Fee</h2>
-        <p>
-          A <strong>3% processing fee</strong> is applied to all deposits.
-        </p>
-
-        <h3>Example:</h3>
-        <p>Deposit: {exampleDeposit} USDT</p>
-        <p>Fee (3%): {fee} USDT</p>
-        <p style={{ fontWeight: "bold", color: "green" }}>
-          Credited Balance: {credited} USDT
-        </p>
-      </div>
-
-      <div style={card}>
-        <h2>How to Fund</h2>
-        <ol>
-          <li>Buy USDT from your preferred provider</li>
-          <li>Choose ERC20 or BEP20 carefully</li>
-          <li>Send USDT to the wallet above</li>
-          <li>Wait for blockchain confirmation</li>
-          <li>Your balance will be updated automatically</li>
-        </ol>
-      </div>
-
-      <div style={{ marginTop: "20px" }}>
-        <a
-          href="https://www.binance.com/en/buy-sell-crypto"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={buyLink}
-        >
-          💳 Buy USDT (External Provider)
-        </a>
-      </div>
+      {!loading && !error && deposits.length > 0 && (
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: "left", padding: 10 }}>Amount</th>
+                <th style={{ textAlign: "left", padding: 10 }}>Currency</th>
+                <th style={{ textAlign: "left", padding: 10 }}>Network</th>
+                <th style={{ textAlign: "left", padding: 10 }}>Status</th>
+                <th style={{ textAlign: "left", padding: 10 }}>TX Hash</th>
+                <th style={{ textAlign: "left", padding: 10 }}>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {deposits.map((deposit) => (
+                <tr key={deposit.id}>
+                  <td style={{ padding: 10 }}>{deposit.amount}</td>
+                  <td style={{ padding: 10 }}>{deposit.currency}</td>
+                  <td style={{ padding: 10 }}>{deposit.network}</td>
+                  <td style={{ padding: 10 }}>{deposit.status}</td>
+                  <td style={{ padding: 10 }}>{deposit.tx_hash || "-"}</td>
+                  <td style={{ padding: 10 }}>
+                    {new Date(deposit.created_at).toLocaleString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
-
-const card = {
-  border: "1px solid #ddd",
-  borderRadius: "10px",
-  padding: "20px",
-  marginBottom: "20px",
-  background: "#fff",
-};
-
-const walletBox = {
-  background: "#f4f4f4",
-  padding: "10px",
-  borderRadius: "6px",
-  wordBreak: "break-all" as const,
-  marginBottom: "10px",
-};
-
-const btn = {
-  padding: "10px 20px",
-  background: "#2d66d3",
-  color: "#fff",
-  border: "none",
-  borderRadius: "6px",
-  cursor: "pointer",
-};
-
-const buyLink = {
-  display: "inline-block",
-  padding: "12px 25px",
-  background: "#ffc439",
-  color: "#111",
-  borderRadius: "6px",
-  fontWeight: "bold",
-  textDecoration: "none",
-  cursor: "pointer",
-};
