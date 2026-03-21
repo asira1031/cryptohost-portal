@@ -187,6 +187,9 @@ export default function FundPage() {
         >
           <div>
             <h1 style={{ margin: 0, fontSize: 30, fontWeight: 800 }}>Deposit USDT</h1>
+            <div style={{ color: "red", fontWeight: 800 }}>
+  NEW VERSION TEST
+</div>
             <p style={{ marginTop: 8, color: "#848e9c" }}>
               Logged in as: {userEmail || "Loading..."}
             </p>
