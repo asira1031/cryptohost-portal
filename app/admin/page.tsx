@@ -4,16 +4,18 @@ export default function AdminPage() {
       style={{
         minHeight: "100vh",
         background: "#0b0e11",
-        color: "#fff",
+        color: "#ffffff",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "Inter, Arial, sans-serif",
       }}
     >
-      <div>
-        <h1>Admin Page</h1>
-        <p>Admin module temporarily under maintenance.</p>
+      <div style={{ textAlign: "center" }}>
+        <h1 style={{ marginBottom: 12 }}>Admin Page</h1>
+        <p style={{ opacity: 0.8 }}>
+          Admin module temporarily under maintenance.
+        </p>
       </div>
     </div>
   );
