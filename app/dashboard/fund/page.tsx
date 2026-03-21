@@ -1,66 +1,83 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabase";
+import { useEffect, useMemo, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 type Deposit = {
   id: string;
-  amount: number;
+  amount: string | number;
   currency: string;
   network: string;
-  tx_hash: string | null;
   status: string;
-  wallet_address: string | null;
+  tx_hash?: string | null;
   created_at: string;
 };
 
 export default function FundPage() {
-  // no need to create client again
-}
+  const supabase = useMemo(() => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    return createClient(url, key);
+  }, []);
 
-  const [deposits, setDeposits] = useState<Deposit[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deposits, setDeposits] = useState<Deposit[]>([]);
 
   useEffect(() => {
+    let mounted = true;
+
     async function loadDeposits() {
       try {
+        setLoading(true);
+        setError("");
+
         const {
-          data: { session },
-          error: sessionError,
-        } = await supabase.auth.getSession();
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
 
-        if (sessionError) {
-          setError(sessionError.message);
-          setLoading(false);
+        if (userError) {
+          throw userError;
+        }
+
+        if (!user) {
+          if (mounted) {
+            setDeposits([]);
+            setError("Please log in to view your deposits.");
+          }
           return;
         }
 
-        if (!session?.user) {
-          setError("No logged in user");
-          setLoading(false);
-          return;
-        }
-
-        const { data, error } = await supabase
+        const { data, error: depositsError } = await supabase
           .from("deposits")
-          .select("*")
-          .eq("user_id", session.user.id)
+          .select("id, amount, currency, network, status, tx_hash, created_at")
+          .eq("user_id", user.id)
           .order("created_at", { ascending: false });
 
-        if (error) {
-          setError(error.message);
-        } else {
-          setDeposits(data || []);
+        if (depositsError) {
+          throw depositsError;
         }
-      } catch (err) {
-        setError("Failed to load deposits");
+
+        if (mounted) {
+          setDeposits((data as Deposit[]) ?? []);
+        }
+      } catch (err: any) {
+        if (mounted) {
+          setError(err?.message || "Failed to load deposits.");
+        }
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     }
 
     loadDeposits();
+
+    return () => {
+      mounted = false;
+    };
   }, [supabase]);
 
   return (
@@ -76,7 +93,13 @@ export default function FundPage() {
 
       {!loading && !error && deposits.length > 0 && (
         <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              background: "#fff",
+            }}
+          >
             <thead>
               <tr>
                 <th style={{ textAlign: "left", padding: 10 }}>Amount</th>
