@@ -3,6 +3,6 @@ import { NextResponse } from "next/server";
 export async function GET() {
   return NextResponse.json({
     ok: true,
-    message: "API ROUTE WORKING",
+    message: "API ROUTE WORKING V2",
   });
 }
