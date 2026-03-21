@@ -11,65 +11,143 @@ type Deposit = {
   tx_hash: string | null;
   network: string | null;
   asset: string | null;
-  gross_amount: number;
-  fee_percent: number;
-  fee_amount: number;
-  net_amount: number;
+  gross_amount: number | null;
+  fee_percent: number | null;
+  fee_amount: number | null;
+  net_amount: number | null;
   status: string;
   note: string | null;
   created_at: string;
+  amount?: number | null;
 };
 
 export default function FundPage() {
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [walletAddress] = useState("0xc47133a6bd653793562a1ea25cb1d3161fbd99cd");
   const [deposits, setDeposits] = useState<Deposit[]>([]);
+  const [manualAmount, setManualAmount] = useState("1000");
+
+  const loadDeposits = async () => {
+    setLoading(true);
+    setError("");
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      setError("You must be logged in to view deposits.");
+      setDeposits([]);
+      setLoading(false);
+      return;
+    }
+
+    setUserId(user.id);
+    setUserEmail(user.email || "");
+
+    const { data, error } = await supabase
+      .from("deposits")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      setError(error.message);
+      setDeposits([]);
+    } else {
+      setDeposits((data || []) as Deposit[]);
+    }
+
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const loadDeposits = async () => {
-      setLoading(true);
-      setError("");
-
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError || !user) {
-        setError("You must be logged in to view deposits.");
-        setLoading(false);
-        return;
-      }
-
-      setUserEmail(user.email || "");
-
-      const { data, error } = await supabase
-        .from("deposits")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        setError(error.message);
-        setDeposits([]);
-      } else {
-        setDeposits((data || []) as Deposit[]);
-      }
-
-      setLoading(false);
-    };
-
     loadDeposits();
   }, []);
 
+  const handleManualDeposit = async () => {
+    setError("");
+    setSuccess("");
+
+    const amount = Number(manualAmount);
+
+    if (!userId) {
+      setError("User not loaded yet. Please refresh and try again.");
+      return;
+    }
+
+    if (!amount || amount <= 0) {
+      setError("Please enter a valid amount.");
+      return;
+    }
+
+    setSubmitting(true);
+
+    const fee = Number((amount * 0.03).toFixed(2));
+    const net = Number((amount - fee).toFixed(2));
+
+    const { error } = await supabase.from("deposits").insert([
+      {
+        user_id: userId,
+        amount: amount,
+        wallet_address: walletAddress,
+        tx_hash: `MANUAL-${Date.now()}`,
+        network: "BEP20",
+        asset: "USDT",
+        gross_amount: amount,
+        fee_percent: 3.0,
+        fee_amount: fee,
+        net_amount: net,
+        status: "Pending",
+        note: "Manual deposit test from dashboard",
+      },
+    ]);
+
+    if (error) {
+      setError(error.message);
+      setSubmitting(false);
+      return;
+    }
+
+    setSuccess(`Manual deposit added: ${amount.toFixed(2)} USDT`);
+    setManualAmount("1000");
+    await loadDeposits();
+    setSubmitting(false);
+  };
+
   const totals = useMemo(() => {
-    const gross = deposits.reduce((sum, d) => sum + Number(d.gross_amount || 0), 0);
+    const gross = deposits.reduce((sum, d) => sum + Number(d.gross_amount || d.amount || 0), 0);
     const fees = deposits.reduce((sum, d) => sum + Number(d.fee_amount || 0), 0);
     const net = deposits.reduce((sum, d) => sum + Number(d.net_amount || 0), 0);
     return { gross, fees, net };
   }, [deposits]);
+
+  const getStatusStyle = (status: string) => {
+    if (status === "Credited") {
+      return {
+        background: "rgba(14,203,129,0.12)",
+        color: "#0ecb81",
+      };
+    }
+
+    if (status === "Pending") {
+      return {
+        background: "rgba(240,185,11,0.12)",
+        color: "#f0b90b",
+      };
+    }
+
+    return {
+      background: "rgba(255,77,79,0.12)",
+      color: "#ff4d4f",
+    };
+  };
 
   return (
     <div
@@ -186,6 +264,96 @@ export default function FundPage() {
 
         <div
           style={{
+            background: "#161a1e",
+            border: "1px solid #2b3139",
+            borderRadius: 16,
+            padding: 20,
+            marginBottom: 24,
+          }}
+        >
+          <h2 style={{ marginTop: 0, fontSize: 20, marginBottom: 12 }}>Manual Deposit Test</h2>
+          <p style={{ color: "#848e9c", marginTop: 0, marginBottom: 16 }}>
+            Use this temporary tool to add a real deposit record while we finish the fully automated scanner.
+          </p>
+
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              flexWrap: "wrap",
+              alignItems: "center",
+            }}
+          >
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={manualAmount}
+              onChange={(e) => setManualAmount(e.target.value)}
+              placeholder="Enter amount"
+              style={{
+                background: "#0f1419",
+                border: "1px solid #2b3139",
+                color: "#eaecef",
+                borderRadius: 10,
+                padding: "12px 14px",
+                minWidth: 220,
+                outline: "none",
+              }}
+            />
+
+            <button
+              onClick={handleManualDeposit}
+              disabled={submitting || loading}
+              style={{
+                background: submitting || loading ? "#5f6670" : "#f0b90b",
+                color: "#111",
+                border: "none",
+                borderRadius: 10,
+                padding: "12px 18px",
+                fontWeight: 700,
+                cursor: submitting || loading ? "not-allowed" : "pointer",
+              }}
+            >
+              {submitting ? "Adding..." : "Add Manual Deposit"}
+            </button>
+          </div>
+
+          <div style={{ marginTop: 14, color: "#848e9c", fontSize: 14 }}>
+            Example: 1000 USDT → Fee 30 USDT → Net 970 USDT
+          </div>
+
+          {success && (
+            <div
+              style={{
+                marginTop: 14,
+                background: "rgba(14,203,129,0.12)",
+                color: "#0ecb81",
+                padding: "12px 14px",
+                borderRadius: 10,
+              }}
+            >
+              {success}
+            </div>
+          )}
+
+          {error && (
+            <div
+              style={{
+                marginTop: 14,
+                background: "rgba(255,77,79,0.12)",
+                color: "#ff4d4f",
+                padding: "12px 14px",
+                borderRadius: 10,
+              }}
+            >
+              {error}
+            </div>
+          )}
+        </div>
+
+        <div
+          style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
             gap: 16,
@@ -202,7 +370,11 @@ export default function FundPage() {
           >
             <div style={{ color: "#848e9c", marginBottom: 8 }}>Total Deposits</div>
             <div style={{ fontSize: 26, fontWeight: 700 }}>
-              {totals.gross.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT
+              {totals.gross.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
+              USDT
             </div>
           </div>
 
@@ -216,7 +388,11 @@ export default function FundPage() {
           >
             <div style={{ color: "#848e9c", marginBottom: 8 }}>Total Fees Earned</div>
             <div style={{ fontSize: 26, fontWeight: 700, color: "#f0b90b" }}>
-              {totals.fees.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT
+              {totals.fees.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
+              USDT
             </div>
           </div>
 
@@ -230,7 +406,11 @@ export default function FundPage() {
           >
             <div style={{ color: "#848e9c", marginBottom: 8 }}>Net Balance</div>
             <div style={{ fontSize: 26, fontWeight: 700, color: "#0ecb81" }}>
-              {totals.net.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT
+              {totals.net.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
+              USDT
             </div>
           </div>
         </div>
@@ -268,10 +448,6 @@ export default function FundPage() {
 
           {loading && <p style={{ color: "#848e9c" }}>Loading deposits...</p>}
 
-          {!loading && error && (
-            <p style={{ color: "#ff4d4f" }}>{error}</p>
-          )}
-
           {!loading && !error && deposits.length === 0 && (
             <div
               style={{
@@ -289,7 +465,7 @@ export default function FundPage() {
             </div>
           )}
 
-          {!loading && !error && deposits.length > 0 && (
+          {!loading && deposits.length > 0 && (
             <div style={{ overflowX: "auto" }}>
               <table
                 style={{
@@ -311,60 +487,74 @@ export default function FundPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {deposits.map((deposit) => (
-                    <tr key={deposit.id} style={{ borderBottom: "1px solid #2b3139" }}>
-                      <td style={{ padding: "14px 10px" }}>
-                        {new Date(deposit.created_at).toLocaleString()}
-                      </td>
-                      <td style={{ padding: "14px 10px" }}>{deposit.asset || "USDT"}</td>
-                      <td style={{ padding: "14px 10px" }}>{deposit.network || "-"}</td>
-                      <td style={{ padding: "14px 10px", textAlign: "right" }}>
-                        {Number(deposit.gross_amount).toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </td>
-                      <td style={{ padding: "14px 10px", textAlign: "right", color: "#f0b90b" }}>
-                        {Number(deposit.fee_amount).toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </td>
-                      <td style={{ padding: "14px 10px", textAlign: "right", color: "#0ecb81" }}>
-                        {Number(deposit.net_amount).toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </td>
-                      <td style={{ padding: "14px 10px" }}>
-                        <span
+                  {deposits.map((deposit) => {
+                    const statusStyle = getStatusStyle(deposit.status);
+                    return (
+                      <tr key={deposit.id} style={{ borderBottom: "1px solid #2b3139" }}>
+                        <td style={{ padding: "14px 10px" }}>
+                          {new Date(deposit.created_at).toLocaleString()}
+                        </td>
+                        <td style={{ padding: "14px 10px" }}>{deposit.asset || "USDT"}</td>
+                        <td style={{ padding: "14px 10px" }}>{deposit.network || "-"}</td>
+                        <td style={{ padding: "14px 10px", textAlign: "right" }}>
+                          {Number(deposit.gross_amount || deposit.amount || 0).toLocaleString(
+                            undefined,
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )}
+                        </td>
+                        <td
                           style={{
-                            padding: "6px 10px",
-                            borderRadius: 999,
-                            fontSize: 12,
-                            fontWeight: 700,
-                            background:
-                              deposit.status === "completed"
-                                ? "rgba(14,203,129,0.12)"
-                                : deposit.status === "pending"
-                                ? "rgba(240,185,11,0.12)"
-                                : "rgba(255,77,79,0.12)",
-                            color:
-                              deposit.status === "completed"
-                                ? "#0ecb81"
-                                : deposit.status === "pending"
-                                ? "#f0b90b"
-                                : "#ff4d4f",
+                            padding: "14px 10px",
+                            textAlign: "right",
+                            color: "#f0b90b",
                           }}
                         >
-                          {deposit.status}
-                        </span>
-                      </td>
-                      <td style={{ padding: "14px 10px", maxWidth: 180, wordBreak: "break-all" }}>
-                        {deposit.tx_hash || "-"}
-                      </td>
-                    </tr>
-                  ))}
+                          {Number(deposit.fee_amount || 0).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </td>
+                        <td
+                          style={{
+                            padding: "14px 10px",
+                            textAlign: "right",
+                            color: "#0ecb81",
+                          }}
+                        >
+                          {Number(deposit.net_amount || 0).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </td>
+                        <td style={{ padding: "14px 10px" }}>
+                          <span
+                            style={{
+                              padding: "6px 10px",
+                              borderRadius: 999,
+                              fontSize: 12,
+                              fontWeight: 700,
+                              background: statusStyle.background,
+                              color: statusStyle.color,
+                            }}
+                          >
+                            {deposit.status}
+                          </span>
+                        </td>
+                        <td
+                          style={{
+                            padding: "14px 10px",
+                            maxWidth: 180,
+                            wordBreak: "break-all",
+                          }}
+                        >
+                          {deposit.tx_hash || "-"}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
