@@ -1,39 +1,42 @@
-export const dynamic = "force-static";
-
 import type { CSSProperties } from "react";
 
-type Props = {
-  params: { ref: string } | Promise<{ ref: string }>;
-};
+export default function PriorityMintPage() {
+  const TIMESTAMP =
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Manila",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })
+      .format(new Date())
+      .replace(",", "") + " (UTC+8)";
 
-export default async function ReportPage({ params }: Props) {
-  const resolved = await Promise.resolve(params);
-  const reference = resolved.ref;
-
-  const TIMESTAMP = "2026-03-20 12:10 (UTC+8)";
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
 
-  const STAGE_LABEL = "LIQUIDITY PRIORITY MINT — PRE-DISTRIBUTION PHASE";
-  const STATUS_BADGE = "AWAITING MINT EXECUTION";
-  const SYSTEM_STATUS = "PRIORITY EXECUTION QUEUE";
+  const STAGE_LABEL = "LIQUIDITY PRIORITY MINT — PRODUCTION PHASE";
+  const STATUS_BADGE = "BAND CONFIRMATION PENDING";
+  const SYSTEM_STATUS = "PRODUCTION MINTING / BAND VALIDATION";
 
   const LIQUIDITY_LINE =
-    "99.5M position indexed in smart mint queue and pending on-chain priority execution.";
+    "99.5M indexed position remains in production mint flow while the active 5,000,000 liquidity tranche awaits full band confirmation for conversion routing.";
 
-  const NOTICE_TITLE = "99.5M Liquidity Priority Mint — Queued";
+  const NOTICE_TITLE = "99.5M Liquidity Priority Mint — In Production";
   const NOTICE_BODY =
-    "The 99.5M liquidity file has been successfully indexed within the liquidity engine and is now queued for priority mint execution. Smart routing contracts have confirmed the allocation structure, and the system is preparing to initiate mint-level liquidity injection for the indexed position. Execution will proceed once priority block conditions and gas optimization thresholds are satisfied.";
+    "The indexed liquidity position is now in active production minting. The current tranche of 5,000,000 is being prepared for liquidity release, subject to full band confirmation across the configured price range. Once full band confirmation is achieved, the released liquidity will proceed through the designated conversion path for EURC to USDT settlement routing.";
 
   const REASON =
-    "Mint execution pending — awaiting optimal block conditions and priority gas alignment";
+    "Production minting is active; full band confirmation is still required before the 5,000,000 liquidity tranche can be released for EURC-to-USDT conversion.";
 
   const REQUIRED_ACTION =
-    "No manual intervention is required at this stage. The system will automatically trigger mint execution once network conditions satisfy priority block inclusion and routing alignment requirements. After execution, liquidity will be injected into the active pool and distribution routing will proceed.";
+    "No manual intervention is required at this stage. The system is currently monitoring band completion, routing readiness, and mint production continuity. Upon confirmation of the full operating band, the 5,000,000 liquidity tranche will be released and made convertible through the EURC to USDT settlement path.";
 
   const SYSTEM_NAME = "Blockchain Liquidity Engine (CLAMM Routing Core)";
 
-  const BAND_CURRENT = "17.10";
+  const BAND_CURRENT = "23,083.2";
   const BAND_MIN = "8.55";
   const BAND_MAX = "34.21";
 
@@ -41,75 +44,68 @@ export default async function ReportPage({ params }: Props) {
   const POSITION_MIN = "0.0584";
   const POSITION_MAX = "0.0590";
   const POSITION_LIQUIDITY = "99.5M INDEXED";
-  const POSITION_STATE = "Pending Mint Injection";
+  const POSITION_STATE = "Production Mint / Awaiting Full Band Confirmation";
   const POSITION_EARNINGS = "NOT ACTIVE";
-  const POSITION_APR = "0%";
+  const POSITION_APR = "2.60%";
 
-  const FEE_STATE = "PRE-MINT";
-  const PAYOUT_STATE = "QUEUED FOR EXECUTION";
+  const FEE_STATE = "PRODUCTION MINT";
+  const PAYOUT_STATE = "LOCKED UNTIL BAND CONFIRMATION";
   const GAS_STATE = "IN PROGRESS";
   const ROUTING_STATE = "ACTIVE";
 
   const EXPLORER_URL = "#";
 
-  const terminal = `99.5M LIQUIDITY PRIORITY MINT — EXECUTION QUEUE
+  // CHANGE THIS ONLY
+  const MINT_PROGRESS = 35;
+
+  const terminal = `99.5M LIQUIDITY PRIORITY MINT — PRODUCTION MONITOR
 SMART CONTRACT ROUTING INITIALIZED
 ------------------------------------------------------------
 
 FILE SUMMARY
 - File Label               : ${FILE_LABEL}
 - Indexed Amount           : ${FILE_AMOUNT}
-- Reference                : ${reference}
+- Reference                : 99.5M-PRIORITY-MINT
 
 MINT ENGINE STATUS
 - Network                  : BNB Chain
 - Execution Layer          : Smart Mint Engine (CLAMM)
 - Routing Engine           : ${ROUTING_STATE}
-- Mint Queue               : PRIORITY (Awaiting Execution Slot)
+- Mint State               : PRODUCTION
 - Gas Optimization         : ${GAS_STATE}
-- Block Condition          : MONITORING
+- Band Confirmation        : PENDING
+- Conversion Path          : EURC -> USDT
 
 LIVE MINT ACTIVITY
-- Mint Signal              : +5,000,000 EURC
-- Progress                 : 35%
-- Phase                    : Liquidity injection phase initialized
+- Active Mint Signal       : +5,000,000 EURC
+- Production State         : RUNNING
+- Progress                 : ${MINT_PROGRESS}%
+- Current Phase            : Full band confirmation monitoring
+- Release Condition        : Full configured band must be confirmed
+- Settlement Route         : EURC conversion toward USDT enablement
 
 POSITION SUMMARY
 - Asset Pair               : ${POSITION_PAIR}
 - Position Range           : ${POSITION_MIN} – ${POSITION_MAX}
-- Liquidity Allocation     : 99.5M INDEXED (Pending Mint)
-- Earnings State           : NOT ACTIVE (Pre-Mint Phase)
+- Liquidity Allocation     : 99.5M INDEXED
+- Current Tranche          : 5,000,000 pending release
+- Earnings State           : NOT ACTIVE (Pre-Conversion)
 
 PRICE BAND (CONFIGURED)
 - Price Band               : ${BAND_MIN} – ${BAND_MAX}
 - Current Price            : ${BAND_CURRENT}
 
-SMART OBSERVATIONS
-1) Liquidity State
-- 99.5M position has been successfully registered inside the liquidity engine
-- Allocation mapping is verified and ready for mint execution
-
-2) Execution Readiness
-- Smart contracts deployed and linked
-- Routing paths validated
-- Awaiting optimal gas + block priority conditions
-
-3) Mint Trigger Logic
-- Execution will occur automatically once:
-  • Gas efficiency threshold is met
-  • Block inclusion priority is secured
-  • Liquidity routing alignment is confirmed
-
 NEXT STEP
-- Execute 99.5M priority mint on-chain
-- Inject liquidity into CLAMM pool
-- Activate fee generation
-- Begin distribution routing cycle
+- Confirm full operating band
+- Release active 5,000,000 liquidity tranche
+- Route released liquidity for EURC conversion
+- Enable EURC-to-USDT settlement path
+- Continue production mint monitoring
 
-SYSTEM STATUS : READY FOR MINT — QUEUED
+SYSTEM STATUS : MINTING IN PRODUCTION — AWAITING FULL BAND CONFIRMATION
 COMPLIANCE    : ${SYSTEM_NAME}
 TIMESTAMP     : ${TIMESTAMP}
-REFERENCE     : ${reference}
+REFERENCE     : 99.5M-PRIORITY-MINT
 ------------------------------------------------------------`;
 
   const colors = {
@@ -117,7 +113,6 @@ REFERENCE     : ${reference}
     panel: "#12161c",
     panel2: "#161b22",
     border: "rgba(255,255,255,0.08)",
-    soft: "rgba(255,255,255,0.04)",
     text: "#eaecef",
     muted: "#9aa4af",
     yellow: "#f0b90b",
@@ -277,7 +272,7 @@ REFERENCE     : ${reference}
             <div
               style={{
                 ...cardStyle,
-                minWidth: 280,
+                minWidth: 320,
                 padding: 18,
                 borderColor: "rgba(240,185,11,0.18)",
               }}
@@ -287,8 +282,8 @@ REFERENCE     : ${reference}
                 {SYSTEM_STATUS}
               </div>
               <div style={{ marginTop: 8, fontSize: 13, color: colors.muted }}>
-                Real-time monitoring for liquidity queue, gas optimization, and mint
-                readiness.
+                Production mint monitoring is active while the system waits for full
+                band confirmation before releasing the convertible liquidity tranche.
               </div>
             </div>
           </div>
@@ -327,7 +322,7 @@ REFERENCE     : ${reference}
                 {BAND_CURRENT}
               </div>
               <div style={{ marginTop: 4, fontSize: 13, color: colors.muted }}>
-                Indicative
+                Live Market Reference
               </div>
             </div>
 
@@ -339,7 +334,7 @@ REFERENCE     : ${reference}
                 </span>
               </div>
               <div style={{ marginTop: 8, fontSize: 13, color: colors.muted }}>
-                Queue Active
+                Production Queue Active
               </div>
             </div>
           </div>
@@ -365,12 +360,12 @@ REFERENCE     : ${reference}
                 <div>
                   <div style={{ fontSize: 13, color: colors.muted }}>ACTIVE FILE</div>
                   <div style={{ fontSize: 24, fontWeight: 900, marginTop: 4 }}>
-                    {reference}
+                    99.5M-PRIORITY-MINT
                   </div>
                 </div>
 
                 <span style={badgeStyle("rgba(240,185,11,0.18)", colors.yellow)}>
-                  ● PRE-MINT
+                  ● PRODUCTION
                 </span>
               </div>
 
@@ -564,8 +559,10 @@ REFERENCE     : ${reference}
                   +5,000,000 EURC
                 </div>
 
-                <div style={{ marginTop: 6, color: "#d7fffa" }}>
-                  Minting in progress — liquidity injection phase initialized
+                <div style={{ marginTop: 6, color: "#d7fffa", lineHeight: 1.7 }}>
+                  Minting is in production. The active 5,000,000 tranche remains under
+                  live band validation and will be released for liquidity conversion
+                  once the full operating band is confirmed.
                 </div>
 
                 <div
@@ -579,7 +576,7 @@ REFERENCE     : ${reference}
                 >
                   <div
                     style={{
-                      width: "35%",
+                      width: `${MINT_PROGRESS}%`,
                       height: "100%",
                       background: "linear-gradient(90deg,#00ffd0,#28c6ff)",
                     }}
@@ -587,7 +584,7 @@ REFERENCE     : ${reference}
                 </div>
 
                 <div style={{ fontSize: 12, marginTop: 8, color: "#8bded0" }}>
-                  Mint Progress: 35%
+                  Mint Progress: {MINT_PROGRESS}% — Awaiting Full Band Confirmation
                 </div>
               </div>
 

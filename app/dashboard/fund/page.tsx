@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "../../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 type Deposit = {
   id: string;
@@ -15,7 +15,8 @@ type Deposit = {
 };
 
 export default function FundPage() {
-  const supabase = createClient();
+  // no need to create client again
+}
 
   const [deposits, setDeposits] = useState<Deposit[]>([]);
   const [loading, setLoading] = useState(true);
