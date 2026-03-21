@@ -26,6 +26,7 @@ export default function FundPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [copied, setCopied] = useState(false);
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [walletAddress] = useState("0xc47133a6bd653793562a1ea25cb1d3161fbd99cd");
@@ -70,6 +71,16 @@ export default function FundPage() {
   useEffect(() => {
     loadDeposits();
   }, []);
+
+  const handleCopyWallet = async () => {
+    try {
+      await navigator.clipboard.writeText(walletAddress);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setError("Failed to copy wallet address.");
+    }
+  };
 
   const handleManualDeposit = async () => {
     setError("");
@@ -149,6 +160,8 @@ export default function FundPage() {
     };
   };
 
+  const quickAmounts = [100, 250, 500, 1000];
+
   return (
     <div
       style={{
@@ -159,12 +172,7 @@ export default function FundPage() {
         fontFamily: "Arial, sans-serif",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-        }}
-      >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div
           style={{
             display: "flex",
@@ -176,7 +184,7 @@ export default function FundPage() {
           }}
         >
           <div>
-            <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700 }}>Deposit USDT</h1>
+            <h1 style={{ margin: 0, fontSize: 30, fontWeight: 800 }}>Deposit USDT</h1>
             <p style={{ marginTop: 8, color: "#848e9c" }}>
               Logged in as: {userEmail || "Loading..."}
             </p>
@@ -190,9 +198,10 @@ export default function FundPage() {
               background: "#f0b90b",
               color: "#111",
               padding: "12px 18px",
-              borderRadius: 10,
-              fontWeight: 700,
+              borderRadius: 12,
+              fontWeight: 800,
               textDecoration: "none",
+              boxShadow: "0 8px 24px rgba(240,185,11,0.18)",
             }}
           >
             Buy USDT
@@ -201,155 +210,230 @@ export default function FundPage() {
 
         <div
           style={{
-            background: "#161a1e",
-            border: "1px solid #2b3139",
-            borderRadius: 16,
-            padding: 20,
+            display: "grid",
+            gridTemplateColumns: "1.2fr 0.8fr",
+            gap: 20,
             marginBottom: 24,
           }}
         >
-          <h2 style={{ marginTop: 0, fontSize: 20 }}>Deposit Wallet</h2>
-          <p style={{ color: "#848e9c", marginBottom: 8 }}>
-            Send only USDT using the supported network shown below.
-          </p>
-
           <div
             style={{
-              background: "#0f1419",
+              background: "#161a1e",
               border: "1px solid #2b3139",
-              borderRadius: 12,
-              padding: 14,
-              wordBreak: "break-all",
-              marginBottom: 12,
-              color: "#f0b90b",
-              fontWeight: 700,
+              borderRadius: 18,
+              padding: 22,
             }}
           >
-            {walletAddress}
-          </div>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+              <div>
+                <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 22 }}>Deposit Wallet</h2>
+                <p style={{ margin: 0, color: "#848e9c" }}>
+                  Send only USDT using the supported network below.
+                </p>
+              </div>
 
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <div
-              style={{
-                background: "#0f1419",
-                border: "1px solid #2b3139",
-                borderRadius: 10,
-                padding: "10px 14px",
-              }}
-            >
-              Asset: <strong>USDT</strong>
+              <button
+                onClick={handleCopyWallet}
+                style={{
+                  background: copied ? "#0ecb81" : "#0f1419",
+                  color: copied ? "#0b0e11" : "#eaecef",
+                  border: "1px solid #2b3139",
+                  borderRadius: 10,
+                  padding: "10px 14px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  height: "fit-content",
+                }}
+              >
+                {copied ? "Copied!" : "Copy Address"}
+              </button>
             </div>
+
             <div
               style={{
                 background: "#0f1419",
                 border: "1px solid #2b3139",
-                borderRadius: 10,
-                padding: "10px 14px",
+                borderRadius: 14,
+                padding: 16,
+                wordBreak: "break-all",
+                marginTop: 16,
+                marginBottom: 14,
+                color: "#f0b90b",
+                fontWeight: 800,
+                fontSize: 15,
               }}
             >
-              Network: <strong>BEP20 / ERC20 only</strong>
+              {walletAddress}
             </div>
-            <div
-              style={{
-                background: "#0f1419",
-                border: "1px solid #2b3139",
-                borderRadius: 10,
-                padding: "10px 14px",
-              }}
-            >
-              Platform Fee: <strong>3%</strong>
+
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <div
+                style={{
+                  background: "#0f1419",
+                  border: "1px solid #2b3139",
+                  borderRadius: 10,
+                  padding: "10px 14px",
+                }}
+              >
+                Asset: <strong>USDT</strong>
+              </div>
+              <div
+                style={{
+                  background: "#0f1419",
+                  border: "1px solid #2b3139",
+                  borderRadius: 10,
+                  padding: "10px 14px",
+                }}
+              >
+                Network: <strong>BEP20 / ERC20</strong>
+              </div>
+              <div
+                style={{
+                  background: "#0f1419",
+                  border: "1px solid #2b3139",
+                  borderRadius: 10,
+                  padding: "10px 14px",
+                }}
+              >
+                Platform Fee: <strong>3%</strong>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div
-          style={{
-            background: "#161a1e",
-            border: "1px solid #2b3139",
-            borderRadius: 16,
-            padding: 20,
-            marginBottom: 24,
-          }}
-        >
-          <h2 style={{ marginTop: 0, fontSize: 20, marginBottom: 12 }}>Manual Deposit Test</h2>
-          <p style={{ color: "#848e9c", marginTop: 0, marginBottom: 16 }}>
-            Use this temporary tool to add a real deposit record while we finish the fully automated scanner.
-          </p>
 
           <div
             style={{
-              display: "flex",
-              gap: 12,
-              flexWrap: "wrap",
-              alignItems: "center",
+              background: "#161a1e",
+              border: "1px solid #2b3139",
+              borderRadius: 18,
+              padding: 22,
             }}
           >
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={manualAmount}
-              onChange={(e) => setManualAmount(e.target.value)}
-              placeholder="Enter amount"
+            <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 22 }}>Manual Deposit Test</h2>
+            <p style={{ margin: 0, color: "#848e9c" }}>
+              Temporary tool while we finish full automation.
+            </p>
+
+            <div style={{ marginTop: 16 }}>
+              <label style={{ display: "block", marginBottom: 8, color: "#848e9c", fontSize: 14 }}>
+                Deposit Amount
+              </label>
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={manualAmount}
+                onChange={(e) => setManualAmount(e.target.value)}
+                placeholder="Enter amount"
+                style={{
+                  width: "100%",
+                  background: "#0f1419",
+                  border: "1px solid #2b3139",
+                  color: "#eaecef",
+                  borderRadius: 12,
+                  padding: "12px 14px",
+                  outline: "none",
+                  fontSize: 15,
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+              {quickAmounts.map((amt) => (
+                <button
+                  key={amt}
+                  onClick={() => setManualAmount(String(amt))}
+                  style={{
+                    background: "#0f1419",
+                    color: "#eaecef",
+                    border: "1px solid #2b3139",
+                    borderRadius: 10,
+                    padding: "8px 12px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  {amt}
+                </button>
+              ))}
+            </div>
+
+            <div
               style={{
+                marginTop: 14,
                 background: "#0f1419",
                 border: "1px solid #2b3139",
-                color: "#eaecef",
-                borderRadius: 10,
-                padding: "12px 14px",
-                minWidth: 220,
-                outline: "none",
+                borderRadius: 12,
+                padding: 14,
+                fontSize: 14,
+                color: "#b7bdc6",
+                lineHeight: 1.7,
               }}
-            />
+            >
+              <div>
+                Fee (3%):{" "}
+                <span style={{ color: "#f0b90b", fontWeight: 700 }}>
+                  {Number(Number(manualAmount || 0) * 0.03).toFixed(2)} USDT
+                </span>
+              </div>
+              <div>
+                Net Balance:{" "}
+                <span style={{ color: "#0ecb81", fontWeight: 700 }}>
+                  {Number(Number(manualAmount || 0) - Number(manualAmount || 0) * 0.03).toFixed(2)} USDT
+                </span>
+              </div>
+            </div>
 
             <button
               onClick={handleManualDeposit}
               disabled={submitting || loading}
               style={{
+                width: "100%",
+                marginTop: 16,
                 background: submitting || loading ? "#5f6670" : "#f0b90b",
                 color: "#111",
                 border: "none",
-                borderRadius: 10,
-                padding: "12px 18px",
-                fontWeight: 700,
+                borderRadius: 12,
+                padding: "13px 18px",
+                fontWeight: 800,
+                fontSize: 15,
                 cursor: submitting || loading ? "not-allowed" : "pointer",
+                boxShadow: submitting || loading ? "none" : "0 8px 24px rgba(240,185,11,0.18)",
               }}
             >
-              {submitting ? "Adding..." : "Add Manual Deposit"}
+              {submitting ? "Adding Deposit..." : "Add Manual Deposit"}
             </button>
+
+            {success && (
+              <div
+                style={{
+                  marginTop: 14,
+                  background: "rgba(14,203,129,0.12)",
+                  color: "#0ecb81",
+                  padding: "12px 14px",
+                  borderRadius: 10,
+                  fontSize: 14,
+                }}
+              >
+                {success}
+              </div>
+            )}
+
+            {error && (
+              <div
+                style={{
+                  marginTop: 14,
+                  background: "rgba(255,77,79,0.12)",
+                  color: "#ff4d4f",
+                  padding: "12px 14px",
+                  borderRadius: 10,
+                  fontSize: 14,
+                }}
+              >
+                {error}
+              </div>
+            )}
           </div>
-
-          <div style={{ marginTop: 14, color: "#848e9c", fontSize: 14 }}>
-            Example: 1000 USDT → Fee 30 USDT → Net 970 USDT
-          </div>
-
-          {success && (
-            <div
-              style={{
-                marginTop: 14,
-                background: "rgba(14,203,129,0.12)",
-                color: "#0ecb81",
-                padding: "12px 14px",
-                borderRadius: 10,
-              }}
-            >
-              {success}
-            </div>
-          )}
-
-          {error && (
-            <div
-              style={{
-                marginTop: 14,
-                background: "rgba(255,77,79,0.12)",
-                color: "#ff4d4f",
-                padding: "12px 14px",
-                borderRadius: 10,
-              }}
-            >
-              {error}
-            </div>
-          )}
         </div>
 
         <div
@@ -369,7 +453,7 @@ export default function FundPage() {
             }}
           >
             <div style={{ color: "#848e9c", marginBottom: 8 }}>Total Deposits</div>
-            <div style={{ fontSize: 26, fontWeight: 700 }}>
+            <div style={{ fontSize: 28, fontWeight: 800 }}>
               {totals.gross.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -387,7 +471,7 @@ export default function FundPage() {
             }}
           >
             <div style={{ color: "#848e9c", marginBottom: 8 }}>Total Fees Earned</div>
-            <div style={{ fontSize: 26, fontWeight: 700, color: "#f0b90b" }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: "#f0b90b" }}>
               {totals.fees.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -405,7 +489,7 @@ export default function FundPage() {
             }}
           >
             <div style={{ color: "#848e9c", marginBottom: 8 }}>Net Balance</div>
-            <div style={{ fontSize: 26, fontWeight: 700, color: "#0ecb81" }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: "#0ecb81" }}>
               {totals.net.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -489,6 +573,7 @@ export default function FundPage() {
                 <tbody>
                   {deposits.map((deposit) => {
                     const statusStyle = getStatusStyle(deposit.status);
+
                     return (
                       <tr key={deposit.id} style={{ borderBottom: "1px solid #2b3139" }}>
                         <td style={{ padding: "14px 10px" }}>
@@ -505,25 +590,13 @@ export default function FundPage() {
                             }
                           )}
                         </td>
-                        <td
-                          style={{
-                            padding: "14px 10px",
-                            textAlign: "right",
-                            color: "#f0b90b",
-                          }}
-                        >
+                        <td style={{ padding: "14px 10px", textAlign: "right", color: "#f0b90b" }}>
                           {Number(deposit.fee_amount || 0).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
                         </td>
-                        <td
-                          style={{
-                            padding: "14px 10px",
-                            textAlign: "right",
-                            color: "#0ecb81",
-                          }}
-                        >
+                        <td style={{ padding: "14px 10px", textAlign: "right", color: "#0ecb81" }}>
                           {Number(deposit.net_amount || 0).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
