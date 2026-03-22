@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link"; // make sure this is at the top
 
-<Link
+<a
   href="https://www.binance.com/en/buy-sell-crypto"
   target="_blank"
+  rel="noopener noreferrer"
   style={{
     background: "#f3c400",
     color: "#111",
@@ -16,7 +17,7 @@ import Link from "next/link"; // make sure this is at the top
   }}
 >
   Buy USDT
-</Link>
+</a>
 
 const deposits = [
   {
@@ -94,19 +95,41 @@ export default function FundPage() {
             </div>
           </div>
 
-          <button
-            style={{
-              background: "#f3c400",
-              color: "#111",
-              border: "none",
-              borderRadius: "10px",
-              padding: "12px 20px",
-              fontWeight: 700,
-              cursor: "pointer",
-            }}
-          >
-            Buy USDT
-          </button>
+          
+           <a
+  href="https://www.binance.com/en/buy-sell-crypto"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    background: "#f3c400",
+    color: "#111",
+    borderRadius: "10px",
+    padding: "12px 20px",
+    fontWeight: 700,
+    cursor: "pointer",
+    textDecoration: "none",
+    display: "inline-block",
+  }}
+>
+  Buy USDT
+</a>
+          <a
+  href="https://www.binance.com/en/buy-sell-crypto"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    background: "#f3c400",
+    color: "#111",
+    borderRadius: "10px",
+    padding: "12px 20px",
+    fontWeight: 700,
+    cursor: "pointer",
+    textDecoration: "none",
+    display: "inline-block",
+  }}
+>
+  Buy USDT
+</a>
         </div>
 
         <section
