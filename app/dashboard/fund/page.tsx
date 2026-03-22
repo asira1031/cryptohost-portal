@@ -37,298 +37,235 @@ const deposits = [
 
 export default function FundPage() {
   return (
-    <div
+    <main
       style={{
         minHeight: "100vh",
-        background: "#e9e9e9",
+        background: "#00090f",
+        padding: "18px 20px",
+        boxSizing: "border-box",
         fontFamily: "Arial, sans-serif",
-        display: "flex",
       }}
     >
-      <aside
+      <div
         style={{
-          width: "230px",
-          background: "#0a0a0a",
-          color: "#fff",
-          padding: "28px 16px",
-          boxSizing: "border-box",
+          maxWidth: "1050px",
+          margin: "0 auto",
         }}
       >
         <div
           style={{
-            fontSize: "22px",
-            fontWeight: 800,
-            marginBottom: "28px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: "20px",
+            marginBottom: "18px",
+            flexWrap: "wrap",
           }}
         >
-          CryptoHost
+          <div>
+            <h1
+              style={{
+                color: "#fff",
+                fontSize: "26px",
+                fontWeight: 800,
+                margin: "0 0 8px 0",
+              }}
+            >
+              Deposit USDT
+            </h1>
+            <div style={{ color: "#cbd5e1", fontSize: "15px" }}>
+              Logged in as: jans103174@gmail.com
+            </div>
+          </div>
+
+          <button
+            style={{
+              background: "#f3c400",
+              color: "#111",
+              border: "none",
+              borderRadius: "10px",
+              padding: "12px 20px",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            Buy USDT
+          </button>
         </div>
 
-        <div style={{ display: "grid", gap: "14px" }}>
-          <NavButton href="/dashboard" label="Dashboard" />
-          <NavButton href="/upload" label="Upload File" />
-          <NavButton href="/reports" label="Reports" />
-          <NavButton href="/subscription" label="Subscription" />
-          <NavButton href="/dashboard/fund" label="💰 Fund Account" />
-        </div>
-      </aside>
-
-      <main
-        style={{
-          flex: 1,
-          padding: "18px 20px",
-          boxSizing: "border-box",
-        }}
-      >
-        <div
+        <section
           style={{
-            background: "#00090f",
-            minHeight: "calc(100vh - 36px)",
-            padding: "28px 34px",
-            boxSizing: "border-box",
+            background: "#141922",
+            border: "1px solid #232b39",
+            borderRadius: "16px",
+            padding: "18px",
+            marginBottom: "20px",
           }}
         >
           <div
             style={{
-              maxWidth: "1050px",
-              margin: "0 auto",
+              color: "#fff",
+              fontSize: "18px",
+              fontWeight: 700,
+              marginBottom: "10px",
+            }}
+          >
+            Deposit Wallet
+          </div>
+
+          <div
+            style={{
+              color: "#8e9aab",
+              fontSize: "14px",
+              marginBottom: "12px",
+            }}
+          >
+            Send only USDT using the supported network shown below.
+          </div>
+
+          <div
+            style={{
+              background: "#0c1117",
+              border: "1px solid #263143",
+              borderRadius: "10px",
+              padding: "12px 14px",
+              color: "#f3c400",
+              fontWeight: 700,
+              fontSize: "15px",
+              wordBreak: "break-all",
+              marginBottom: "12px",
+            }}
+          >
+            0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              flexWrap: "wrap",
+            }}
+          >
+            <InfoPill text="Asset: USDT" />
+            <InfoPill text="Network: BEP20 / ERC20 only" />
+            <InfoPill text="Platform Fee: 3%" />
+          </div>
+        </section>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+            gap: "14px",
+            marginBottom: "20px",
+          }}
+        >
+          <StatCard label="Total Deposits" value="1,000.00 USDT" color="#ffffff" />
+          <StatCard label="Total Fees Earned" value="30.00 USDT" color="#f3c400" />
+          <StatCard label="Net Balance" value="970.00 USDT" color="#19d38a" />
+        </div>
+
+        <section
+          style={{
+            background: "#141922",
+            border: "1px solid #232b39",
+            borderRadius: "16px",
+            padding: "18px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "16px",
+              gap: "16px",
+              flexWrap: "wrap",
             }}
           >
             <div
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                gap: "20px",
-                marginBottom: "18px",
-                flexWrap: "wrap",
+                color: "#fff",
+                fontSize: "18px",
+                fontWeight: 700,
               }}
             >
-              <div>
-                <h1
-                  style={{
-                    color: "#fff",
-                    fontSize: "26px",
-                    fontWeight: 800,
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  Deposit USDT
-                </h1>
-                <div style={{ color: "#cbd5e1", fontSize: "15px" }}>
-                  Logged in as: jans103174@gmail.com
-                </div>
-              </div>
-
-              <button
-                style={{
-                  background: "#f3c400",
-                  color: "#111",
-                  border: "none",
-                  borderRadius: "10px",
-                  padding: "12px 20px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
-              >
-                Buy USDT
-              </button>
+              Deposit History
             </div>
 
-            <section
+            <Link
+              href="/dashboard"
               style={{
-                background: "#141922",
-                border: "1px solid #232b39",
-                borderRadius: "16px",
-                padding: "18px",
-                marginBottom: "20px",
+                color: "#f3c400",
+                textDecoration: "none",
+                fontWeight: 700,
               }}
             >
-              <div
-                style={{
-                  color: "#fff",
-                  fontSize: "18px",
-                  fontWeight: 700,
-                  marginBottom: "10px",
-                }}
-              >
-                Deposit Wallet
-              </div>
-
-              <div
-                style={{
-                  color: "#8e9aab",
-                  fontSize: "14px",
-                  marginBottom: "12px",
-                }}
-              >
-                Send only USDT using the supported network shown below.
-              </div>
-
-              <div
-                style={{
-                  background: "#0c1117",
-                  border: "1px solid #263143",
-                  borderRadius: "10px",
-                  padding: "12px 14px",
-                  color: "#f3c400",
-                  fontWeight: 700,
-                  fontSize: "15px",
-                  wordBreak: "break-all",
-                  marginBottom: "12px",
-                }}
-              >
-                0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <InfoPill text="Asset: USDT" />
-                <InfoPill text="Network: BEP20 / ERC20 only" />
-                <InfoPill text="Platform Fee: 3%" />
-              </div>
-            </section>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                gap: "14px",
-                marginBottom: "20px",
-              }}
-            >
-              <StatCard label="Total Deposits" value="1,000.00 USDT" color="#ffffff" />
-              <StatCard label="Total Fees Earned" value="30.00 USDT" color="#f3c400" />
-              <StatCard label="Net Balance" value="970.00 USDT" color="#19d38a" />
-            </div>
-
-            <section
-              style={{
-                background: "#141922",
-                border: "1px solid #232b39",
-                borderRadius: "16px",
-                padding: "18px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "16px",
-                  gap: "16px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <div
-                  style={{
-                    color: "#fff",
-                    fontSize: "18px",
-                    fontWeight: 700,
-                  }}
-                >
-                  Deposit History
-                </div>
-
-                <Link
-                  href="/dashboard"
-                  style={{
-                    color: "#f3c400",
-                    textDecoration: "none",
-                    fontWeight: 700,
-                  }}
-                >
-                  Back to Dashboard
-                </Link>
-              </div>
-
-              <div style={{ overflowX: "auto" }}>
-                <table
-                  style={{
-                    width: "100%",
-                    borderCollapse: "collapse",
-                    color: "#d8e2f1",
-                    fontSize: "14px",
-                  }}
-                >
-                  <thead>
-                    <tr style={{ color: "#94a3b8", textAlign: "left" }}>
-                      <th style={thStyle}>Date</th>
-                      <th style={thStyle}>Asset</th>
-                      <th style={thStyle}>Network</th>
-                      <th style={thStyle}>Gross</th>
-                      <th style={thStyle}>Fee</th>
-                      <th style={thStyle}>Net</th>
-                      <th style={thStyle}>Status</th>
-                      <th style={thStyle}>TX Hash</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {deposits.map((row) => (
-                      <tr key={row.tx} style={{ borderTop: "1px solid #253041" }}>
-                        <td style={tdStyle}>{row.date}</td>
-                        <td style={tdStyle}>{row.asset}</td>
-                        <td style={tdStyle}>{row.network}</td>
-                        <td style={tdStyle}>{row.gross}</td>
-                        <td style={{ ...tdStyle, color: "#f3c400", fontWeight: 700 }}>
-                          {row.fee}
-                        </td>
-                        <td style={{ ...tdStyle, color: "#19d38a", fontWeight: 700 }}>
-                          {row.net}
-                        </td>
-                        <td style={tdStyle}>
-                          <span
-                            style={{
-                              padding: "6px 10px",
-                              borderRadius: "999px",
-                              fontSize: "12px",
-                              fontWeight: 700,
-                              background:
-                                row.status === "Pending"
-                                  ? "rgba(239,68,68,0.15)"
-                                  : "rgba(34,197,94,0.15)",
-                              color:
-                                row.status === "Pending" ? "#ef4444" : "#22c55e",
-                            }}
-                          >
-                            {row.status}
-                          </span>
-                        </td>
-                        <td style={tdStyle}>{row.tx}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </section>
+              Back to Dashboard
+            </Link>
           </div>
-        </div>
-      </main>
-    </div>
-  );
-}
 
-function NavButton({ href, label }: { href: string; label: string }) {
-  return (
-    <Link
-      href={href}
-      style={{
-        display: "block",
-        background: "#1c1c1f",
-        color: "#fff",
-        textDecoration: "none",
-        padding: "14px 14px",
-        borderRadius: "10px",
-        fontWeight: 600,
-      }}
-    >
-      {label}
-    </Link>
+          <div style={{ overflowX: "auto" }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                color: "#d8e2f1",
+                fontSize: "14px",
+              }}
+            >
+              <thead>
+                <tr style={{ color: "#94a3b8", textAlign: "left" }}>
+                  <th style={thStyle}>Date</th>
+                  <th style={thStyle}>Asset</th>
+                  <th style={thStyle}>Network</th>
+                  <th style={thStyle}>Gross</th>
+                  <th style={thStyle}>Fee</th>
+                  <th style={thStyle}>Net</th>
+                  <th style={thStyle}>Status</th>
+                  <th style={thStyle}>TX Hash</th>
+                </tr>
+              </thead>
+              <tbody>
+                {deposits.map((row) => (
+                  <tr key={row.tx} style={{ borderTop: "1px solid #253041" }}>
+                    <td style={tdStyle}>{row.date}</td>
+                    <td style={tdStyle}>{row.asset}</td>
+                    <td style={tdStyle}>{row.network}</td>
+                    <td style={tdStyle}>{row.gross}</td>
+                    <td style={{ ...tdStyle, color: "#f3c400", fontWeight: 700 }}>
+                      {row.fee}
+                    </td>
+                    <td style={{ ...tdStyle, color: "#19d38a", fontWeight: 700 }}>
+                      {row.net}
+                    </td>
+                    <td style={tdStyle}>
+                      <span
+                        style={{
+                          padding: "6px 10px",
+                          borderRadius: "999px",
+                          fontSize: "12px",
+                          fontWeight: 700,
+                          background:
+                            row.status === "Pending"
+                              ? "rgba(239,68,68,0.15)"
+                              : "rgba(34,197,94,0.15)",
+                          color:
+                            row.status === "Pending" ? "#ef4444" : "#22c55e",
+                        }}
+                      >
+                        {row.status}
+                      </span>
+                    </td>
+                    <td style={tdStyle}>{row.tx}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }
 
