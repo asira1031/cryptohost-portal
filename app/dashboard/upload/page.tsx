@@ -18,7 +18,6 @@ export default function UploadPage() {
       setLoading(true);
       setMessage("");
 
-      // Get user
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -39,7 +38,7 @@ export default function UploadPage() {
       } else {
         setMessage("✅ File uploaded successfully!");
       }
-    } catch (err) {
+    } catch {
       setMessage("Unexpected error.");
     } finally {
       setLoading(false);
@@ -47,33 +46,66 @@ export default function UploadPage() {
   };
 
   return (
-    <div style={{ padding: "40px", color: "#fff" }}>
-      <h1>Upload File</h1>
-
-      <input
-        type="file"
-        onChange={(e) => setFile(e.target.files?.[0] || null)}
-        style={{ marginTop: "20px" }}
-      />
-
-      <br />
-
-      <button
-        onClick={handleUpload}
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "#00090f",
+        color: "#fff",
+        fontFamily: "Arial, sans-serif",
+        padding: "32px",
+      }}
+    >
+      <div
         style={{
-          marginTop: "20px",
-          background: "#f3c400",
-          color: "#111",
-          padding: "10px 20px",
-          borderRadius: "8px",
-          border: "none",
-          cursor: "pointer",
+          maxWidth: "900px",
+          margin: "0 auto",
+          background: "#141922",
+          border: "1px solid #232b39",
+          borderRadius: "16px",
+          padding: "24px",
         }}
       >
-        {loading ? "Uploading..." : "Upload"}
-      </button>
+        <h1 style={{ marginTop: 0 }}>Upload File</h1>
+        <p style={{ color: "#cbd5e1" }}>
+          Upload your financial file here.
+        </p>
 
-      {message && <p style={{ marginTop: "20px" }}>{message}</p>}
-    </div>
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          style={{
+            marginTop: "16px",
+            padding: "10px",
+            background: "#0c1117",
+            color: "#fff",
+            border: "1px solid #263143",
+            borderRadius: "8px",
+          }}
+        />
+
+        <div style={{ marginTop: "20px" }}>
+          <button
+            onClick={handleUpload}
+            style={{
+              background: "#f3c400",
+              color: "#111",
+              padding: "10px 20px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              fontWeight: 700,
+            }}
+          >
+            {loading ? "Uploading..." : "Submit Upload"}
+          </button>
+        </div>
+
+        {message && (
+          <p style={{ marginTop: "20px", color: "#fff" }}>
+            {message}
+          </p>
+        )}
+      </div>
+    </main>
   );
 }
