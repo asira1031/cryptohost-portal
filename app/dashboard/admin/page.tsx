@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 
 export default async function AdminPage() {
   const urlLoaded = !!process.env.NEXT_PUBLIC_SUPABASE_URL;
