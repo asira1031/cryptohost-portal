@@ -1,140 +1,243 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-
-type Deposit = {
-  id: string;
-  user_id: string;
-  wallet_address: string | null;
-  tx_hash: string | null;
-  network: string | null;
-  asset: string | null;
-  gross_amount: number | null;
-  fee_percent: number | null;
-  fee_amount: number | null;
-  net_amount: number | null;
-  status: string;
-  note: string | null;
-  created_at: string;
-  amount?: number | null;
-};
 
 export default function FundPage() {
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [walletAddress] = useState("0xc47133a6bd653793562a1ea25cb1d3161fbd99cd");
-  const [deposits, setDeposits] = useState<Deposit[]>([]);
-  const [manualAmount, setManualAmount] = useState("1000");
-
-  const loadDeposits = async () => {
-    setLoading(true);
-    setError("");
-
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      setError("You must be logged in to view deposits.");
-      setDeposits([]);
-      setLoading(false);
-      return;
-    }
-
-    setUserId(user.id);
-    setUserEmail(user.email || "");
-
-    const { data, error } = await supabase
-      .from("deposits")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      setError(error.message);
-      setDeposits([]);
-    } else {
-      setDeposits((data || []) as Deposit[]);
-    }
-
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadDeposits();
-  }, []);
-
-  const handleCopyWallet = async () => {
-    await navigator.clipboard.writeText(walletAddress);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
-  const handleManualDeposit = async () => {
-    setError("");
-    setSuccess("");
-
-    const amount = Number(manualAmount);
-    if (!userId || amount <= 0) return;
-
-    setSubmitting(true);
-
-    const fee = Number((amount * 0.03).toFixed(2));
-    const net = Number((amount - fee).toFixed(2));
-
-    await supabase.from("deposits").insert([
-      {
-        user_id: userId,
-        amount,
-        wallet_address: walletAddress,
-        tx_hash: `MANUAL-${Date.now()}`,
-        network: "BEP20",
-        asset: "USDT",
-        gross_amount: amount,
-        fee_percent: 3,
-        fee_amount: fee,
-        net_amount: net,
-        status: "Pending",
-        note: "Manual deposit",
-      },
-    ]);
-
-    setSuccess("Deposit added!");
-    await loadDeposits();
-    setSubmitting(false);
-  };
-
-  const totals = useMemo(() => {
-    const gross = deposits.reduce((s, d) => s + Number(d.gross_amount || 0), 0);
-    const fees = deposits.reduce((s, d) => s + Number(d.fee_amount || 0), 0);
-    const net = deposits.reduce((s, d) => s + Number(d.net_amount || 0), 0);
-    return { gross, fees, net };
-  }, [deposits]);
-
   return (
-    <div style={{ padding: 24, background: "#0b0e11", color: "white" }}>
-      
-      {/* ✅ VERSION MARKER */}
-      <div style={{ color: "red", fontWeight: 800 }}>
-        NEW VERSION TEST
-      </div>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#050b14",
+        color: "#ffffff",
+        fontFamily: "Arial, sans-serif",
+        display: "flex",
+      }}
+    >
+      <aside
+        style={{
+          width: "250px",
+          background: "#060606",
+          padding: "24px 18px",
+          boxSizing: "border-box",
+          borderRight: "1px solid #161616",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "22px",
+            fontWeight: 800,
+            marginBottom: "30px",
+            color: "#ffffff",
+          }}
+        >
+          CryptoHost
+        </h1>
 
-      <h1>Deposit USDT</h1>
-      <p>Logged in as: {userEmail || "Loading..."}</p>
+        <nav style={{ display: "grid", gap: "14px" }}>
+          <Link href="/dashboard" style={navStyle}>
+            Dashboard
+          </Link>
+          <Link href="/upload" style={navStyle}>
+            Upload File
+          </Link>
+          <Link href="/reports" style={navStyle}>
+            Reports
+          </Link>
+          <Link href="/subscription" style={navStyle}>
+            Subscription
+          </Link>
+          <Link href="/dashboard/fund" style={navStyle}>
+            💰 Fund Account
+          </Link>
+        </nav>
+      </aside>
 
-      <button onClick={handleManualDeposit}>
-        Add Test Deposit
-      </button>
+      <main
+        style={{
+          flex: 1,
+          padding: "42px 48px",
+          background: "linear-gradient(180deg, #03142f 0%, #021022 55%, #010814 100%)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1100px",
+            margin: "0 auto",
+          }}
+        >
+          <div
+            style={{
+              background: "#08111d",
+              border: "1px solid #1f314b",
+              borderRadius: "22px",
+              padding: "36px",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                color: "#f3c400",
+                fontWeight: 700,
+                fontSize: "13px",
+                marginBottom: "14px",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+              }}
+            >
+              Secure Funding Portal
+            </div>
 
-      <p>Total: {totals.gross} USDT</p>
+            <h2
+              style={{
+                fontSize: "48px",
+                fontWeight: 800,
+                margin: "0 0 14px 0",
+                color: "#ffffff",
+              }}
+            >
+              Deposit USDT
+            </h2>
+
+            <p
+              style={{
+                margin: 0,
+                fontSize: "17px",
+                color: "#c6d3e6",
+                lineHeight: 1.7,
+                maxWidth: "760px",
+              }}
+            >
+              Fund your CryptoHost account securely using supported USDT networks.
+              Once deposit monitoring is fully connected, your incoming transaction
+              will reflect automatically in your account dashboard.
+            </p>
+
+            <div
+              style={{
+                marginTop: "30px",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                gap: "18px",
+              }}
+            >
+              <div style={cardStyle}>
+                <div style={labelStyle}>Accepted Asset</div>
+                <div style={valueStyle}>USDT</div>
+              </div>
+
+              <div style={cardStyle}>
+                <div style={labelStyle}>Status</div>
+                <div style={{ ...valueStyle, color: "#f3c400" }}>
+                  Awaiting live wallet sync
+                </div>
+              </div>
+
+              <div style={cardStyle}>
+                <div style={labelStyle}>Funding Mode</div>
+                <div style={valueStyle}>Direct Deposit</div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginTop: "26px",
+                background: "rgba(243,196,0,0.08)",
+                border: "1px solid rgba(243,196,0,0.18)",
+                borderRadius: "16px",
+                padding: "18px 20px",
+              }}
+            >
+              <div
+                style={{
+                  color: "#f3c400",
+                  fontWeight: 700,
+                  marginBottom: "8px",
+                }}
+              >
+                Funding Notice
+              </div>
+              <div
+                style={{
+                  color: "#dbe6f5",
+                  fontSize: "14px",
+                  lineHeight: 1.7,
+                }}
+              >
+                Deposit automation is being finalized. This page will serve as the
+                live account funding interface once wallet tracking and automatic
+                confirmation are enabled.
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginTop: "30px",
+                display: "flex",
+                gap: "14px",
+                flexWrap: "wrap",
+              }}
+            >
+              <Link href="/dashboard/admin" style={primaryButton}>
+                Open Admin Panel
+              </Link>
+
+              <Link href="/dashboard" style={secondaryButton}>
+                Back to Dashboard
+              </Link>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
+
+const navStyle = {
+  display: "block",
+  padding: "14px 14px",
+  borderRadius: "10px",
+  background: "#1a1a1a",
+  color: "#ffffff",
+  textDecoration: "none",
+  fontWeight: 600,
+};
+
+const cardStyle = {
+  background: "#0b1728",
+  border: "1px solid #1f314b",
+  borderRadius: "16px",
+  padding: "20px",
+};
+
+const labelStyle = {
+  color: "#9fb0c7",
+  fontSize: "13px",
+  marginBottom: "10px",
+};
+
+const valueStyle = {
+  color: "#ffffff",
+  fontSize: "22px",
+  fontWeight: 800,
+};
+
+const primaryButton = {
+  background: "#f3c400",
+  color: "#111",
+  textDecoration: "none",
+  padding: "14px 22px",
+  borderRadius: "12px",
+  fontWeight: 700,
+  border: "1px solid #f3c400",
+};
+
+const secondaryButton = {
+  background: "#111927",
+  color: "#ffffff",
+  textDecoration: "none",
+  padding: "14px 22px",
+  borderRadius: "12px",
+  fontWeight: 700,
+  border: "1px solid #253246",
+};
