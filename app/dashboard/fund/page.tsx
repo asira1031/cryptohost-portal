@@ -2,190 +2,310 @@
 
 import Link from "next/link";
 
+const deposits = [
+  {
+    date: "3/21/2026, 12:26:13 PM",
+    asset: "USDT",
+    network: "BEP20",
+    gross: "1,000.00",
+    fee: "30.00",
+    net: "970.00",
+    status: "Pending",
+    tx: "TEST-TX-001",
+  },
+  {
+    date: "3/19/2026, 6:35:36 PM",
+    asset: "USDT",
+    network: "BEP20",
+    gross: "0.00",
+    fee: "0.00",
+    net: "0.00",
+    status: "Credited",
+    tx: "0xTEST123456789",
+  },
+  {
+    date: "3/18/2026, 4:21:34 PM",
+    asset: "USDT",
+    network: "ERC20",
+    gross: "0.00",
+    fee: "0.00",
+    net: "0.00",
+    status: "Credited",
+    tx: "0x8d34demo91ab",
+  },
+];
+
 export default function FundPage() {
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#050b14",
-        color: "#ffffff",
+        background: "#e9e9e9",
         fontFamily: "Arial, sans-serif",
         display: "flex",
       }}
     >
       <aside
         style={{
-          width: "250px",
-          background: "#060606",
-          padding: "24px 18px",
+          width: "230px",
+          background: "#0a0a0a",
+          color: "#fff",
+          padding: "28px 16px",
           boxSizing: "border-box",
-          borderRight: "1px solid #161616",
         }}
       >
-        <h1
+        <div
           style={{
             fontSize: "22px",
             fontWeight: 800,
-            marginBottom: "30px",
-            color: "#ffffff",
+            marginBottom: "28px",
           }}
         >
           CryptoHost
-        </h1>
+        </div>
 
-        <nav style={{ display: "grid", gap: "14px" }}>
-          <Link href="/dashboard" style={navStyle}>
-            Dashboard
-          </Link>
-          <Link href="/upload" style={navStyle}>
-            Upload File
-          </Link>
-          <Link href="/reports" style={navStyle}>
-            Reports
-          </Link>
-          <Link href="/subscription" style={navStyle}>
-            Subscription
-          </Link>
-          <Link href="/dashboard/fund" style={navStyle}>
-            💰 Fund Account
-          </Link>
-        </nav>
+        <div style={{ display: "grid", gap: "14px" }}>
+          <NavButton href="/dashboard" label="Dashboard" />
+          <NavButton href="/upload" label="Upload File" />
+          <NavButton href="/reports" label="Reports" />
+          <NavButton href="/subscription" label="Subscription" />
+          <NavButton href="/dashboard/fund" label="💰 Fund Account" />
+        </div>
       </aside>
 
       <main
         style={{
           flex: 1,
-          padding: "42px 48px",
-          background: "linear-gradient(180deg, #03142f 0%, #021022 55%, #010814 100%)",
+          padding: "18px 20px",
+          boxSizing: "border-box",
         }}
       >
         <div
           style={{
-            maxWidth: "1100px",
-            margin: "0 auto",
+            background: "#00090f",
+            minHeight: "calc(100vh - 36px)",
+            padding: "28px 34px",
+            boxSizing: "border-box",
           }}
         >
           <div
             style={{
-              background: "#08111d",
-              border: "1px solid #1f314b",
-              borderRadius: "22px",
-              padding: "36px",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+              maxWidth: "1050px",
+              margin: "0 auto",
             }}
           >
             <div
               style={{
-                display: "inline-block",
-                color: "#f3c400",
-                fontWeight: 700,
-                fontSize: "13px",
-                marginBottom: "14px",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-              }}
-            >
-              Secure Funding Portal
-            </div>
-
-            <h2
-              style={{
-                fontSize: "48px",
-                fontWeight: 800,
-                margin: "0 0 14px 0",
-                color: "#ffffff",
-              }}
-            >
-              Deposit USDT
-            </h2>
-
-            <p
-              style={{
-                margin: 0,
-                fontSize: "17px",
-                color: "#c6d3e6",
-                lineHeight: 1.7,
-                maxWidth: "760px",
-              }}
-            >
-              Fund your CryptoHost account securely using supported USDT networks.
-              Once deposit monitoring is fully connected, your incoming transaction
-              will reflect automatically in your account dashboard.
-            </p>
-
-            <div
-              style={{
-                marginTop: "30px",
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "18px",
-              }}
-            >
-              <div style={cardStyle}>
-                <div style={labelStyle}>Accepted Asset</div>
-                <div style={valueStyle}>USDT</div>
-              </div>
-
-              <div style={cardStyle}>
-                <div style={labelStyle}>Status</div>
-                <div style={{ ...valueStyle, color: "#f3c400" }}>
-                  Awaiting live wallet sync
-                </div>
-              </div>
-
-              <div style={cardStyle}>
-                <div style={labelStyle}>Funding Mode</div>
-                <div style={valueStyle}>Direct Deposit</div>
-              </div>
-            </div>
-
-            <div
-              style={{
-                marginTop: "26px",
-                background: "rgba(243,196,0,0.08)",
-                border: "1px solid rgba(243,196,0,0.18)",
-                borderRadius: "16px",
-                padding: "18px 20px",
-              }}
-            >
-              <div
-                style={{
-                  color: "#f3c400",
-                  fontWeight: 700,
-                  marginBottom: "8px",
-                }}
-              >
-                Funding Notice
-              </div>
-              <div
-                style={{
-                  color: "#dbe6f5",
-                  fontSize: "14px",
-                  lineHeight: 1.7,
-                }}
-              >
-                Deposit automation is being finalized. This page will serve as the
-                live account funding interface once wallet tracking and automatic
-                confirmation are enabled.
-              </div>
-            </div>
-
-            <div
-              style={{
-                marginTop: "30px",
                 display: "flex",
-                gap: "14px",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                gap: "20px",
+                marginBottom: "18px",
                 flexWrap: "wrap",
               }}
             >
-              <Link href="/dashboard/admin" style={primaryButton}>
-                Open Admin Panel
-              </Link>
+              <div>
+                <h1
+                  style={{
+                    color: "#fff",
+                    fontSize: "26px",
+                    fontWeight: 800,
+                    margin: "0 0 8px 0",
+                  }}
+                >
+                  Deposit USDT
+                </h1>
+                <div style={{ color: "#cbd5e1", fontSize: "15px" }}>
+                  Logged in as: jans103174@gmail.com
+                </div>
+              </div>
 
-              <Link href="/dashboard" style={secondaryButton}>
-                Back to Dashboard
-              </Link>
+              <button
+                style={{
+                  background: "#f3c400",
+                  color: "#111",
+                  border: "none",
+                  borderRadius: "10px",
+                  padding: "12px 20px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                Buy USDT
+              </button>
             </div>
+
+            <section
+              style={{
+                background: "#141922",
+                border: "1px solid #232b39",
+                borderRadius: "16px",
+                padding: "18px",
+                marginBottom: "20px",
+              }}
+            >
+              <div
+                style={{
+                  color: "#fff",
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  marginBottom: "10px",
+                }}
+              >
+                Deposit Wallet
+              </div>
+
+              <div
+                style={{
+                  color: "#8e9aab",
+                  fontSize: "14px",
+                  marginBottom: "12px",
+                }}
+              >
+                Send only USDT using the supported network shown below.
+              </div>
+
+              <div
+                style={{
+                  background: "#0c1117",
+                  border: "1px solid #263143",
+                  borderRadius: "10px",
+                  padding: "12px 14px",
+                  color: "#f3c400",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  wordBreak: "break-all",
+                  marginBottom: "12px",
+                }}
+              >
+                0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <InfoPill text="Asset: USDT" />
+                <InfoPill text="Network: BEP20 / ERC20 only" />
+                <InfoPill text="Platform Fee: 3%" />
+              </div>
+            </section>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                gap: "14px",
+                marginBottom: "20px",
+              }}
+            >
+              <StatCard label="Total Deposits" value="1,000.00 USDT" color="#ffffff" />
+              <StatCard label="Total Fees Earned" value="30.00 USDT" color="#f3c400" />
+              <StatCard label="Net Balance" value="970.00 USDT" color="#19d38a" />
+            </div>
+
+            <section
+              style={{
+                background: "#141922",
+                border: "1px solid #232b39",
+                borderRadius: "16px",
+                padding: "18px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "16px",
+                  gap: "16px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <div
+                  style={{
+                    color: "#fff",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                  }}
+                >
+                  Deposit History
+                </div>
+
+                <Link
+                  href="/dashboard"
+                  style={{
+                    color: "#f3c400",
+                    textDecoration: "none",
+                    fontWeight: 700,
+                  }}
+                >
+                  Back to Dashboard
+                </Link>
+              </div>
+
+              <div style={{ overflowX: "auto" }}>
+                <table
+                  style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    color: "#d8e2f1",
+                    fontSize: "14px",
+                  }}
+                >
+                  <thead>
+                    <tr style={{ color: "#94a3b8", textAlign: "left" }}>
+                      <th style={thStyle}>Date</th>
+                      <th style={thStyle}>Asset</th>
+                      <th style={thStyle}>Network</th>
+                      <th style={thStyle}>Gross</th>
+                      <th style={thStyle}>Fee</th>
+                      <th style={thStyle}>Net</th>
+                      <th style={thStyle}>Status</th>
+                      <th style={thStyle}>TX Hash</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {deposits.map((row) => (
+                      <tr key={row.tx} style={{ borderTop: "1px solid #253041" }}>
+                        <td style={tdStyle}>{row.date}</td>
+                        <td style={tdStyle}>{row.asset}</td>
+                        <td style={tdStyle}>{row.network}</td>
+                        <td style={tdStyle}>{row.gross}</td>
+                        <td style={{ ...tdStyle, color: "#f3c400", fontWeight: 700 }}>
+                          {row.fee}
+                        </td>
+                        <td style={{ ...tdStyle, color: "#19d38a", fontWeight: 700 }}>
+                          {row.net}
+                        </td>
+                        <td style={tdStyle}>
+                          <span
+                            style={{
+                              padding: "6px 10px",
+                              borderRadius: "999px",
+                              fontSize: "12px",
+                              fontWeight: 700,
+                              background:
+                                row.status === "Pending"
+                                  ? "rgba(239,68,68,0.15)"
+                                  : "rgba(34,197,94,0.15)",
+                              color:
+                                row.status === "Pending" ? "#ef4444" : "#22c55e",
+                            }}
+                          >
+                            {row.status}
+                          </span>
+                        </td>
+                        <td style={tdStyle}>{row.tx}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
           </div>
         </div>
       </main>
@@ -193,51 +313,88 @@ export default function FundPage() {
   );
 }
 
-const navStyle = {
-  display: "block",
-  padding: "14px 14px",
-  borderRadius: "10px",
-  background: "#1a1a1a",
-  color: "#ffffff",
-  textDecoration: "none",
+function NavButton({ href, label }: { href: string; label: string }) {
+  return (
+    <Link
+      href={href}
+      style={{
+        display: "block",
+        background: "#1c1c1f",
+        color: "#fff",
+        textDecoration: "none",
+        padding: "14px 14px",
+        borderRadius: "10px",
+        fontWeight: 600,
+      }}
+    >
+      {label}
+    </Link>
+  );
+}
+
+function InfoPill({ text }: { text: string }) {
+  return (
+    <div
+      style={{
+        background: "#111722",
+        border: "1px solid #243041",
+        borderRadius: "10px",
+        padding: "10px 14px",
+        color: "#dbe5f3",
+        fontSize: "14px",
+        fontWeight: 600,
+      }}
+    >
+      {text}
+    </div>
+  );
+}
+
+function StatCard({
+  label,
+  value,
+  color,
+}: {
+  label: string;
+  value: string;
+  color: string;
+}) {
+  return (
+    <div
+      style={{
+        background: "#141922",
+        border: "1px solid #232b39",
+        borderRadius: "14px",
+        padding: "18px",
+      }}
+    >
+      <div
+        style={{
+          color: "#8e9aab",
+          fontSize: "14px",
+          marginBottom: "10px",
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          color,
+          fontSize: "20px",
+          fontWeight: 800,
+        }}
+      >
+        {value}
+      </div>
+    </div>
+  );
+}
+
+const thStyle: React.CSSProperties = {
+  padding: "12px 10px",
   fontWeight: 600,
 };
 
-const cardStyle = {
-  background: "#0b1728",
-  border: "1px solid #1f314b",
-  borderRadius: "16px",
-  padding: "20px",
-};
-
-const labelStyle = {
-  color: "#9fb0c7",
-  fontSize: "13px",
-  marginBottom: "10px",
-};
-
-const valueStyle = {
-  color: "#ffffff",
-  fontSize: "22px",
-  fontWeight: 800,
-};
-
-const primaryButton = {
-  background: "#f3c400",
-  color: "#111",
-  textDecoration: "none",
-  padding: "14px 22px",
-  borderRadius: "12px",
-  fontWeight: 700,
-  border: "1px solid #f3c400",
-};
-
-const secondaryButton = {
-  background: "#111927",
-  color: "#ffffff",
-  textDecoration: "none",
-  padding: "14px 22px",
-  borderRadius: "12px",
-  fontWeight: 700,
-  border: "1px solid #253246",
+const tdStyle: React.CSSProperties = {
+  padding: "14px 10px",
 };
