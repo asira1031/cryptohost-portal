@@ -1,6 +1,23 @@
 "use client";
+D
+import Link from "next/link"; // make sure this is at the top
 
-import Link from "next/link";
+<Link
+  href="https://www.binance.com/en/buy-sell-crypto"
+  target="_blank"
+  style={{
+    background: "#f3c400",
+    color: "#111",
+    borderRadius: "10px",
+    padding: "12px 20px",
+    fontWeight: 700,
+    cursor: "pointer",
+    textDecoration: "none",
+    display: "inline-block",
+  }}
+>
+  Buy USDT
+</Link>
 
 const deposits = [
   {
