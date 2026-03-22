@@ -95,8 +95,8 @@ export default function FundPage() {
             </div>
           </div>
 
-          
-           <a
+ 
+<a
   href="https://www.binance.com/en/buy-sell-crypto"
   target="_blank"
   rel="noopener noreferrer"
@@ -113,23 +113,7 @@ export default function FundPage() {
 >
   Buy USDT
 </a>
-          <a
-  href="https://www.binance.com/en/buy-sell-crypto"
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{
-    background: "#f3c400",
-    color: "#111",
-    borderRadius: "10px",
-    padding: "12px 20px",
-    fontWeight: 700,
-    cursor: "pointer",
-    textDecoration: "none",
-    display: "inline-block",
-  }}
->
-  Buy USDT
-</a>
+
         </div>
 
         <section
