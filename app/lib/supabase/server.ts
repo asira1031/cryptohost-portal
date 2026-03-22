@@ -12,7 +12,9 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll() {},
+        setAll() {
+          // no-op for now
+        },
       },
     }
   );

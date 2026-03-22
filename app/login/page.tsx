@@ -1,134 +1,96 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "../lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
+  const supabase = createClient();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function handleLogin(e: FormEvent<HTMLFormElement>) {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (error) {
-        setMessage(error.message);
-        return;
-      }
-
-      router.push("/dashboard");
-    } catch {
-      setMessage("Unexpected error occurred.");
-    } finally {
+    if (error) {
+      setMessage(error.message);
       setLoading(false);
+      return;
     }
+
+    router.push("/dashboard");
+    router.refresh();
   }
 
   return (
     <div
       style={{
         minHeight: "100vh",
-        background:
-          "linear-gradient(180deg, #03142f 0%, #021022 55%, #010814 100%)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "Arial, sans-serif",
+        background: "#0b1220",
+        color: "#fff",
       }}
     >
-      <div
+      <form
+        onSubmit={handleLogin}
         style={{
-          width: "100%",
-          maxWidth: "420px",
-          background: "#0a1628",
-          borderRadius: "16px",
-          padding: "32px",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
-          border: "1px solid #1f314b",
+          background: "#111827",
+          padding: 30,
+          borderRadius: 12,
+          width: 320,
         }}
       >
-        <h1
+        <h2 style={{ marginBottom: 20 }}>Login</h2>
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          style={{ width: "100%", marginBottom: 10, padding: 10 }}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{ width: "100%", marginBottom: 10, padding: 10 }}
+        />
+
+        <button
+          type="submit"
+          disabled={loading}
           style={{
-            fontSize: "28px",
-            marginBottom: "20px",
-            color: "#ffffff",
+            width: "100%",
+            padding: 10,
+            background: "#facc15",
+            border: "none",
+            cursor: "pointer",
           }}
         >
-          Login
-        </h1>
-
-        <form onSubmit={handleLogin} style={{ display: "grid", gap: "14px" }}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #2a3f5f",
-              background: "#020c1b",
-              color: "#ffffff",
-            }}
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #2a3f5f",
-              background: "#020c1b",
-              color: "#ffffff",
-            }}
-          />
-
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "none",
-              background: "#2563eb",
-              color: "#fff",
-              fontWeight: "bold",
-              cursor: "pointer",
-            }}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
+          {loading ? "Logging in..." : "Login"}
+        </button>
 
         {message && (
-          <p style={{ color: "#ff6b6b", marginTop: "12px" }}>{message}</p>
+          <p style={{ color: "red", marginTop: 10 }}>{message}</p>
         )}
-
-        <p style={{ marginTop: "16px", color: "#c6d3e6" }}>
-          Don’t have an account?{" "}
-          <Link href="/register" style={{ color: "#f3c400" }}>
-            Create account
-          </Link>
-        </p>
-      </div>
+      </form>
     </div>
   );
 }

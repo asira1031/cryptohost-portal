@@ -64,6 +64,10 @@ export default function AdminPage() {
     );
   }
 
+  function openReport(id: string) {
+    window.open(`/reports/${id}`, "_blank", "noopener,noreferrer");
+  }
+
   useEffect(() => {
     loadUploads();
   }, []);
@@ -72,14 +76,12 @@ export default function AdminPage() {
     <div style={{ padding: 24 }}>
       <h1>Admin Upload Monitor</h1>
 
-      {message && (
-        <p style={{ color: "red", marginTop: 12 }}>{message}</p>
-      )}
+      {message && <p style={{ color: "red" }}>{message}</p>}
 
       {loading ? (
-        <p style={{ marginTop: 16 }}>Loading uploads...</p>
+        <p>Loading uploads...</p>
       ) : uploads.length === 0 ? (
-        <p style={{ marginTop: 16 }}>No uploads found.</p>
+        <p>No uploads found.</p>
       ) : (
         <table
           style={{
@@ -90,21 +92,28 @@ export default function AdminPage() {
         >
           <thead>
             <tr>
-              <th style={{ textAlign: "left", padding: 8 }}>File</th>
-              <th style={{ textAlign: "left", padding: 8 }}>User ID</th>
-              <th style={{ textAlign: "left", padding: 8 }}>Status</th>
-              <th style={{ textAlign: "left", padding: 8 }}>Created</th>
-              <th style={{ textAlign: "left", padding: 8 }}>Actions</th>
+              <th style={{ padding: 8, textAlign: "left" }}>File</th>
+              <th style={{ padding: 8, textAlign: "left" }}>User ID</th>
+              <th style={{ padding: 8, textAlign: "left" }}>Status</th>
+              <th style={{ padding: 8, textAlign: "left" }}>Created</th>
+              <th style={{ padding: 8, textAlign: "left" }}>Report URL</th>
+              <th style={{ padding: 8, textAlign: "left" }}>Actions</th>
             </tr>
           </thead>
+
           <tbody>
             {uploads.map((item) => (
               <tr key={item.id}>
                 <td style={{ padding: 8 }}>{item.file_name}</td>
                 <td style={{ padding: 8 }}>{item.user_id}</td>
-                <td style={{ padding: 8 }}>{item.status}</td>
+                <td style={{ padding: 8, textTransform: "capitalize" }}>
+                  {item.status}
+                </td>
                 <td style={{ padding: 8 }}>
                   {new Date(item.created_at).toLocaleString()}
+                </td>
+                <td style={{ padding: 8, fontSize: 12, wordBreak: "break-all" }}>
+                  {`/reports/${item.id}`}
                 </td>
                 <td style={{ padding: 8 }}>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -116,6 +125,9 @@ export default function AdminPage() {
                     </button>
                     <button onClick={() => updateStatus(item.id, "completed")}>
                       Completed
+                    </button>
+                    <button onClick={() => openReport(item.id)}>
+                      Open Report
                     </button>
                   </div>
                 </td>
