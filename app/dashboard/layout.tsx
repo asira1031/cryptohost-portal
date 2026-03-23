@@ -72,6 +72,10 @@ export default function DashboardLayout({
           Subscription
         </Link>
 
+        <Link href="/dashboard/account" style={navStyle("/dashboard/account")}>
+          💰 Fund Account
+        </Link>
+
         <button
           onClick={handleLogout}
           style={{
