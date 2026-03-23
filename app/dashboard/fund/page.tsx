@@ -79,13 +79,13 @@ export default function FundPage() {
     >
       <div
         style={{
-          maxWidth: "1160px",
+          maxWidth: "1100px",
           margin: "0 auto",
           background: "#020817",
           borderRadius: "18px",
           padding: "28px",
-          color: "#ffffff",
-        }}
+          boxShadow: "0 0 0 1px #1f2937",
+  }}
       >
         {/* HEADER */}
         <div
