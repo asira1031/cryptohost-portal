@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "../../lib/supabase/client";
 
 export default function FundPage() {
   const supabase = createClient();
@@ -25,15 +25,16 @@ export default function FundPage() {
     const { error } = await supabase.from("buyer_wallets").insert({
       user_id: user.id,
       wallet_address: buyerWallet,
-      network: network,
+      network,
     });
 
     if (error) {
       setMessage("Error saving wallet.");
-    } else {
-      setMessage("Wallet saved successfully.");
-      setBuyerWallet("");
+      return;
     }
+
+    setMessage("Wallet saved successfully.");
+    setBuyerWallet("");
   }
 
   return (
