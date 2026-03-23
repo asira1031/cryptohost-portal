@@ -16,7 +16,18 @@ function getStatusColor(status: string) {
 
   if (s === "completed") return "#22c55e";
   if (s === "processing") return "#facc15";
+  if (s === "failed") return "#ef4444";
   return "#60a5fa";
+}
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) {
+    return "Invalid date";
+  }
+
+  return date.toLocaleString();
 }
 
 export default async function ReportsPage() {
@@ -30,11 +41,13 @@ export default async function ReportsPage() {
     return <div style={{ padding: 20 }}>Not logged in</div>;
   }
 
-  const { data: files } = await supabase
+  const { data, error } = await supabase
     .from("uploaded_files")
-    .select("*")
+    .select("id, file_name, file_path, file_size, mime_type, status, created_at")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
+
+  const files: UploadedFile[] = data ?? [];
 
   return (
     <div style={{ padding: 24 }}>
@@ -64,7 +77,20 @@ export default async function ReportsPage() {
           View your uploaded files and current processing status.
         </p>
 
-        {!files || files.length === 0 ? (
+        {error ? (
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: 14,
+              padding: 24,
+              boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+            }}
+          >
+            <p style={{ margin: 0, color: "#dc2626" }}>
+              Failed to load reports.
+            </p>
+          </div>
+        ) : files.length === 0 ? (
           <div
             style={{
               background: "#fff",
@@ -201,7 +227,7 @@ export default async function ReportsPage() {
                         verticalAlign: "middle",
                       }}
                     >
-                      {new Date(file.created_at).toLocaleString()}
+                      {formatDate(file.created_at)}
                     </td>
 
                     <td
