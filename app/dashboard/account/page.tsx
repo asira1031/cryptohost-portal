@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 type BankAccount = {
   bank: string;
   accountName: string;
@@ -10,6 +12,11 @@ type BankAccount = {
 };
 
 export default function AccountPage() {
+  const [showBanks, setShowBanks] = useState(false);
+
+  const gatewayWallet = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
+  const buyerWallet = "Buyer wallet will be assigned / confirmed per transaction";
+
   const bankAccounts: BankAccount[] = [
     {
       bank: "MariBank",
@@ -69,6 +76,15 @@ export default function AccountPage() {
     },
   ];
 
+  async function copyText(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Copied successfully.");
+    } catch {
+      alert("Copy failed.");
+    }
+  }
+
   return (
     <div
       style={{
@@ -83,7 +99,7 @@ export default function AccountPage() {
       <div
         style={{
           width: "100%",
-          maxWidth: 1100,
+          maxWidth: 1120,
           background: "#101a49",
           borderRadius: 22,
           padding: 32,
@@ -105,18 +121,192 @@ export default function AccountPage() {
         <p
           style={{
             marginTop: 14,
-            marginBottom: 28,
+            marginBottom: 26,
             color: "#c7d2fe",
             fontSize: 15,
             lineHeight: 1.8,
-            maxWidth: 900,
+            maxWidth: 920,
           }}
         >
-          Please use one of the approved bank accounts below to fund your
-          CryptoHost transaction. After completing your transfer, proceed with
-          file upload and confirmation inside the portal. Always use your
-          registered CryptoHost email as your payment reference when possible.
+          Choose your preferred funding method below. You may buy USDT from an
+          external provider, send to the designated gateway wallet, or use bank
+          payment when required for your transaction flow.
         </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 16,
+            marginBottom: 22,
+          }}
+        >
+          <a
+            href="https://www.binance.com/en/buy-sell-crypto"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              background: "#f4b400",
+              color: "#111827",
+              textDecoration: "none",
+              padding: "16px 20px",
+              borderRadius: 14,
+              fontWeight: 800,
+              fontSize: 16,
+              textAlign: "center",
+              display: "block",
+            }}
+          >
+            Buy USDT via Binance
+          </a>
+
+          <a
+            href="https://www.coinbase.com/buy"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              background: "#2563eb",
+              color: "#ffffff",
+              textDecoration: "none",
+              padding: "16px 20px",
+              borderRadius: 14,
+              fontWeight: 800,
+              fontSize: 16,
+              textAlign: "center",
+              display: "block",
+            }}
+          >
+            Buy Crypto via Coinbase
+          </a>
+
+          <button
+            onClick={() => setShowBanks((prev) => !prev)}
+            style={{
+              background: showBanks ? "#334155" : "#1f2b5c",
+              color: "#ffffff",
+              border: "1px solid #42568f",
+              padding: "16px 20px",
+              borderRadius: 14,
+              fontWeight: 800,
+              fontSize: 16,
+              cursor: "pointer",
+            }}
+          >
+            {showBanks ? "Hide Bank Accounts" : "Bank Payment"}
+          </button>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 18,
+            marginBottom: 24,
+          }}
+        >
+          <div
+            style={{
+              background: "#1a2556",
+              border: "1px solid #33457a",
+              borderRadius: 16,
+              padding: 22,
+            }}
+          >
+            <div
+              style={{
+                color: "#93c5fd",
+                fontSize: 13,
+                fontWeight: 700,
+                marginBottom: 10,
+                letterSpacing: 0.3,
+              }}
+            >
+              GATEWAY WALLET
+            </div>
+
+            <div
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 12,
+                padding: "14px 16px",
+                color: "#ffffff",
+                fontSize: 15,
+                lineHeight: 1.7,
+                wordBreak: "break-word",
+                marginBottom: 14,
+              }}
+            >
+              {gatewayWallet}
+            </div>
+
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <button
+                onClick={() => copyText(gatewayWallet)}
+                style={smallButtonStyle("#f4b400", "#111827")}
+              >
+                Copy Gateway Wallet
+              </button>
+
+              <div
+                style={{
+                  ...pillStyle,
+                  background: "#0f766e",
+                }}
+              >
+                ERC20 / BEP20
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              background: "#1a2556",
+              border: "1px solid #33457a",
+              borderRadius: 16,
+              padding: 22,
+            }}
+          >
+            <div
+              style={{
+                color: "#93c5fd",
+                fontSize: 13,
+                fontWeight: 700,
+                marginBottom: 10,
+                letterSpacing: 0.3,
+              }}
+            >
+              BUYER WALLET
+            </div>
+
+            <div
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 12,
+                padding: "14px 16px",
+                color: "#ffffff",
+                fontSize: 15,
+                lineHeight: 1.7,
+                wordBreak: "break-word",
+                marginBottom: 14,
+              }}
+            >
+              {buyerWallet}
+            </div>
+
+            <div
+              style={{
+                color: "#cbd5e1",
+                fontSize: 13,
+                lineHeight: 1.7,
+              }}
+            >
+              Buyer wallet details may be assigned or confirmed depending on the
+              transaction workflow and funding route.
+            </div>
+          </div>
+        </div>
 
         <div
           style={{
@@ -124,7 +314,7 @@ export default function AccountPage() {
             border: "1px solid #33457a",
             borderRadius: 16,
             padding: 20,
-            marginBottom: 24,
+            marginBottom: showBanks ? 22 : 0,
           }}
         >
           <div
@@ -146,84 +336,109 @@ export default function AccountPage() {
               lineHeight: 1.8,
             }}
           >
-            1. Select the most appropriate bank account below based on your
-            transfer type and currency.
+            1. Choose Binance or Coinbase if purchasing USDT externally.
             <br />
-            2. Complete your funding using the correct bank details.
+            2. After purchase, send USDT to the designated gateway wallet using
+            the correct network.
             <br />
-            3. Use your registered CryptoHost email as payment reference.
+            3. If using bank transfer, click Bank Payment to reveal approved
+            bank accounts.
             <br />
-            4. After payment, upload your file through the portal.
+            4. After funding, upload your file through the portal.
             <br />
             5. Monitor your processing status in the Reports section.
           </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: 18,
-          }}
-        >
-          {bankAccounts.map((account, index) => (
+        {showBanks && (
+          <div
+            style={{
+              marginTop: 22,
+            }}
+          >
             <div
-              key={`${account.bank}-${account.accountNumber}-${index}`}
               style={{
-                background: "#1a2556",
-                border: "1px solid #33457a",
-                borderRadius: 16,
-                padding: 22,
-                boxShadow: "0 8px 20px rgba(0,0,0,0.14)",
+                color: "#ffffff",
+                fontSize: 22,
+                fontWeight: 700,
+                marginBottom: 16,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: 12,
-                  marginBottom: 16,
-                  flexWrap: "wrap",
-                }}
-              >
-                <div
-                  style={{
-                    color: "#ffffff",
-                    fontSize: 20,
-                    fontWeight: 700,
-                  }}
-                >
-                  {account.bank}
-                </div>
-
-                <div
-                  style={{
-                    background: account.currency === "USD" ? "#2563eb" : "#f4b400",
-                    color: account.currency === "USD" ? "#ffffff" : "#111827",
-                    fontSize: 12,
-                    fontWeight: 800,
-                    padding: "6px 10px",
-                    borderRadius: 999,
-                  }}
-                >
-                  {account.currency}
-                </div>
-              </div>
-
-              <div style={{ display: "grid", gap: 12 }}>
-                <InfoRow label="Account Name" value={account.accountName} />
-                <InfoRow label="Account Number" value={account.accountNumber} />
-                <InfoRow label="SWIFT Code" value={account.swift} />
-                <InfoRow label="Note" value={account.note} />
-              </div>
+              Approved Bank Accounts
             </div>
-          ))}
-        </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gap: 18,
+              }}
+            >
+              {bankAccounts.map((account, index) => (
+                <div
+                  key={`${account.bank}-${account.accountNumber}-${index}`}
+                  style={{
+                    background: "#1a2556",
+                    border: "1px solid #33457a",
+                    borderRadius: 16,
+                    padding: 22,
+                    boxShadow: "0 8px 20px rgba(0,0,0,0.14)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: 12,
+                      marginBottom: 16,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <div
+                      style={{
+                        color: "#ffffff",
+                        fontSize: 20,
+                        fontWeight: 700,
+                      }}
+                    >
+                      {account.bank}
+                    </div>
+
+                    <div
+                      style={{
+                        background:
+                          account.currency === "USD" ? "#2563eb" : "#f4b400",
+                        color:
+                          account.currency === "USD" ? "#ffffff" : "#111827",
+                        fontSize: 12,
+                        fontWeight: 800,
+                        padding: "6px 10px",
+                        borderRadius: 999,
+                      }}
+                    >
+                      {account.currency}
+                    </div>
+                  </div>
+
+                  <div style={{ display: "grid", gap: 12 }}>
+                    <InfoRow label="Account Name" value={account.accountName} />
+                    <InfoRow
+                      label="Account Number"
+                      value={account.accountNumber}
+                    />
+                    <InfoRow label="SWIFT Code" value={account.swift} />
+                    <InfoRow label="Note" value={account.note} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div
           style={{
-            marginTop: 26,
+            marginTop: 24,
             background: "rgba(255,255,255,0.05)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: 14,
@@ -233,9 +448,9 @@ export default function AccountPage() {
             lineHeight: 1.8,
           }}
         >
-          Important: Please verify all transfer details carefully before sending
-          funds. Incorrect account information, missing payment reference, or
-          mismatched transfer currency may delay processing and confirmation.
+          Important: Always verify the correct network, wallet address, and
+          funding method before sending any payment. Incorrect bank details or
+          mismatched transfer routes may delay processing.
         </div>
       </div>
     </div>
@@ -276,3 +491,24 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+
+function smallButtonStyle(background: string, color: string): React.CSSProperties {
+  return {
+    background,
+    color,
+    border: "none",
+    padding: "10px 14px",
+    borderRadius: 10,
+    fontWeight: 700,
+    cursor: "pointer",
+    fontSize: 13,
+  };
+}
+
+const pillStyle: React.CSSProperties = {
+  color: "#ffffff",
+  padding: "10px 14px",
+  borderRadius: 10,
+  fontWeight: 700,
+  fontSize: 13,
+};
