@@ -207,6 +207,36 @@ export default function FundPage() {
           }}
         >
           <h3>Buyer Wallet</h3>
+          {/* BANK & E-WALLET PAYMENT */}
+<div
+  style={{
+    background: "#111827",
+    padding: "20px",
+    borderRadius: "12px",
+    marginBottom: "20px",
+  }}
+>
+  <h3>Bank & E-Wallet Payment (Verified Clients Only)</h3>
+  <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
+    You may send funds using the following accounts. Please ensure correct details and submit proof of payment.
+  </p>
+
+  <div style={{ display: "grid", gap: "12px", color: "#ffffff" }}>
+    <div><strong>Maribank:</strong> Janica Maldives — 1032-431-2229 (SWIFT: LAUIPHM2)</div>
+    <div><strong>Security Bank:</strong> Janica Maldives — 0000076867520 (SWIFT: SETCPHMM)</div>
+    <div><strong>UnionBank:</strong> Janica Maldives — 103200011788 (SWIFT: UBPHPHMMXXX)</div>
+    <div><strong>BDO:</strong> Janica Maldives — 012516004148 (SWIFT: BNORPHMMXXX)</div>
+    <div><strong>BPI (PHP):</strong> Janica Maldives — 0629075905</div>
+    <div><strong>BPI (USD):</strong> Janica Maldives — 0574196219 (SWIFT: BOPIPHMM)</div>
+    <div><strong>Maya Bank:</strong> Janica Maldives — 808529591832 (SWIFT: MYYAPHM2XX)</div>
+    <div><strong>Maya Wallet:</strong> 09498387452</div>
+    <div><strong>GCash:</strong> 09288985979</div>
+  </div>
+
+  <div style={{ marginTop: "15px", color: "#facc15" }}>
+    Bank transfers are processed manually. Submit proof of payment after sending.
+  </div>
+</div>
 
           <form onSubmit={handleSaveBuyerWallet}>
             <input
