@@ -1,264 +1,76 @@
-import Link from "next/link";
-import { createClient } from "../../lib/supabase/server";
+"use client";
 
-type UploadedFile = {
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { createClient } from "../../lib/supabase/client";
+
+type FileData = {
   id: string;
   file_name: string;
-  file_path: string;
-  file_size: number | null;
-  mime_type: string | null;
   status: string;
   created_at: string;
 };
 
-function getStatusColor(status: string) {
-  const s = status.toLowerCase();
+export default function ReportsPage() {
+  const supabase = createClient();
 
-  if (s === "completed") return "#22c55e";
-  if (s === "processing") return "#facc15";
-  if (s === "failed") return "#ef4444";
-  return "#60a5fa";
-}
+  const [files, setFiles] = useState<FileData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
+  useEffect(() => {
+    async function fetchReports() {
+      const { data, error } = await supabase
+        .from("uploaded_files")
+        .select("id, file_name, status, created_at")
+        .order("created_at", { ascending: false });
 
-  if (isNaN(date.getTime())) {
-    return "Invalid date";
-  }
+      if (error) {
+        console.error(error);
+        setError("Failed to load reports.");
+      } else {
+        setFiles(data || []);
+      }
 
-  return date.toLocaleString();
-}
+      setLoading(false);
+    }
 
-export default async function ReportsPage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return <div style={{ padding: 20 }}>Not logged in</div>;
-  }
-
-  const { data, error } = await supabase
-    .from("uploaded_files")
-    .select("id, file_name, file_path, file_size, mime_type, status, created_at")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
-
-  const files: UploadedFile[] = data ?? [];
+    fetchReports();
+  }, []);
 
   return (
     <div style={{ padding: 24 }}>
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: 42,
-            marginBottom: 10,
-            fontWeight: 800,
-          }}
-        >
-          📊 Reports
-        </h1>
+      <h1>📊 Reports</h1>
+      <p>View your uploaded files and current processing status.</p>
 
-        <p
-          style={{
-            color: "#555",
-            marginBottom: 24,
-            fontSize: 16,
-          }}
-        >
-          View your uploaded files and current processing status.
-        </p>
+      {loading && <p>Loading reports...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {!loading && !error && files.length === 0 && <p>No reports found.</p>}
 
-        {error ? (
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 14,
-              padding: 24,
-              boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-            }}
-          >
-            <p style={{ margin: 0, color: "#dc2626" }}>
-              Failed to load reports.
-            </p>
-          </div>
-        ) : files.length === 0 ? (
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 14,
-              padding: 24,
-              boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-            }}
-          >
-            <p style={{ margin: 0 }}>No reports yet.</p>
-          </div>
-        ) : (
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 16,
-              overflow: "hidden",
-              boxShadow: "0 6px 24px rgba(0,0,0,0.08)",
-            }}
-          >
-            <table
+      {!loading && !error && files.length > 0 && (
+        <div style={{ marginTop: 20 }}>
+          {files.map((file) => (
+            <div
+              key={file.id}
               style={{
-                width: "100%",
-                borderCollapse: "collapse",
+                padding: 16,
+                border: "1px solid #ccc",
+                borderRadius: 10,
+                marginBottom: 12,
+                background: "#fff",
               }}
             >
-              <thead>
-                <tr
-                  style={{
-                    background: "#f8fafc",
-                    borderBottom: "1px solid #e5e7eb",
-                  }}
-                >
-                  <th
-                    style={{
-                      textAlign: "left",
-                      padding: "16px 18px",
-                      fontSize: 14,
-                      fontWeight: 700,
-                    }}
-                  >
-                    File
-                  </th>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      padding: "16px 18px",
-                      fontSize: 14,
-                      fontWeight: 700,
-                      width: 140,
-                    }}
-                  >
-                    Status
-                  </th>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      padding: "16px 18px",
-                      fontSize: 14,
-                      fontWeight: 700,
-                      width: 220,
-                    }}
-                  >
-                    Created
-                  </th>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      padding: "16px 18px",
-                      fontSize: 14,
-                      fontWeight: 700,
-                      width: 140,
-                    }}
-                  >
-                    View
-                  </th>
-                </tr>
-              </thead>
+              <h3>{file.file_name}</h3>
+              <p>Status: {file.status}</p>
+              <p>Date: {new Date(file.created_at).toLocaleString()}</p>
 
-              <tbody>
-                {files.map((file, index) => (
-                  <tr
-                    key={file.id}
-                    style={{
-                      borderBottom:
-                        index === files.length - 1
-                          ? "none"
-                          : "1px solid #f1f5f9",
-                    }}
-                  >
-                    <td
-                      style={{
-                        padding: "16px 18px",
-                        verticalAlign: "middle",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontWeight: 600,
-                          color: "#111827",
-                          wordBreak: "break-word",
-                        }}
-                      >
-                        {file.file_name}
-                      </div>
-                    </td>
-
-                    <td
-                      style={{
-                        padding: "16px 18px",
-                        verticalAlign: "middle",
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "6px 12px",
-                          borderRadius: 999,
-                          fontSize: 13,
-                          fontWeight: 700,
-                          textTransform: "capitalize",
-                          background: `${getStatusColor(file.status)}20`,
-                          color: getStatusColor(file.status),
-                        }}
-                      >
-                        {file.status}
-                      </span>
-                    </td>
-
-                    <td
-                      style={{
-                        padding: "16px 18px",
-                        color: "#374151",
-                        fontSize: 14,
-                        verticalAlign: "middle",
-                      }}
-                    >
-                      {formatDate(file.created_at)}
-                    </td>
-
-                    <td
-                      style={{
-                        padding: "16px 18px",
-                        verticalAlign: "middle",
-                      }}
-                    >
-                      <Link
-                        href={`/reports/${file.id}`}
-                        style={{
-                          display: "inline-block",
-                          padding: "8px 14px",
-                          borderRadius: 8,
-                          background: "#facc15",
-                          color: "#111827",
-                          textDecoration: "none",
-                          fontWeight: 700,
-                          fontSize: 14,
-                        }}
-                      >
-                        View Report
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+              <Link href={`/dashboard/reports/${file.id}`}>
+                View Report →
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
