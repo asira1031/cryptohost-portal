@@ -1,54 +1,88 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createClient } from "../lib/supabase/client";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const supabase = createClient();
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.push("/login");
+    router.refresh();
+  }
+
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
-      
       {/* SIDEBAR */}
-      <aside
+      <div
         style={{
-          width: "220px",
-          background: "#111",
+          width: 220,
+          background: "#0a0a0a",
           color: "#fff",
-          padding: "20px",
+          padding: 16,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <h2 style={{ marginBottom: "30px" }}>CryptoHost</h2>
+        <h2 style={{ marginBottom: 20 }}>CryptoHost</h2>
 
-        <nav style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-          <Link href="/dashboard" style={linkStyle}>Dashboard</Link>
-          <Link href="/dashboard/upload" style={linkStyle}>Upload File</Link>
-          <Link href="/dashboard/reports" style={linkStyle}>Reports</Link>
-          <Link href="/dashboard/subscription" style={linkStyle}>Subscription</Link>
-          <Link href="/dashboard/fund" style={linkStyle}>💰 Fund Account</Link>
-        </nav>
-      </aside>
+        <Link href="/dashboard">
+          <div style={navStyle}>Dashboard</div>
+        </Link>
+
+        <Link href="/dashboard/fund">
+          <div style={navStyle}>Upload File</div>
+        </Link>
+
+        <Link href="/dashboard/reports">
+          <div style={navStyle}>Reports</div>
+        </Link>
+
+        <Link href="/dashboard/subscription">
+          <div style={navStyle}>Subscription</div>
+        </Link>
+
+        <Link href="/dashboard/account">
+          <div style={navStyle}>💰 Fund Account</div>
+        </Link>
+
+        {/* LOGOUT BUTTON */}
+        <button
+          onClick={handleLogout}
+          style={{
+            marginTop: "auto",
+            padding: "12px",
+            background: "#ef4444",
+            color: "#fff",
+            border: "none",
+            borderRadius: 8,
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+        >
+          Logout
+        </button>
+      </div>
 
       {/* MAIN CONTENT */}
-      <main
-        style={{
-          flex: 1,
-          padding: "30px",
-          background: "#f4f4f4",
-          color: "#111",
-        }}
-      >
+      <div style={{ flex: 1, background: "#f3f4f6", padding: 24 }}>
         {children}
-      </main>
+      </div>
     </div>
   );
 }
 
-const linkStyle = {
-  color: "#fff",
-  textDecoration: "none",
-  padding: "10px",
-  borderRadius: "6px",
-  background: "#222",
+const navStyle: React.CSSProperties = {
+  padding: "10px 12px",
+  marginBottom: 10,
+  borderRadius: 8,
+  background: "#1f2937",
+  cursor: "pointer",
 };
