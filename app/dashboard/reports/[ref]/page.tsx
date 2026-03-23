@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { createClient } from "../../lib/supabase/client";
-
+import { useEffect, useState } from "react";
+import { createClient } from "../../../lib/supabase/client";
 type FileData = {
   id: string;
   file_name: string;
@@ -22,7 +21,7 @@ export default function ReportsPage() {
     async function fetchReports() {
       const { data, error } = await supabase
         .from("uploaded_files")
-        .select("*")
+        .select("id, file_name, status, created_at")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -36,7 +35,7 @@ export default function ReportsPage() {
     }
 
     fetchReports();
-  }, []);
+  }, [supabase]);
 
   return (
     <div style={{ padding: 24 }}>
@@ -46,9 +45,7 @@ export default function ReportsPage() {
       {loading && <p>Loading reports...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {!loading && !error && files.length === 0 && (
-        <p>No reports found.</p>
-      )}
+      {!loading && !error && files.length === 0 && <p>No reports found.</p>}
 
       {!loading && !error && files.length > 0 && (
         <div style={{ marginTop: 20 }}>
@@ -66,7 +63,7 @@ export default function ReportsPage() {
               <p>Status: {file.status}</p>
               <p>Date: {new Date(file.created_at).toLocaleString()}</p>
 
-              <Link href={`/reports/${file.id}`}>
+              <Link href={`/dashboard/reports/${file.id}`}>
                 View Report →
               </Link>
             </div>
