@@ -13,9 +13,9 @@ type BankAccount = {
 
 export default function AccountPage() {
   const [showBanks, setShowBanks] = useState(false);
+  const [buyerWallet, setBuyerWallet] = useState("");
 
   const gatewayWallet = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
-  const buyerWallet = "Buyer wallet will be assigned / confirmed per transaction";
 
   const bankAccounts: BankAccount[] = [
     {
@@ -279,8 +279,13 @@ export default function AccountPage() {
               BUYER WALLET
             </div>
 
-            <div
+            <textarea
+              value={buyerWallet}
+              onChange={(e) => setBuyerWallet(e.target.value)}
+              placeholder="Paste buyer wallet here"
+              rows={4}
               style={{
+                width: "100%",
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: 12,
@@ -288,11 +293,27 @@ export default function AccountPage() {
                 color: "#ffffff",
                 fontSize: 15,
                 lineHeight: 1.7,
-                wordBreak: "break-word",
                 marginBottom: 14,
+                resize: "vertical",
+                boxSizing: "border-box",
               }}
-            >
-              {buyerWallet}
+            />
+
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <button
+                onClick={() => copyText(buyerWallet)}
+                style={smallButtonStyle("#2563eb", "#ffffff")}
+                disabled={!buyerWallet.trim()}
+              >
+                Copy Buyer Wallet
+              </button>
+
+              <button
+                onClick={() => setBuyerWallet("")}
+                style={smallButtonStyle("#475569", "#ffffff")}
+              >
+                Clear
+              </button>
             </div>
 
             <div
@@ -300,10 +321,11 @@ export default function AccountPage() {
                 color: "#cbd5e1",
                 fontSize: 13,
                 lineHeight: 1.7,
+                marginTop: 12,
               }}
             >
-              Buyer wallet details may be assigned or confirmed depending on the
-              transaction workflow and funding route.
+              Paste the buyer wallet address here before proceeding with funding
+              or wallet assignment.
             </div>
           </div>
         </div>
@@ -351,11 +373,7 @@ export default function AccountPage() {
         </div>
 
         {showBanks && (
-          <div
-            style={{
-              marginTop: 22,
-            }}
-          >
+          <div style={{ marginTop: 22 }}>
             <div
               style={{
                 color: "#ffffff",
