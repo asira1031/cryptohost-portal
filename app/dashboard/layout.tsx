@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { createClient } from "../lib/supabase/client";
 
 export default function DashboardLayout({
@@ -10,6 +10,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const supabase = createClient();
 
   async function handleLogout() {
@@ -18,71 +19,81 @@ export default function DashboardLayout({
     router.refresh();
   }
 
+  const navStyle = (href: string): React.CSSProperties => ({
+    display: "block",
+    padding: "14px 16px",
+    marginBottom: 14,
+    borderRadius: 8,
+    background: pathname === href ? "#1f2937" : "#171717",
+    color: "#ffffff",
+    textDecoration: "none",
+    fontWeight: 500,
+  });
+
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      {/* SIDEBAR */}
-      <div
+    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
+      <aside
         style={{
-          width: 220,
+          width: 180,
           background: "#0a0a0a",
-          color: "#fff",
-          padding: 16,
+          color: "#ffffff",
+          padding: "20px 12px",
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <h2 style={{ marginBottom: 20 }}>CryptoHost</h2>
+        <div
+          style={{
+            fontSize: 16,
+            fontWeight: 700,
+            marginBottom: 18,
+            padding: "0 6px",
+          }}
+        >
+          CryptoHost
+        </div>
 
-        <Link href="/dashboard">
-          <div style={navStyle}>Dashboard</div>
+        <Link href="/dashboard" style={navStyle("/dashboard")}>
+          Dashboard
         </Link>
 
-        <Link href="/dashboard/fund">
-          <div style={navStyle}>Upload File</div>
+        <Link href="/dashboard/fund" style={navStyle("/dashboard/fund")}>
+          Upload File
         </Link>
 
-        <Link href="/dashboard/reports">
-          <div style={navStyle}>Reports</div>
+        <Link href="/dashboard/reports" style={navStyle("/dashboard/reports")}>
+          Reports
         </Link>
 
-        <Link href="/dashboard/subscription">
-          <div style={navStyle}>Subscription</div>
+        <Link
+          href="/dashboard/subscription"
+          style={navStyle("/dashboard/subscription")}
+        >
+          Subscription
         </Link>
 
-        <Link href="/dashboard/account">
-          <div style={navStyle}>💰 Fund Account</div>
+        <Link href="/dashboard/fund" style={navStyle("/dashboard/fund")}>
+          💰 Fund Account
         </Link>
 
-        {/* LOGOUT BUTTON */}
         <button
           onClick={handleLogout}
           style={{
             marginTop: "auto",
-            padding: "12px",
-            background: "#ef4444",
-            color: "#fff",
-            border: "none",
+            padding: "12px 14px",
             borderRadius: 8,
+            border: "none",
+            background: "#dc2626",
+            color: "#ffffff",
+            fontWeight: 700,
             cursor: "pointer",
-            fontWeight: 600,
           }}
         >
           Logout
         </button>
-      </div>
+      </aside>
 
-      {/* MAIN CONTENT */}
-      <div style={{ flex: 1, background: "#f3f4f6", padding: 24 }}>
-        {children}
-      </div>
+      <main style={{ flex: 1 }}>{children}</main>
     </div>
   );
 }
-
-const navStyle: React.CSSProperties = {
-  padding: "10px 12px",
-  marginBottom: 10,
-  borderRadius: 8,
-  background: "#1f2937",
-  cursor: "pointer",
-};
