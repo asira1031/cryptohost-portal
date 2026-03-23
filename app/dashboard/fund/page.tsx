@@ -11,8 +11,7 @@ export default function FundPage() {
   const [message, setMessage] = useState("");
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  const gatewayWallet =
-    "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
+  const gatewayWallet = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
 
   useEffect(() => {
     async function loadUser() {
@@ -26,7 +25,6 @@ export default function FundPage() {
     loadUser();
   }, [supabase]);
 
-  // 🔥 BUY FUNCTIONS
   function handleBuyUsdt() {
     window.open("https://www.binance.com/en/buy-sell-crypto", "_blank");
   }
@@ -85,7 +83,8 @@ export default function FundPage() {
           borderRadius: "18px",
           padding: "28px",
           boxShadow: "0 0 0 1px #1f2937",
-  }}
+          color: "#ffffff",
+        }}
       >
         {/* HEADER */}
         <div
@@ -104,7 +103,7 @@ export default function FundPage() {
             </div>
           </div>
 
-          {/* 🔥 MULTI BUTTONS */}
+          {/* MULTI BUTTONS */}
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <button
               onClick={handleBuyUsdt}
@@ -236,6 +235,7 @@ export default function FundPage() {
                 borderRadius: "8px",
                 background: "#000",
                 color: "#fff",
+                border: "1px solid #333",
               }}
             >
               <option value="ERC20">ERC20</option>
@@ -251,6 +251,8 @@ export default function FundPage() {
                 border: "none",
                 borderRadius: "8px",
                 fontWeight: "bold",
+                color: "#111827",
+                cursor: "pointer",
               }}
             >
               Save Buyer Wallet
