@@ -61,8 +61,8 @@ export default function FundPage() {
   }
 
   function handleBuyUsdt() {
-    window.open("https://www.binance.com/en/buy-crypto", "_blank");
-  }
+  window.open("https://www.binance.com/en/buy-sell-crypto", "_blank");
+}
 
   return (
     <div
