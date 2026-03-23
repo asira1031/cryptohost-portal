@@ -6,15 +6,10 @@ import { createClient } from "../../lib/supabase/client";
 export default function FundPage() {
   const supabase = createClient();
 
-  const [buyerWallet, setBuyerWallet] = useState("");
-  const [network, setNetwork] = useState("ERC20");
+  const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
+  const [uploading, setUploading] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
-
-  const [showBankDetails, setShowBankDetails] = useState(false);
-  const [showEwalletDetails, setShowEwalletDetails] = useState(false);
-
-  const gatewayWallet = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
 
   useEffect(() => {
     async function loadUser() {
@@ -22,356 +17,182 @@ export default function FundPage() {
         data: { user },
       } = await supabase.auth.getUser();
 
-      setUserEmail(user?.email ?? null);
+      if (user?.email) {
+        setUserEmail(user.email);
+      }
     }
 
     loadUser();
   }, [supabase]);
 
-  function handleBuyUsdt() {
-    window.open("https://www.binance.com/en/buy-sell-crypto", "_blank");
-  }
-
-  function handleBuyCoinbase() {
-    window.open("https://www.coinbase.com/buy", "_blank");
-  }
-
-  function handleBuyMoonpay() {
-    window.open("https://www.moonpay.com/buy", "_blank");
-  }
-
-  function handleBuyTransak() {
-    window.open("https://global.transak.com", "_blank");
-  }
-
-  async function handleSaveBuyerWallet(e: React.FormEvent) {
+  async function handleUpload(e: React.FormEvent) {
     e.preventDefault();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      setMessage("You must be logged in.");
+    if (!file) {
+      setMessage("Please choose a file first.");
       return;
     }
 
-    const { error } = await supabase.from("buyer_wallets").insert({
+    setUploading(true);
+    setMessage("");
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      setMessage("You must be logged in to upload.");
+      setUploading(false);
+      return;
+    }
+
+    const filePath = `${user.id}/${Date.now()}-${file.name}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("client-files")
+      .upload(filePath, file);
+
+    if (uploadError) {
+      setMessage("Upload failed: " + uploadError.message);
+      setUploading(false);
+      return;
+    }
+
+    const { error: dbError } = await supabase.from("uploaded_files").insert({
       user_id: user.id,
-      wallet_address: buyerWallet,
-      network,
+      file_name: file.name,
+      file_path: filePath,
+      status: "uploaded",
     });
 
-    if (error) {
-      setMessage("Error saving buyer wallet.");
-    } else {
-      setMessage("Buyer wallet saved successfully.");
-      setBuyerWallet("");
+    if (dbError) {
+      setMessage(
+        "Uploaded to storage but failed to save to database: " + dbError.message
+      );
+      setUploading(false);
+      return;
     }
-  }
 
-  const sectionButtonStyle: React.CSSProperties = {
-    background: "#1f2937",
-    color: "#ffffff",
-    border: "1px solid #374151",
-    borderRadius: "10px",
-    padding: "12px 18px",
-    fontWeight: 700,
-    cursor: "pointer",
-  };
+    setMessage("File uploaded successfully.");
+    setUploading(false);
+    setFile(null);
+
+    const input = document.getElementById("fund-file-input") as HTMLInputElement | null;
+    if (input) input.value = "";
+  }
 
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#020817",
-        padding: "18px 24px",
+        background: "#020b2d",
+        padding: "40px 24px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
       }}
     >
       <div
         style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          background: "#020817",
-          borderRadius: "18px",
-          padding: "28px",
-          boxShadow: "0 0 0 1px #1f2937",
-          color: "#ffffff",
+          width: "100%",
+          maxWidth: 760,
+          background: "#101a49",
+          borderRadius: 18,
+          padding: 30,
+          boxShadow: "0 12px 40px rgba(0,0,0,0.28)",
+          border: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <div
+        <h1
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "12px",
-            marginBottom: "20px",
+            margin: 0,
+            color: "#ffffff",
+            fontSize: 28,
+            fontWeight: 700,
           }}
         >
-          <div>
-            <h1 style={{ margin: 0 }}>Deposit USDT</h1>
-            <div style={{ color: "#94a3b8" }}>
-              Logged in as: {userEmail ?? "Loading..."}
-            </div>
-          </div>
+          Upload Financial File
+        </h1>
 
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <button
-              onClick={handleBuyUsdt}
-              style={{
-                background: "#facc15",
-                color: "#111827",
-                border: "none",
-                borderRadius: "10px",
-                padding: "12px 18px",
-                fontWeight: 800,
-                cursor: "pointer",
-              }}
-            >
-              Binance
-            </button>
-
-            <button
-              onClick={handleBuyCoinbase}
-              style={{
-                background: "#2563eb",
-                color: "#fff",
-                border: "none",
-                borderRadius: "10px",
-                padding: "12px 18px",
-                fontWeight: 800,
-                cursor: "pointer",
-              }}
-            >
-              Coinbase
-            </button>
-
-            <button
-              onClick={handleBuyMoonpay}
-              style={{
-                background: "#9333ea",
-                color: "#fff",
-                border: "none",
-                borderRadius: "10px",
-                padding: "12px 18px",
-                fontWeight: 800,
-                cursor: "pointer",
-              }}
-            >
-              MoonPay
-            </button>
-
-            <button
-              onClick={handleBuyTransak}
-              style={{
-                background: "#10b981",
-                color: "#fff",
-                border: "none",
-                borderRadius: "10px",
-                padding: "12px 18px",
-                fontWeight: 800,
-                cursor: "pointer",
-              }}
-            >
-              Transak
-            </button>
-          </div>
-        </div>
-
-        <div
+        <p
           style={{
-            background: "#111827",
-            padding: "20px",
-            borderRadius: "12px",
-            marginBottom: "20px",
+            marginTop: 12,
+            marginBottom: 22,
+            color: "#c7d2fe",
+            fontSize: 14,
           }}
         >
-          <h3>Deposit Wallet</h3>
-          <p style={{ color: "#94a3b8" }}>
-            Send only USDT using supported network.
-          </p>
+          Upload your transaction file securely to CryptoHost.
+        </p>
 
-          <div
+        {userEmail && (
+          <p
             style={{
-              background: "#000",
-              padding: "12px",
-              borderRadius: "8px",
-              color: "#facc15",
-              wordBreak: "break-all",
+              marginTop: 0,
+              marginBottom: 18,
+              color: "#93c5fd",
+              fontSize: 13,
             }}
           >
-            {gatewayWallet}
-          </div>
-
-          <div style={{ marginTop: "10px", color: "#94a3b8" }}>
-            Asset: USDT | Network: ERC20 / BEP20 | Fee: 3%
-          </div>
-        </div>
-
-        <div
-          style={{
-            background: "#111827",
-            padding: "20px",
-            borderRadius: "12px",
-            marginBottom: "20px",
-          }}
-        >
-          <h3>Buyer Wallet</h3>
-
-          <form onSubmit={handleSaveBuyerWallet}>
-            <input
-              type="text"
-              placeholder="Enter buyer wallet address"
-              value={buyerWallet}
-              onChange={(e) => setBuyerWallet(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "12px",
-                marginBottom: "10px",
-                borderRadius: "8px",
-                background: "#000",
-                color: "#fff",
-                border: "1px solid #333",
-              }}
-            />
-
-            <select
-              value={network}
-              onChange={(e) => setNetwork(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "12px",
-                marginBottom: "10px",
-                borderRadius: "8px",
-                background: "#000",
-                color: "#fff",
-                border: "1px solid #333",
-              }}
-            >
-              <option value="ERC20">ERC20</option>
-              <option value="BEP20">BEP20</option>
-            </select>
-
-            <button
-              type="submit"
-              style={{
-                width: "100%",
-                padding: "12px",
-                background: "#facc15",
-                border: "none",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                color: "#111827",
-                cursor: "pointer",
-              }}
-            >
-              Save Buyer Wallet
-            </button>
-          </form>
-
-          {message && <p style={{ marginTop: 10 }}>{message}</p>}
-        </div>
-
-        <div
-          style={{
-            background: "#111827",
-            padding: "20px",
-            borderRadius: "12px",
-            marginBottom: "20px",
-          }}
-        >
-          <h3>Alternative Payment Methods</h3>
-          <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
-            Click to view available bank or e-wallet payment details.
+            Logged in as: {userEmail}
           </p>
-
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <button
-              onClick={() => setShowBankDetails((prev) => !prev)}
-              style={sectionButtonStyle}
-            >
-              {showBankDetails ? "Hide Bank Details" : "Show Bank Details"}
-            </button>
-
-            <button
-              onClick={() => setShowEwalletDetails((prev) => !prev)}
-              style={sectionButtonStyle}
-            >
-              {showEwalletDetails ? "Hide E-Wallet Details" : "Show E-Wallet Details"}
-            </button>
-          </div>
-        </div>
-
-        {showBankDetails && (
-          <div
-            style={{
-              background: "#111827",
-              padding: "20px",
-              borderRadius: "12px",
-              marginBottom: "20px",
-            }}
-          >
-            <h3>Bank Transfer (Verified Clients Only)</h3>
-            <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
-              Please use the correct account details and submit proof of payment after transfer.
-            </p>
-
-            <div style={{ display: "grid", gap: "12px", color: "#ffffff" }}>
-              <div>
-                <strong>Maribank:</strong> Janica Maldives — 1032-431-2229 (SWIFT: LAUIPHM2)
-              </div>
-              <div>
-                <strong>Security Bank:</strong> Janica Maldives — 0000076867520 (SWIFT: SETCPHMM)
-              </div>
-              <div>
-                <strong>UnionBank:</strong> Janica Maldives — 103200011788 (SWIFT: UBPHPHMMXXX)
-              </div>
-              <div>
-                <strong>BDO:</strong> Janica Maldives — 012516004148 (SWIFT: BNORPHMMXXX)
-              </div>
-              <div>
-                <strong>BPI (PHP):</strong> Janica Maldives — 0629075905
-              </div>
-              <div>
-                <strong>BPI (USD):</strong> Janica Maldives — 0574196219 (SWIFT: BOPIPHMM)
-              </div>
-              <div>
-                <strong>Maya Bank:</strong> Janica Maldives — 808529591832 (SWIFT: MYYAPHM2XX)
-              </div>
-            </div>
-
-            <div style={{ marginTop: "15px", color: "#facc15" }}>
-              Bank transfers are processed manually. Submit proof of payment after sending.
-            </div>
-          </div>
         )}
 
-        {showEwalletDetails && (
-          <div
+        <form onSubmit={handleUpload}>
+          <input
+            id="fund-file-input"
+            type="file"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
             style={{
-              background: "#111827",
-              padding: "20px",
-              borderRadius: "12px",
-              marginBottom: "20px",
+              width: "100%",
+              padding: "12px 14px",
+              borderRadius: 10,
+              border: "1px solid #33457a",
+              background: "#1f2b5c",
+              color: "#ffffff",
+              marginBottom: 20,
+              fontSize: 14,
+              boxSizing: "border-box",
+            }}
+          />
+
+          <button
+            type="submit"
+            disabled={uploading}
+            style={{
+              background: uploading ? "#6b7280" : "#f4b400",
+              color: "#111827",
+              border: "none",
+              padding: "14px 24px",
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: 16,
+              cursor: uploading ? "not-allowed" : "pointer",
+              minWidth: 140,
             }}
           >
-            <h3>E-Wallet Payment</h3>
-            <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
-              Use the correct mobile number and submit proof of payment after sending.
-            </p>
+            {uploading ? "Uploading..." : "Submit File"}
+          </button>
+        </form>
 
-            <div style={{ display: "grid", gap: "12px", color: "#ffffff" }}>
-              <div>
-                <strong>Maya Wallet:</strong> 09498387452
-              </div>
-              <div>
-                <strong>GCash:</strong> 09288985979
-              </div>
-            </div>
-
-            <div style={{ marginTop: "15px", color: "#facc15" }}>
-              E-wallet payments are processed manually. Submit proof of payment after sending.
-            </div>
+        {message && (
+          <div
+            style={{
+              marginTop: 18,
+              padding: "12px 14px",
+              borderRadius: 10,
+              background: message.toLowerCase().includes("success")
+                ? "rgba(34,197,94,0.12)"
+                : "rgba(239,68,68,0.12)",
+              border: message.toLowerCase().includes("success")
+                ? "1px solid rgba(34,197,94,0.35)"
+                : "1px solid rgba(239,68,68,0.35)",
+              color: "#ffffff",
+              fontSize: 14,
+            }}
+          >
+            {message}
           </div>
         )}
       </div>
