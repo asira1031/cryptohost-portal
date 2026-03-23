@@ -24,7 +24,7 @@ export default function DashboardLayout({
     padding: "14px 16px",
     marginBottom: 14,
     borderRadius: 8,
-    background: pathname === href ? "#1f2937" : "#171717",
+    background: pathname === href ? "#1e2b4f" : "#171717",
     color: "#ffffff",
     textDecoration: "none",
     fontWeight: 500,
@@ -34,7 +34,7 @@ export default function DashboardLayout({
     <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
       <aside
         style={{
-          width: 180,
+          width: 170,
           background: "#0a0a0a",
           color: "#ffffff",
           padding: "20px 12px",
@@ -70,10 +70,6 @@ export default function DashboardLayout({
           style={navStyle("/dashboard/subscription")}
         >
           Subscription
-        </Link>
-
-        <Link href="/dashboard/fund" style={navStyle("/dashboard/fund")}>
-          💰 Fund Account
         </Link>
 
         <button
