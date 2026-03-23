@@ -1,6 +1,74 @@
 "use client";
 
+type BankAccount = {
+  bank: string;
+  accountName: string;
+  accountNumber: string;
+  swift: string;
+  currency: string;
+  note: string;
+};
+
 export default function AccountPage() {
+  const bankAccounts: BankAccount[] = [
+    {
+      bank: "MariBank",
+      accountName: "Janica Maldives",
+      accountNumber: "1032-431-2229",
+      swift: "LAUIPHM2",
+      currency: "PHP",
+      note: "Primary digital banking option",
+    },
+    {
+      bank: "Security Bank",
+      accountName: "Janica Maldive",
+      accountNumber: "0000076867520",
+      swift: "SETCPHMM",
+      currency: "PHP",
+      note: "Local funding option",
+    },
+    {
+      bank: "UnionBank",
+      accountName: "Janica Maldives",
+      accountNumber: "103200011788",
+      swift: "UBPHPHMMXXX",
+      currency: "PHP",
+      note: "Primary local receiving account",
+    },
+    {
+      bank: "BDO",
+      accountName: "Janica Maldives",
+      accountNumber: "012516004148",
+      swift: "BNORPHMMXXX",
+      currency: "PHP",
+      note: "Standard bank transfer option",
+    },
+    {
+      bank: "BPI",
+      accountName: "JANICA MALDIVES",
+      accountNumber: "0629075905",
+      swift: "BOPIPHMM",
+      currency: "PHP",
+      note: "PHP receiving account",
+    },
+    {
+      bank: "BPI",
+      accountName: "JANICA MALDIVES",
+      accountNumber: "0574196219",
+      swift: "BOPIPHMM",
+      currency: "USD",
+      note: "USD receiving account",
+    },
+    {
+      bank: "Maya Bank",
+      accountName: "Janica Maldives",
+      accountNumber: "808529591832",
+      swift: "MYYAPHM2XX",
+      currency: "PHP",
+      note: "Digital funding option",
+    },
+  ];
+
   return (
     <div
       style={{
@@ -15,10 +83,10 @@ export default function AccountPage() {
       <div
         style={{
           width: "100%",
-          maxWidth: 760,
+          maxWidth: 1100,
           background: "#101a49",
-          borderRadius: 18,
-          padding: 30,
+          borderRadius: 22,
+          padding: 32,
           boxShadow: "0 12px 40px rgba(0,0,0,0.28)",
           border: "1px solid rgba(255,255,255,0.06)",
         }}
@@ -27,7 +95,7 @@ export default function AccountPage() {
           style={{
             margin: 0,
             color: "#ffffff",
-            fontSize: 28,
+            fontSize: 32,
             fontWeight: 700,
           }}
         >
@@ -36,98 +104,174 @@ export default function AccountPage() {
 
         <p
           style={{
-            marginTop: 12,
-            marginBottom: 22,
+            marginTop: 14,
+            marginBottom: 28,
             color: "#c7d2fe",
-            fontSize: 14,
-            lineHeight: 1.7,
+            fontSize: 15,
+            lineHeight: 1.8,
+            maxWidth: 900,
           }}
         >
-          Purchase USDT from your preferred provider, then transfer the funds to
-          your designated CryptoHost wallet for processing.
+          Please use one of the approved bank accounts below to fund your
+          CryptoHost transaction. After completing your transfer, proceed with
+          file upload and confirmation inside the portal. Always use your
+          registered CryptoHost email as your payment reference when possible.
         </p>
 
         <div
           style={{
             background: "#1f2b5c",
             border: "1px solid #33457a",
-            borderRadius: 12,
-            padding: 18,
-            marginBottom: 18,
-            color: "#ffffff",
+            borderRadius: 16,
+            padding: 20,
+            marginBottom: 24,
           }}
         >
-          <div style={{ fontSize: 13, color: "#93c5fd", marginBottom: 8 }}>
-            Recommended Wallet Funding Method
+          <div
+            style={{
+              color: "#93c5fd",
+              fontSize: 13,
+              fontWeight: 700,
+              marginBottom: 10,
+              letterSpacing: 0.3,
+            }}
+          >
+            FUNDING INSTRUCTIONS
           </div>
-          <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 10 }}>
-            Buy USDT externally, then send to your assigned wallet
-          </div>
-          <div style={{ fontSize: 14, color: "#cbd5e1", lineHeight: 1.7 }}>
-            Use Binance, Coinbase, or another approved provider to purchase USDT.
-            After purchase, withdraw and send the USDT to your designated wallet
-            using the correct network.
+
+          <div
+            style={{
+              color: "#e5e7eb",
+              fontSize: 14,
+              lineHeight: 1.8,
+            }}
+          >
+            1. Select the most appropriate bank account below based on your
+            transfer type and currency.
+            <br />
+            2. Complete your funding using the correct bank details.
+            <br />
+            3. Use your registered CryptoHost email as payment reference.
+            <br />
+            4. After payment, upload your file through the portal.
+            <br />
+            5. Monitor your processing status in the Reports section.
           </div>
         </div>
 
         <div
           style={{
-            display: "flex",
-            gap: 14,
-            flexWrap: "wrap",
-            marginTop: 10,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 18,
           }}
         >
-          <a
-            href="https://www.binance.com/en/buy-sell-crypto"
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              background: "#f4b400",
-              color: "#111827",
-              textDecoration: "none",
-              padding: "14px 20px",
-              borderRadius: 10,
-              fontWeight: 700,
-              display: "inline-block",
-            }}
-          >
-            Buy USDT via Binance
-          </a>
+          {bankAccounts.map((account, index) => (
+            <div
+              key={`${account.bank}-${account.accountNumber}-${index}`}
+              style={{
+                background: "#1a2556",
+                border: "1px solid #33457a",
+                borderRadius: 16,
+                padding: 22,
+                boxShadow: "0 8px 20px rgba(0,0,0,0.14)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 12,
+                  marginBottom: 16,
+                  flexWrap: "wrap",
+                }}
+              >
+                <div
+                  style={{
+                    color: "#ffffff",
+                    fontSize: 20,
+                    fontWeight: 700,
+                  }}
+                >
+                  {account.bank}
+                </div>
 
-          <a
-            href="https://www.coinbase.com/buy"
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              background: "#2563eb",
-              color: "#ffffff",
-              textDecoration: "none",
-              padding: "14px 20px",
-              borderRadius: 10,
-              fontWeight: 700,
-              display: "inline-block",
-            }}
-          >
-            Buy Crypto via Coinbase
-          </a>
+                <div
+                  style={{
+                    background: account.currency === "USD" ? "#2563eb" : "#f4b400",
+                    color: account.currency === "USD" ? "#ffffff" : "#111827",
+                    fontSize: 12,
+                    fontWeight: 800,
+                    padding: "6px 10px",
+                    borderRadius: 999,
+                  }}
+                >
+                  {account.currency}
+                </div>
+              </div>
+
+              <div style={{ display: "grid", gap: 12 }}>
+                <InfoRow label="Account Name" value={account.accountName} />
+                <InfoRow label="Account Number" value={account.accountNumber} />
+                <InfoRow label="SWIFT Code" value={account.swift} />
+                <InfoRow label="Note" value={account.note} />
+              </div>
+            </div>
+          ))}
         </div>
 
         <div
           style={{
-            marginTop: 24,
-            padding: 16,
-            borderRadius: 10,
+            marginTop: 26,
             background: "rgba(255,255,255,0.05)",
             border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 14,
+            padding: 18,
             color: "#cbd5e1",
             fontSize: 13,
-            lineHeight: 1.7,
+            lineHeight: 1.8,
           }}
         >
-          Make sure the wallet address and network shown by your CryptoHost portal
-          match the withdrawal network you select on the exchange.
+          Important: Please verify all transfer details carefully before sending
+          funds. Incorrect account information, missing payment reference, or
+          mismatched transfer currency may delay processing and confirmation.
         </div>
+      </div>
+    </div>
+  );
+}
+
+function InfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div
+      style={{
+        background: "rgba(255,255,255,0.04)",
+        border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: 12,
+        padding: "12px 14px",
+      }}
+    >
+      <div
+        style={{
+          color: "#93c5fd",
+          fontSize: 12,
+          fontWeight: 700,
+          marginBottom: 6,
+          letterSpacing: 0.2,
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          color: "#ffffff",
+          fontSize: 15,
+          fontWeight: 500,
+          wordBreak: "break-word",
+        }}
+      >
+        {value}
       </div>
     </div>
   );
