@@ -21,18 +21,22 @@ export default function PriorityMintPage() {
   const STATUS_BADGE = "BAND CONFIRMATION PENDING";
   const SYSTEM_STATUS = "PRODUCTION MINTING / BAND VALIDATION";
 
-  const LIQUIDITY_LINE =
-    "99.5M indexed position remains in production mint flow while the active 5,000,000 liquidity tranche awaits full band confirmation for conversion routing.";
+  const MINT_PROGRESS = 56;
+  const ACTIVE_TRANCHE = "5,000,000 EURC";
+  const ACTIVATED_AMOUNT = "2,800,000 EURC";
 
-  const NOTICE_TITLE = "99.5M Liquidity Priority Mint — In Production";
+  const LIQUIDITY_LINE =
+    "The indexed 99.5M position remains in production mint flow while the active 5,000,000 EURC tranche has reached 56% completion and continues under full band confirmation monitoring for conversion routing.";
+
+  const NOTICE_TITLE = "5M Production Mint Update — 56% Complete";
   const NOTICE_BODY =
-    "The indexed liquidity position is now in active production minting. The current tranche of 5,000,000 is being prepared for liquidity release, subject to full band confirmation across the configured price range. Once full band confirmation is achieved, the released liquidity will proceed through the designated conversion path for EURC to USDT settlement routing.";
+    "Production minting remains active and the current 5,000,000 EURC liquidity tranche has reached 56% completion. Live liquidity positioning is active across EURC-BNB, BNB-EURC, and USDT-EURC channels. The system is now awaiting full band confirmation before releasing the active tranche for final EURC-to-USDT conversion routing. All liquidity components remain visible, paired, and operating within production parameters.";
 
   const REASON =
-    "Production minting is active; full band confirmation is still required before the 5,000,000 liquidity tranche can be released for EURC-to-USDT conversion.";
+    "Production minting is active at 56% completion; the active 5,000,000 EURC tranche remains under full band confirmation before conversion release.";
 
   const REQUIRED_ACTION =
-    "No manual intervention is required at this stage. The system is currently monitoring band completion, routing readiness, and mint production continuity. Upon confirmation of the full operating band, the 5,000,000 liquidity tranche will be released and made convertible through the EURC to USDT settlement path.";
+    "No manual intervention is required at this stage. The system is monitoring band completion, live LP positioning, routing stability, and mint continuity. Upon confirmation of the full operating band, the active tranche will be released for EURC-to-USDT conversion and settlement continuation.";
 
   const SYSTEM_NAME = "Blockchain Liquidity Engine (CLAMM Routing Core)";
 
@@ -53,10 +57,21 @@ export default function PriorityMintPage() {
   const GAS_STATE = "IN PROGRESS";
   const ROUTING_STATE = "ACTIVE";
 
-  const EXPLORER_URL = "#";
+  const USDT_EURC_LIQUIDITY = "$1.88";
+  const USDT_EURC_USDT_SIDE = "1.889";
+  const USDT_EURC_EURC_SIDE = "1205000000";
+  const USDT_EURC_APR = "1,545.91%";
+  const USDT_EURC_POOL_SHARE = "99.9992407%";
 
-  // CHANGE THIS ONLY
-  const MINT_PROGRESS = 35;
+  const EURC_BNB_POOL_ID = "#5239977";
+  const EURC_BNB_FEE = "0.01%";
+  const EURC_BNB_RANGE = "Min 16.9363 / Max 17.1065";
+
+  const BNB_EURC_POOL_ID = "#6547046";
+  const BNB_EURC_FEE = "1%";
+  const BNB_EURC_RANGE = "Min 0 / Max ∞";
+
+  const EXPLORER_URL = "#";
 
   const terminal = `99.5M LIQUIDITY PRIORITY MINT — PRODUCTION MONITOR
 SMART CONTRACT ROUTING INITIALIZED
@@ -77,19 +92,30 @@ MINT ENGINE STATUS
 - Conversion Path          : EURC -> USDT
 
 LIVE MINT ACTIVITY
-- Active Mint Signal       : +5,000,000 EURC
-- Production State         : RUNNING
+- Active Mint Signal       : +${ACTIVE_TRANCHE}
+- Activated Amount         : ${ACTIVATED_AMOUNT}
 - Progress                 : ${MINT_PROGRESS}%
 - Current Phase            : Full band confirmation monitoring
 - Release Condition        : Full configured band must be confirmed
 - Settlement Route         : EURC conversion toward USDT enablement
 
+LIVE LP SNAPSHOTS
+- EURC-BNB LP             : ${EURC_BNB_POOL_ID} / Fee ${EURC_BNB_FEE} / ACTIVE
+- Range                   : ${EURC_BNB_RANGE}
+- BNB-EURC LP             : ${BNB_EURC_POOL_ID} / Fee ${BNB_EURC_FEE} / ACTIVE
+- Range                   : ${BNB_EURC_RANGE}
+- USDT-EURC LP Liquidity  : ${USDT_EURC_LIQUIDITY}
+- USDT Side               : ${USDT_EURC_USDT_SIDE}
+- EURC Side               : ${USDT_EURC_EURC_SIDE}
+- LP Reward APR           : ${USDT_EURC_APR}
+- Pool Share              : ${USDT_EURC_POOL_SHARE}
+
 POSITION SUMMARY
 - Asset Pair               : ${POSITION_PAIR}
 - Position Range           : ${POSITION_MIN} – ${POSITION_MAX}
-- Liquidity Allocation     : 99.5M INDEXED
-- Current Tranche          : 5,000,000 pending release
-- Earnings State           : NOT ACTIVE (Pre-Conversion)
+- Liquidity Allocation     : ${POSITION_LIQUIDITY}
+- Current Tranche          : ${ACTIVE_TRANCHE}
+- Earnings State           : ${POSITION_EARNINGS} (Pre-Conversion)
 
 PRICE BAND (CONFIGURED)
 - Price Band               : ${BAND_MIN} – ${BAND_MAX}
@@ -97,7 +123,7 @@ PRICE BAND (CONFIGURED)
 
 NEXT STEP
 - Confirm full operating band
-- Release active 5,000,000 liquidity tranche
+- Release active 5,000,000 EURC tranche
 - Route released liquidity for EURC conversion
 - Enable EURC-to-USDT settlement path
 - Continue production mint monitoring
@@ -491,6 +517,56 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
               </div>
 
+              <div
+                style={{
+                  marginTop: 18,
+                  borderRadius: 16,
+                  padding: 18,
+                  background: "rgba(255,255,255,0.025)",
+                  border: `1px solid ${colors.border}`,
+                }}
+              >
+                <div style={{ fontSize: 18, fontWeight: 800, marginBottom: 12 }}>
+                  Live LP Status
+                </div>
+
+                <div style={{ display: "grid", gap: 12 }}>
+                  <div style={metricCard}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                      <div>
+                        <div style={labelStyle}>EURC-BNB LP</div>
+                        <div style={{ marginTop: 6, fontWeight: 800 }}>
+                          {EURC_BNB_POOL_ID} • Fee {EURC_BNB_FEE}
+                        </div>
+                        <div style={{ marginTop: 4, color: colors.muted, fontSize: 13 }}>
+                          {EURC_BNB_RANGE}
+                        </div>
+                      </div>
+                      <span style={badgeStyle("rgba(14,203,129,0.16)", colors.green)}>
+                        Active
+                      </span>
+                    </div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                      <div>
+                        <div style={labelStyle}>BNB-EURC LP</div>
+                        <div style={{ marginTop: 6, fontWeight: 800 }}>
+                          {BNB_EURC_POOL_ID} • Fee {BNB_EURC_FEE}
+                        </div>
+                        <div style={{ marginTop: 4, color: colors.muted, fontSize: 13 }}>
+                          {BNB_EURC_RANGE}
+                        </div>
+                      </div>
+                      <span style={badgeStyle("rgba(14,203,129,0.16)", colors.green)}>
+                        Active
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div style={{ marginTop: 16, fontSize: 12, color: colors.muted }}>
                 Timestamp: {TIMESTAMP}
               </div>
@@ -556,13 +632,13 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     marginBottom: 8,
                   }}
                 >
-                  +5,000,000 EURC
+                  +{ACTIVE_TRANCHE}
                 </div>
 
                 <div style={{ marginTop: 6, color: "#d7fffa", lineHeight: 1.7 }}>
-                  Minting is in production. The active 5,000,000 tranche remains under
-                  live band validation and will be released for liquidity conversion
-                  once the full operating band is confirmed.
+                  Minting is in production. The active 5,000,000 EURC tranche has
+                  reached 56% completion and remains under live band validation for
+                  final liquidity release and conversion routing.
                 </div>
 
                 <div
@@ -584,7 +660,55 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <div style={{ fontSize: 12, marginTop: 8, color: "#8bded0" }}>
-                  Mint Progress: {MINT_PROGRESS}% — Awaiting Full Band Confirmation
+                  Mint Progress: {MINT_PROGRESS}% — Activated {ACTIVATED_AMOUNT} / {ACTIVE_TRANCHE}
+                </div>
+              </div>
+
+              <div
+                style={{
+                  marginBottom: 16,
+                  borderRadius: 16,
+                  padding: 16,
+                  background: "rgba(255,255,255,0.025)",
+                  border: `1px solid ${colors.border}`,
+                }}
+              >
+                <div style={{ fontSize: 12, color: colors.muted, marginBottom: 10 }}>
+                  USDT–EURC LP LIVE SNAPSHOT
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <div style={metricCard}>
+                    <div style={labelStyle}>Liquidity</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_LIQUIDITY}</div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>Pool Share</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_POOL_SHARE}</div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>USDT Side</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_USDT_SIDE}</div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>EURC Side</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_EURC_SIDE}</div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>LP Reward APR</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_APR}</div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>Tranche Status</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>
+                      {MINT_PROGRESS}% Complete
+                    </div>
+                  </div>
                 </div>
               </div>
 
