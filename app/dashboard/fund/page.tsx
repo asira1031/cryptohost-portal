@@ -66,12 +66,12 @@ export default function FundPage() {
 
   return (
     <div
-      style={{
-        minHeight: "100vh",
-        background: "#f3f4f6",
-        padding: "28px 24px",
-      }}
-    >
+  style={{
+    minHeight: "100vh",
+    background: "#020817", // ✅ same as main container
+    padding: "16px 24px",
+  }}
+>
       <div
         style={{
           maxWidth: "1160px",
