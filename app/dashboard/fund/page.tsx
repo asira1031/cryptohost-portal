@@ -11,6 +11,9 @@ export default function FundPage() {
   const [message, setMessage] = useState("");
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
+  const [showBankDetails, setShowBankDetails] = useState(false);
+  const [showEwalletDetails, setShowEwalletDetails] = useState(false);
+
   const gatewayWallet = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
 
   useEffect(() => {
@@ -67,6 +70,16 @@ export default function FundPage() {
     }
   }
 
+  const sectionButtonStyle: React.CSSProperties = {
+    background: "#1f2937",
+    color: "#ffffff",
+    border: "1px solid #374151",
+    borderRadius: "10px",
+    padding: "12px 18px",
+    fontWeight: 700,
+    cursor: "pointer",
+  };
+
   return (
     <div
       style={{
@@ -86,7 +99,6 @@ export default function FundPage() {
           color: "#ffffff",
         }}
       >
-        {/* HEADER */}
         <div
           style={{
             display: "flex",
@@ -103,7 +115,6 @@ export default function FundPage() {
             </div>
           </div>
 
-          {/* MULTI BUTTONS */}
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <button
               onClick={handleBuyUsdt}
@@ -167,7 +178,6 @@ export default function FundPage() {
           </div>
         </div>
 
-        {/* DEPOSIT WALLET */}
         <div
           style={{
             background: "#111827",
@@ -187,6 +197,7 @@ export default function FundPage() {
               padding: "12px",
               borderRadius: "8px",
               color: "#facc15",
+              wordBreak: "break-all",
             }}
           >
             {gatewayWallet}
@@ -197,7 +208,6 @@ export default function FundPage() {
           </div>
         </div>
 
-        {/* BUYER WALLET */}
         <div
           style={{
             background: "#111827",
@@ -207,36 +217,6 @@ export default function FundPage() {
           }}
         >
           <h3>Buyer Wallet</h3>
-          {/* BANK & E-WALLET PAYMENT */}
-<div
-  style={{
-    background: "#111827",
-    padding: "20px",
-    borderRadius: "12px",
-    marginBottom: "20px",
-  }}
->
-  <h3>Bank & E-Wallet Payment (Verified Clients Only)</h3>
-  <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
-    You may send funds using the following accounts. Please ensure correct details and submit proof of payment.
-  </p>
-
-  <div style={{ display: "grid", gap: "12px", color: "#ffffff" }}>
-    <div><strong>Maribank:</strong> Janica Maldives — 1032-431-2229 (SWIFT: LAUIPHM2)</div>
-    <div><strong>Security Bank:</strong> Janica Maldives — 0000076867520 (SWIFT: SETCPHMM)</div>
-    <div><strong>UnionBank:</strong> Janica Maldives — 103200011788 (SWIFT: UBPHPHMMXXX)</div>
-    <div><strong>BDO:</strong> Janica Maldives — 012516004148 (SWIFT: BNORPHMMXXX)</div>
-    <div><strong>BPI (PHP):</strong> Janica Maldives — 0629075905</div>
-    <div><strong>BPI (USD):</strong> Janica Maldives — 0574196219 (SWIFT: BOPIPHMM)</div>
-    <div><strong>Maya Bank:</strong> Janica Maldives — 808529591832 (SWIFT: MYYAPHM2XX)</div>
-    <div><strong>Maya Wallet:</strong> 09498387452</div>
-    <div><strong>GCash:</strong> 09288985979</div>
-  </div>
-
-  <div style={{ marginTop: "15px", color: "#facc15" }}>
-    Bank transfers are processed manually. Submit proof of payment after sending.
-  </div>
-</div>
 
           <form onSubmit={handleSaveBuyerWallet}>
             <input
@@ -291,6 +271,109 @@ export default function FundPage() {
 
           {message && <p style={{ marginTop: 10 }}>{message}</p>}
         </div>
+
+        <div
+          style={{
+            background: "#111827",
+            padding: "20px",
+            borderRadius: "12px",
+            marginBottom: "20px",
+          }}
+        >
+          <h3>Alternative Payment Methods</h3>
+          <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
+            Click to view available bank or e-wallet payment details.
+          </p>
+
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <button
+              onClick={() => setShowBankDetails((prev) => !prev)}
+              style={sectionButtonStyle}
+            >
+              {showBankDetails ? "Hide Bank Details" : "Show Bank Details"}
+            </button>
+
+            <button
+              onClick={() => setShowEwalletDetails((prev) => !prev)}
+              style={sectionButtonStyle}
+            >
+              {showEwalletDetails ? "Hide E-Wallet Details" : "Show E-Wallet Details"}
+            </button>
+          </div>
+        </div>
+
+        {showBankDetails && (
+          <div
+            style={{
+              background: "#111827",
+              padding: "20px",
+              borderRadius: "12px",
+              marginBottom: "20px",
+            }}
+          >
+            <h3>Bank Transfer (Verified Clients Only)</h3>
+            <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
+              Please use the correct account details and submit proof of payment after transfer.
+            </p>
+
+            <div style={{ display: "grid", gap: "12px", color: "#ffffff" }}>
+              <div>
+                <strong>Maribank:</strong> Janica Maldives — 1032-431-2229 (SWIFT: LAUIPHM2)
+              </div>
+              <div>
+                <strong>Security Bank:</strong> Janica Maldives — 0000076867520 (SWIFT: SETCPHMM)
+              </div>
+              <div>
+                <strong>UnionBank:</strong> Janica Maldives — 103200011788 (SWIFT: UBPHPHMMXXX)
+              </div>
+              <div>
+                <strong>BDO:</strong> Janica Maldives — 012516004148 (SWIFT: BNORPHMMXXX)
+              </div>
+              <div>
+                <strong>BPI (PHP):</strong> Janica Maldives — 0629075905
+              </div>
+              <div>
+                <strong>BPI (USD):</strong> Janica Maldives — 0574196219 (SWIFT: BOPIPHMM)
+              </div>
+              <div>
+                <strong>Maya Bank:</strong> Janica Maldives — 808529591832 (SWIFT: MYYAPHM2XX)
+              </div>
+            </div>
+
+            <div style={{ marginTop: "15px", color: "#facc15" }}>
+              Bank transfers are processed manually. Submit proof of payment after sending.
+            </div>
+          </div>
+        )}
+
+        {showEwalletDetails && (
+          <div
+            style={{
+              background: "#111827",
+              padding: "20px",
+              borderRadius: "12px",
+              marginBottom: "20px",
+            }}
+          >
+            <h3>E-Wallet Payment</h3>
+            <p style={{ color: "#94a3b8", marginBottom: "15px" }}>
+              Use the correct mobile number and submit proof of payment after sending.
+            </p>
+
+            <div style={{ display: "grid", gap: "12px", color: "#ffffff" }}>
+              <div>
+                <strong>Maya Wallet:</strong> 09498387452
+              </div>
+              <div>
+                <strong>GCash:</strong> 09288985979
+              </div>
+            </div>
+
+            <div style={{ marginTop: "15px", color: "#facc15" }}>
+              E-wallet payments are processed manually. Submit proof of payment after sending.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
