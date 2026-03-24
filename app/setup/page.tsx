@@ -5,6 +5,11 @@ import { useRouter } from "next/navigation";
 export default function SetupPage() {
   const router = useRouter();
 
+  const handleInstall = () => {
+    localStorage.setItem("cryptohost_installed", "true");
+    window.open("https://cryptohost-portal.vercel.app", "_blank");
+  };
+
   const handleContinue = () => {
     localStorage.setItem("cryptohost_installed", "true");
     router.push("/register");
@@ -24,21 +29,20 @@ export default function SetupPage() {
       <div
         style={{
           width: "100%",
-          maxWidth: "620px", // 👈 MEDIUM SIZE
+          maxWidth: "620px",
           background: "#0b1730",
           borderRadius: "18px",
-          padding: "48px 40px", // 👈 MORE SPACING
+          padding: "48px 40px",
           color: "#ffffff",
           boxShadow: "0 25px 70px rgba(0,0,0,0.5)",
           border: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        {/* HEADER */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <h1
             style={{
               margin: 0,
-              fontSize: "40px", // 👈 BIGGER TITLE
+              fontSize: "40px",
               fontWeight: 700,
             }}
           >
@@ -56,19 +60,18 @@ export default function SetupPage() {
           </p>
         </div>
 
-        {/* CONTENT BOX */}
         <div
           style={{
             background: "rgba(255,255,255,0.03)",
             borderRadius: "14px",
-            padding: "26px",
+            padding: "26px 30px",
             marginBottom: "28px",
           }}
         >
           <h2
             style={{
               marginTop: 0,
-              marginBottom: "18px",
+              marginBottom: "22px",
               textAlign: "center",
               fontSize: "26px",
               fontWeight: 600,
@@ -77,27 +80,42 @@ export default function SetupPage() {
             Prepare Access
           </h2>
 
-          <ul
+          <div
             style={{
-              margin: 0,
-              paddingLeft: "22px",
               color: "#e2e8f0",
-              lineHeight: 2,
               fontSize: "17px",
+              lineHeight: 2,
             }}
           >
-            <li>Install or prepare your wallet</li>
-            <li>Confirm supported network (ERC20 / BEP20)</li>
-            <li>Prepare your active email access</li>
-          </ul>
+            <div>
+              <button
+                onClick={handleInstall}
+                style={{
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  margin: 0,
+                  color: "#facc15",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontSize: "17px",
+                }}
+              >
+                Install
+              </button>{" "}
+              CryptoHost App
+            </div>
+
+            <div>Confirm supported network (ERC20 / BEP20)</div>
+            <div>Prepare your active email access</div>
+          </div>
         </div>
 
-        {/* BUTTON */}
         <button
           onClick={handleContinue}
           style={{
             width: "100%",
-            padding: "16px", // 👈 BIGGER BUTTON
+            padding: "16px",
             background: "#facc15",
             color: "#111827",
             border: "none",
@@ -110,7 +128,6 @@ export default function SetupPage() {
           Continue to Sign Up
         </button>
 
-        {/* FOOTER */}
         <p
           style={{
             marginTop: "20px",
