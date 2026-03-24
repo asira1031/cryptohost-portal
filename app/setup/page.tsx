@@ -11,6 +11,8 @@ type BeforeInstallPromptEvent = Event & {
 export default function SetupPage() {
   const router = useRouter();
 
+  const [isIOS, setIsIOS] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
   const [installStatus, setInstallStatus] = useState<
     "idle" | "installing" | "installed"
   >("idle");
@@ -19,20 +21,35 @@ export default function SetupPage() {
     useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const iosDevice = /iphone|ipad|ipod/.test(userAgent);
+    setIsIOS(iosDevice);
+
+    const standaloneMode =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as Navigator & { standalone?: boolean }).standalone ===
+        true;
+
+    setIsStandalone(standaloneMode);
+
+    if (standaloneMode) {
+      setInstallStatus("installed");
+      localStorage.setItem("cryptohost_installed", "true");
+    }
+  }, []);
+
+  useEffect(() => {
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
     };
 
     window.addEventListener("beforeinstallprompt", handler);
-
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
-    };
+    return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
 
   useEffect(() => {
-    if (installStatus !== "installing" || deferredPrompt) return;
+    if (installStatus !== "installing" || deferredPrompt || isIOS) return;
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -50,18 +67,24 @@ export default function SetupPage() {
     }, 180);
 
     return () => clearInterval(interval);
-  }, [installStatus, deferredPrompt]);
+  }, [installStatus, deferredPrompt, isIOS]);
 
   const handleInstall = async () => {
     if (installStatus !== "idle") return;
 
     if (deferredPrompt) {
+      setInstallStatus("installing");
+
       await deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
 
       if (choice.outcome === "accepted") {
         setInstallStatus("installed");
+        setProgress(100);
         localStorage.setItem("cryptohost_installed", "true");
+      } else {
+        setInstallStatus("idle");
+        setProgress(0);
       }
 
       setDeferredPrompt(null);
@@ -70,6 +93,12 @@ export default function SetupPage() {
 
     setInstallStatus("installing");
     setProgress(0);
+  };
+
+  const handleIOSInstalled = () => {
+    setInstallStatus("installed");
+    setProgress(100);
+    localStorage.setItem("cryptohost_installed", "true");
   };
 
   const handleContinue = () => {
@@ -100,6 +129,17 @@ export default function SetupPage() {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
+          <img
+            src="/icon-192.png"
+            alt="Asira CryptoHost Logo"
+            style={{
+              width: "84px",
+              height: "84px",
+              borderRadius: "18px",
+              marginBottom: "16px",
+            }}
+          />
+
           <h1 style={{ margin: 0, fontSize: "40px", fontWeight: 700 }}>
             Asira CryptoHost
           </h1>
@@ -131,35 +171,51 @@ export default function SetupPage() {
 
           <div style={{ fontSize: "17px", lineHeight: 2 }}>
             <div>
-              <button
-                onClick={handleInstall}
-                disabled={installStatus !== "idle"}
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  margin: 0,
-                  fontWeight: 700,
-                  fontSize: "17px",
-                  cursor: installStatus === "idle" ? "pointer" : "default",
-                  color:
-                    installStatus === "installed"
-                      ? "#22c55e"
-                      : "#facc15",
-                }}
-              >
-                {installStatus === "idle" && "Install"}
-                {installStatus === "installing" && "Installing..."}
-                {installStatus === "installed" && "Installed ✅"}
-              </button>{" "}
-              CryptoHost App
+              {isIOS ? (
+                <div style={{ color: "#facc15", fontWeight: 700 }}>
+                  On iPhone/iPad: Tap Share (📤) then Add to Home Screen
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={handleInstall}
+                    disabled={installStatus !== "idle" || isStandalone}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      margin: 0,
+                      fontWeight: 700,
+                      fontSize: "17px",
+                      cursor:
+                        installStatus === "idle" && !isStandalone
+                          ? "pointer"
+                          : "default",
+                      color:
+                        installStatus === "installed" || isStandalone
+                          ? "#22c55e"
+                          : "#facc15",
+                    }}
+                  >
+                    {isStandalone && "Installed ✅"}
+                    {!isStandalone && installStatus === "idle" && "Install"}
+                    {!isStandalone &&
+                      installStatus === "installing" &&
+                      "Installing..."}
+                    {!isStandalone &&
+                      installStatus === "installed" &&
+                      "Installed ✅"}
+                  </button>{" "}
+                  CryptoHost App
+                </>
+              )}
             </div>
 
             <div>Confirm supported network (ERC20 / BEP20)</div>
             <div>Prepare your active email access</div>
           </div>
 
-          {installStatus === "installing" && (
+          {!isIOS && installStatus === "installing" && (
             <div style={{ marginTop: "22px" }}>
               <div
                 style={{
@@ -195,7 +251,45 @@ export default function SetupPage() {
             </div>
           )}
 
-          {installStatus === "installed" && (
+          {isIOS && installStatus !== "installed" && (
+            <div style={{ marginTop: "22px" }}>
+              <div
+                style={{
+                  background: "#111c36",
+                  borderRadius: "12px",
+                  padding: "16px",
+                  color: "#cbd5e1",
+                  fontSize: "14px",
+                  lineHeight: 1.8,
+                }}
+              >
+                <div>1. Open this page in Safari</div>
+                <div>2. Tap the Share button</div>
+                <div>3. Choose Add to Home Screen</div>
+                <div>4. Return here and confirm below</div>
+              </div>
+
+              <button
+                onClick={handleIOSInstalled}
+                style={{
+                  width: "100%",
+                  marginTop: "16px",
+                  padding: "14px",
+                  background: "#facc15",
+                  color: "#111827",
+                  border: "none",
+                  borderRadius: "12px",
+                  fontWeight: 700,
+                  fontSize: "16px",
+                  cursor: "pointer",
+                }}
+              >
+                I Installed CryptoHost App
+              </button>
+            </div>
+          )}
+
+          {(installStatus === "installed" || isStandalone) && (
             <p
               style={{
                 marginTop: "18px",
@@ -213,19 +307,23 @@ export default function SetupPage() {
 
         <button
           onClick={handleContinue}
-          disabled={installStatus !== "installed"}
+          disabled={installStatus !== "installed" && !isStandalone}
           style={{
             width: "100%",
             padding: "16px",
             background:
-              installStatus === "installed" ? "#facc15" : "#475569",
+              installStatus === "installed" || isStandalone
+                ? "#facc15"
+                : "#475569",
             color: "#111827",
             border: "none",
             borderRadius: "12px",
             fontWeight: 700,
             fontSize: "17px",
             cursor:
-              installStatus === "installed" ? "pointer" : "not-allowed",
+              installStatus === "installed" || isStandalone
+                ? "pointer"
+                : "not-allowed",
           }}
         >
           Continue to Sign Up
