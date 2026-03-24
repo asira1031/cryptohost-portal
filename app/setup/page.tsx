@@ -96,7 +96,6 @@ export default function SetupPage() {
       return;
     }
 
-    // fallback when Chrome doesn't show install prompt
     setInstallStatus("installed");
     setProgress(100);
     setIsReadyToContinue(true);
@@ -108,10 +107,6 @@ export default function SetupPage() {
     setProgress(100);
     setIsReadyToContinue(true);
     localStorage.setItem("cryptohost_installed", "true");
-  };
-
-  const handleContinue = () => {
-    window.location.href = "/register";
   };
 
   return (
@@ -314,25 +309,43 @@ export default function SetupPage() {
           )}
         </div>
 
-        <button
-          onClick={handleContinue}
-          disabled={!isReadyToContinue && !isStandalone}
-          style={{
-            width: "100%",
-            padding: "16px",
-            background:
-              isReadyToContinue || isStandalone ? "#facc15" : "#475569",
-            color: "#111827",
-            border: "none",
-            borderRadius: "12px",
-            fontWeight: 700,
-            fontSize: "17px",
-            cursor:
-              isReadyToContinue || isStandalone ? "pointer" : "not-allowed",
-          }}
-        >
-          Continue to Sign Up
-        </button>
+        {isReadyToContinue || isStandalone ? (
+          <a
+            href="/register"
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "16px",
+              background: "#facc15",
+              color: "#111827",
+              borderRadius: "12px",
+              fontWeight: 700,
+              fontSize: "17px",
+              textAlign: "center",
+              textDecoration: "none",
+              boxSizing: "border-box",
+            }}
+          >
+            Continue to Sign Up
+          </a>
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              padding: "16px",
+              background: "#475569",
+              color: "#111827",
+              borderRadius: "12px",
+              fontWeight: 700,
+              fontSize: "17px",
+              textAlign: "center",
+              boxSizing: "border-box",
+              opacity: 0.9,
+            }}
+          >
+            Continue to Sign Up
+          </div>
+        )}
 
         <p
           style={{
