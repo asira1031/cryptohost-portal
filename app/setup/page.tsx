@@ -1,17 +1,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SetupPage() {
   const router = useRouter();
 
+  const [installStatus, setInstallStatus] = useState<
+    "idle" | "installing" | "installed"
+  >("idle");
+
   const handleInstall = () => {
-    localStorage.setItem("cryptohost_installed", "true");
-    window.open("https://cryptohost-portal.vercel.app", "_blank");
+    if (installStatus !== "idle") return;
+
+    setInstallStatus("installing");
+
+    // simulate install process
+    setTimeout(() => {
+      setInstallStatus("installed");
+      localStorage.setItem("cryptohost_installed", "true");
+    }, 2000);
   };
 
   const handleContinue = () => {
-    localStorage.setItem("cryptohost_installed", "true");
     router.push("/register");
   };
 
@@ -39,23 +50,11 @@ export default function SetupPage() {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <h1
-            style={{
-              margin: 0,
-              fontSize: "40px",
-              fontWeight: 700,
-            }}
-          >
+          <h1 style={{ margin: 0, fontSize: "40px", fontWeight: 700 }}>
             Asira CryptoHost
           </h1>
 
-          <p
-            style={{
-              marginTop: "12px",
-              color: "#cbd5e1",
-              fontSize: "16px",
-            }}
-          >
+          <p style={{ marginTop: "12px", color: "#cbd5e1", fontSize: "16px" }}>
             Secure Client Access Setup
           </p>
         </div>
@@ -80,13 +79,7 @@ export default function SetupPage() {
             Prepare Access
           </h2>
 
-          <div
-            style={{
-              color: "#e2e8f0",
-              fontSize: "17px",
-              lineHeight: 2,
-            }}
-          >
+          <div style={{ fontSize: "17px", lineHeight: 2 }}>
             <div>
               <button
                 onClick={handleInstall}
@@ -95,13 +88,21 @@ export default function SetupPage() {
                   border: "none",
                   padding: 0,
                   margin: 0,
-                  color: "#facc15",
                   fontWeight: 700,
-                  cursor: "pointer",
+                  cursor:
+                    installStatus === "installed"
+                      ? "default"
+                      : "pointer",
                   fontSize: "17px",
+                  color:
+                    installStatus === "installed"
+                      ? "#22c55e"
+                      : "#facc15",
                 }}
               >
-                Install
+                {installStatus === "idle" && "Install"}
+                {installStatus === "installing" && "Installing..."}
+                {installStatus === "installed" && "Installed ✅"}
               </button>{" "}
               CryptoHost App
             </div>
@@ -113,16 +114,19 @@ export default function SetupPage() {
 
         <button
           onClick={handleContinue}
+          disabled={installStatus !== "installed"}
           style={{
             width: "100%",
             padding: "16px",
-            background: "#facc15",
+            background:
+              installStatus === "installed" ? "#facc15" : "#475569",
             color: "#111827",
             border: "none",
             borderRadius: "12px",
             fontWeight: 700,
             fontSize: "17px",
-            cursor: "pointer",
+            cursor:
+              installStatus === "installed" ? "pointer" : "not-allowed",
           }}
         >
           Continue to Sign Up
@@ -136,7 +140,7 @@ export default function SetupPage() {
             fontSize: "14px",
           }}
         >
-          You will be redirected to secure account registration.
+          Complete installation before proceeding.
         </p>
       </div>
     </div>
