@@ -3,6 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
+};
+
 export default function SetupPage() {
   const router = useRouter();
 
@@ -10,16 +15,24 @@ export default function SetupPage() {
     "idle" | "installing" | "installed"
   >("idle");
   const [progress, setProgress] = useState(0);
-
-  const handleInstall = () => {
-    if (installStatus !== "idle") return;
-
-    setInstallStatus("installing");
-    setProgress(0);
-  };
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
-    if (installStatus !== "installing") return;
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (installStatus !== "installing" || deferredPrompt) return;
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -37,7 +50,27 @@ export default function SetupPage() {
     }, 180);
 
     return () => clearInterval(interval);
-  }, [installStatus]);
+  }, [installStatus, deferredPrompt]);
+
+  const handleInstall = async () => {
+    if (installStatus !== "idle") return;
+
+    if (deferredPrompt) {
+      await deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+
+      if (choice.outcome === "accepted") {
+        setInstallStatus("installed");
+        localStorage.setItem("cryptohost_installed", "true");
+      }
+
+      setDeferredPrompt(null);
+      return;
+    }
+
+    setInstallStatus("installing");
+    setProgress(0);
+  };
 
   const handleContinue = () => {
     router.push("/register");
@@ -112,8 +145,6 @@ export default function SetupPage() {
                   color:
                     installStatus === "installed"
                       ? "#22c55e"
-                      : installStatus === "installing"
-                      ? "#facc15"
                       : "#facc15",
                 }}
               >
