@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type BeforeInstallPromptEvent = Event & {
@@ -9,9 +8,9 @@ type BeforeInstallPromptEvent = Event & {
 };
 
 export default function SetupPage() {
-  const router = useRouter();
-
   const [isIOS, setIsIOS] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [isReadyToContinue, setIsReadyToContinue] = useState(false);
   const [installStatus, setInstallStatus] = useState<
     "idle" | "installing" | "installed"
   >("idle");
@@ -29,11 +28,16 @@ export default function SetupPage() {
       (window.navigator as Navigator & { standalone?: boolean }).standalone ===
         true;
 
+    setIsStandalone(standaloneMode);
+
     const savedInstalled =
       localStorage.getItem("cryptohost_installed") === "true";
 
     if (standaloneMode || savedInstalled) {
       setInstallStatus("installed");
+      setProgress(100);
+      setIsReadyToContinue(true);
+      localStorage.setItem("cryptohost_installed", "true");
     }
   }, []);
 
@@ -57,6 +61,7 @@ export default function SetupPage() {
         if (next >= 100) {
           clearInterval(interval);
           setInstallStatus("installed");
+          setIsReadyToContinue(true);
           localStorage.setItem("cryptohost_installed", "true");
           return 100;
         }
@@ -80,6 +85,7 @@ export default function SetupPage() {
       if (choice.outcome === "accepted") {
         setInstallStatus("installed");
         setProgress(100);
+        setIsReadyToContinue(true);
         localStorage.setItem("cryptohost_installed", "true");
       } else {
         setInstallStatus("idle");
@@ -90,18 +96,22 @@ export default function SetupPage() {
       return;
     }
 
-    setInstallStatus("installing");
-    setProgress(0);
+    // fallback when Chrome doesn't show install prompt
+    setInstallStatus("installed");
+    setProgress(100);
+    setIsReadyToContinue(true);
+    localStorage.setItem("cryptohost_installed", "true");
   };
 
   const handleIOSInstalled = () => {
     setInstallStatus("installed");
     setProgress(100);
+    setIsReadyToContinue(true);
     localStorage.setItem("cryptohost_installed", "true");
   };
 
   const handleContinue = () => {
-    router.push("/register");
+    window.location.href = "/register";
   };
 
   return (
@@ -178,7 +188,7 @@ export default function SetupPage() {
                 <>
                   <button
                     onClick={handleInstall}
-                    disabled={installStatus !== "idle"}
+                    disabled={installStatus !== "idle" || isStandalone}
                     style={{
                       background: "none",
                       border: "none",
@@ -186,16 +196,24 @@ export default function SetupPage() {
                       margin: 0,
                       fontWeight: 700,
                       fontSize: "17px",
-                      cursor: installStatus === "idle" ? "pointer" : "default",
+                      cursor:
+                        installStatus === "idle" && !isStandalone
+                          ? "pointer"
+                          : "default",
                       color:
-                        installStatus === "installed"
+                        installStatus === "installed" || isStandalone
                           ? "#22c55e"
                           : "#facc15",
                     }}
                   >
-                    {installStatus === "idle" && "Install"}
-                    {installStatus === "installing" && "Installing..."}
-                    {installStatus === "installed" && "Installed ✅"}
+                    {isStandalone && "Installed ✅"}
+                    {!isStandalone && installStatus === "idle" && "Install"}
+                    {!isStandalone &&
+                      installStatus === "installing" &&
+                      "Installing..."}
+                    {!isStandalone &&
+                      installStatus === "installed" &&
+                      "Installed ✅"}
                   </button>{" "}
                   CryptoHost App
                 </>
@@ -280,7 +298,7 @@ export default function SetupPage() {
             </div>
           )}
 
-          {installStatus === "installed" && (
+          {(installStatus === "installed" || isStandalone) && (
             <p
               style={{
                 marginTop: "18px",
@@ -298,19 +316,19 @@ export default function SetupPage() {
 
         <button
           onClick={handleContinue}
-          disabled={installStatus !== "installed"}
+          disabled={!isReadyToContinue && !isStandalone}
           style={{
             width: "100%",
             padding: "16px",
             background:
-              installStatus === "installed" ? "#facc15" : "#475569",
+              isReadyToContinue || isStandalone ? "#facc15" : "#475569",
             color: "#111827",
             border: "none",
             borderRadius: "12px",
             fontWeight: 700,
             fontSize: "17px",
             cursor:
-              installStatus === "installed" ? "pointer" : "not-allowed",
+              isReadyToContinue || isStandalone ? "pointer" : "not-allowed",
           }}
         >
           Continue to Sign Up
