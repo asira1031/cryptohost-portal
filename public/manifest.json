@@ -2,7 +2,7 @@
   "name": "Asira CryptoHost",
   "short_name": "CryptoHost",
   "description": "Secure client portal for Asira CryptoHost.",
-  "start_url": "/setup",
+  "start_url": "/register",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#0b1730",

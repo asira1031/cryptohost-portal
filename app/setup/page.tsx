@@ -12,8 +12,6 @@ export default function SetupPage() {
   const router = useRouter();
 
   const [isIOS, setIsIOS] = useState(false);
-  const [isStandalone, setIsStandalone] = useState(false);
-  const [isReadyToContinue, setIsReadyToContinue] = useState(false);
   const [installStatus, setInstallStatus] = useState<
     "idle" | "installing" | "installed"
   >("idle");
@@ -31,15 +29,11 @@ export default function SetupPage() {
       (window.navigator as Navigator & { standalone?: boolean }).standalone ===
         true;
 
-    setIsStandalone(standaloneMode);
-
     const savedInstalled =
       localStorage.getItem("cryptohost_installed") === "true";
 
     if (standaloneMode || savedInstalled) {
       setInstallStatus("installed");
-      setIsReadyToContinue(true);
-      localStorage.setItem("cryptohost_installed", "true");
     }
   }, []);
 
@@ -63,7 +57,6 @@ export default function SetupPage() {
         if (next >= 100) {
           clearInterval(interval);
           setInstallStatus("installed");
-          setIsReadyToContinue(true);
           localStorage.setItem("cryptohost_installed", "true");
           return 100;
         }
@@ -87,7 +80,6 @@ export default function SetupPage() {
       if (choice.outcome === "accepted") {
         setInstallStatus("installed");
         setProgress(100);
-        setIsReadyToContinue(true);
         localStorage.setItem("cryptohost_installed", "true");
       } else {
         setInstallStatus("idle");
@@ -105,7 +97,6 @@ export default function SetupPage() {
   const handleIOSInstalled = () => {
     setInstallStatus("installed");
     setProgress(100);
-    setIsReadyToContinue(true);
     localStorage.setItem("cryptohost_installed", "true");
   };
 
@@ -187,7 +178,7 @@ export default function SetupPage() {
                 <>
                   <button
                     onClick={handleInstall}
-                    disabled={installStatus !== "idle" || isStandalone}
+                    disabled={installStatus !== "idle"}
                     style={{
                       background: "none",
                       border: "none",
@@ -195,24 +186,16 @@ export default function SetupPage() {
                       margin: 0,
                       fontWeight: 700,
                       fontSize: "17px",
-                      cursor:
-                        installStatus === "idle" && !isStandalone
-                          ? "pointer"
-                          : "default",
+                      cursor: installStatus === "idle" ? "pointer" : "default",
                       color:
-                        installStatus === "installed" || isStandalone
+                        installStatus === "installed"
                           ? "#22c55e"
                           : "#facc15",
                     }}
                   >
-                    {isStandalone && "Installed ✅"}
-                    {!isStandalone && installStatus === "idle" && "Install"}
-                    {!isStandalone &&
-                      installStatus === "installing" &&
-                      "Installing..."}
-                    {!isStandalone &&
-                      installStatus === "installed" &&
-                      "Installed ✅"}
+                    {installStatus === "idle" && "Install"}
+                    {installStatus === "installing" && "Installing..."}
+                    {installStatus === "installed" && "Installed ✅"}
                   </button>{" "}
                   CryptoHost App
                 </>
@@ -297,7 +280,7 @@ export default function SetupPage() {
             </div>
           )}
 
-          {(installStatus === "installed" || isStandalone) && (
+          {installStatus === "installed" && (
             <p
               style={{
                 marginTop: "18px",
@@ -315,19 +298,19 @@ export default function SetupPage() {
 
         <button
           onClick={handleContinue}
-          disabled={!isReadyToContinue && !isStandalone}
+          disabled={installStatus !== "installed"}
           style={{
             width: "100%",
             padding: "16px",
             background:
-              isReadyToContinue || isStandalone ? "#facc15" : "#475569",
+              installStatus === "installed" ? "#facc15" : "#475569",
             color: "#111827",
             border: "none",
             borderRadius: "12px",
             fontWeight: 700,
             fontSize: "17px",
             cursor:
-              isReadyToContinue || isStandalone ? "pointer" : "not-allowed",
+              installStatus === "installed" ? "pointer" : "not-allowed",
           }}
         >
           Continue to Sign Up
