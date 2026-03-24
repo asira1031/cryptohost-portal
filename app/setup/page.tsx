@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SetupPage() {
   const router = useRouter();
@@ -9,18 +9,35 @@ export default function SetupPage() {
   const [installStatus, setInstallStatus] = useState<
     "idle" | "installing" | "installed"
   >("idle");
+  const [progress, setProgress] = useState(0);
 
   const handleInstall = () => {
     if (installStatus !== "idle") return;
 
     setInstallStatus("installing");
-
-    // simulate install process
-    setTimeout(() => {
-      setInstallStatus("installed");
-      localStorage.setItem("cryptohost_installed", "true");
-    }, 2000);
+    setProgress(0);
   };
+
+  useEffect(() => {
+    if (installStatus !== "installing") return;
+
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + 10;
+
+        if (next >= 100) {
+          clearInterval(interval);
+          setInstallStatus("installed");
+          localStorage.setItem("cryptohost_installed", "true");
+          return 100;
+        }
+
+        return next;
+      });
+    }, 180);
+
+    return () => clearInterval(interval);
+  }, [installStatus]);
 
   const handleContinue = () => {
     router.push("/register");
@@ -83,20 +100,20 @@ export default function SetupPage() {
             <div>
               <button
                 onClick={handleInstall}
+                disabled={installStatus !== "idle"}
                 style={{
                   background: "none",
                   border: "none",
                   padding: 0,
                   margin: 0,
                   fontWeight: 700,
-                  cursor:
-                    installStatus === "installed"
-                      ? "default"
-                      : "pointer",
                   fontSize: "17px",
+                  cursor: installStatus === "idle" ? "pointer" : "default",
                   color:
                     installStatus === "installed"
                       ? "#22c55e"
+                      : installStatus === "installing"
+                      ? "#facc15"
                       : "#facc15",
                 }}
               >
@@ -110,6 +127,57 @@ export default function SetupPage() {
             <div>Confirm supported network (ERC20 / BEP20)</div>
             <div>Prepare your active email access</div>
           </div>
+
+          {installStatus === "installing" && (
+            <div style={{ marginTop: "22px" }}>
+              <div
+                style={{
+                  width: "100%",
+                  height: "12px",
+                  background: "#1e293b",
+                  borderRadius: "999px",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    width: `${progress}%`,
+                    height: "100%",
+                    background: "#facc15",
+                    borderRadius: "999px",
+                    transition: "width 0.18s linear",
+                  }}
+                />
+              </div>
+
+              <p
+                style={{
+                  marginTop: "10px",
+                  marginBottom: 0,
+                  color: "#cbd5e1",
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
+              >
+                Installing CryptoHost App... {progress}%
+              </p>
+            </div>
+          )}
+
+          {installStatus === "installed" && (
+            <p
+              style={{
+                marginTop: "18px",
+                marginBottom: 0,
+                color: "#22c55e",
+                fontSize: "14px",
+                textAlign: "center",
+                fontWeight: 600,
+              }}
+            >
+              CryptoHost App installation completed successfully.
+            </p>
+          )}
         </div>
 
         <button
