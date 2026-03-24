@@ -1,271 +1,133 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import Link from "next/link";
+import { createClient } from "../lib/supabase/client";
 
 export default function RegisterPage() {
+  const supabase = createClient();
   const router = useRouter();
 
-  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage("");
     setLoading(true);
+    setMessage("");
 
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: {
-          data: {
-            full_name: fullName.trim(),
-          },
-        },
-      });
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-      if (error) {
-        setMessage(`Registration failed: ${error.message}`);
-        setLoading(false);
-        return;
-      }
-
-      const user = data.user ?? data.session?.user;
-
-      if (!user) {
-        setMessage("Registration succeeded, but no user session was returned.");
-        setLoading(false);
-        return;
-      }
-
-      const { error: profileError } = await supabase.from("clients").upsert({
-        id: user.id,
-        full_name: fullName.trim(),
-        email: email.trim(),
-        subscription_plan: "Starter",
-        subscription_amount: 10,
-      });
-
-      if (profileError) {
-        setMessage(`Profile save failed: ${profileError.message}`);
-        setLoading(false);
-        return;
-      }
-
-      router.push("/login");
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Unknown error occurred.";
-      setMessage(`Registration failed: ${errorMessage}`);
+    if (error) {
+      setMessage(error.message);
       setLoading(false);
+      return;
     }
+
+    setMessage("Registration successful! You can now log in.");
+    setLoading(false);
+
+    // redirect after 2 seconds
+    setTimeout(() => {
+      router.push("/login");
+    }, 2000);
   };
 
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#dfe5eb",
+        background: "#020617",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontFamily: "Arial, sans-serif",
-        padding: "24px",
       }}
     >
       <div
         style={{
-          width: "100%",
-          maxWidth: "600px",
-          background: "#ffffff",
-          borderRadius: "20px",
-          overflow: "hidden",
-          boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+          background: "#0f172a",
+          padding: "40px",
+          borderRadius: "12px",
+          width: "350px",
+          color: "#fff",
         }}
       >
-        <div
-          style={{
-            background: "#3568cf",
-            color: "#ffffff",
-            fontSize: "34px",
-            fontWeight: "bold",
-            padding: "24px 30px",
-          }}
-        >
-          Asira CryptoHost
-        </div>
+        <h2 style={{ marginBottom: "20px", textAlign: "center" }}>
+          Create Account
+        </h2>
 
-        <div style={{ padding: "34px 30px 36px" }}>
-          <h1
+        <form onSubmit={handleRegister}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
             style={{
-              margin: 0,
-              fontSize: "34px",
+              width: "100%",
+              padding: "10px",
+              marginBottom: "12px",
+              borderRadius: "6px",
+              border: "none",
+            }}
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "16px",
+              borderRadius: "6px",
+              border: "none",
+            }}
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              width: "100%",
+              padding: "10px",
+              background: "#facc15",
+              border: "none",
+              borderRadius: "6px",
               fontWeight: "bold",
-              color: "#111827",
+              cursor: "pointer",
             }}
           >
-            Create Account
-          </h1>
+            {loading ? "Creating..." : "Register"}
+          </button>
+        </form>
 
+        {message && (
           <p
             style={{
               marginTop: "12px",
-              marginBottom: "30px",
-              fontSize: "17px",
-              color: "#6b7280",
+              textAlign: "center",
+              color: message.includes("successful") ? "#22c55e" : "red",
             }}
           >
-            Register to access the CryptoHost client portal.
+            {message}
           </p>
+        )}
 
-          <form onSubmit={handleRegister}>
-            <label
-              style={{
-                display: "block",
-                fontWeight: "bold",
-                fontSize: "17px",
-                marginBottom: "8px",
-                color: "#111827",
-              }}
-            >
-              Full Name
-            </label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              placeholder="Enter your full name"
-              style={{
-                width: "100%",
-                padding: "16px",
-                borderRadius: "12px",
-                border: "1px solid #cbd5e1",
-                marginBottom: "22px",
-                fontSize: "16px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
-            />
-
-            <label
-              style={{
-                display: "block",
-                fontWeight: "bold",
-                fontSize: "17px",
-                marginBottom: "8px",
-                color: "#111827",
-              }}
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Enter your email"
-              style={{
-                width: "100%",
-                padding: "16px",
-                borderRadius: "12px",
-                border: "1px solid #cbd5e1",
-                marginBottom: "22px",
-                fontSize: "16px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
-            />
-
-            <label
-              style={{
-                display: "block",
-                fontWeight: "bold",
-                fontSize: "17px",
-                marginBottom: "8px",
-                color: "#111827",
-              }}
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Enter your password"
-              style={{
-                width: "100%",
-                padding: "16px",
-                borderRadius: "12px",
-                border: "1px solid #cbd5e1",
-                marginBottom: "24px",
-                fontSize: "16px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
-            />
-
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                width: "100%",
-                padding: "16px",
-                background: "#3568cf",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "12px",
-                fontSize: "18px",
-                fontWeight: "bold",
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.8 : 1,
-              }}
-            >
-              {loading ? "Signing Up..." : "Sign Up"}
-            </button>
-          </form>
-
-          {message && (
-            <p
-              style={{
-                marginTop: "18px",
-                marginBottom: "0",
-                color: "red",
-                fontSize: "16px",
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {message}
-            </p>
-          )}
-
-          <p
-            style={{
-              marginTop: "26px",
-              color: "#6b7280",
-              fontSize: "16px",
-            }}
-          >
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              style={{
-                color: "#3568cf",
-                fontWeight: "bold",
-                textDecoration: "none",
-              }}
-            >
-              Log in
-            </Link>
-          </p>
-        </div>
+        <p style={{ marginTop: "20px", textAlign: "center", fontSize: "14px" }}>
+          Already have an account?{" "}
+          <Link href="/login" style={{ color: "#facc15" }}>
+            Login here
+          </Link>
+        </p>
       </div>
     </div>
   );
