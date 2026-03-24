@@ -179,21 +179,25 @@ export default function AccountPage() {
             Buy Crypto via Coinbase
           </a>
 
-          <button
-            onClick={() => setShowBanks((prev) => !prev)}
-            style={{
-              background: showBanks ? "#334155" : "#1f2b5c",
-              color: "#ffffff",
-              border: "1px solid #42568f",
-              padding: "16px 20px",
-              borderRadius: 14,
-              fontWeight: 800,
-              fontSize: 16,
-              cursor: "pointer",
-            }}
-          >
-            {showBanks ? "Hide Bank Accounts" : "Bank Payment"}
-          </button>
+          <div
+  style={{
+    background: "#111",
+    color: "#777",
+    border: "1px solid #42568f",
+    padding: "16px 20px",
+    borderRadius: 14,
+    fontWeight: 800,
+    fontSize: 16,
+    textAlign: "center",
+    cursor: "not-allowed",
+    opacity: 0.7,
+  }}
+>
+  Bank Payment 🔒
+  <div style={{ fontSize: "11px", color: "#888", marginTop: "6px" }}>
+    Disabled as per request
+  </div>
+</div>
         </div>
 
         <div
