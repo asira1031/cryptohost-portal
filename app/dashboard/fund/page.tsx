@@ -3,6 +3,38 @@
 import { useEffect, useState } from "react";
 import { createClient } from "../../lib/supabase/client";
 
+const gatewayWallet = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
+
+const assetButtonStyle: React.CSSProperties = {
+  background: "#1e3a8a",
+  color: "#ffffff",
+  border: "none",
+  padding: "10px 18px",
+  borderRadius: 8,
+  cursor: "pointer",
+  fontWeight: 700,
+};
+
+const buyStyle: React.CSSProperties = {
+  background: "#f4b400",
+  color: "#111827",
+  padding: "12px 20px",
+  borderRadius: 8,
+  border: "none",
+  fontWeight: 700,
+  cursor: "pointer",
+};
+
+const coinbaseStyle: React.CSSProperties = {
+  background: "#2563eb",
+  color: "#ffffff",
+  padding: "12px 20px",
+  borderRadius: 8,
+  border: "none",
+  fontWeight: 700,
+  cursor: "pointer",
+};
+
 export default function FundPage() {
   const supabase = createClient();
 
@@ -10,6 +42,7 @@ export default function FundPage() {
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [selectedAsset, setSelectedAsset] = useState("USDT");
 
   useEffect(() => {
     async function loadUser() {
@@ -78,9 +111,20 @@ export default function FundPage() {
     setUploading(false);
     setFile(null);
 
-    const input = document.getElementById("fund-file-input") as HTMLInputElement | null;
+    const input = document.getElementById(
+      "fund-file-input"
+    ) as HTMLInputElement | null;
     if (input) input.value = "";
   }
+
+  const networkLabel =
+    selectedAsset === "BTC"
+      ? "Bitcoin"
+      : selectedAsset === "ETH"
+      ? "ERC20"
+      : selectedAsset === "BNB"
+      ? "BEP20"
+      : "ERC20 / BEP20";
 
   return (
     <div
@@ -96,7 +140,7 @@ export default function FundPage() {
       <div
         style={{
           width: "100%",
-          maxWidth: 760,
+          maxWidth: 900,
           background: "#101a49",
           borderRadius: 18,
           padding: 30,
@@ -112,7 +156,7 @@ export default function FundPage() {
             fontWeight: 700,
           }}
         >
-          Upload Financial File
+          Fund Account
         </h1>
 
         <p
@@ -123,7 +167,8 @@ export default function FundPage() {
             fontSize: 14,
           }}
         >
-          Upload your transaction file securely to CryptoHost.
+          Choose your preferred funding asset, then upload your financial file
+          securely to CryptoHost.
         </p>
 
         {userEmail && (
@@ -138,6 +183,104 @@ export default function FundPage() {
             Logged in as: {userEmail}
           </p>
         )}
+
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            marginBottom: 20,
+            flexWrap: "wrap",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedAsset("USDT")}
+            style={assetButtonStyle}
+          >
+            USDT
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedAsset("BTC")}
+            style={assetButtonStyle}
+          >
+            BTC
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedAsset("ETH")}
+            style={assetButtonStyle}
+          >
+            ETH
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedAsset("BNB")}
+            style={assetButtonStyle}
+          >
+            BNB
+          </button>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            marginBottom: 20,
+            flexWrap: "wrap",
+          }}
+        >
+          <a
+            href="https://www.binance.com/en/buy-crypto"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button type="button" style={buyStyle}>
+              Buy {selectedAsset} via Binance
+            </button>
+          </a>
+
+          <a
+            href="https://www.coinbase.com/buy"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button type="button" style={coinbaseStyle}>
+              Buy {selectedAsset} via Coinbase
+            </button>
+          </a>
+        </div>
+
+        <div
+          style={{
+            background: "#1f2b5c",
+            padding: 16,
+            borderRadius: 12,
+            marginBottom: 24,
+            border: "1px solid #33457a",
+          }}
+        >
+          <p style={{ color: "#93c5fd", fontSize: 13, marginTop: 0 }}>
+            Gateway Wallet
+          </p>
+          <p style={{ color: "#ffffff", fontSize: 14, wordBreak: "break-all" }}>
+            {gatewayWallet}
+          </p>
+          <p style={{ color: "#22c55e", fontSize: 12, marginBottom: 0 }}>
+            Asset: {selectedAsset} | Network: {networkLabel}
+          </p>
+        </div>
+
+        <h2
+          style={{
+            marginTop: 0,
+            color: "#ffffff",
+            fontSize: 22,
+            marginBottom: 14,
+          }}
+        >
+          Upload Financial File
+        </h2>
 
         <form onSubmit={handleUpload}>
           <input
