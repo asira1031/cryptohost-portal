@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 type BankAccount = {
   bank: string;
@@ -11,9 +11,12 @@ type BankAccount = {
   note: string;
 };
 
+type AssetKey = "USDT" | "BTC" | "ETH" | "BNB";
+
 export default function AccountPage() {
   const [showBanks, setShowBanks] = useState(false);
   const [buyerWallet, setBuyerWallet] = useState("");
+  const [selectedAsset, setSelectedAsset] = useState<AssetKey>("USDT");
 
   const gatewayWallet = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
 
@@ -76,6 +79,50 @@ export default function AccountPage() {
     },
   ];
 
+  const assetConfig = useMemo(
+    () => ({
+      USDT: {
+        network: "ERC20 / BEP20",
+        binanceLabel: "Buy USDT via Binance",
+        coinbaseLabel: "Buy USDT via Coinbase",
+        providerText:
+          "Choose Binance or Coinbase if purchasing USDT externally.",
+        sendText:
+          "After purchase, send USDT to the designated gateway wallet using the correct network.",
+      },
+      BTC: {
+        network: "Bitcoin",
+        binanceLabel: "Buy BTC via Binance",
+        coinbaseLabel: "Buy BTC via Coinbase",
+        providerText:
+          "Choose Binance or Coinbase if purchasing BTC externally.",
+        sendText:
+          "After purchase, send BTC to the designated gateway wallet using the Bitcoin network only.",
+      },
+      ETH: {
+        network: "ERC20",
+        binanceLabel: "Buy ETH via Binance",
+        coinbaseLabel: "Buy ETH via Coinbase",
+        providerText:
+          "Choose Binance or Coinbase if purchasing ETH externally.",
+        sendText:
+          "After purchase, send ETH to the designated gateway wallet using the ERC20 network.",
+      },
+      BNB: {
+        network: "BEP20",
+        binanceLabel: "Buy BNB via Binance",
+        coinbaseLabel: "Buy BNB via Coinbase",
+        providerText:
+          "Choose Binance or Coinbase if purchasing BNB externally.",
+        sendText:
+          "After purchase, send BNB to the designated gateway wallet using the BEP20 network.",
+      },
+    }),
+    []
+  );
+
+  const currentAsset = assetConfig[selectedAsset];
+
   async function copyText(text: string) {
     try {
       await navigator.clipboard.writeText(text);
@@ -128,10 +175,39 @@ export default function AccountPage() {
             maxWidth: 920,
           }}
         >
-          Choose your preferred funding method below. You may buy USDT from an
-          external provider, send to the designated gateway wallet, or use bank
-          payment when required for your transaction flow.
+          Choose your preferred funding method below. You may buy crypto from an
+          external provider, send it to the designated gateway wallet, or use
+          bank payment when required for your transaction flow.
         </p>
+
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            flexWrap: "wrap",
+            marginBottom: 22,
+          }}
+        >
+          {(["USDT", "BTC", "ETH", "BNB"] as AssetKey[]).map((asset) => (
+            <button
+              key={asset}
+              type="button"
+              onClick={() => setSelectedAsset(asset)}
+              style={{
+                ...assetChipStyle,
+                background:
+                  selectedAsset === asset ? "#2563eb" : "rgba(255,255,255,0.08)",
+                border:
+                  selectedAsset === asset
+                    ? "1px solid #3b82f6"
+                    : "1px solid rgba(255,255,255,0.08)",
+                color: "#ffffff",
+              }}
+            >
+              {asset}
+            </button>
+          ))}
+        </div>
 
         <div
           style={{
@@ -157,7 +233,7 @@ export default function AccountPage() {
               display: "block",
             }}
           >
-            Buy USDT via Binance
+            {currentAsset.binanceLabel}
           </a>
 
           <a
@@ -176,28 +252,36 @@ export default function AccountPage() {
               display: "block",
             }}
           >
-            Buy Crypto via Coinbase
+            {currentAsset.coinbaseLabel}
           </a>
 
-          <div
-  style={{
-    background: "#111",
-    color: "#777",
-    border: "1px solid #42568f",
-    padding: "16px 20px",
-    borderRadius: 14,
-    fontWeight: 800,
-    fontSize: 16,
-    textAlign: "center",
-    cursor: "not-allowed",
-    opacity: 0.7,
-  }}
->
-  Bank Payment 🔒
-  <div style={{ fontSize: "11px", color: "#888", marginTop: "6px" }}>
-    Disabled as per request
-  </div>
-</div>
+          <button
+            type="button"
+            onClick={() => setShowBanks((prev) => !prev)}
+            style={{
+              background: "#111",
+              color: "#ffffff",
+              border: "1px solid #42568f",
+              padding: "16px 20px",
+              borderRadius: 14,
+              fontWeight: 800,
+              fontSize: 16,
+              textAlign: "center",
+              cursor: "pointer",
+            }}
+          >
+            {showBanks ? "Hide Bank Payment" : "Bank Payment"}
+            <div
+              style={{
+                fontSize: "11px",
+                color: "#a5b4fc",
+                marginTop: "6px",
+                fontWeight: 600,
+              }}
+            >
+              Approved bank accounts
+            </div>
+          </button>
         </div>
 
         <div
@@ -246,6 +330,7 @@ export default function AccountPage() {
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <button
+                type="button"
                 onClick={() => copyText(gatewayWallet)}
                 style={smallButtonStyle("#f4b400", "#111827")}
               >
@@ -258,7 +343,16 @@ export default function AccountPage() {
                   background: "#0f766e",
                 }}
               >
-                ERC20 / BEP20
+                {currentAsset.network}
+              </div>
+
+              <div
+                style={{
+                  ...pillStyle,
+                  background: "#1d4ed8",
+                }}
+              >
+                {selectedAsset}
               </div>
             </div>
           </div>
@@ -305,6 +399,7 @@ export default function AccountPage() {
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <button
+                type="button"
                 onClick={() => copyText(buyerWallet)}
                 style={smallButtonStyle("#2563eb", "#ffffff")}
                 disabled={!buyerWallet.trim()}
@@ -313,6 +408,7 @@ export default function AccountPage() {
               </button>
 
               <button
+                type="button"
                 onClick={() => setBuyerWallet("")}
                 style={smallButtonStyle("#475569", "#ffffff")}
               >
@@ -362,10 +458,9 @@ export default function AccountPage() {
               lineHeight: 1.8,
             }}
           >
-            1. Choose Binance or Coinbase if purchasing USDT externally.
+            1. {currentAsset.providerText}
             <br />
-            2. After purchase, send USDT to the designated gateway wallet using
-            the correct network.
+            2. {currentAsset.sendText}
             <br />
             3. If using bank transfer, click Bank Payment to reveal approved
             bank accounts.
@@ -514,7 +609,10 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function smallButtonStyle(background: string, color: string): React.CSSProperties {
+function smallButtonStyle(
+  background: string,
+  color: string
+): React.CSSProperties {
   return {
     background,
     color,
@@ -532,5 +630,14 @@ const pillStyle: React.CSSProperties = {
   padding: "10px 14px",
   borderRadius: 10,
   fontWeight: 700,
+  fontSize: 13,
+};
+
+const assetChipStyle: React.CSSProperties = {
+  border: "none",
+  padding: "10px 16px",
+  borderRadius: 10,
+  fontWeight: 700,
+  cursor: "pointer",
   fontSize: 13,
 };

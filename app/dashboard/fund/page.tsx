@@ -1,3 +1,4 @@
+<h1 style={{ color: "red" }}>BTC VERSION LIVE</h1>
 "use client";
 
 import { useEffect, useState } from "react";
