@@ -17,26 +17,27 @@ export default function PriorityMintPage() {
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
 
-  const STAGE_LABEL = "LIQUIDITY PRIORITY MINT — PRODUCTION PHASE";
-  const STATUS_BADGE = "BAND CONFIRMATION PENDING";
-  const SYSTEM_STATUS = "PRODUCTION MINTING / BAND VALIDATION";
+  const STAGE_LABEL = "LIQUIDITY PRIORITY MINT — VALIDATION PHASE";
+  const STATUS_BADGE = "ONLINE";
+  const SYSTEM_STATUS = "ONLINE / VALIDATION ACTIVE";
 
   const MINT_PROGRESS = 56;
+
   const ACTIVE_TRANCHE = "5,000,000 EURC";
   const ACTIVATED_AMOUNT = "2,800,000 EURC";
 
   const LIQUIDITY_LINE =
-    "The indexed 99.5M position remains in production mint flow while the active 5,000,000 EURC tranche has reached 56% completion and continues under full band confirmation monitoring for conversion routing.";
+    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 56% completion and remains under live validation monitoring for continuation.";
 
-  const NOTICE_TITLE = "5M Production Mint Update — 56% Complete";
+  const NOTICE_TITLE = "Swap Validation Status — Online";
   const NOTICE_BODY =
-    "Production minting remains active and the current 5,000,000 EURC liquidity tranche has reached 56% completion. Live liquidity positioning is active across EURC-BNB, BNB-EURC, and USDT-EURC channels. The system is now awaiting full band confirmation before releasing the active tranche for final EURC-to-USDT conversion routing. All liquidity components remain visible, paired, and operating within production parameters.";
+    "Status: Online. Swap amounts below 1,000,000 do not meet the required validation threshold and may require revalidation before execution can continue.";
 
   const REASON =
-    "Production minting is active at 56% completion; the active 5,000,000 EURC tranche remains under full band confirmation before conversion release.";
+    "Swap volume must remain at or above the minimum validation threshold of 1,000,000 to preserve active validation continuity.";
 
   const REQUIRED_ACTION =
-    "No manual intervention is required at this stage. The system is monitoring band completion, live LP positioning, routing stability, and mint continuity. Upon confirmation of the full operating band, the active tranche will be released for EURC-to-USDT conversion and settlement continuation.";
+    "Maintain swap execution at or above the required validation threshold. Amounts below 1,000,000 may not qualify for continuation and may require revalidation before execution can proceed.";
 
   const SYSTEM_NAME = "Blockchain Liquidity Engine (CLAMM Routing Core)";
 
@@ -45,35 +46,41 @@ export default function PriorityMintPage() {
   const BAND_MAX = "34.21";
 
   const POSITION_PAIR = "EURC / BNB";
-  const POSITION_MIN = "0.0584";
-  const POSITION_MAX = "0.0590";
+  const POSITION_MIN = "0.058393075";
+  const POSITION_MAX = "0.058509972";
   const POSITION_LIQUIDITY = "99.5M INDEXED";
-  const POSITION_STATE = "Production Mint / Awaiting Full Band Confirmation";
+  const POSITION_STATE = "Validation Active / Routing Online";
   const POSITION_EARNINGS = "NOT ACTIVE";
   const POSITION_APR = "2.60%";
 
-  const FEE_STATE = "PRODUCTION MINT";
-  const PAYOUT_STATE = "LOCKED UNTIL BAND CONFIRMATION";
-  const GAS_STATE = "IN PROGRESS";
+  const FEE_STATE = "VALIDATION ACTIVE";
+  const PAYOUT_STATE = "AWAITING QUALIFIED SWAP";
+  const GAS_STATE = "ONLINE";
   const ROUTING_STATE = "ACTIVE";
 
   const USDT_EURC_LIQUIDITY = "$1.88";
-  const USDT_EURC_USDT_SIDE = "1.889";
-  const USDT_EURC_EURC_SIDE = "1205000000";
+  const USDT_EURC_USDT_SIDE = "1.88923";
+  const USDT_EURC_EURC_SIDE = "1205690000";
   const USDT_EURC_APR = "1,545.91%";
   const USDT_EURC_POOL_SHARE = "99.9992407%";
 
   const EURC_BNB_POOL_ID = "#5239977";
   const EURC_BNB_FEE = "0.01%";
-  const EURC_BNB_RANGE = "Min 16.9363 / Max 17.1065";
+  const EURC_BNB_RANGE = "Min 16.9363 / Max 17.1065 EURC = 1 BNB";
 
   const BNB_EURC_POOL_ID = "#6547046";
   const BNB_EURC_FEE = "1%";
-  const BNB_EURC_RANGE = "Min 0 / Max ∞";
+  const BNB_EURC_RANGE = "Min 0 / Max ∞ BNB = 1 EURC";
 
-  const EXPLORER_URL = "#";
+  const APPROVAL_STATUS = "VALID";
+  const APPROVAL_AMOUNT = "323,971,324.226828625927174825";
+  const APPROVAL_ASSET = "EURC";
+  const APPROVAL_TX =
+    "0x1784381fb5fb75188a5884ae9817c053b315c2cb8eac8ae821d8ad144e18ea70";
 
-  const terminal = `99.5M LIQUIDITY PRIORITY MINT — PRODUCTION MONITOR
+  const EXPLORER_URL = `https://bscscan.com/tx/${APPROVAL_TX}`;
+
+  const terminal = `99.5M LIQUIDITY PRIORITY MINT — VALIDATION MONITOR
 SMART CONTRACT ROUTING INITIALIZED
 ------------------------------------------------------------
 
@@ -82,22 +89,27 @@ FILE SUMMARY
 - Indexed Amount           : ${FILE_AMOUNT}
 - Reference                : 99.5M-PRIORITY-MINT
 
-MINT ENGINE STATUS
+SYSTEM STATUS
 - Network                  : BNB Chain
 - Execution Layer          : Smart Mint Engine (CLAMM)
 - Routing Engine           : ${ROUTING_STATE}
-- Mint State               : PRODUCTION
-- Gas Optimization         : ${GAS_STATE}
-- Band Confirmation        : PENDING
+- Validation State         : ACTIVE
+- Gas State                : ${GAS_STATE}
+- Qualified Swap Minimum   : 1,000,000
 - Conversion Path          : EURC -> USDT
 
-LIVE MINT ACTIVITY
-- Active Mint Signal       : +${ACTIVE_TRANCHE}
+LIVE VALIDATION ACTIVITY
+- Active Tranche           : ${ACTIVE_TRANCHE}
 - Activated Amount         : ${ACTIVATED_AMOUNT}
 - Progress                 : ${MINT_PROGRESS}%
-- Current Phase            : Full band confirmation monitoring
-- Release Condition        : Full configured band must be confirmed
+- Current Phase            : Swap validation monitoring
+- Continuity Requirement   : Minimum valid swap threshold must be maintained
 - Settlement Route         : EURC conversion toward USDT enablement
+
+APPROVAL SNAPSHOT
+- Approval Status          : ${APPROVAL_STATUS}
+- Approval Amount          : ${APPROVAL_AMOUNT} ${APPROVAL_ASSET}
+- Approval TX              : ${APPROVAL_TX}
 
 LIVE LP SNAPSHOTS
 - EURC-BNB LP             : ${EURC_BNB_POOL_ID} / Fee ${EURC_BNB_FEE} / ACTIVE
@@ -115,20 +127,18 @@ POSITION SUMMARY
 - Position Range           : ${POSITION_MIN} – ${POSITION_MAX}
 - Liquidity Allocation     : ${POSITION_LIQUIDITY}
 - Current Tranche          : ${ACTIVE_TRANCHE}
-- Earnings State           : ${POSITION_EARNINGS} (Pre-Conversion)
+- Earnings State           : ${POSITION_EARNINGS}
 
-PRICE BAND (CONFIGURED)
+PRICE BAND
 - Price Band               : ${BAND_MIN} – ${BAND_MAX}
 - Current Price            : ${BAND_CURRENT}
 
-NEXT STEP
-- Confirm full operating band
-- Release active 5,000,000 EURC tranche
-- Route released liquidity for EURC conversion
-- Enable EURC-to-USDT settlement path
-- Continue production mint monitoring
+NOTICE
+- Swap amounts below 1,000,000 do not meet the required validation threshold
+- Sub-threshold execution may require revalidation before continuation
+- Routing remains online and visible on-chain
 
-SYSTEM STATUS : MINTING IN PRODUCTION — AWAITING FULL BAND CONFIRMATION
+SYSTEM STATUS : ONLINE — VALIDATION ACTIVE
 COMPLIANCE    : ${SYSTEM_NAME}
 TIMESTAMP     : ${TIMESTAMP}
 REFERENCE     : 99.5M-PRIORITY-MINT
@@ -143,6 +153,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
     muted: "#9aa4af",
     yellow: "#f0b90b",
     green: "#0ecb81",
+    cyan: "#00ffc3",
   };
 
   const cardStyle: CSSProperties = {
@@ -174,7 +185,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
     color: active ? "#111" : colors.text,
     background: active ? colors.yellow : "transparent",
     fontWeight: active ? 700 : 500,
-    border: active ? "none" : `1px solid transparent`,
+    border: active ? "none" : "1px solid transparent",
   });
 
   const badgeStyle = (
@@ -266,7 +277,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
               Network: <b>BNB Chain</b>
             </div>
             <div style={{ fontSize: 13, marginBottom: 6 }}>
-              Mode: <b>Verification Console</b>
+              Mode: <b>Validation Console</b>
             </div>
             <div style={{ fontSize: 13 }}>
               Engine: <b>CLAMM Routing Core</b>
@@ -308,8 +319,9 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 {SYSTEM_STATUS}
               </div>
               <div style={{ marginTop: 8, fontSize: 13, color: colors.muted }}>
-                Production mint monitoring is active while the system waits for full
-                band confirmation before releasing the convertible liquidity tranche.
+                Validation is active and liquidity routing remains online. Swap
+                execution must remain within the required threshold parameters for
+                continuation.
               </div>
             </div>
           </div>
@@ -355,12 +367,12 @@ REFERENCE     : 99.5M-PRIORITY-MINT
             <div style={metricCard}>
               <div style={labelStyle}>Execution State</div>
               <div style={{ marginTop: 8 }}>
-                <span style={badgeStyle("rgba(240,185,11,0.18)", colors.yellow)}>
+                <span style={badgeStyle("rgba(14,203,129,0.16)", colors.green)}>
                   ● {STATUS_BADGE}
                 </span>
               </div>
               <div style={{ marginTop: 8, fontSize: 13, color: colors.muted }}>
-                Production Queue Active
+                Validation Running
               </div>
             </div>
           </div>
@@ -390,8 +402,8 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   </div>
                 </div>
 
-                <span style={badgeStyle("rgba(240,185,11,0.18)", colors.yellow)}>
-                  ● PRODUCTION
+                <span style={badgeStyle("rgba(14,203,129,0.16)", colors.green)}>
+                  ● ONLINE
                 </span>
               </div>
 
@@ -488,9 +500,22 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   }}
                 >
                   <div style={metricCard}>
-                    <div style={labelStyle}>Price Range</div>
+                    <div style={labelStyle}>Min Price</div>
                     <div style={{ marginTop: 6, fontWeight: 800 }}>
-                      {POSITION_MIN} – {POSITION_MAX}
+                      {POSITION_MIN}
+                    </div>
+                    <div style={{ marginTop: 4, fontSize: 12, color: colors.muted }}>
+                      BNB = 1 EURC
+                    </div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>Max Price</div>
+                    <div style={{ marginTop: 6, fontWeight: 800 }}>
+                      {POSITION_MAX}
+                    </div>
+                    <div style={{ marginTop: 4, fontSize: 12, color: colors.muted }}>
+                      BNB = 1 EURC
                     </div>
                   </div>
 
@@ -505,13 +530,6 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     <div style={labelStyle}>State</div>
                     <div style={{ marginTop: 6, fontWeight: 800 }}>
                       {POSITION_STATE}
-                    </div>
-                  </div>
-
-                  <div style={metricCard}>
-                    <div style={labelStyle}>Earnings / APR</div>
-                    <div style={{ marginTop: 6, fontWeight: 800 }}>
-                      {POSITION_EARNINGS} / {POSITION_APR}
                     </div>
                   </div>
                 </div>
@@ -532,7 +550,13 @@ REFERENCE     : 99.5M-PRIORITY-MINT
 
                 <div style={{ display: "grid", gap: 12 }}>
                   <div style={metricCard}>
-                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        gap: 12,
+                      }}
+                    >
                       <div>
                         <div style={labelStyle}>EURC-BNB LP</div>
                         <div style={{ marginTop: 6, fontWeight: 800 }}>
@@ -549,7 +573,13 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   </div>
 
                   <div style={metricCard}>
-                    <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        gap: 12,
+                      }}
+                    >
                       <div>
                         <div style={labelStyle}>BNB-EURC LP</div>
                         <div style={{ marginTop: 6, fontWeight: 800 }}>
@@ -597,7 +627,9 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   marginBottom: 16,
                 }}
               >
-                <div style={{ color: colors.text, lineHeight: 1.8 }}>{NOTICE_BODY}</div>
+                <div style={{ color: colors.text, lineHeight: 1.8 }}>
+                  {NOTICE_BODY}
+                </div>
               </div>
 
               <div
@@ -621,14 +653,14 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     fontWeight: 700,
                   }}
                 >
-                  Live Mint Activity
+                  Live Validation Activity
                 </div>
 
                 <div
                   style={{
                     fontSize: 24,
                     fontWeight: 900,
-                    color: "#00ffc3",
+                    color: colors.cyan,
                     marginBottom: 8,
                   }}
                 >
@@ -636,9 +668,9 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <div style={{ marginTop: 6, color: "#d7fffa", lineHeight: 1.7 }}>
-                  Minting is in production. The active 5,000,000 EURC tranche has
-                  reached 56% completion and remains under live band validation for
-                  final liquidity release and conversion routing.
+                  Validation is online. Current LP routing remains active, and swap
+                  amounts must stay at or above 1,000,000 to maintain execution
+                  continuity.
                 </div>
 
                 <div
@@ -660,7 +692,49 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <div style={{ fontSize: 12, marginTop: 8, color: "#8bded0" }}>
-                  Mint Progress: {MINT_PROGRESS}% — Activated {ACTIVATED_AMOUNT} / {ACTIVE_TRANCHE}
+                  Validation Status: Online — Minimum Valid Swap Threshold: 1,000,000
+                </div>
+              </div>
+
+              <div
+                style={{
+                  marginBottom: 16,
+                  borderRadius: 16,
+                  padding: 16,
+                  background: "rgba(255,255,255,0.025)",
+                  border: `1px solid ${colors.border}`,
+                }}
+              >
+                <div style={{ fontSize: 12, color: colors.muted, marginBottom: 10 }}>
+                  APPROVAL / SWAP VALIDATION
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12 }}>
+                  <div style={metricCard}>
+                    <div style={labelStyle}>Approval Status</div>
+                    <div style={{ marginTop: 6, fontWeight: 800 }}>{APPROVAL_STATUS}</div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>Valid Amount</div>
+                    <div style={{ marginTop: 6, fontWeight: 800 }}>
+                      {APPROVAL_AMOUNT} {APPROVAL_ASSET}
+                    </div>
+                  </div>
+
+                  <div style={metricCard}>
+                    <div style={labelStyle}>Transaction Hash</div>
+                    <div
+                      style={{
+                        marginTop: 6,
+                        fontWeight: 700,
+                        wordBreak: "break-all",
+                        fontSize: 13,
+                      }}
+                    >
+                      {APPROVAL_TX}
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -680,33 +754,43 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                   <div style={metricCard}>
                     <div style={labelStyle}>Liquidity</div>
-                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_LIQUIDITY}</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>
+                      {USDT_EURC_LIQUIDITY}
+                    </div>
                   </div>
 
                   <div style={metricCard}>
                     <div style={labelStyle}>Pool Share</div>
-                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_POOL_SHARE}</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>
+                      {USDT_EURC_POOL_SHARE}
+                    </div>
                   </div>
 
                   <div style={metricCard}>
                     <div style={labelStyle}>USDT Side</div>
-                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_USDT_SIDE}</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>
+                      {USDT_EURC_USDT_SIDE}
+                    </div>
                   </div>
 
                   <div style={metricCard}>
                     <div style={labelStyle}>EURC Side</div>
-                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_EURC_SIDE}</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>
+                      {USDT_EURC_EURC_SIDE}
+                    </div>
                   </div>
 
                   <div style={metricCard}>
                     <div style={labelStyle}>LP Reward APR</div>
-                    <div style={{ marginTop: 4, fontWeight: 800 }}>{USDT_EURC_APR}</div>
+                    <div style={{ marginTop: 4, fontWeight: 800 }}>
+                      {USDT_EURC_APR}
+                    </div>
                   </div>
 
                   <div style={metricCard}>
-                    <div style={labelStyle}>Tranche Status</div>
+                    <div style={labelStyle}>Activated Amount</div>
                     <div style={{ marginTop: 4, fontWeight: 800 }}>
-                      {MINT_PROGRESS}% Complete
+                      {ACTIVATED_AMOUNT}
                     </div>
                   </div>
                 </div>
@@ -741,7 +825,12 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     <div style={{ marginTop: 6, fontWeight: 700 }}>{SYSTEM_NAME}</div>
 
                     <div style={{ marginTop: 12, display: "flex", gap: 10 }}>
-                      <a href={EXPLORER_URL} style={buttonStyle}>
+                      <a
+                        href={EXPLORER_URL}
+                        style={buttonStyle}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         View on Explorer
                       </a>
                     </div>
