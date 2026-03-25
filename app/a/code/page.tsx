@@ -15,9 +15,5 @@ export default function AgentCodePage() {
     router.replace("/register");
   }, [params, router]);
 
-  return (
-    <div style={{ padding: 24 }}>
-      Redirecting securely...
-    </div>
-  );
+  return <div style={{ padding: 24 }}>Redirecting...</div>;
 }
