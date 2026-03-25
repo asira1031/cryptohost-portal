@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "../lib/supabase/client";
 
 export default function RegisterPage() {
   const supabase = createClient();
-  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +29,9 @@ export default function RegisterPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: "https://cryptohost-portal.vercel.app/dashboard/setup",
+      },
     });
 
     if (error) {
@@ -39,12 +40,12 @@ export default function RegisterPage() {
       return;
     }
 
-    setMessage("Registration successful! You can now log in.");
+    setMessage(
+      "Registration successful. Please check your email and confirm your account to continue."
+    );
     setLoading(false);
-
-    setTimeout(() => {
-      router.push("/login");
-    }, 2000);
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -123,7 +124,9 @@ export default function RegisterPage() {
             style={{
               marginTop: "12px",
               textAlign: "center",
-              color: message.includes("successful") ? "#22c55e" : "red",
+              color: message.toLowerCase().includes("successful")
+                ? "#22c55e"
+                : "#ef4444",
             }}
           >
             {message}
