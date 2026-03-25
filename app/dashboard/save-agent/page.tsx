@@ -26,13 +26,13 @@ export default function SaveAgentPage() {
         return;
       }
 
-      // 🔥 update client with agent_code
+      // 🔥 FIX: match by email instead of id
       await supabase
         .from("clients")
         .update({
           agent_code: agentCode,
         })
-        .eq("id", user.id);
+        .eq("email", user.email); // ✅ THIS IS THE FIX
 
       router.push("/dashboard");
     };
