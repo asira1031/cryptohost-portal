@@ -11,13 +11,20 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [agentCode, setAgentCode] = useState<string | null>(null);
 
-  // 🔒 INSTALL CHECK (IMPORTANT)
+  // 🔒 INSTALL CHECK
   useEffect(() => {
     const installed = localStorage.getItem("cryptohost_installed");
 
     if (!installed) {
       window.location.href = "/setup";
+      return;
+    }
+
+    const savedAgentCode = localStorage.getItem("agent_code");
+    if (savedAgentCode) {
+      setAgentCode(savedAgentCode);
     }
   }, []);
 
@@ -26,26 +33,47 @@ export default function RegisterPage() {
     setLoading(true);
     setMessage("");
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: "https://cryptohost-portal.vercel.app/dashboard/setup",
-      },
-    });
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo:
+            "https://cryptohost-portal.vercel.app/dashboard/setup",
+        },
+      });
 
-    if (error) {
-      setMessage(error.message);
+      if (error) {
+        setMessage(error.message);
+        setLoading(false);
+        return;
+      }
+
+      // Save extra client record with agent code
+      if (data?.user) {
+        const { error: clientError } = await supabase.from("clients").insert([
+          {
+            email,
+            agent_code: agentCode || null,
+          },
+        ]);
+
+        if (clientError) {
+          console.error("Client insert error:", clientError.message);
+        }
+      }
+
+      setMessage(
+        "Registration successful. Please check your email and confirm your account to continue."
+      );
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.error("Registration error:", err);
+      setMessage("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    setMessage(
-      "Registration successful. Please check your email and confirm your account to continue."
-    );
-    setLoading(false);
-    setEmail("");
-    setPassword("");
   };
 
   return (
