@@ -1,110 +1,123 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
-import { useState } from "react";
 
-export default function PaymentPage() {
-  const params = useSearchParams();
-  const router = useRouter();
+export default function SubscriptionPage() {
   const supabase = createClient();
+  const router = useRouter();
 
-  const plan = params.get("plan");
-
-  const prices: any = {
-    basic: 99,
-    advanced: 199,
-    premium: 299,
-  };
-
-  const amount = prices[plan || "basic"];
-
-  const walletAddress = "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd";
-
-  const [loading, setLoading] = useState(false);
-
-  const confirmPayment = async () => {
-    setLoading(true);
-
+  const handleSelect = async (plan: string) => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user) return;
+    if (!user) {
+      router.push("/login");
+      return;
+    }
 
-    await supabase.from("clients").update({
-      subscription_plan: plan,
-      subscription_status: "active",
-      subscription_started_at: new Date().toISOString(),
-    }).eq("id", user.id);
-
-    router.push("/dashboard");
+    router.push(`/dashboard/payment?plan=${plan}`);
   };
 
   return (
-    <div style={container}>
-      <div style={card}>
-        <h1>USDT Payment</h1>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#020617",
+        color: "#fff",
+        padding: 40,
+      }}
+    >
+      <h1 style={{ marginBottom: 30 }}>Choose Your Validation Plan</h1>
 
-        <p>Selected Plan: <b>{plan?.toUpperCase()}</b></p>
+      <div
+        style={{
+          display: "flex",
+          gap: 20,
+          flexWrap: "wrap",
+        }}
+      >
+        <div style={card}>
+          <h2 style={price}>$99</h2>
+          <p style={title}>Basic Validation</p>
 
-        <p style={{ fontSize: 22, color: "#facc15" }}>
-          Amount: {amount} USDT
-        </p>
+          <ul style={list}>
+            <li>Standard file validation</li>
+            <li>Basic monitoring</li>
+          </ul>
 
-        <div style={box}>
-          <p>Send USDT (ERC20 / BEP20)</p>
-          <p style={{ wordBreak: "break-all", fontWeight: "bold" }}>
-            {walletAddress}
-          </p>
+          <button style={button} onClick={() => handleSelect("basic")}>
+            Select Plan
+          </button>
         </div>
 
-        <p style={{ color: "#94a3b8", fontSize: 13 }}>
-          After sending payment, click confirm below.
-        </p>
+        <div style={card}>
+          <h2 style={price}>$199</h2>
+          <p style={title}>Advanced Validation</p>
 
-        <button style={button} onClick={confirmPayment}>
-          {loading ? "Processing..." : "I Have Paid"}
-        </button>
+          <ul style={list}>
+            <li>Enhanced validation</li>
+            <li>Faster processing</li>
+          </ul>
+
+          <button style={button} onClick={() => handleSelect("advanced")}>
+            Select Plan
+          </button>
+        </div>
+
+        <div style={card}>
+          <h2 style={price}>$299</h2>
+          <p style={title}>Full Validation</p>
+
+          <ul style={list}>
+            <li>Priority processing</li>
+            <li>Full system access</li>
+          </ul>
+
+          <button style={button} onClick={() => handleSelect("premium")}>
+            Select Plan
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-/* 🎨 STYLES */
-
-const container: React.CSSProperties = {
-  minHeight: "100vh",
-  background: "#020617",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
 const card: React.CSSProperties = {
   background: "#0f172a",
-  padding: 30,
+  border: "1px solid #1e293b",
+  padding: 24,
   borderRadius: 14,
-  width: 400,
+  width: 260,
   color: "#fff",
-  textAlign: "center",
+  boxShadow: "0 8px 30px rgba(0,0,0,0.35)",
 };
 
-const box: React.CSSProperties = {
-  background: "#111827",
-  padding: 12,
-  borderRadius: 8,
-  marginTop: 15,
-  marginBottom: 15,
+const price: React.CSSProperties = {
+  color: "#facc15",
+  fontSize: "28px",
+  marginBottom: 6,
+};
+
+const title: React.CSSProperties = {
+  color: "#e2e8f0",
+  marginBottom: 10,
+};
+
+const list: React.CSSProperties = {
+  color: "#94a3b8",
+  fontSize: 14,
+  marginBottom: 16,
 };
 
 const button: React.CSSProperties = {
   background: "#facc15",
   color: "#020617",
+  border: "none",
   padding: "12px",
   borderRadius: 8,
-  border: "none",
   fontWeight: "bold",
-  width: "100%",
   cursor: "pointer",
+  width: "100%",
 };
