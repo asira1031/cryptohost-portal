@@ -67,66 +67,38 @@ export default function HSBCTPPHoldPage() {
   const liveTimestamp = useMemo(() => getUtc8Now(now), [now]);
 
   const terminal = `
-CRYPTOHOST SECURE AUTOMATION — COMPLIANCE HOLD NOTICE (BLACKSCREEN CONSOLE)
-Module      : Secure Channel (mTLS) + OAuth Onboarding Validator
+CRYPTOHOST SECURE AUTOMATION — TRANSACTION SUSPENSION NOTICE
+Module      : Compliance Deadline Monitor
 Reference   : CH-2026-LIVE
-Hold Code   : CHX-COMP-HOLD-JURISD-CERT-240226
+Hold Code   : CHX-TRANSACTION-SUSPENDED-240326
 Timestamp   : ${liveTimestamp}
 
 =======================================================================
 
-STATUS      : HOLD (COMPLIANCE)
-STAGE       : JURISDICTION & CERTIFICATE INTEGRITY REVIEW
-PROGRESS    : 80% — COMPLIANCE REVIEW
-MODE        : READ-ONLY (No Broadcast / No Token Access / No Release)
+STATUS      : SUSPENDED
+STAGE       : FINAL COMPLIANCE REVIEW CLOSED
+PROGRESS    : 100% — SUSPENSION APPLIED
+MODE        : READ-ONLY (No Release / No Processing / No Execution)
 
-1) PRIMARY HOLD REASONS
+NOTICE
 -----------------------------------------------------------------------
-[A] CERTIFICATE EXPIRY (LEAF CERT)
-- Subject (CN)        : www.hsbc.co.uk
-- Issuer              : DigiCert EV RSA CA G2
-- Valid From          : 2024-08-01
-- Valid Until         : 2025-09-01 23:59:59Z
-- Result              : EXPIRED — Cannot be used for current authorization
-- Fingerprints        : SHA-256 665d5deeaddf0260a903383ced61e0a343ba41dcb2402ac29d8f38e5b170989
-- SHA-1               : 5afdcb7b46a19ce4cc5706025756f766db9741b8
+This transaction is now SUSPENDED.
 
-[B] HOSTNAME / IDENTITY MISMATCH
-- Expected Hostname   : banking.hsbc.co.uk
-- Provided CN         : www.hsbc.co.uk
-- Result              : MISMATCH — Endpoint identity not aligned (SAN/CN mismatch)
+The compliance deadline was March 24, 2026.
+As the required compliance conditions were not completed within the
+given timeframe, the transaction has been placed under suspension.
 
-[C] JURISDICTION / PLATFORM MISMATCH (OAUTH ENVIRONMENT)
-- Declared Entity     : HSBC UK BANK PLC (SWIFT: HBUKGB4BXXX)
-- UK OB Host          : api.ob.hsbc.co.uk:443
-- Provided Endpoint   : https://api.hsbc.com.hk/live
-- Result              : MISMATCH — HK platform credentials do not validate UK-declared flow
+No further processing, release, or execution will proceed unless a
+formal reactivation review is initiated.
 
-[D] ROOT CA CERT (INFORMATIONAL)
-- Root CA             : VeriSign Class 3 CA Group 3
-- Status              : VALID (ROOT CA — not proof of onboarding)
-
-2) CURRENT SYSTEM STATE
+SYSTEM STATUS
 -----------------------------------------------------------------------
-Secure Channel Parameters : REVIEWED
-mTLS Handshake Auth       : NOT ESTABLISHED (Expired + Host mismatch)
-OAuth Token Issuance      : NOT ACTIVE (Jurisdiction mismatch)
-Funds / Transfer Confirm  : NOT VERIFIED (No valid bank-side onboarding proof)
+Processing Engine        : DISABLED
+Release Access           : RESTRICTED
+Execution Mode           : LOCKED
+Audit Export             : ENABLED (Read-only)
 
-ACTION LOCKS
-- Broadcast Engine        : DISABLED
-- Liquidity Routing       : DISABLED
-- Settlement Trigger      : DISABLED
-- Audit Export            : ENABLED (Read-only)
-
-3) REQUIRED TO CLEAR HOLD (SENDER ACTION ITEMS)
------------------------------------------------------------------------
-1. Active leaf certificate chain required (leaf + intermediate + root) — must be current (not expired)
-2. Endpoint identity alignment required (CN/SAN must match expected hostname used for onboarding)
-3. Jurisdiction alignment required (UK-declared entity must use UK OAuth environment unless formally migrated)
-4. HSBC UK OAuth onboarding confirmation required (client registration + token endpoints + consent/authorization_code or approved client_credentials)
-
-4) DISTRIBUTION RECEIPT (BROADCAST HASHES — AUDIT ONLY)
+DISTRIBUTION RECEIPT (AUDIT ONLY)
 -----------------------------------------------------------------------
 Sending to: 0x90a6a82ff63cd50b1d47d6e3f3791ce1b1937196
 Percent   : 15.0 %
@@ -163,10 +135,10 @@ REFERENCE       : CH-2026-LIVE
 TIMESTAMP       : ${liveTimestamp}
 
 =======================================================================
-DEADLINE POLICY
+FINAL STATUS
 - Deadline               : March 24, 2026
-- Third extension        : NOT ALLOWED
-- Current mode           : Compliance Lock / Audit Only
+- Result                 : TRANSACTION SUSPENDED
+- Current mode           : Suspension Lock / Audit Only
 `.trim();
 
   const colors = {
@@ -189,13 +161,6 @@ DEADLINE POLICY
     borderRadius: 18,
     padding: 22,
     boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
-  };
-
-  const metricCard: CSSProperties = {
-    background: "rgba(255,255,255,0.02)",
-    border: `1px solid ${colors.border}`,
-    borderRadius: 14,
-    padding: 16,
   };
 
   const labelStyle: CSSProperties = {
@@ -288,10 +253,10 @@ DEADLINE POLICY
               Network: <b>Ethereum Mainnet</b>
             </div>
             <div style={{ fontSize: 13, marginBottom: 6 }}>
-              Mode: <b>Validation Console</b>
+              Mode: <b>Suspension Console</b>
             </div>
             <div style={{ fontSize: 13 }}>
-              Policy: <b>Compliance Lock (Read-only)</b>
+              Policy: <b>Transaction Suspended</b>
             </div>
           </div>
 
@@ -319,7 +284,7 @@ DEADLINE POLICY
             >
               <div
                 style={{
-                  width: "80%",
+                  width: "100%",
                   height: "100%",
                   background: "linear-gradient(90deg, #f0b90b, #ef4444)",
                 }}
@@ -327,13 +292,13 @@ DEADLINE POLICY
             </div>
 
             <div style={{ fontSize: 13, marginBottom: 6 }}>
-              COMPLIANCE REVIEW: <b>80%</b>
+              FINAL STATUS: <b>100%</b>
             </div>
             <div style={{ fontSize: 13, marginBottom: 6 }}>
-              Status: <b style={{ color: colors.yellow }}>HOLD (AUTHORIZATION PENDING)</b>
+              Status: <b style={{ color: colors.red }}>SUSPENDED</b>
             </div>
             <div style={{ fontSize: 13 }}>
-              Hold Code: <b>CHX-COMP-HOLD-JURISD-CERT-240226</b>
+              Hold Code: <b>CHX-TRANSACTION-SUSPENDED-240326</b>
             </div>
           </div>
         </aside>
@@ -347,7 +312,7 @@ DEADLINE POLICY
               Status:{" "}
               <span style={{ color: colors.green, fontWeight: 800 }}>System Online</span>{" "}
               • Mode:{" "}
-              <span style={{ color: colors.yellow, fontWeight: 800 }}>Compliance Hold</span>
+              <span style={{ color: colors.red, fontWeight: 800 }}>Transaction Suspended</span>
             </div>
           </div>
 
@@ -377,19 +342,18 @@ DEADLINE POLICY
                     Reference: <b style={{ color: colors.text }}>CH-2026-LIVE</b>
                   </div>
 
-                  <div style={{ fontSize: 22, fontWeight: 900, color: colors.yellow }}>
-                    COMPLIANCE HOLD — JURISDICTION & CERTIFICATE MISMATCH
+                  <div style={{ fontSize: 22, fontWeight: 900, color: colors.red }}>
+                    TRANSACTION SUSPENDED
                   </div>
 
-                  <div style={{ marginTop: 8, fontWeight: 800, color: colors.yellow }}>
-                    Status: HOLD (AUTHORIZATION PENDING)
+                  <div style={{ marginTop: 8, fontWeight: 800, color: colors.red }}>
+                    Status: SUSPENDED
                   </div>
 
                   <div style={{ marginTop: 14, lineHeight: 1.75, color: colors.text }}>
-                    Secure channel artifacts reviewed. Hold triggered due to expired leaf
-                    certificate, hostname mismatch (banking.hsbc.co.uk vs www.hsbc.co.uk),
-                    and jurisdiction mismatch (HK API credentials presented for UK-declared
-                    entity). Distribution hashes retained for audit only.
+                    This transaction is now suspended due to incomplete compliance
+                    requirements. The final deadline was March 24, 2026, and the
+                    required conditions were not completed within the given timeframe.
                   </div>
 
                   <div
@@ -401,13 +365,13 @@ DEADLINE POLICY
                     }}
                   >
                     <span style={badgeStyle("rgba(239,68,68,0.16)", "#ff8a8a")}>
-                      ● HOLD — COMPLIANCE REVIEW (80%)
+                      ● TRANSACTION SUSPENDED
                     </span>
                     <span style={badgeStyle("rgba(245,158,11,0.16)", "#fbbf24")}>
-                      🔐 TLS: TLS 1.2+ / 1.3
+                      🔒 COMPLIANCE DEADLINE PASSED
                     </span>
                     <span style={badgeStyle("rgba(96,165,250,0.16)", "#93c5fd")}>
-                      📊 Allocation: 100.0%
+                      📊 Audit Only
                     </span>
                   </div>
 
@@ -425,7 +389,7 @@ DEADLINE POLICY
                       border: `1px solid ${colors.border}`,
                     }}
                   >
-                    🔗 Hold Code: CHX-COMP-HOLD-JURISD-CERT-240226
+                    🔗 Hold Code: CHX-TRANSACTION-SUSPENDED-240326
                   </div>
 
                   <div style={{ marginTop: 18 }}>
@@ -439,14 +403,14 @@ DEADLINE POLICY
                     >
                       <div
                         style={{
-                          width: "80%",
+                          width: "100%",
                           height: "100%",
                           background: "linear-gradient(90deg, #f0b90b, #ef4444)",
                         }}
                       />
                     </div>
                     <div style={{ marginTop: 8, fontSize: 12, color: colors.muted }}>
-                      Validation Progress
+                      Final Status Applied
                     </div>
                   </div>
 
@@ -474,7 +438,7 @@ DEADLINE POLICY
                       On-chain Broadcast Hashes (Audit Only)
                     </div>
                     <div style={{ marginTop: 6, fontSize: 13, color: colors.muted }}>
-                      Total Allocation: 100.0% • Progress: 80%
+                      Total Allocation: 100.0% • Status: Suspended
                     </div>
                   </div>
 
@@ -519,9 +483,9 @@ DEADLINE POLICY
                       color: colors.muted,
                     }}
                   >
-                    Note: TX hashes are provided for audit reference only. Compliance
-                    Hold is active; no release or settlement actions will proceed until
-                    updated bank-side onboarding requirements are satisfied.
+                    Note: TX hashes are shown for audit reference only. This transaction
+                    is suspended and no further release, execution, or processing will
+                    proceed unless a formal reactivation review is initiated.
                   </div>
                 </div>
               </div>
@@ -529,7 +493,7 @@ DEADLINE POLICY
 
             <div style={{ display: "grid", gap: 18 }}>
               <div style={cardStyle}>
-                <div style={{ ...labelStyle, marginBottom: 10 }}>VALIDATION NOTICE</div>
+                <div style={{ ...labelStyle, marginBottom: 10 }}>TRANSACTION NOTICE</div>
 
                 <div
                   style={{
@@ -539,7 +503,7 @@ DEADLINE POLICY
                     marginBottom: 16,
                   }}
                 >
-                  Compliance Hold — Jurisdiction & Certificate Integrity Review
+                  Transaction Suspended
                 </div>
 
                 <div
@@ -551,62 +515,33 @@ DEADLINE POLICY
                   }}
                 >
                   <div style={{ lineHeight: 1.8 }}>
-                    A compliance hold has been applied after technical review of the
-                    submitted secure-channel materials. The leaf certificate provided is expired,
-                    the certificate identity does not align with the expected hostname for the
-                    declared UK endpoint, and the OAuth/API credentials provided reference a Hong Kong
-                    environment despite the transaction being declared under HSBC UK (HBUKGB4BXXX).
-                    No token access, broadcast, or release actions will proceed until valid,
-                    aligned mTLS/OAuth onboarding materials are provided.
+                    This transaction is now <b>suspended</b>.
                   </div>
 
-                  <div style={{ marginTop: 18, lineHeight: 1.8 }}>
-                    <b>Reason:</b> Mismatch detected across certificate validity, endpoint
-                    hostname alignment, and platform jurisdiction. Root CA presence alone is
-                    not proof of live authorization or onboarding.
+                  <div style={{ marginTop: 14, lineHeight: 1.8 }}>
+                    The compliance deadline was <b>March 24, 2026</b>.
                   </div>
 
-                  <div style={{ marginTop: 10, lineHeight: 1.8 }}>
-                    <b>Next Step:</b> Provide an active certification chain (leaf +
-                    intermediate + root) matching the live UK endpoint hostname, provide HSBC UK
-                    OAuth onboarding confirmation (client registration + token endpoints), and
-                    resolve jurisdiction alignment (UK-declared entity must use UK environment
-                    unless formally migrated with documentation).
+                  <div style={{ marginTop: 14, lineHeight: 1.8 }}>
+                    As the required conditions were not completed within the given
+                    timeframe, the transaction has been placed under suspension.
                   </div>
 
-                  <div style={{ marginTop: 10, lineHeight: 1.8 }}>
-                    <b>Hold Code:</b> CHX-COMP-HOLD-JURISD-CERT-240226
+                  <div style={{ marginTop: 14, lineHeight: 1.8 }}>
+                    No further processing, release, or execution will proceed unless a
+                    formal reactivation review is initiated.
+                  </div>
+
+                  <div style={{ marginTop: 14, lineHeight: 1.8 }}>
+                    <b>Status:</b> SUSPENDED
                   </div>
 
                   <div style={{ marginTop: 10, lineHeight: 1.8 }}>
-                    <b>System:</b> CryptoHost Secure Automation — Validation Console
+                    <b>System:</b> CryptoHost Secure Automation — Suspension Console
                   </div>
 
                   <div style={{ marginTop: 10, lineHeight: 1.8 }}>
                     <b>Timestamp:</b> {liveTimestamp}
-                  </div>
-
-                  <div style={{ marginTop: 16 }}>
-                    <div style={{ ...labelStyle, marginBottom: 8 }}>Validation Progress</div>
-                    <div
-                      style={{
-                        height: 10,
-                        borderRadius: 999,
-                        background: "rgba(255,255,255,0.10)",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "80%",
-                          height: "100%",
-                          background: "linear-gradient(90deg, #f0b90b, #ef4444)",
-                        }}
-                      />
-                    </div>
-                    <div style={{ marginTop: 8, fontSize: 12, color: colors.muted }}>
-                      COMPLIANCE REVIEW: 80%
-                    </div>
                   </div>
 
                   <div
@@ -619,23 +554,21 @@ DEADLINE POLICY
                     }}
                   >
                     <p style={{ color: "#ff6b6b", fontSize: 12, fontWeight: 600 }}>
-                      DEADLINE POLICY
+                      NOTICE TO SENDER
                     </p>
 
                     <h3 style={{ color: "#ffd4d4", marginTop: 5 }}>
-                      Deadline: March 24, 2026
+                      Transaction Suspended
                     </h3>
 
                     <p style={{ marginTop: 10, color: "#ddd", lineHeight: 1.8 }}>
-                      Final compliance clearance must be completed on or before March 24, 2026.
-                      Due to prior waiting and already granted extension consideration,
-                      <b> a third extension is not allowed.</b>
+                      Please be advised that this transaction is under suspension status
+                      due to incomplete compliance requirements within the allowed period.
                     </p>
 
                     <p style={{ marginTop: 10, color: "#aaa", lineHeight: 1.8 }}>
-                      If required bank-side onboarding, certificate correction, and TPP / OAuth
-                      alignment are not completed by the deadline, the file remains under
-                      compliance lock pending formal reactivation review.
+                      This is a system-enforced suspension based on compliance policy and
+                      deadline enforcement.
                     </p>
                   </div>
                 </div>
