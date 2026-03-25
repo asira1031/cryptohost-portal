@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/app/lib/supabase/server";
 
 export default async function ReportDetailPage({
   params,
