@@ -1,3 +1,14 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "CryptoHost Portal",
+  description: "Secure Crypto Processing Platform",
+  verification: {
+    google: "5QAJCkd_KmfE41zheC9DwVBWGOtz83a-HSXpxumtsjc",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -5,9 +16,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="google-site-verification" content="5QAJCkd_KmfE41" />
-      </head>
       <body>{children}</body>
     </html>
   );
