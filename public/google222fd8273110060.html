@@ -1,1 +1,12 @@
-google-site-verification: google222fd8273110060.html
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  return new NextResponse(
+    "google-site-verification: google222fd8273110060.html",
+    {
+      headers: {
+        "Content-Type": "text/html",
+      },
+    }
+  );
+}
