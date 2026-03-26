@@ -48,9 +48,9 @@ export default function BankApiPage() {
         >
           {[
             {
-              name: "HSBC Developer Portal",
-              url: "https://develop.hsbc.com/knowledge-article/get-started-open-banking-apis",
-            },
+  name: "HSBC Developer Portal",
+  url: "https://develop.hsbc.com/knowledge-article/get-started-open-banking-apis",
+},
             {
               name: "Barclays Developer Portal",
               url: "https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation",
