@@ -1,8 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { ReactNode, useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/app/lib/supabase/client";
+
+type ClientProfile = {
+  email?: string | null;
+  receiving_wallet?: string | null;
+  wallet_address?: string | null;
+  status?: string | null;
+};
 
 export default function DashboardLayout({
   children,
@@ -10,6 +18,55 @@ export default function DashboardLayout({
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const supabase = createClient();
+
+  const [clientEmail, setClientEmail] = useState("Loading...");
+  const [wallet, setWallet] = useState("Not set");
+  const [accountStatus, setAccountStatus] = useState("Verified");
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  useEffect(() => {
+    async function loadClientInfo() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        setClientEmail("Not signed in");
+        setWallet("Not set");
+        setAccountStatus("Guest");
+        return;
+      }
+
+      setClientEmail(user.email || "No email");
+
+      const { data: clientRow } = await supabase
+        .from("clients")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (clientRow) {
+        const profile = clientRow as ClientProfile;
+
+        const foundWallet =
+          profile.receiving_wallet || profile.wallet_address || "Not set";
+
+        setWallet(foundWallet);
+        setAccountStatus(profile.status || "Verified");
+      }
+    }
+
+    loadClientInfo();
+  }, [supabase]);
+
+  async function handleLogout() {
+    setLoggingOut(true);
+    await supabase.auth.signOut();
+    router.push("/login");
+    router.refresh();
+  }
 
   return (
     <div
@@ -21,7 +78,7 @@ export default function DashboardLayout({
     >
       <aside
         style={{
-          width: 220,
+          width: 245,
           background: "#000000",
           padding: "20px 12px",
           display: "flex",
@@ -35,11 +92,84 @@ export default function DashboardLayout({
               color: "#ffffff",
               fontSize: 20,
               fontWeight: 800,
-              marginBottom: 20,
+              marginBottom: 16,
               paddingLeft: 6,
             }}
           >
             CryptoHost
+          </div>
+
+          {/* Client Info Card */}
+          <div
+            style={{
+              background: "#111827",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 14,
+              padding: 14,
+              marginBottom: 16,
+              boxShadow: "0 8px 20px rgba(0,0,0,0.22)",
+            }}
+          >
+            <div
+              style={{
+                color: "#93c5fd",
+                fontSize: 12,
+                fontWeight: 700,
+                marginBottom: 6,
+                textTransform: "uppercase",
+                letterSpacing: 0.4,
+              }}
+            >
+              Client Information
+            </div>
+
+            <div style={{ marginBottom: 10 }}>
+              <div style={{ color: "#9ca3af", fontSize: 11, marginBottom: 3 }}>
+                Email
+              </div>
+              <div
+                style={{
+                  color: "#ffffff",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  wordBreak: "break-word",
+                }}
+              >
+                {clientEmail}
+              </div>
+            </div>
+
+            <div style={{ marginBottom: 10 }}>
+              <div style={{ color: "#9ca3af", fontSize: 11, marginBottom: 3 }}>
+                Receiving Wallet
+              </div>
+              <div
+                style={{
+                  color: "#facc15",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  wordBreak: "break-word",
+                  lineHeight: 1.4,
+                }}
+              >
+                {wallet}
+              </div>
+            </div>
+
+            <div>
+              <div style={{ color: "#9ca3af", fontSize: 11, marginBottom: 3 }}>
+                Status
+              </div>
+              <div
+                style={{
+                  color: "#4ade80",
+                  fontSize: 13,
+                  fontWeight: 800,
+                }}
+              >
+                {accountStatus}
+              </div>
+            </div>
           </div>
 
           <div
@@ -102,6 +232,8 @@ export default function DashboardLayout({
         </div>
 
         <button
+          onClick={handleLogout}
+          disabled={loggingOut}
           style={{
             background: "#ef4444",
             color: "#ffffff",
@@ -111,9 +243,10 @@ export default function DashboardLayout({
             fontWeight: 700,
             cursor: "pointer",
             width: "100%",
+            opacity: loggingOut ? 0.8 : 1,
           }}
         >
-          Logout
+          {loggingOut ? "Logging out..." : "Logout"}
         </button>
       </aside>
 
@@ -121,7 +254,7 @@ export default function DashboardLayout({
         style={{
           flex: 1,
           minHeight: "100vh",
-          background: "#e5e7eb",
+          background: "#03113a",
         }}
       >
         {children}
