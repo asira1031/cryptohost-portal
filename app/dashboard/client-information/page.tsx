@@ -18,6 +18,7 @@ export default function ClientInformationPage() {
   const [walletAddress, setWalletAddress] = useState("");
   const [walletNetwork, setWalletNetwork] = useState("ERC20");
   const [profileImage, setProfileImage] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
 
   useEffect(() => {
     async function loadProfile() {
@@ -59,6 +60,7 @@ export default function ClientInformationPage() {
         setWalletAddress(data.wallet_address || "");
         setWalletNetwork(data.wallet_network || "ERC20");
         setProfileImage(data.profile_image || "");
+        setPreviewImage(data.profile_image || "");
       }
 
       setLoading(false);
@@ -81,6 +83,10 @@ export default function ClientInformationPage() {
       return;
     }
 
+    // Show local preview immediately
+    const localPreview = URL.createObjectURL(file);
+    setPreviewImage(localPreview);
+
     const fileExt = file.name.split(".").pop();
     const filePath = `${user.id}/profile-${Date.now()}.${fileExt}`;
 
@@ -96,9 +102,15 @@ export default function ClientInformationPage() {
       return;
     }
 
-    const { data } = supabase.storage.from("client-files").getPublicUrl(filePath);
+    const { data } = supabase.storage
+      .from("client-files")
+      .getPublicUrl(filePath);
 
-    setProfileImage(data.publicUrl);
+    // Add timestamp to avoid stale cached image
+    const publicUrl = `${data.publicUrl}?t=${Date.now()}`;
+
+    setProfileImage(publicUrl);
+    setPreviewImage(publicUrl);
     setMessage("Profile picture uploaded.");
   }
 
@@ -278,11 +290,11 @@ export default function ClientInformationPage() {
                 </div>
               </div>
 
-              {profileImage && (
+              {previewImage && (
                 <div style={{ marginTop: 20 }}>
                   <div style={labelStyle}>Preview</div>
                   <img
-                    src={profileImage}
+                    src={previewImage}
                     alt="Profile"
                     style={{
                       width: 110,
@@ -291,6 +303,13 @@ export default function ClientInformationPage() {
                       borderRadius: 16,
                       border: "2px solid rgba(255,255,255,0.12)",
                       marginTop: 8,
+                      display: "block",
+                      background: "#0f172a",
+                    }}
+                    onError={() => {
+                      setError(
+                        "Profile image preview failed. Please make sure the 'client-files' storage bucket is set to Public in Supabase."
+                      );
                     }}
                   />
                 </div>
