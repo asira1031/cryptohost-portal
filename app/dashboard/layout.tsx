@@ -1,99 +1,19 @@
-"use client";
-
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { createClient } from "../lib/supabase/client";
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const supabase = createClient();
+<div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+  <Link href="/dashboard" className="sidebar-btn">Dashboard</Link>
 
-  async function handleLogout() {
-    await supabase.auth.signOut();
-    router.push("/login");
-    router.refresh();
-  }
+  <Link href="/dashboard/upload" className="sidebar-btn">Upload File</Link>
 
-  const navStyle = (href: string): React.CSSProperties => ({
-    display: "block",
-    padding: "14px 16px",
-    marginBottom: 14,
-    borderRadius: 8,
-    background: pathname === href ? "#1e2b4f" : "#171717",
-    color: "#ffffff",
-    textDecoration: "none",
-    fontWeight: 500,
-  });
+  <Link href="/dashboard/my-files" className="sidebar-btn">My Files</Link>
 
-  return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
-      <aside
-        style={{
-          width: 170,
-          background: "#0a0a0a",
-          color: "#ffffff",
-          padding: "20px 12px",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 16,
-            fontWeight: 700,
-            marginBottom: 18,
-            padding: "0 6px",
-          }}
-        >
-          CryptoHost
-        </div>
+  <Link href="/dashboard/subscription" className="sidebar-btn">Subscription</Link>
 
-        <Link href="/dashboard" style={navStyle("/dashboard")}>
-          Dashboard
-        </Link>
+  <Link href="/dashboard/fund" className="sidebar-btn">💰 Fund Account</Link>
 
-        <Link href="/dashboard/fund" style={navStyle("/dashboard/fund")}>
-          Upload File
-        </Link>
+  <Link href="/dashboard/blockchain" className="sidebar-btn">Blockchain</Link>
 
-        <Link href="/dashboard/reports" style={navStyle("/dashboard/reports")}>
-          Reports
-        </Link>
+  <Link href="/dashboard/bank-api" className="sidebar-btn">Bank API</Link>
 
-        <Link
-          href="/dashboard/subscription"
-          style={navStyle("/dashboard/subscription")}
-        >
-          Subscription
-        </Link>
-
-        <Link href="/dashboard/account" style={navStyle("/dashboard/account")}>
-          💰 Fund Account
-        </Link>
-
-        <button
-          onClick={handleLogout}
-          style={{
-            marginTop: "auto",
-            padding: "12px 14px",
-            borderRadius: 8,
-            border: "none",
-            background: "#dc2626",
-            color: "#ffffff",
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          Logout
-        </button>
-      </aside>
-
-      <main style={{ flex: 1 }}>{children}</main>
-    </div>
-  );
-}
+  <Link href="/dashboard/security" className="sidebar-btn">Security</Link>
+</div>
