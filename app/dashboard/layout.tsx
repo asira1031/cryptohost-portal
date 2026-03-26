@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { ReactNode } from "react";
+import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({
   children,
 }: {
   children: ReactNode;
 }) {
+  const pathname = usePathname();
+
   return (
     <div
       style={{
@@ -44,35 +49,53 @@ export default function DashboardLayout({
               gap: 12,
             }}
           >
-            <Link href="/dashboard" style={buttonStyle}>
+            <Link href="/dashboard" style={getStyle("/dashboard", pathname)}>
               Dashboard
             </Link>
 
-            <Link href="/dashboard/upload" style={buttonStyle}>
+            <Link
+              href="/dashboard/upload"
+              style={getStyle("/dashboard/upload", pathname)}
+            >
               Upload File
             </Link>
 
-            <Link href="/dashboard/my-files" style={buttonStyle}>
+            <Link
+              href="/dashboard/my-files"
+              style={getStyle("/dashboard/my-files", pathname)}
+            >
               My Files
             </Link>
 
-            <Link href="/dashboard/subscription" style={buttonStyle}>
+            <Link
+              href="/dashboard/subscription"
+              style={getStyle("/dashboard/subscription", pathname)}
+            >
               Subscription
             </Link>
 
-            <Link href="/dashboard/fund" style={buttonStyle}>
+            <Link href="/dashboard/fund" style={getStyle("/dashboard/fund", pathname)}>
               💰 Fund Account
             </Link>
 
-            <Link href="/dashboard/blockchain" style={buttonStyle}>
+            <Link
+              href="/dashboard/blockchain"
+              style={getStyle("/dashboard/blockchain", pathname)}
+            >
               Blockchain
             </Link>
 
-            <Link href="/dashboard/bank-api" style={buttonStyle}>
+            <Link
+              href="/dashboard/bank-api"
+              style={getStyle("/dashboard/bank-api", pathname)}
+            >
               Bank API
             </Link>
 
-            <Link href="/dashboard/security" style={buttonStyle}>
+            <Link
+              href="/dashboard/security"
+              style={getStyle("/dashboard/security", pathname)}
+            >
               Security
             </Link>
           </div>
@@ -98,7 +121,7 @@ export default function DashboardLayout({
         style={{
           flex: 1,
           minHeight: "100vh",
-          background: "#03113a",
+          background: "#e5e7eb",
         }}
       >
         {children}
@@ -107,12 +130,18 @@ export default function DashboardLayout({
   );
 }
 
-const buttonStyle: React.CSSProperties = {
-  display: "block",
-  textDecoration: "none",
-  background: "#111111",
-  color: "#ffffff",
-  padding: "14px 16px",
-  borderRadius: 12,
-  fontWeight: 700,
-};
+function getStyle(path: string, current: string): React.CSSProperties {
+  const isActive = current === path;
+
+  return {
+    display: "block",
+    textDecoration: "none",
+    background: isActive ? "#1d4ed8" : "#111111",
+    color: "#ffffff",
+    padding: "14px 16px",
+    borderRadius: 12,
+    fontWeight: 700,
+    transition: "0.2s",
+    boxShadow: isActive ? "0 0 0 1px rgba(255,255,255,0.08) inset" : "none",
+  };
+}
