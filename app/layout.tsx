@@ -1,17 +1,3 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import ServiceWorkerRegister from "./components/ServiceWorkerRegister";
-
-export const metadata: Metadata = {
-  title: "Asira CryptoHost",
-  description: "Secure client portal for Asira CryptoHost",
-  manifest: "/manifest.json",
-  icons: {
-    icon: "/icon-192.png",
-    apple: "/icon-192.png",
-  },
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -19,10 +5,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <ServiceWorkerRegister />
-        {children}
-      </body>
+      <head>
+        <meta name="google-site-verification" content="5QAJCkd_KmfE41" />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
