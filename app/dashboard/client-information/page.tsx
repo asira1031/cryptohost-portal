@@ -11,13 +11,13 @@ export default function ClientInformationPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
   const [walletNetwork, setWalletNetwork] = useState("ERC20");
   const [profileImage, setProfileImage] = useState("");
-  const [email, setEmail] = useState("");
 
   useEffect(() => {
     async function loadProfile() {
@@ -27,9 +27,10 @@ export default function ClientInformationPage() {
 
       const {
         data: { user },
+        error: userError,
       } = await supabase.auth.getUser();
 
-      if (!user) {
+      if (userError || !user) {
         setError("You are not logged in.");
         setLoading(false);
         return;
@@ -72,9 +73,10 @@ export default function ClientInformationPage() {
 
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (!user) {
+    if (userError || !user) {
       setError("You are not logged in.");
       return;
     }
@@ -108,9 +110,10 @@ export default function ClientInformationPage() {
 
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (!user) {
+    if (userError || !user) {
       setError("You are not logged in.");
       setSaving(false);
       return;
