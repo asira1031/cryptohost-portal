@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "../lib/supabase/client";
 
 export default function LoginPage() {
@@ -50,10 +51,11 @@ export default function LoginPage() {
           background: "#111827",
           padding: 30,
           borderRadius: 12,
-          width: 320,
+          width: 340,
+          boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
         }}
       >
-        <h2 style={{ marginBottom: 20 }}>Login</h2>
+        <h2 style={{ marginBottom: 20, fontWeight: 800 }}>Login</h2>
 
         <input
           type="email"
@@ -61,7 +63,15 @@ export default function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: 10, padding: 10 }}
+          style={{
+            width: "100%",
+            marginBottom: 12,
+            padding: 12,
+            borderRadius: 8,
+            border: "none",
+            background: "#1f2937",
+            color: "#fff",
+          }}
         />
 
         <input
@@ -70,25 +80,53 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: 10, padding: 10 }}
+          style={{
+            width: "100%",
+            marginBottom: 10,
+            padding: 12,
+            borderRadius: 8,
+            border: "none",
+            background: "#1f2937",
+            color: "#fff",
+          }}
         />
+
+        {/* 🔥 Forgot Password Link */}
+        <div style={{ textAlign: "right", marginBottom: 16 }}>
+          <Link
+            href="/forgot-password"
+            style={{
+              color: "#93c5fd",
+              fontSize: 13,
+              textDecoration: "none",
+              fontWeight: 600,
+            }}
+          >
+            Forgot Password?
+          </Link>
+        </div>
 
         <button
           type="submit"
           disabled={loading}
           style={{
             width: "100%",
-            padding: 10,
+            padding: 12,
             background: "#facc15",
             border: "none",
+            borderRadius: 8,
             cursor: "pointer",
+            fontWeight: 700,
+            color: "#000",
           }}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
         {message && (
-          <p style={{ color: "red", marginTop: 10 }}>{message}</p>
+          <p style={{ color: "#f87171", marginTop: 12, fontSize: 14 }}>
+            {message}
+          </p>
         )}
       </form>
     </div>
