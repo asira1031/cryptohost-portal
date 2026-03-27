@@ -6,6 +6,8 @@ const plans = [
     name: "Starter Plan",
     price: 99,
     description: [
+      "Valid for 10 days",
+      "Up to 3 file uploads only",
       "Client portal dashboard",
       "Upload transaction files",
       "Basic transaction monitoring",
@@ -19,10 +21,11 @@ const plans = [
     name: "Professional Plan",
     price: 199,
     description: [
+      "Valid for 20 days",
+      "Up to 6 file uploads only",
       "Everything in Starter",
       "Priority transaction processing",
       "Advanced monitoring dashboard",
-      "Multiple file upload support",
       "Faster blockchain updates",
       "Priority support",
     ],
@@ -32,6 +35,8 @@ const plans = [
     name: "Enterprise Plan",
     price: 299,
     description: [
+      "Valid for 30 days",
+      "Up to 10 file uploads only",
       "Everything in Professional",
       "Full client transaction suite",
       "Dedicated processing lane",
@@ -223,10 +228,24 @@ export default function SubscriptionPage() {
                     color: "#ffffff",
                     fontSize: "48px",
                     fontWeight: "bold",
-                    marginBottom: "20px",
+                    marginBottom: "8px",
                   }}
                 >
                   ${plan.price}
+                </div>
+
+                <div
+                  style={{
+                    color: "#9ec5ff",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    marginBottom: "20px",
+                    letterSpacing: "0.3px",
+                  }}
+                >
+                  {plan.id === "starter" && "10 DAYS • 3 FILES MAX"}
+                  {plan.id === "professional" && "20 DAYS • 6 FILES MAX"}
+                  {plan.id === "enterprise" && "30 DAYS • 10 FILES MAX"}
                 </div>
 
                 <ul
@@ -241,6 +260,18 @@ export default function SubscriptionPage() {
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
+
+                <div
+                  style={{
+                    color: "rgba(255,255,255,0.72)",
+                    fontSize: "13px",
+                    lineHeight: 1.6,
+                    marginBottom: "18px",
+                  }}
+                >
+                  Access remains active until the plan expires or the file limit
+                  is reached, whichever comes first.
+                </div>
 
                 <button
                   onClick={() => handleChoosePlan(plan)}
