@@ -17,27 +17,27 @@ export default function PriorityMintPage() {
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
 
-  const STAGE_LABEL = "LIQUIDITY PRIORITY MINT — VALIDATION PHASE";
-  const STATUS_BADGE = "ONLINE";
-  const SYSTEM_STATUS = "ONLINE / VALIDATION ACTIVE";
+  const STAGE_LABEL = "LIQUIDITY PRIORITY MINT — MINT CONFIRMATION PHASE";
+  const STATUS_BADGE = "MINT CONFIRMATION PENDING";
+  const SYSTEM_STATUS = "ONLINE / MINT VALIDATION ACTIVE";
 
-  const MINT_PROGRESS = 56;
+  const MINT_PROGRESS = 66;
 
   const ACTIVE_TRANCHE = "5,000,000 EURC";
-  const ACTIVATED_AMOUNT = "2,800,000 EURC";
+  const ACTIVATED_AMOUNT = "3,300,000 EURC";
 
   const LIQUIDITY_LINE =
-    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 56% completion and remains under live validation monitoring for continuation.";
+    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 66% completion, but swapping remains disabled until full mint confirmation is completed.";
 
-  const NOTICE_TITLE = "Swap Validation Status — Online";
+  const NOTICE_TITLE = "Swap Status — Temporarily Restricted";
   const NOTICE_BODY =
-    "Status: Online. Swap amounts below 1,000,000 do not meet the required validation threshold and may require revalidation before execution can continue.";
+    "Status: Online. Withdrawal-based swapping remains disabled until full mint confirmation is completed. Current liquidity is still under active validation, and partial withdrawal attempts may return insufficient status until the minting cycle is fully confirmed and released for executable swap routing.";
 
   const REASON =
-    "Swap volume must remain at or above the minimum validation threshold of 1,000,000 to preserve active validation continuity.";
+    "The minting cycle has not yet reached full confirmation. As a result, executable swap routing remains restricted and withdrawal-triggered swaps may return insufficient status.";
 
   const REQUIRED_ACTION =
-    "Maintain swap execution at or above the required validation threshold. Amounts below 1,000,000 may not qualify for continuation and may require revalidation before execution can proceed.";
+    "No swapping or withdrawal-based conversion should be attempted until the minting cycle is fully confirmed. Once full mint confirmation is achieved, executable swap routing will be enabled and validated liquidity may proceed to conversion.";
 
   const SYSTEM_NAME = "Blockchain Liquidity Engine (CLAMM Routing Core)";
 
@@ -49,12 +49,12 @@ export default function PriorityMintPage() {
   const POSITION_MIN = "0.058393075";
   const POSITION_MAX = "0.058509972";
   const POSITION_LIQUIDITY = "99.5M INDEXED";
-  const POSITION_STATE = "Validation Active / Routing Online";
+  const POSITION_STATE = "Mint Validation Active / Swap Restricted";
   const POSITION_EARNINGS = "NOT ACTIVE";
   const POSITION_APR = "2.60%";
 
-  const FEE_STATE = "VALIDATION ACTIVE";
-  const PAYOUT_STATE = "AWAITING QUALIFIED SWAP";
+  const FEE_STATE = "MINT VALIDATION ACTIVE";
+  const PAYOUT_STATE = "SWAP RESTRICTED";
   const GAS_STATE = "ONLINE";
   const ROUTING_STATE = "ACTIVE";
 
@@ -80,7 +80,7 @@ export default function PriorityMintPage() {
 
   const EXPLORER_URL = `https://bscscan.com/tx/${APPROVAL_TX}`;
 
-  const terminal = `99.5M LIQUIDITY PRIORITY MINT — VALIDATION MONITOR
+  const terminal = `99.5M LIQUIDITY PRIORITY MINT — MINT CONFIRMATION MONITOR
 SMART CONTRACT ROUTING INITIALIZED
 ------------------------------------------------------------
 
@@ -97,13 +97,15 @@ SYSTEM STATUS
 - Gas State                : ${GAS_STATE}
 - Qualified Swap Minimum   : 1,000,000
 - Conversion Path          : EURC -> USDT
+- Swap Execution           : DISABLED (Pending Full Mint Confirmation)
 
 LIVE VALIDATION ACTIVITY
 - Active Tranche           : ${ACTIVE_TRANCHE}
 - Activated Amount         : ${ACTIVATED_AMOUNT}
 - Progress                 : ${MINT_PROGRESS}%
-- Current Phase            : Swap validation monitoring
-- Continuity Requirement   : Minimum valid swap threshold must be maintained
+- Current Phase            : Mint confirmation monitoring
+- Withdrawal Test          : 1,000,000 returned insufficient
+- Continuity Requirement   : Full mint confirmation required before swap execution
 - Settlement Route         : EURC conversion toward USDT enablement
 
 APPROVAL SNAPSHOT
@@ -134,11 +136,13 @@ PRICE BAND
 - Current Price            : ${BAND_CURRENT}
 
 NOTICE
-- Swap amounts below 1,000,000 do not meet the required validation threshold
-- Sub-threshold execution may require revalidation before continuation
-- Routing remains online and visible on-chain
+- Minting progress is currently at ${MINT_PROGRESS}%
+- Withdrawal-based swapping is not enabled at this stage
+- A 1,000,000 withdrawal test returned insufficient status
+- No swap execution will proceed until full mint confirmation is completed
+- Routing remains online and under active validation
 
-SYSTEM STATUS : ONLINE — VALIDATION ACTIVE
+SYSTEM STATUS : ONLINE — SWAP RESTRICTED UNTIL FULL MINT CONFIRMATION
 COMPLIANCE    : ${SYSTEM_NAME}
 TIMESTAMP     : ${TIMESTAMP}
 REFERENCE     : 99.5M-PRIORITY-MINT
@@ -154,6 +158,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
     yellow: "#f0b90b",
     green: "#0ecb81",
     cyan: "#00ffc3",
+    orange: "#f59e0b",
   };
 
   const cardStyle: CSSProperties = {
@@ -277,7 +282,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
               Network: <b>BNB Chain</b>
             </div>
             <div style={{ fontSize: 13, marginBottom: 6 }}>
-              Mode: <b>Validation Console</b>
+              Mode: <b>Mint Validation Console</b>
             </div>
             <div style={{ fontSize: 13 }}>
               Engine: <b>CLAMM Routing Core</b>
@@ -319,9 +324,9 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 {SYSTEM_STATUS}
               </div>
               <div style={{ marginTop: 8, fontSize: 13, color: colors.muted }}>
-                Validation is active and liquidity routing remains online. Swap
-                execution must remain within the required threshold parameters for
-                continuation.
+                Mint validation is active and liquidity routing remains online.
+                Withdrawal-based swapping remains disabled until full mint
+                confirmation is completed.
               </div>
             </div>
           </div>
@@ -367,12 +372,12 @@ REFERENCE     : 99.5M-PRIORITY-MINT
             <div style={metricCard}>
               <div style={labelStyle}>Execution State</div>
               <div style={{ marginTop: 8 }}>
-                <span style={badgeStyle("rgba(14,203,129,0.16)", colors.green)}>
+                <span style={badgeStyle("rgba(245,158,11,0.18)", colors.orange)}>
                   ● {STATUS_BADGE}
                 </span>
               </div>
               <div style={{ marginTop: 8, fontSize: 13, color: colors.muted }}>
-                Validation Running
+                Swap Restricted
               </div>
             </div>
           </div>
@@ -402,8 +407,8 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   </div>
                 </div>
 
-                <span style={badgeStyle("rgba(14,203,129,0.16)", colors.green)}>
-                  ● ONLINE
+                <span style={badgeStyle("rgba(245,158,11,0.18)", colors.orange)}>
+                  ● RESTRICTED
                 </span>
               </div>
 
@@ -668,9 +673,9 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <div style={{ marginTop: 6, color: "#d7fffa", lineHeight: 1.7 }}>
-                  Validation is online. Current LP routing remains active, and swap
-                  amounts must stay at or above 1,000,000 to maintain execution
-                  continuity.
+                  Validation remains active. Minting progress is now at 66%.
+                  Swap execution is not yet enabled, and withdrawal-based attempts
+                  may return insufficient status until full mint confirmation is completed.
                 </div>
 
                 <div
@@ -692,7 +697,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <div style={{ fontSize: 12, marginTop: 8, color: "#8bded0" }}>
-                  Validation Status: Online — Minimum Valid Swap Threshold: 1,000,000
+                  Validation Status: 66% — No Swapping Until Full Mint Confirmation
                 </div>
               </div>
 
