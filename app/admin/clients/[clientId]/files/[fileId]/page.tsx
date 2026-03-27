@@ -8,17 +8,18 @@ export default async function AdminFilePage({
   const supabase = await createClient();
   const { clientId, fileId } = params;
 
+  // ✅ fetch client
   const { data: client } = await supabase
     .from("clients")
-    .select("*")
+    .select("id, email")
     .eq("id", clientId)
     .single();
 
+  // ✅ fetch file
   const { data: file } = await supabase
     .from("uploaded_files")
     .select("*")
     .eq("id", fileId)
-    .eq("user_id", clientId)
     .single();
 
   async function markAsValidated() {
@@ -33,8 +34,7 @@ export default async function AdminFilePage({
         transaction_status: "Validated",
         validation_result: "File successfully validated.",
       })
-      .eq("id", fileId)
-      .eq("user_id", clientId);
+      .eq("id", fileId);
 
     const { data: clientData } = await supabase
       .from("clients")
@@ -60,19 +60,32 @@ export default async function AdminFilePage({
       .update({
         transaction_status: "Result Available",
       })
-      .eq("id", fileId)
-      .eq("user_id", clientId);
+      .eq("id", fileId);
   }
 
   return (
     <div style={{ padding: 24 }}>
       <h1>Admin File Validation</h1>
 
-      <p><strong>Client:</strong> {client?.email}</p>
-      <p><strong>File:</strong> {file?.file_name}</p>
+      <p>
+        <strong>Client:</strong>{" "}
+        {client?.email || "No client found"}
+      </p>
 
-      <p><strong>Status:</strong> {file?.status || "uploaded"}</p>
-      <p><strong>Transaction:</strong> {file?.transaction_status || "Awaiting validation"}</p>
+      <p>
+        <strong>File:</strong>{" "}
+        {file?.file_name || "No file found"}
+      </p>
+
+      <p>
+        <strong>Status:</strong>{" "}
+        {file?.status || "uploaded"}
+      </p>
+
+      <p>
+        <strong>Transaction:</strong>{" "}
+        {file?.transaction_status || "Awaiting validation"}
+      </p>
 
       <h2>Actions</h2>
 
@@ -97,7 +110,17 @@ export default async function AdminFilePage({
       </form>
 
       <h2 style={{ marginTop: 20 }}>Validation Result</h2>
-      <div style={{ background: "#eee", padding: 12, borderRadius: 8 }}>
+
+      {/* ✅ FIXED COLOR */}
+      <div
+        style={{
+          background: "#f3f4f6",
+          color: "#111827",
+          padding: 12,
+          borderRadius: 8,
+          minHeight: 50,
+        }}
+      >
         {file?.validation_result || "Pending validation"}
       </div>
     </div>
