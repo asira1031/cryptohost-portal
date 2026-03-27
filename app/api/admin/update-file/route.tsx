@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     .from("uploaded_files")
     .update(updateData)
     .eq("id", fileId)
-    .eq("user_id", clientId);
+    
 
   return NextResponse.json({ success: true });
 }
