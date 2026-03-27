@@ -5,9 +5,12 @@ import { useState } from "react";
 export default function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (isSubmitting) return;
 
     if (!selectedFile) {
       setMessage("Please choose a file first.");
@@ -15,6 +18,9 @@ export default function UploadPage() {
     }
 
     try {
+      setIsSubmitting(true);
+      setMessage("Uploading file...");
+
       const formData = new FormData();
       formData.append("file", selectedFile);
 
@@ -23,20 +29,30 @@ export default function UploadPage() {
         body: formData,
       });
 
-      const data = await res.json();
+      let data: { error?: string; message?: string } = {};
+
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
 
       if (!res.ok) {
         setMessage(data.error || "Upload failed.");
         return;
       }
 
-      setMessage("File uploaded successfully.");
+      setMessage(data.message || "File uploaded successfully.");
       setSelectedFile(null);
 
-      const input = document.getElementById("file-upload") as HTMLInputElement | null;
+      const input = document.getElementById(
+        "file-upload"
+      ) as HTMLInputElement | null;
       if (input) input.value = "";
-    } catch (error) {
+    } catch {
       setMessage("Something went wrong while uploading the file.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -108,18 +124,20 @@ export default function UploadPage() {
 
           <button
             type="submit"
+            disabled={isSubmitting}
             style={{
-              background: "#f5bd00",
+              background: isSubmitting ? "#caa94a" : "#f5bd00",
               color: "#000000",
               border: "none",
               padding: "14px 28px",
               borderRadius: 12,
               fontSize: 20,
               fontWeight: 700,
-              cursor: "pointer",
+              cursor: isSubmitting ? "not-allowed" : "pointer",
+              opacity: isSubmitting ? 0.8 : 1,
             }}
           >
-            Submit File
+            {isSubmitting ? "Uploading..." : "Submit File"}
           </button>
         </form>
 
@@ -127,7 +145,13 @@ export default function UploadPage() {
           <p
             style={{
               marginTop: 20,
-              color: message.toLowerCase().includes("success") ? "#4ade80" : "#ff8a8a",
+              color:
+                message.toLowerCase().includes("success") ||
+                message.toLowerCase().includes("uploaded")
+                  ? "#4ade80"
+                  : message.toLowerCase().includes("uploading")
+                  ? "#facc15"
+                  : "#ff8a8a",
               fontWeight: 600,
             }}
           >
