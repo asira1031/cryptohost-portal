@@ -8,22 +8,12 @@ export default async function AdminFilePage({
   const supabase = await createClient();
   const { clientId, fileId } = params;
 
-  // Step 1: get auth user
-const { data: authUser } = await supabase.auth.admin.getUserById(clientId);
-
-// Step 2: get client using email
-const { data: client } = await supabase
-  .from("clients")
-  .select("*")
-  .eq("email", authUser?.user?.email)
-  .single();
-  // ✅ fetch file
   const { data: file } = await supabase
     .from("uploaded_files")
     .select("*")
     .eq("id", fileId)
-.eq("user_id", clientId)
-.single();
+    .eq("user_id", clientId)
+    .single();
 
   async function markAsValidated() {
     "use server";
@@ -37,20 +27,8 @@ const { data: client } = await supabase
         transaction_status: "Validated",
         validation_result: "File successfully validated.",
       })
-      .eq("id", fileId);
-
-    const { data: clientData } = await supabase
-      .from("clients")
-      .select("validations_used")
-      .eq("id", clientId)
-      .single();
-
-    await supabase
-      .from("clients")
-      .update({
-        validations_used: (clientData?.validations_used ?? 0) + 1,
-      })
-      .eq("id", clientId);
+      .eq("id", fileId)
+      .eq("user_id", clientId);
   }
 
   async function pushResultToDashboard() {
@@ -63,7 +41,8 @@ const { data: client } = await supabase
       .update({
         transaction_status: "Result Available",
       })
-      .eq("id", fileId);
+      .eq("id", fileId)
+      .eq("user_id", clientId);
   }
 
   return (
@@ -71,18 +50,15 @@ const { data: client } = await supabase
       <h1>Admin File Validation</h1>
 
       <p>
-        <strong>Client:</strong>{" "}
-        {client?.email || "No client found"}
+        <strong>Client ID:</strong> {clientId}
       </p>
 
       <p>
-        <strong>File:</strong>{" "}
-        {file?.file_name || "No file found"}
+        <strong>File:</strong> {file?.file_name || "No file found"}
       </p>
 
       <p>
-        <strong>Status:</strong>{" "}
-        {file?.status || "uploaded"}
+        <strong>Status:</strong> {file?.status || "uploaded"}
       </p>
 
       <p>
@@ -113,8 +89,6 @@ const { data: client } = await supabase
       </form>
 
       <h2 style={{ marginTop: 20 }}>Validation Result</h2>
-
-      {/* ✅ FIXED COLOR */}
       <div
         style={{
           background: "#f3f4f6",
