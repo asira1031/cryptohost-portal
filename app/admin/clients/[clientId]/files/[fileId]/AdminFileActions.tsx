@@ -9,11 +9,7 @@ export default function AdminFileActions({
   clientId,
   fileId,
 }: AdminFileActionsProps) {
-
-  console.log("UPDATED VERSION"); // ✅ HERE
-
   async function handleAction(action: string) {
-    
     try {
       const res = await fetch("/api/admin/update-file", {
         method: "POST",
