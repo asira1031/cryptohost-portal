@@ -29,32 +29,19 @@ export default function UploadPage() {
         body: formData,
       });
 
-      const text = await res.text();
-
-      let data: any = {};
-      try {
-        data = JSON.parse(text);
-      } catch {
-        data = { raw: text };
-      }
+      const data = await res.json();
 
       if (!res.ok) {
-        setMessage(
-          data?.error ||
-            data?.message ||
-            `Upload failed. Status: ${res.status}`
-        );
+        setMessage(data.error || "Upload failed.");
         return;
       }
 
-      setMessage(data?.message || "File uploaded successfully.");
+      setMessage(data.message || "File uploaded successfully.");
       setSelectedFile(null);
 
-      const input = document.getElementById(
-        "file-upload"
-      ) as HTMLInputElement | null;
+      const input = document.getElementById("file-upload") as HTMLInputElement | null;
       if (input) input.value = "";
-    } catch (error) {
+    } catch {
       setMessage("Something went wrong while uploading the file.");
     } finally {
       setIsSubmitting(false);
@@ -69,6 +56,8 @@ export default function UploadPage() {
         padding: "40px 20px",
         display: "flex",
         justifyContent: "center",
+        position: "relative",
+        zIndex: 1,
       }}
     >
       <div
@@ -79,6 +68,9 @@ export default function UploadPage() {
           borderRadius: 18,
           padding: 30,
           boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+          position: "relative",
+          zIndex: 2,
+          pointerEvents: "auto",
         }}
       >
         <h1
@@ -102,7 +94,14 @@ export default function UploadPage() {
           Securely upload your financial file for processing.
         </p>
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            position: "relative",
+            zIndex: 3,
+            pointerEvents: "auto",
+          }}
+        >
           <div
             style={{
               background: "#24357a",
@@ -110,6 +109,8 @@ export default function UploadPage() {
               borderRadius: 12,
               padding: 18,
               marginBottom: 20,
+              position: "relative",
+              zIndex: 3,
             }}
           >
             <input
@@ -123,6 +124,8 @@ export default function UploadPage() {
               style={{
                 color: "#ffffff",
                 width: "100%",
+                position: "relative",
+                zIndex: 3,
               }}
             />
           </div>
@@ -130,6 +133,7 @@ export default function UploadPage() {
           <button
             type="submit"
             disabled={isSubmitting}
+            onClick={() => console.log("Submit button clicked")}
             style={{
               background: isSubmitting ? "#caa94a" : "#f5bd00",
               color: "#000000",
@@ -140,6 +144,9 @@ export default function UploadPage() {
               fontWeight: 700,
               cursor: isSubmitting ? "not-allowed" : "pointer",
               opacity: isSubmitting ? 0.8 : 1,
+              position: "relative",
+              zIndex: 4,
+              pointerEvents: "auto",
             }}
           >
             {isSubmitting ? "Uploading..." : "Submit File"}
