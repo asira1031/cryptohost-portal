@@ -12,8 +12,7 @@ export default async function AdminFilePage({
     .from("uploaded_files")
     .select("*")
     .eq("id", fileId)
-    .eq("user_id", clientId)
-    .single();
+    .maybeSingle();
 
   async function markAsValidated() {
     "use server";
@@ -27,8 +26,7 @@ export default async function AdminFilePage({
         transaction_status: "Validated",
         validation_result: "File successfully validated.",
       })
-      .eq("id", fileId)
-      .eq("user_id", clientId);
+      .eq("id", fileId);
   }
 
   async function pushResultToDashboard() {
@@ -41,16 +39,19 @@ export default async function AdminFilePage({
       .update({
         transaction_status: "Result Available",
       })
-      .eq("id", fileId)
-      .eq("user_id", clientId);
+      .eq("id", fileId);
   }
 
   return (
-    <div style={{ padding: 24 }}>
+    <div style={{ padding: 24, background: "#001845", minHeight: "100vh", color: "#ffffff" }}>
       <h1>Admin File Validation</h1>
 
       <p>
         <strong>Client ID:</strong> {clientId}
+      </p>
+
+      <p>
+        <strong>File ID:</strong> {fileId}
       </p>
 
       <p>
@@ -62,8 +63,7 @@ export default async function AdminFilePage({
       </p>
 
       <p>
-        <strong>Transaction:</strong>{" "}
-        {file?.transaction_status || "Awaiting validation"}
+        <strong>Transaction:</strong> {file?.transaction_status || "Awaiting validation"}
       </p>
 
       <h2>Actions</h2>
@@ -73,7 +73,7 @@ export default async function AdminFilePage({
       </button>
 
       <form action={markAsValidated}>
-        <button style={actionButtonStyle("#ffffff", "#111827")}>
+        <button type="submit" style={actionButtonStyle("#ffffff", "#111827")}>
           Mark as Validated
         </button>
       </form>
@@ -83,7 +83,7 @@ export default async function AdminFilePage({
       </button>
 
       <form action={pushResultToDashboard}>
-        <button style={actionButtonStyle("#8ec5ff", "#001a3d")}>
+        <button type="submit" style={actionButtonStyle("#8ec5ff", "#001a3d")}>
           Push Result to Dashboard
         </button>
       </form>
@@ -111,9 +111,10 @@ function actionButtonStyle(background: string, color: string) {
     border: "none",
     padding: "12px 18px",
     borderRadius: 10,
-    fontWeight: "bold",
+    fontWeight: "bold" as const,
     cursor: "pointer",
     marginRight: 10,
     marginTop: 10,
+    display: "inline-block",
   };
 }
