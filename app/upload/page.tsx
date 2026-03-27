@@ -29,27 +29,32 @@ export default function UploadPage() {
         body: formData,
       });
 
-      let data: { error?: string; message?: string } = {};
+      const text = await res.text();
 
+      let data: any = {};
       try {
-        data = await res.json();
+        data = JSON.parse(text);
       } catch {
-        data = {};
+        data = { raw: text };
       }
 
       if (!res.ok) {
-        setMessage(data.error || "Upload failed.");
+        setMessage(
+          data?.error ||
+            data?.message ||
+            `Upload failed. Status: ${res.status}`
+        );
         return;
       }
 
-      setMessage(data.message || "File uploaded successfully.");
+      setMessage(data?.message || "File uploaded successfully.");
       setSelectedFile(null);
 
       const input = document.getElementById(
         "file-upload"
       ) as HTMLInputElement | null;
       if (input) input.value = "";
-    } catch {
+    } catch (error) {
       setMessage("Something went wrong while uploading the file.");
     } finally {
       setIsSubmitting(false);
