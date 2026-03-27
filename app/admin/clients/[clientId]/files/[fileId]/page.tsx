@@ -30,6 +30,11 @@ export default function AdminFileActions({
         return;
       }
 
+      if (!data.updated || data.updated.length === 0) {
+        alert("No database row was updated. Please check fileId and clientId.");
+        return;
+      }
+
       window.location.reload();
     } catch (error) {
       alert("Something went wrong while updating the file.");
