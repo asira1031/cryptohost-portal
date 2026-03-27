@@ -1,17 +1,21 @@
 import { createClient } from "@/app/lib/supabase/server";
 
-export default async function AdminFilePage({
-  params,
-}: {
-  params: { clientId: string; fileId: string };
-}) {
+type PageProps = {
+  params: Promise<{
+    clientId: string;
+    fileId: string;
+  }>;
+};
+
+export default async function AdminFilePage({ params }: PageProps) {
+  const { clientId, fileId } = await params;
   const supabase = await createClient();
-  const { clientId, fileId } = params;
 
   const { data: file } = await supabase
     .from("uploaded_files")
     .select("*")
     .eq("id", fileId)
+    .eq("user_id", clientId)
     .maybeSingle();
 
   async function markAsValidated() {
@@ -26,7 +30,8 @@ export default async function AdminFilePage({
         transaction_status: "Validated",
         validation_result: "File successfully validated.",
       })
-      .eq("id", fileId);
+      .eq("id", fileId)
+      .eq("user_id", clientId);
   }
 
   async function pushResultToDashboard() {
@@ -39,7 +44,8 @@ export default async function AdminFilePage({
       .update({
         transaction_status: "Result Available",
       })
-      .eq("id", fileId);
+      .eq("id", fileId)
+      .eq("user_id", clientId);
   }
 
   return (
