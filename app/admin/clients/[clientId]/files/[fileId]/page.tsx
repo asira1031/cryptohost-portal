@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/app/lib/supabase/server";
 
 type PageProps = {
@@ -18,6 +19,25 @@ export default async function AdminFilePage({ params }: PageProps) {
     .eq("user_id", clientId)
     .maybeSingle();
 
+  async function markUnderValidation() {
+    "use server";
+
+    const supabase = await createClient();
+
+    await supabase
+      .from("uploaded_files")
+      .update({
+        status: "under_validation",
+        transaction_status: "Under Validation",
+        validation_result: "File is currently under validation.",
+      })
+      .eq("id", fileId)
+      .eq("user_id", clientId);
+
+    revalidatePath(`/admin/clients/${clientId}/files/${fileId}`);
+    revalidatePath("/dashboard/my-files");
+  }
+
   async function markAsValidated() {
     "use server";
 
@@ -32,6 +52,28 @@ export default async function AdminFilePage({ params }: PageProps) {
       })
       .eq("id", fileId)
       .eq("user_id", clientId);
+
+    revalidatePath(`/admin/clients/${clientId}/files/${fileId}`);
+    revalidatePath("/dashboard/my-files");
+  }
+
+  async function setOnHold() {
+    "use server";
+
+    const supabase = await createClient();
+
+    await supabase
+      .from("uploaded_files")
+      .update({
+        status: "on_hold",
+        transaction_status: "On Hold",
+        validation_result: "This file has been placed on hold for further review.",
+      })
+      .eq("id", fileId)
+      .eq("user_id", clientId);
+
+    revalidatePath(`/admin/clients/${clientId}/files/${fileId}`);
+    revalidatePath("/dashboard/my-files");
   }
 
   async function pushResultToDashboard() {
@@ -46,10 +88,20 @@ export default async function AdminFilePage({ params }: PageProps) {
       })
       .eq("id", fileId)
       .eq("user_id", clientId);
+
+    revalidatePath(`/admin/clients/${clientId}/files/${fileId}`);
+    revalidatePath("/dashboard/my-files");
   }
 
   return (
-    <div style={{ padding: 24, background: "#001845", minHeight: "100vh", color: "#ffffff" }}>
+    <div
+      style={{
+        padding: 24,
+        background: "#001845",
+        minHeight: "100vh",
+        color: "#ffffff",
+      }}
+    >
       <h1>Admin File Validation</h1>
 
       <p>
@@ -69,14 +121,17 @@ export default async function AdminFilePage({ params }: PageProps) {
       </p>
 
       <p>
-        <strong>Transaction:</strong> {file?.transaction_status || "Awaiting validation"}
+        <strong>Transaction:</strong>{" "}
+        {file?.transaction_status || "Awaiting validation"}
       </p>
 
       <h2>Actions</h2>
 
-      <button style={actionButtonStyle("#f5bd00", "#000000")}>
-        Mark as Under Validation
-      </button>
+      <form action={markUnderValidation}>
+        <button type="submit" style={actionButtonStyle("#f5bd00", "#000000")}>
+          Mark as Under Validation
+        </button>
+      </form>
 
       <form action={markAsValidated}>
         <button type="submit" style={actionButtonStyle("#ffffff", "#111827")}>
@@ -84,9 +139,11 @@ export default async function AdminFilePage({ params }: PageProps) {
         </button>
       </form>
 
-      <button style={actionButtonStyle("#ff8a8a", "#1a0000")}>
-        Set On Hold
-      </button>
+      <form action={setOnHold}>
+        <button type="submit" style={actionButtonStyle("#ff8a8a", "#1a0000")}>
+          Set On Hold
+        </button>
+      </form>
 
       <form action={pushResultToDashboard}>
         <button type="submit" style={actionButtonStyle("#8ec5ff", "#001a3d")}>
@@ -119,8 +176,8 @@ function actionButtonStyle(background: string, color: string) {
     borderRadius: 10,
     fontWeight: "bold" as const,
     cursor: "pointer",
-    marginRight: 10,
     marginTop: 10,
+    marginBottom: 6,
     display: "inline-block",
   };
 }
