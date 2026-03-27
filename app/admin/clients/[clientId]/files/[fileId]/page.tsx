@@ -8,19 +8,22 @@ export default async function AdminFilePage({
   const supabase = await createClient();
   const { clientId, fileId } = params;
 
-  // ✅ fetch client
-  const { data: client } = await supabase
-    .from("clients")
-    .select("id, email")
-    .eq("id", clientId)
-    .single();
+  // Step 1: get auth user
+const { data: authUser } = await supabase.auth.admin.getUserById(clientId);
 
+// Step 2: get client using email
+const { data: client } = await supabase
+  .from("clients")
+  .select("*")
+  .eq("email", authUser?.user?.email)
+  .single();
   // ✅ fetch file
   const { data: file } = await supabase
     .from("uploaded_files")
     .select("*")
     .eq("id", fileId)
-    .single();
+.eq("user_id", clientId)
+.single();
 
   async function markAsValidated() {
     "use server";
