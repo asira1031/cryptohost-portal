@@ -94,6 +94,20 @@ export default function DashboardLayout({
               href="/dashboard/fund"
               style={getStyle("/dashboard/fund", pathname)}
             >
+              <Link
+  href="/dashboard/validation"
+  style={{
+    display: "block",
+    background: "#000",
+    color: "white",
+    textDecoration: "none",
+    padding: "14px 16px",
+    borderRadius: 14,
+    fontWeight: 700,
+  }}
+>
+  Validation
+</Link>
               💰 Fund Account
             </Link>
 
