@@ -10,6 +10,7 @@ export default function Dashboard() {
         background: "#f4f6fb",
         padding: "40px",
         fontFamily: "Arial, sans-serif",
+        boxSizing: "border-box",
       }}
     >
       <div
@@ -58,7 +59,7 @@ export default function Dashboard() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
               gap: "18px",
             }}
           >
@@ -70,27 +71,36 @@ export default function Dashboard() {
                 background: "#fff",
               }}
             >
-              <h3 style={{ fontSize: "24px", color: "#0f172a" }}>File Upload</h3>
+              <h3
+                style={{
+                  fontSize: "24px",
+                  color: "#0f172a",
+                  marginTop: 0,
+                  marginBottom: "10px",
+                }}
+              >
+                File Upload
+              </h3>
 
-              <p style={{ color: "#64748b" }}>
+              <p style={{ color: "#64748b", marginBottom: 0 }}>
                 Upload financial or transaction files securely to the system.
               </p>
 
-              <Link href="/upload">
-                <button
-                  style={{
-                    background: "#3b6edc",
-                    color: "white",
-                    border: "none",
-                    padding: "12px 18px",
-                    borderRadius: "8px",
-                    fontWeight: "bold",
-                    marginTop: "12px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Upload File
-                </button>
+              <Link
+                href="/dashboard/upload"
+                style={{
+                  display: "inline-block",
+                  background: "#3b6edc",
+                  color: "white",
+                  textDecoration: "none",
+                  padding: "12px 18px",
+                  borderRadius: "8px",
+                  fontWeight: "bold",
+                  marginTop: "12px",
+                  cursor: "pointer",
+                }}
+              >
+                Upload File
               </Link>
             </div>
 
@@ -102,11 +112,18 @@ export default function Dashboard() {
                 background: "#fff",
               }}
             >
-              <h3 style={{ fontSize: "24px", color: "#0f172a" }}>
+              <h3
+                style={{
+                  fontSize: "24px",
+                  color: "#0f172a",
+                  marginTop: 0,
+                  marginBottom: "10px",
+                }}
+              >
                 Transaction Monitor
               </h3>
 
-              <p style={{ color: "#64748b" }}>
+              <p style={{ color: "#64748b", marginBottom: 0 }}>
                 Once paid, the Transaction Monitor activates.
               </p>
             </div>
