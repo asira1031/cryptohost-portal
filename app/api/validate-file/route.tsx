@@ -5,7 +5,6 @@ export async function POST(req: Request) {
   const supabase = await createClient();
   const { fileId } = await req.json();
 
-  // STEP 1: set to in_progress
   await supabase
     .from("uploaded_files")
     .update({
@@ -13,7 +12,6 @@ export async function POST(req: Request) {
     })
     .eq("id", fileId);
 
-  // STEP 2: simulate processing delay
   setTimeout(async () => {
     await supabase
       .from("uploaded_files")
@@ -21,7 +19,7 @@ export async function POST(req: Request) {
         validation_status: "validated",
       })
       .eq("id", fileId);
-  }, 4000); // 4 seconds
+  }, 4000);
 
   return NextResponse.json({ success: true });
 }
