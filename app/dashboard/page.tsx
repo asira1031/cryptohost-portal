@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 export default function Dashboard() {
   return (
     <div
@@ -59,51 +57,10 @@ export default function Dashboard() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gridTemplateColumns: "1fr",
               gap: "18px",
             }}
           >
-            <div
-              style={{
-                border: "1px solid #d7dce5",
-                borderRadius: "12px",
-                padding: "20px",
-                background: "#fff",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "24px",
-                  color: "#0f172a",
-                  marginTop: 0,
-                  marginBottom: "10px",
-                }}
-              >
-                File Upload
-              </h3>
-
-              <p style={{ color: "#64748b", marginBottom: 0 }}>
-                Upload financial or transaction files securely to the system.
-              </p>
-
-              <Link
-                href="/dashboard/upload"
-                style={{
-                  display: "inline-block",
-                  background: "#3b6edc",
-                  color: "white",
-                  textDecoration: "none",
-                  padding: "12px 18px",
-                  borderRadius: "8px",
-                  fontWeight: "bold",
-                  marginTop: "12px",
-                  cursor: "pointer",
-                }}
-              >
-                Upload File
-              </Link>
-            </div>
-
             <div
               style={{
                 border: "1px solid #d7dce5",
