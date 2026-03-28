@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     })
     .eq("id", fileId);
 
-  // STEP 2: simulate delay then mark validated
+  // STEP 2: simulate processing delay
   setTimeout(async () => {
     await supabase
       .from("uploaded_files")
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         validation_status: "validated",
       })
       .eq("id", fileId);
-  }, 4000);
+  }, 4000); // 4 seconds
 
   return NextResponse.json({ success: true });
 }
