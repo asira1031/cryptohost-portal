@@ -21,13 +21,13 @@ export default function PriorityMintPage() {
   const STATUS_BADGE = "MINT CONFIRMATION PENDING";
   const SYSTEM_STATUS = "ONLINE / MINT VALIDATION ACTIVE";
 
-  const MINT_PROGRESS = 66;
+  const MINT_PROGRESS = 72;
 
   const ACTIVE_TRANCHE = "5,000,000 EURC";
-  const ACTIVATED_AMOUNT = "3,300,000 EURC";
+  const ACTIVATED_AMOUNT = "3,600,000 EURC";
 
   const LIQUIDITY_LINE =
-    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 66% completion, but swapping remains disabled until full mint confirmation is completed.";
+    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 72% completion, but swapping remains disabled until full mint confirmation is completed.";
 
   const NOTICE_TITLE = "Swap Status — Temporarily Restricted";
   const NOTICE_BODY =
@@ -672,8 +672,19 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   +{ACTIVE_TRANCHE}
                 </div>
 
+                <div
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color: "#9fffe0",
+                    marginBottom: 6,
+                  }}
+                >
+                  Activated: {ACTIVATED_AMOUNT} ({MINT_PROGRESS}%)
+                </div>
+
                 <div style={{ marginTop: 6, color: "#d7fffa", lineHeight: 1.7 }}>
-                  Validation remains active. Minting progress is now at 66%.
+                  Validation remains active. Minting progress is now at 72%.
                   Swap execution is not yet enabled, and withdrawal-based attempts
                   may return insufficient status until full mint confirmation is completed.
                 </div>
@@ -697,7 +708,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <div style={{ fontSize: 12, marginTop: 8, color: "#8bded0" }}>
-                  Validation Status: 66% — No Swapping Until Full Mint Confirmation
+                  Validation Status: 72% — No Swapping Until Full Mint Confirmation
                 </div>
               </div>
 
