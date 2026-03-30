@@ -43,6 +43,33 @@ export default function Dashboard() {
           >
             Welcome to Your Dashboard
           </h1>
+          <div
+  style={{
+    marginTop: "20px",
+    padding: "16px",
+    background: "#eef2ff",
+    borderRadius: "10px",
+    border: "1px solid #c7d2fe",
+  }}
+>
+  <p style={{ margin: 0, fontWeight: "bold", color: "#1e3a8a" }}>
+    Need Help?
+  </p>
+  <p style={{ margin: "5px 0 0 0", color: "#334155" }}>
+    Contact our support team:
+  </p>
+
+  <a
+    href="mailto:asiracryptohost@adminjanspay.com"
+    style={{
+      color: "#3b6edc",
+      fontWeight: "bold",
+      textDecoration: "none",
+    }}
+  >
+    asiracryptohost@adminjanspay.com
+  </a>
+</div>
 
           <p
             style={{
