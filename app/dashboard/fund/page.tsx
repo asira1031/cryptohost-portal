@@ -1,4 +1,27 @@
-export default function FundPage() {
+import { redirect } from "next/navigation";
+import { createClient } from "@/app/lib/supabase/server";
+
+const btnStyle = {
+  background: "#2563eb",
+  color: "white",
+  border: "none",
+  borderRadius: 8,
+  padding: "12px 18px",
+  fontWeight: "bold",
+  cursor: "pointer",
+} as const;
+
+export default async function FundPage() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <div
       style={{
@@ -12,7 +35,9 @@ export default function FundPage() {
         Fund Account
       </h1>
 
-      <p style={{ marginBottom: 16 }}>Logged in as: pilotvl@yahoo.com</p>
+      <p style={{ marginBottom: 16 }}>
+        Logged in as: {user.email}
+      </p>
 
       <div
         style={{
@@ -106,13 +131,3 @@ export default function FundPage() {
     </div>
   );
 }
-
-const btnStyle = {
-  background: "#2563eb",
-  color: "white",
-  border: "none",
-  borderRadius: 8,
-  padding: "12px 18px",
-  fontWeight: "bold",
-  cursor: "pointer",
-};
