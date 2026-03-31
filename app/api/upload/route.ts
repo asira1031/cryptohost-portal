@@ -74,7 +74,6 @@ export async function POST(req: Request) {
 
     if (insertError) {
       console.error("DB insert error:", insertError);
-
       return NextResponse.json(
         { error: insertError.message || "File uploaded but failed to save record." },
         { status: 500 }
