@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DashboardUploadPage() {
+  const router = useRouter();
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,13 +32,13 @@ export default function DashboardUploadPage() {
         body: formData,
       });
 
-      const text = await res.text();
+      let data: { error?: string; message?: string; success?: boolean } = {};
 
-      let data: { error?: string; message?: string } = {};
       try {
-        data = JSON.parse(text);
+        data = await res.json();
       } catch {
-        data = {};
+        setMessage(`Upload failed. Invalid server response. Status: ${res.status}`);
+        return;
       }
 
       if (!res.ok) {
@@ -43,12 +46,28 @@ export default function DashboardUploadPage() {
         return;
       }
 
+      if (!data.success) {
+        setMessage(data.error || data.message || "Upload did not complete.");
+        return;
+      }
+
       setMessage(data.message || "File uploaded successfully.");
       setSelectedFile(null);
 
-      const input = document.getElementById("dashboard-file-upload") as HTMLInputElement | null;
+      const input = document.getElementById(
+        "dashboard-file-upload"
+      ) as HTMLInputElement | null;
+
       if (input) input.value = "";
-    } catch {
+
+      router.refresh();
+
+      setTimeout(() => {
+        router.push("/dashboard/my-files");
+        router.refresh();
+      }, 800);
+    } catch (error) {
+      console.error("UPLOAD ERROR:", error);
       setMessage("Something went wrong while uploading the file.");
     } finally {
       setIsSubmitting(false);
@@ -75,7 +94,7 @@ export default function DashboardUploadPage() {
           fontSize: "16px",
         }}
       >
-        This is the upload-only page.
+        Upload your file securely to your account.
       </p>
 
       <form onSubmit={handleSubmit}>
@@ -102,23 +121,48 @@ export default function DashboardUploadPage() {
             }}
           />
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
+          <div
             style={{
-              background: "#f5bd00",
-              color: "#000000",
-              border: "2px solid #ffffff",
-              padding: "12px 26px",
-              borderRadius: 14,
-              fontSize: "16px",
-              fontWeight: 700,
-              cursor: isSubmitting ? "not-allowed" : "pointer",
-              opacity: isSubmitting ? 0.8 : 1,
+              display: "flex",
+              gap: 12,
+              flexWrap: "wrap",
             }}
           >
-            {isSubmitting ? "Uploading..." : "Submit File"}
-          </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                background: "#f5bd00",
+                color: "#000000",
+                border: "2px solid #ffffff",
+                padding: "12px 26px",
+                borderRadius: 14,
+                fontSize: "16px",
+                fontWeight: 700,
+                cursor: isSubmitting ? "not-allowed" : "pointer",
+                opacity: isSubmitting ? 0.8 : 1,
+              }}
+            >
+              {isSubmitting ? "Uploading..." : "Submit File"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => router.push("/dashboard/my-files")}
+              style={{
+                background: "transparent",
+                color: "#ffffff",
+                border: "2px solid #ffffff",
+                padding: "12px 26px",
+                borderRadius: 14,
+                fontSize: "16px",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Open My Files
+            </button>
+          </div>
 
           {message && (
             <p
