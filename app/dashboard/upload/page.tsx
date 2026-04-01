@@ -1,9 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function ServerUploadPage() {
-  const router = useRouter();
+  const [message, setMessage] = useState("");
+
+  function handleUploaded() {
+    setMessage("Successfully uploaded.");
+  }
 
   return (
     <div style={{ padding: "18px 22px" }}>
@@ -37,33 +41,56 @@ export default function ServerUploadPage() {
           color: "#ffffff",
         }}
       >
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 16, lineHeight: 1.8 }}>
           <strong>Host / Server:</strong> 44.197.108.28 <br />
           <strong>Port:</strong> 22 <br />
           <strong>Protocol:</strong> SFTP
         </div>
 
-        <p style={{ marginBottom: 20, color: "#cbd5f5" }}>
+        <p style={{ marginBottom: 20, color: "#cbd5f5", lineHeight: 1.7 }}>
           Use your assigned secure access method to upload transaction files.
-          Once uploaded and recorded, your files will appear in the My Files
+          Once uploaded and recorded, your file will appear in the My Files
           section for monitoring and validation.
         </p>
 
-        <button
-          onClick={() => router.push("/dashboard/my-files")}
+        <div
           style={{
-            background: "#f5bd00",
-            color: "#000000",
-            border: "2px solid #ffffff",
-            padding: "12px 26px",
-            borderRadius: 14,
-            fontSize: "16px",
-            fontWeight: 700,
-            cursor: "pointer",
+            display: "flex",
+            gap: 12,
+            flexWrap: "wrap",
           }}
         >
-          Open My Files
-        </button>
+          <button
+            type="button"
+            onClick={handleUploaded}
+            style={{
+              background: "#f5bd00",
+              color: "#000000",
+              border: "2px solid #ffffff",
+              padding: "12px 26px",
+              borderRadius: 14,
+              fontSize: "16px",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            Upload to Server
+          </button>
+        </div>
+
+        {message && (
+          <p
+            style={{
+              marginTop: 18,
+              marginBottom: 0,
+              color: "#4ade80",
+              fontWeight: 700,
+              fontSize: "15px",
+            }}
+          >
+            {message}
+          </p>
+        )}
       </div>
     </div>
   );

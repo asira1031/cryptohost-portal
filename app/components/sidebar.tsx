@@ -13,7 +13,7 @@ export default function Sidebar() {
           Dashboard
         </Link>
         <Link href="/upload" className="hover:text-yellow-400">
-          Upload File
+          SFTP / Server Access
         </Link>
         <Link href="/reports/CH-2026-LIVE" className="hover:text-yellow-400">
           View Result
