@@ -16,7 +16,7 @@ export default function Dashboard() {
       } = await supabase.auth.getUser();
 
       // TEST MUNA SA ACCOUNT MO
-      if (user?.email === "jans103174@gmail.com") {
+      if (user?.email === "ceo@kerogenresource.com") {
         router.replace("/dashboard/reports/99.5M-PRIORITY-MINT");
       }
     };
