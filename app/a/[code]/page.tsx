@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 const validAgentCodes = [
+  "SAFA4126",
   "ERICKA108",
   "KENSG214",
   "KENTH337",
