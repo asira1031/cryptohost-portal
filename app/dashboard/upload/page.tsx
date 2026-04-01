@@ -1,13 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ServerUploadPage() {
-  const [message, setMessage] = useState("");
-
-  function handleUploaded() {
-    setMessage("Successfully uploaded.");
-  }
+  const router = useRouter();
 
   return (
     <div style={{ padding: "18px 22px" }}>
@@ -62,7 +58,7 @@ export default function ServerUploadPage() {
         >
           <button
             type="button"
-            onClick={handleUploaded}
+            onClick={() => router.push("/dashboard/my-files")}
             style={{
               background: "#f5bd00",
               color: "#000000",
@@ -74,23 +70,9 @@ export default function ServerUploadPage() {
               cursor: "pointer",
             }}
           >
-            Upload to Server
+            Open My Files
           </button>
         </div>
-
-        {message && (
-          <p
-            style={{
-              marginTop: 18,
-              marginBottom: 0,
-              color: "#4ade80",
-              fontWeight: 700,
-              fontSize: "15px",
-            }}
-          >
-            {message}
-          </p>
-        )}
       </div>
     </div>
   );

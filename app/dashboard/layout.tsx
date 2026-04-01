@@ -73,7 +73,7 @@ export default function DashboardLayout({
               href="/dashboard/upload"
               style={getStyle("/dashboard/upload", pathname)}
             >
-              Upload File
+              SFTP / Server Access
             </Link>
 
             <Link
