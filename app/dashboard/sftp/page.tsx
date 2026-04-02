@@ -72,8 +72,8 @@ export default async function SftpPage() {
             }}
           >
             Use your assigned secure access method to upload transaction files.
-            Once uploaded and recorded, your file will appear in the My Files
-            section for monitoring and validation.
+            Proceed to the SSH upload page to view your assigned upload folder
+            and secure instructions.
           </p>
 
           <Link
