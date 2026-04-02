@@ -21,7 +21,8 @@ export default function PriorityMintPage() {
   const STATUS_BADGE = "MINT CONFIRMATION PENDING";
   const SYSTEM_STATUS = "ONLINE / MINT VALIDATION ACTIVE";
 
-  const MINT_PROGRESS = 72;
+  const MINT_PROGRESS = 78
+  ;
 
   const ACTIVE_TRANCHE = "5,000,000 EURC";
   const ACTIVATED_AMOUNT = "3,600,000 EURC";
@@ -41,13 +42,13 @@ export default function PriorityMintPage() {
 
   const SYSTEM_NAME = "Blockchain Liquidity Engine (CLAMM Routing Core)";
 
-  const BAND_CURRENT = "23,083.2";
-  const BAND_MIN = "8.55";
-  const BAND_MAX = "34.21";
+  const BAND_CURRENT = "23,183.2";
+  const BAND_MIN = "8.56";
+  const BAND_MAX = "34.01";
 
   const POSITION_PAIR = "EURC / BNB";
-  const POSITION_MIN = "0.058393075";
-  const POSITION_MAX = "0.058509972";
+  const POSITION_MIN = "0.057393075";
+  const POSITION_MAX = "0.057509972";
   const POSITION_LIQUIDITY = "99.5M INDEXED";
   const POSITION_STATE = "Mint Validation Active / Swap Restricted";
   const POSITION_EARNINGS = "NOT ACTIVE";
@@ -708,7 +709,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <div style={{ fontSize: 12, marginTop: 8, color: "#8bded0" }}>
-                  Validation Status: 72% — No Swapping Until Full Mint Confirmation
+                  Validation Status: 75% — No Swapping Until Full Mint Confirmation
                 </div>
               </div>
 
