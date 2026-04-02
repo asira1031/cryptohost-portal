@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/server";
 
@@ -13,86 +12,66 @@ export default async function SftpPage() {
     redirect("/login");
   }
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#02134a",
-        color: "white",
-        padding: "28px 32px",
-      }}
-    >
-      <div style={{ maxWidth: 980 }}>
-        <h1
-          style={{
-            fontSize: 34,
-            fontWeight: 800,
-            marginBottom: 8,
-          }}
-        >
-          Secure Server Upload Access
-        </h1>
+  const uploadBaseDir = process.env.SFTP_UPLOAD_BASE_DIR || "/upload";
+  const userFolder = `${uploadBaseDir}/${user.id}`;
 
-        <p
-          style={{
-            fontSize: 16,
-            opacity: 0.95,
-            marginBottom: 24,
-          }}
-        >
-          Upload your transaction file using secure server access.
-        </p>
+  return (
+    <div style={{ padding: 24, color: "white" }}>
+      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>
+        SFTP / Server Access
+      </h1>
+
+      <p style={{ opacity: 0.8, marginBottom: 20 }}>
+        Upload your files to your assigned secure server folder below.
+      </p>
+
+      <div
+        style={{
+          background: "#111827",
+          border: "1px solid #1f2937",
+          borderRadius: 14,
+          padding: 20,
+          marginBottom: 20,
+        }}
+      >
+        <div style={{ fontSize: 14, opacity: 0.8, marginBottom: 10 }}>
+          Your personal upload folder
+        </div>
 
         <div
           style={{
-            background: "#27348b",
-            borderRadius: 24,
-            padding: "28px 22px",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.18)",
+            background: "#0b1220",
+            border: "1px solid #1f2937",
+            borderRadius: 10,
+            padding: 14,
+            fontFamily: "monospace",
+            fontSize: 15,
+            color: "#f0b90b",
+            wordBreak: "break-all",
           }}
         >
-          <div style={{ lineHeight: 1.9, fontSize: 16, marginBottom: 22 }}>
-            <div>
-              <strong>Host / Server:</strong> 44.197.108.28
-            </div>
-            <div>
-              <strong>Port:</strong> 22
-            </div>
-            <div>
-              <strong>Protocol:</strong> SFTP
-            </div>
-          </div>
-
-          <p
-            style={{
-              fontSize: 15,
-              lineHeight: 1.8,
-              marginBottom: 24,
-              maxWidth: 760,
-            }}
-          >
-            Use your assigned secure access method to upload transaction files.
-            Proceed to the SSH upload page to view your assigned upload folder
-            and secure instructions.
-          </p>
-
-          <Link
-            href="/dashboard/upload-ssh"
-            style={{
-              display: "inline-block",
-              background: "#f0b90b",
-              color: "#000",
-              fontWeight: 800,
-              textDecoration: "none",
-              padding: "14px 26px",
-              borderRadius: 14,
-              border: "2px solid white",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-            }}
-          >
-            Upload SSH
-          </Link>
+          {userFolder}
         </div>
+      </div>
+
+      <div
+        style={{
+          background: "#111827",
+          border: "1px solid #1f2937",
+          borderRadius: 14,
+          padding: 20,
+        }}
+      >
+        <div style={{ fontWeight: 700, marginBottom: 12 }}>
+          Important Instructions
+        </div>
+
+        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8 }}>
+          <li>Upload only inside your assigned folder.</li>
+          <li>Files uploaded there will be synced into your My Files page.</li>
+          <li>Do not rename or move other folders on the server.</li>
+          <li>Supported files can be synced automatically after upload.</li>
+        </ul>
       </div>
     </div>
   );
