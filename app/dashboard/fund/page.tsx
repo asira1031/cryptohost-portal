@@ -1,133 +1,151 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/app/lib/supabase/server";
-
-const btnStyle = {
-  background: "#2563eb",
-  color: "white",
-  border: "none",
-  borderRadius: 8,
-  padding: "12px 18px",
-  fontWeight: "bold",
-  cursor: "pointer",
-} as const;
-
-export default async function FundPage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
+export default function FundPage() {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#041a5a",
-        color: "white",
-        padding: "24px",
-      }}
-    >
-      <h1 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: 20 }}>
+    <div style={{ padding: "24px", color: "#fff" }}>
+      <h1 style={{ fontSize: "42px", fontWeight: 700, marginBottom: "10px" }}>
         Fund Account
       </h1>
 
-      <p style={{ marginBottom: 16 }}>
-        Logged in as: {user.email}
+      <p style={{ marginBottom: "20px" }}>
+        Logged in as: jans103174@gmail.com
       </p>
 
+      {/* COIN BUTTONS */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(2, minmax(90px, 120px))",
+          gridTemplateColumns: "repeat(2, 1fr)",
           gap: "12px",
-          marginBottom: "24px",
+          maxWidth: "260px",
+          marginBottom: "25px",
         }}
       >
-        <button style={btnStyle}>USDT</button>
-        <button style={btnStyle}>BTC</button>
-        <button style={btnStyle}>ETH</button>
-        <button style={btnStyle}>BNB</button>
+        <button style={coinStyle}>USDT</button>
+        <button style={coinStyle}>BTC</button>
+        <button style={coinStyle}>ETH</button>
+        <button style={coinStyle}>BNB</button>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "14px", maxWidth: 260 }}>
-        <button
-          style={{
-            background: "#facc15",
-            color: "black",
-            border: "none",
-            borderRadius: 8,
-            padding: "14px 16px",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Buy USDT via Binance
-        </button>
-
-        <button
-          style={{
-            background: "#3b82f6",
-            color: "white",
-            border: "none",
-            borderRadius: 8,
-            padding: "14px 16px",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Buy USDT via Coinbase
-        </button>
-      </div>
-
+      {/* BUY BUTTONS (CLICKABLE) */}
       <div
         style={{
-          marginTop: 24,
-          maxWidth: 280,
-          background: "rgba(255,255,255,0.08)",
-          border: "1px solid rgba(255,255,255,0.15)",
-          borderRadius: 12,
-          padding: 16,
+          display: "flex",
+          flexDirection: "column",
+          gap: "12px",
+          maxWidth: "280px",
+          marginBottom: "25px",
         }}
       >
-        <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 8 }}>Gateway Wallet</div>
-        <div style={{ fontSize: 14, lineHeight: 1.6, wordBreak: "break-all" }}>
+        <a
+          href="https://www.binance.com/en/buy-sell-crypto"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={binanceStyle}
+        >
+          Buy USDT via Binance
+        </a>
+
+        <a
+          href="https://www.coinbase.com/buy"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={coinbaseStyle}
+        >
+          Buy USDT via Coinbase
+        </a>
+      </div>
+
+      {/* GATEWAY WALLET */}
+      <div
+        style={{
+          background: "#1e2a5a",
+          padding: "16px",
+          borderRadius: "12px",
+          maxWidth: "420px",
+          marginBottom: "30px",
+        }}
+      >
+        <div style={{ fontSize: "14px", marginBottom: "8px", color: "#ccc" }}>
+          Gateway Wallet
+        </div>
+
+        <div
+          style={{
+            fontSize: "14px",
+            wordBreak: "break-all",
+            marginBottom: "10px",
+          }}
+        >
           0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
         </div>
-        <div style={{ marginTop: 10, color: "#4ade80", fontSize: 13 }}>
+
+        <div style={{ fontSize: "13px", color: "#00ff88" }}>
           Asset: USDT | Network: ERC20 / BEP20
         </div>
       </div>
 
-      <div style={{ marginTop: 32, maxWidth: 320 }}>
-        <h2 style={{ fontSize: 26, marginBottom: 12 }}>Upload Financial File</h2>
+      {/* UPLOAD SECTION */}
+      <div>
+        <h2 style={{ fontSize: "26px", marginBottom: "10px" }}>
+          Upload Financial File
+        </h2>
 
         <input
           type="file"
           style={{
+            marginBottom: "12px",
             display: "block",
-            marginBottom: 12,
-            color: "white",
           }}
         />
 
-        <button
-          style={{
-            background: "#84cc16",
-            color: "black",
-            border: "none",
-            borderRadius: 8,
-            padding: "12px 18px",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Submit File
-        </button>
+        <button style={submitStyle}>Submit File</button>
       </div>
     </div>
   );
 }
+
+/* ================= STYLES ================= */
+
+const coinStyle: React.CSSProperties = {
+  background: "#2f6df6",
+  color: "#fff",
+  border: "none",
+  borderRadius: "10px",
+  padding: "14px",
+  fontWeight: 700,
+  fontSize: "18px",
+  cursor: "pointer",
+};
+
+const binanceStyle: React.CSSProperties = {
+  display: "block",
+  textAlign: "center",
+  textDecoration: "none",
+  background: "#f0b90b",
+  color: "#000",
+  borderRadius: "10px",
+  padding: "16px",
+  fontWeight: 700,
+  fontSize: "16px",
+};
+
+const coinbaseStyle: React.CSSProperties = {
+  display: "block",
+  textAlign: "center",
+  textDecoration: "none",
+  background: "#4d8dff",
+  color: "#fff",
+  borderRadius: "10px",
+  padding: "16px",
+  fontWeight: 700,
+  fontSize: "16px",
+};
+
+const submitStyle: React.CSSProperties = {
+  background: "#22c55e",
+  color: "#000",
+  border: "none",
+  borderRadius: "8px",
+  padding: "12px 18px",
+  fontWeight: 700,
+  cursor: "pointer",
+};
