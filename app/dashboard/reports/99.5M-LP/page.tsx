@@ -21,13 +21,13 @@ export default function PriorityMintPage() {
   const STATUS_BADGE = "MINT CONFIRMATION PENDING";
   const SYSTEM_STATUS = "ONLINE / MINT VALIDATION ACTIVE";
 
-  const MINT_PROGRESS = 78;
+  const MINT_PROGRESS = 80;
 
   const ACTIVE_TRANCHE = "5,000,000 EURC";
-  const ACTIVATED_AMOUNT = "3,900,000 EURC";
+  const ACTIVATED_AMOUNT = "4,000,000 EURC";
 
   const LIQUIDITY_LINE =
-    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 78% completion, but swapping remains disabled until full mint confirmation is completed.";
+    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 80% completion, but swapping remains disabled until full mint confirmation is completed.";
 
   const NOTICE_TITLE = "Swap Status — Temporarily Restricted";
   const NOTICE_BODY =
