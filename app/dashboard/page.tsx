@@ -1,6 +1,6 @@
-import Link from "next/link";
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
@@ -18,14 +18,14 @@ export default function Dashboard() {
 
       const userEmail = (user?.email || "").toLowerCase();
 
-      // KEEP EXISTING 99.5M REDIRECT
-      if (userEmail === "ceo@kerogenresource.com") {
-        router.replace("/dashboard/reports/99.5M-PRIORITY-MINT");
+      // KEEP YOUR EXISTING CLIENT REDIRECTS HERE
+      // Replace these emails with your real ones
+      if (userEmail === "ken@example.com") {
+        router.replace("/dashboard/reports/10B");
         return;
       }
 
-      // KEN AUTO-REDIRECT TO 10B
-      if (userEmail === "ken@beautuniverse.com") {
+      if (userEmail === "ceo@kerogenresource.com") {
         router.replace("/dashboard/reports/10B");
         return;
       }
@@ -34,13 +34,25 @@ export default function Dashboard() {
     checkUser();
   }, [router]);
 
+  const quickLinkStyle: React.CSSProperties = {
+    display: "inline-block",
+    padding: "10px 16px",
+    background: "#07142b",
+    color: "#ffffff",
+    borderRadius: 10,
+    textDecoration: "none",
+    fontWeight: 600,
+    fontSize: 14,
+  };
+
   const dashboardLinks = [
     {
-   title: "Ken — 99.5M LP",
-  status: "ACTIVE",
-  color: "#16a34a",
-note: "Liquidity dashboard",
-},
+      title: "Ken — 99.5M LP",
+      status: "ACTIVE",
+      color: "#16a34a",
+      href: "/dashboard/reports/99.5M-LP",
+      note: "Liquidity dashboard",
+    },
     {
       title: "Ken — 10B Restricted Review",
       status: "PAID / ACTIVE ACCESS",
@@ -49,28 +61,18 @@ note: "Liquidity dashboard",
       note: "Ken restricted review file",
     },
     {
-      title: "890M Preparation Dashboard",
-      status: "PREPARATION",
+      title: "890M Dashboard",
+      status: "ACTIVE",
       color: "#2563eb",
       href: "/dashboard/reports/890M",
-      note: "Awaiting execution run",
+      note: "890M client dashboard",
     },
     {
-      title: "TJ Deutsche Bank 1.275B",
-      status: "SUSPENDED",
-      color: "#d97706",
+      title: "TJDB1.275B Dashboard",
+      status: "ACTIVE",
+      color: "#7c3aed",
       href: "/dashboard/reports/TJDB1.275B",
-      note: "Re-activation required",
-    },
-  ];
-
-  const paymentRows = [
-    {
-      email: "ken@beautuniverse.com",
-      amount: "99 USDT",
-      plan: "Basic",
-      status: "PAID",
-      action: "/dashboard/validation",
+      note: "TJDB 1.275B dashboard",
     },
   ];
 
@@ -78,474 +80,175 @@ note: "Liquidity dashboard",
     <div
       style={{
         minHeight: "100vh",
-        background: "#f4f6fb",
-        padding: "40px",
-        fontFamily: "Arial, sans-serif",
-        boxSizing: "border-box",
+        background: "#f8fafc",
+        padding: "32px 24px",
       }}
     >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          background: "white",
-          borderRadius: "14px",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
-          overflow: "hidden",
-        }}
-      >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div
           style={{
-            background: "#3b6edc",
-            color: "white",
-            padding: "18px 24px",
-            fontWeight: "bold",
-            fontSize: "16px",
+            marginBottom: 24,
+            background: "#ffffff",
+            border: "1px solid #dbe3ef",
+            borderRadius: 18,
+            padding: 24,
           }}
         >
-          Asira CryptoHost Dashboard
-        </div>
-
-        <div style={{ padding: "30px 24px" }}>
           <h1
             style={{
-              margin: "0 0 10px 0",
-              fontSize: "28px",
-              color: "#0f172a",
+              margin: 0,
+              fontSize: 32,
+              fontWeight: 800,
+              color: "#07142b",
             }}
           >
-            Welcome to Your Dashboard
+            CryptoHost Dashboard
           </h1>
-
-          <div
-            style={{
-              marginTop: "20px",
-              padding: "16px",
-              background: "#eef2ff",
-              borderRadius: "10px",
-              border: "1px solid #c7d2fe",
-            }}
-          >
-            <p style={{ margin: 0, fontWeight: "bold", color: "#1e3a8a" }}>
-              Need Help?
-            </p>
-            <p style={{ margin: "5px 0 0 0", color: "#334155" }}>
-              Contact our support team:
-            </p>
-
-            <a
-              href="mailto:asiracryptohost@adminjanspay.com"
-              style={{
-                color: "#3b6edc",
-                fontWeight: "bold",
-                textDecoration: "none",
-              }}
-            >
-              asiracryptohost@adminjanspay.com
-            </a>
-          </div>
 
           <p
             style={{
-              margin: "20px 0 28px 0",
-              color: "#64748b",
-              fontSize: "16px",
+              marginTop: 10,
+              marginBottom: 0,
+              color: "#5b6472",
+              fontSize: 16,
             }}
           >
-            Upload your financial file and monitor transaction processing.
+            Open and monitor active client dashboards from one place.
           </p>
+        </div>
+
+        <div
+          style={{
+            marginBottom: 24,
+            background: "#ffffff",
+            border: "1px solid #dbe3ef",
+            borderRadius: 18,
+            padding: 24,
+          }}
+        >
+          <h2
+            style={{
+              marginTop: 0,
+              marginBottom: 18,
+              fontSize: 22,
+              fontWeight: 700,
+              color: "#07142b",
+            }}
+          >
+            Quick Links
+          </h2>
 
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "18px",
+              display: "flex",
+              gap: 12,
+              flexWrap: "wrap",
             }}
           >
-            <div
-              style={{
-                border: "1px solid #d7dce5",
-                borderRadius: "12px",
-                padding: "20px",
-                background: "#fff",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "24px",
-                  color: "#0f172a",
-                  marginTop: 0,
-                  marginBottom: "10px",
-                }}
-              >
-                Transaction Monitor
-              </h3>
+            <a href="/dashboard/payment?plan=basic" style={quickLinkStyle}>
+              Payment
+            </a>
 
-              <p style={{ color: "#64748b", marginBottom: 0 }}>
-                Once paid, the Transaction Monitor activates.
-              </p>
-            </div>
+            <a href="/dashboard/upload" style={quickLinkStyle}>
+              Upload
+            </a>
 
-            <div
-              style={{
-                border: "1px solid #d7dce5",
-                borderRadius: "12px",
-                padding: "20px",
-                background: "#fff",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "24px",
-                  color: "#0f172a",
-                  marginTop: 0,
-                  marginBottom: "16px",
-                }}
-              >
-                Admin Dashboard Monitor
-              </h3>
+            <a href="/dashboard/my-files" style={quickLinkStyle}>
+              My Files
+            </a>
 
-              <p
-                style={{
-                  color: "#64748b",
-                  marginTop: 0,
-                  marginBottom: "18px",
-                }}
-              >
-                Open and monitor all active client dashboards from one place.
-              </p>
-
-              <div
-                style={{
-                  display: "grid",
-                  gap: "14px",
-                }}
-              >
-                {dashboardLinks.map((item) => (
-                  <div
-                    key={item.href}
-                    style={{
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "12px",
-                      padding: "16px",
-                      background: "#f8fafc",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "16px",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: "18px",
-                          fontWeight: 800,
-                          color: "#0f172a",
-                          marginBottom: "6px",
-                        }}
-                      >
-                        {item.title}
-                      </div>
-
-                      <div
-                        style={{
-                          display: "inline-block",
-                          background: `${item.color}14`,
-                          color: item.color,
-                          border: `1px solid ${item.color}55`,
-                          borderRadius: "999px",
-                          padding: "6px 10px",
-                          fontSize: "12px",
-                          fontWeight: 800,
-                          marginBottom: "8px",
-                        }}
-                      >
-                        {item.status}
-                      </div>
-
-                      <div
-                        style={{
-                          color: "#64748b",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {item.note}
-                      </div>
-                    </div>
-
-                    <Link
-  href="/dashboard/reports/99.5M-LP"
-  style={{
-    background: "#07142b",
-    color: "#fff",
-    textDecoration: "none",
-    padding: "14px 22px",
-    borderRadius: 12,
-    fontWeight: 700,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    position: "relative",
-    zIndex: 10,
-    pointerEvents: "auto",
-  }}
->
-  Open Dashboard
-</Link>
-                    
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div
-              style={{
-                border: "1px solid #d7dce5",
-                borderRadius: "12px",
-                padding: "20px",
-                background: "#fff",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "24px",
-                  color: "#0f172a",
-                  marginTop: 0,
-                  marginBottom: "16px",
-                }}
-              >
-                Payment Monitor
-              </h3>
-
-              <p
-                style={{
-                  color: "#64748b",
-                  marginTop: 0,
-                  marginBottom: "18px",
-                }}
-              >
-                Review paid accounts, subscription plans, and activation targets.
-              </p>
-
-              <div
-                style={{
-                  display: "grid",
-                  gap: "14px",
-                }}
-              >
-                {paymentRows.map((row) => (
-                  <div
-                    key={row.email}
-                    style={{
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "12px",
-                      padding: "16px",
-                      background: "#f8fafc",
-                      display: "grid",
-                      gap: "10px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                        gap: "12px",
-                      }}
-                    >
-                      <div>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            color: "#64748b",
-                            marginBottom: "4px",
-                          }}
-                        >
-                          Email
-                        </div>
-                        <div
-                          style={{
-                            fontWeight: 700,
-                            color: "#0f172a",
-                          }}
-                        >
-                          {row.email}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            color: "#64748b",
-                            marginBottom: "4px",
-                          }}
-                        >
-                          Amount
-                        </div>
-                        <div
-                          style={{
-                            fontWeight: 700,
-                            color: "#0f172a",
-                          }}
-                        >
-                          {row.amount}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            color: "#64748b",
-                            marginBottom: "4px",
-                          }}
-                        >
-                          Plan
-                        </div>
-                        <div
-                          style={{
-                            fontWeight: 700,
-                            color: "#0f172a",
-                          }}
-                        >
-                          {row.plan}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            color: "#64748b",
-                            marginBottom: "4px",
-                          }}
-                        >
-                          Status
-                        </div>
-                        <div
-                          style={{
-                            fontWeight: 800,
-                            color: "#16a34a",
-                          }}
-                        >
-                          {row.status}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "10px",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      <a
-                        href={row.action}
-                        style={{
-                          display: "inline-block",
-                          background: "#2563eb",
-                          color: "#fff",
-                          padding: "10px 14px",
-                          borderRadius: "10px",
-                          textDecoration: "none",
-                          fontWeight: 700,
-                        }}
-                      >
-                        Open Validation
-                      </a>
-
-                      <a
-                        href="/dashboard/payment?plan=basic"
-                        style={{
-                          display: "inline-block",
-                          background: "#f59e0b",
-                          color: "#111827",
-                          padding: "10px 14px",
-                          borderRadius: "10px",
-                          textDecoration: "none",
-                          fontWeight: 700,
-                        }}
-                      >
-                        Open Payment Page
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div
-              style={{
-                border: "1px solid #d7dce5",
-                borderRadius: "12px",
-                padding: "20px",
-                background: "#fff",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "24px",
-                  color: "#0f172a",
-                  marginTop: 0,
-                  marginBottom: "16px",
-                }}
-              >
-                Quick Access
-              </h3>
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: "12px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <a
-                  href="/dashboard/validation"
-                  style={quickLinkStyle}
-                >
-                  Validation
-                </a>
-
-                <a
-                  href="/dashboard/payment?plan=basic"
-                  style={quickLinkStyle}
-                >
-                  Payment
-                </a>
-
-                <a
-                  href="/dashboard/upload"
-                  style={quickLinkStyle}
-                >
-                  Upload
-                </a>
-
-                <a
-                  href="/dashboard/my-files"
-                  style={quickLinkStyle}
-                >
-                  My Files
-                </a>
-              </div>
-            </div>
+            <a href="/dashboard/subscription" style={quickLinkStyle}>
+              Subscription
+            </a>
           </div>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gap: 18,
+          }}
+        >
+          {dashboardLinks.map((item) => (
+            <div
+              key={item.href}
+              style={{
+                border: "1px solid #dbe3ef",
+                borderRadius: 18,
+                padding: 24,
+                background: "#ffffff",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 20,
+                flexWrap: "wrap",
+              }}
+            >
+              <div style={{ flex: 1, minWidth: 280 }}>
+                <h3
+                  style={{
+                    margin: 0,
+                    fontSize: 18,
+                    fontWeight: 800,
+                    color: "#07142b",
+                  }}
+                >
+                  {item.title}
+                </h3>
+
+                <div
+                  style={{
+                    display: "inline-block",
+                    marginTop: 12,
+                    marginBottom: 12,
+                    padding: "6px 12px",
+                    borderRadius: 999,
+                    background: `${item.color}20`,
+                    color: item.color,
+                    fontWeight: 700,
+                    fontSize: 13,
+                    border: `1px solid ${item.color}40`,
+                  }}
+                >
+                  {item.status}
+                </div>
+
+                <p
+                  style={{
+                    margin: 0,
+                    color: "#5b6472",
+                    fontSize: 15,
+                  }}
+                >
+                  {item.note}
+                </p>
+              </div>
+
+              <Link
+                href={item.href}
+                style={{
+                  background: "#07142b",
+                  color: "#ffffff",
+                  textDecoration: "none",
+                  padding: "14px 22px",
+                  borderRadius: 12,
+                  fontWeight: 700,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  position: "relative",
+                  zIndex: 10,
+                  pointerEvents: "auto",
+                  minWidth: 160,
+                }}
+              >
+                Open Dashboard
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 }
-
-const quickLinkStyle: React.CSSProperties = {
-  display: "inline-block",
-  background: "#eef2ff",
-  color: "#1e3a8a",
-  padding: "10px 14px",
-  borderRadius: "10px",
-  textDecoration: "none",
-  fontWeight: 700,
-  border: "1px solid #c7d2fe",
-};
