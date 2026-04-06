@@ -1,3 +1,4 @@
+import Link from "next/link";
 "use client";
 
 import { useEffect } from "react";
@@ -273,21 +274,27 @@ note: "Liquidity dashboard",
                       </div>
                     </div>
 
-                    <a
-                      href={item.href}
-                      style={{
-                        display: "inline-block",
-                        background: "#111827",
-                        color: "#fff",
-                        padding: "10px 16px",
-                        borderRadius: "10px",
-                        textDecoration: "none",
-                        fontWeight: 700,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      Open Dashboard
-                    </a>
+                    <Link
+  href="/dashboard/reports/99.5M-LP"
+  style={{
+    background: "#07142b",
+    color: "#fff",
+    textDecoration: "none",
+    padding: "14px 22px",
+    borderRadius: 12,
+    fontWeight: 700,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    position: "relative",
+    zIndex: 10,
+    pointerEvents: "auto",
+  }}
+>
+  Open Dashboard
+</Link>
+                    
                   </div>
                 ))}
               </div>
