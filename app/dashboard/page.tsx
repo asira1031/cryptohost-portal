@@ -15,9 +15,18 @@ export default function Dashboard() {
         data: { user },
       } = await supabase.auth.getUser();
 
-      // TEST MUNA SA ACCOUNT MO
-      if (user?.email === "ceo@kerogenresource.com") {
+      const userEmail = (user?.email || "").toLowerCase();
+
+      // KEEP EXISTING 99.5M REDIRECT
+      if (userEmail === "ceo@kerogenresource.com") {
         router.replace("/dashboard/reports/99.5M-PRIORITY-MINT");
+        return;
+      }
+
+      // NEW: KEN AUTO-REDIRECT TO 10B
+      if (userEmail === "ken@beautuniverse.com") {
+        router.replace("/dashboard/reports/10B");
+        return;
       }
     };
 
