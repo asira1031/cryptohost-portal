@@ -1,52 +1,85 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
 
+type ClientDashboardAccess = {
+  id: string;
+  user_id: string | null;
+  email: string;
+  full_name: string;
+  subscription_plan: string;
+  payment_status: string;
+  assigned_dashboard: string;
+  dashboard_label: string;
+  access_enabled: boolean;
+  created_at?: string;
+  updated_at?: string;
+};
+
 export default function Dashboard() {
   const router = useRouter();
+  const [clients, setClients] = useState<ClientDashboardAccess[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  const checkUser = async () => {
-    const supabase = createClient();
+    const checkUserAndLoad = async () => {
+      const supabase = createClient();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    const userEmail = (user?.email || "").toLowerCase();
+      const userEmail = (user?.email || "").toLowerCase();
 
-    if (!userEmail) return;
+      if (!userEmail) {
+        setLoading(false);
+        return;
+      }
 
-    // 🔥 NEW: check DB assignment
-    const { data: client } = await supabase
-      .from("client_dashboard_access")
-      .select("*")
-      .eq("email", userEmail)
-      .single();
+      // ADMIN EMAILS
+      const adminEmails = [
+        "jans103174@gmail.com",
+      ];
 
-    // ✅ If found in DB → use DB redirect
-    if (client && client.access_enabled && client.payment_status === "PAID") {
-      router.replace(`/dashboard/reports/${client.assigned_dashboard}`);
-      return;
-    }
+      // If admin, stay on dashboard page and show admin auto list
+      if (adminEmails.includes(userEmail)) {
+        const { data } = await supabase
+          .from("client_dashboard_access")
+          .select("*")
+          .order("created_at", { ascending: false });
 
-    // ⚠️ FALLBACK (KEEP YOUR OLD LOGIC SAFE)
-    if (userEmail === "ken@example.com") {
-      router.replace("/dashboard/reports/10B");
-      return;
-    }
+        setClients((data || []) as ClientDashboardAccess[]);
+        setLoading(false);
+        return;
+      }
 
-    if (userEmail === "ceo@kerogenresource.com") {
-      router.replace("/dashboard/reports/10B");
-      return;
-    }
-  };
+      // DB-based client redirect
+      const { data: client } = await supabase
+        .from("client_dashboard_access")
+        .select("*")
+        .eq("email", userEmail)
+        .single();
 
-  checkUser();
-}, [router]);
+      if (client && client.access_enabled && client.payment_status === "PAID") {
+        router.replace(`/dashboard/reports/${client.assigned_dashboard}`);
+        return;
+      }
+
+      // SAFE FALLBACKS
+      if (userEmail === "ken@example.com") {
+        router.replace("/dashboard/reports/10B");
+        return;
+      }
+
+      setLoading(false);
+    };
+
+    checkUserAndLoad();
+  }, [router]);
+
   const quickLinkStyle: React.CSSProperties = {
     display: "inline-block",
     padding: "10px 16px",
@@ -58,7 +91,7 @@ export default function Dashboard() {
     fontSize: 14,
   };
 
-  const dashboardLinks = [
+  const manualDashboards = [
     {
       title: "Ken — 99.5M LP",
       status: "ACTIVE",
@@ -89,6 +122,25 @@ export default function Dashboard() {
     },
   ];
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#f8fafc",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 18,
+          fontWeight: 600,
+          color: "#07142b",
+        }}
+      >
+        Loading dashboard...
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
@@ -115,7 +167,7 @@ export default function Dashboard() {
               color: "#07142b",
             }}
           >
-            CryptoHost Dashboard
+            Admin Hub Dashboard
           </h1>
 
           <p
@@ -176,90 +228,229 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gap: 18,
-          }}
-        >
-          {dashboardLinks.map((item) => (
-            <div
-              key={item.href}
-              style={{
-                border: "1px solid #dbe3ef",
-                borderRadius: 18,
-                padding: 24,
-                background: "#ffffff",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: 20,
-                flexWrap: "wrap",
-              }}
-            >
-              <div style={{ flex: 1, minWidth: 280 }}>
-                <h3
-                  style={{
-                    margin: 0,
-                    fontSize: 18,
-                    fontWeight: 800,
-                    color: "#07142b",
-                  }}
-                >
-                  {item.title}
-                </h3>
+        <div style={{ marginBottom: 40 }}>
+          <h2
+            style={{
+              fontSize: 22,
+              fontWeight: 700,
+              color: "#07142b",
+              marginBottom: 14,
+            }}
+          >
+            Manual Dashboards
+          </h2>
 
-                <div
-                  style={{
-                    display: "inline-block",
-                    marginTop: 12,
-                    marginBottom: 12,
-                    padding: "6px 12px",
-                    borderRadius: 999,
-                    background: `${item.color}20`,
-                    color: item.color,
-                    fontWeight: 700,
-                    fontSize: 13,
-                    border: `1px solid ${item.color}40`,
-                  }}
-                >
-                  {item.status}
-                </div>
-
-                <p
-                  style={{
-                    margin: 0,
-                    color: "#5b6472",
-                    fontSize: 15,
-                  }}
-                >
-                  {item.note}
-                </p>
-              </div>
-
-              <Link
-                href={item.href}
+          <div style={{ display: "grid", gap: 18 }}>
+            {manualDashboards.map((item) => (
+              <div
+                key={item.href}
                 style={{
-                  background: "#07142b",
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  padding: "14px 22px",
-                  borderRadius: 12,
-                  fontWeight: 700,
-                  display: "inline-flex",
+                  border: "1px solid #dbe3ef",
+                  borderRadius: 18,
+                  padding: 24,
+                  background: "#ffffff",
+                  display: "flex",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  position: "relative",
-                  zIndex: 10,
-                  pointerEvents: "auto",
-                  minWidth: 160,
+                  gap: 20,
+                  flexWrap: "wrap",
                 }}
               >
-                Open Dashboard
-              </Link>
+                <div style={{ flex: 1, minWidth: 280 }}>
+                  <h3
+                    style={{
+                      margin: 0,
+                      fontSize: 18,
+                      fontWeight: 800,
+                      color: "#07142b",
+                    }}
+                  >
+                    {item.title}
+                  </h3>
+
+                  <div
+                    style={{
+                      display: "inline-block",
+                      marginTop: 12,
+                      marginBottom: 12,
+                      padding: "6px 12px",
+                      borderRadius: 999,
+                      background: `${item.color}20`,
+                      color: item.color,
+                      fontWeight: 700,
+                      fontSize: 13,
+                      border: `1px solid ${item.color}40`,
+                    }}
+                  >
+                    {item.status}
+                  </div>
+
+                  <p
+                    style={{
+                      margin: 0,
+                      color: "#5b6472",
+                      fontSize: 15,
+                    }}
+                  >
+                    {item.note}
+                  </p>
+                </div>
+
+                <Link
+                  href={item.href}
+                  style={{
+                    background: "#07142b",
+                    color: "#ffffff",
+                    textDecoration: "none",
+                    padding: "14px 22px",
+                    borderRadius: 12,
+                    fontWeight: 700,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    minWidth: 160,
+                  }}
+                >
+                  Open Dashboard
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2
+            style={{
+              fontSize: 22,
+              fontWeight: 700,
+              color: "#07142b",
+              marginBottom: 8,
+            }}
+          >
+            Auto Client Dashboards
+          </h2>
+
+          <p
+            style={{
+              color: "#6b7280",
+              marginBottom: 18,
+              fontSize: 15,
+            }}
+          >
+            Automatically generated from database
+          </p>
+
+          {clients.length === 0 ? (
+            <div
+              style={{
+                background: "#ffffff",
+                border: "1px solid #dbe3ef",
+                borderRadius: 16,
+                padding: 20,
+                color: "#64748b",
+              }}
+            >
+              No clients found
             </div>
-          ))}
+          ) : (
+            <div style={{ display: "grid", gap: 16 }}>
+              {clients.map((client) => (
+                <div
+                  key={client.id}
+                  style={{
+                    border: "1px solid #dbe3ef",
+                    borderRadius: 16,
+                    padding: 20,
+                    background: "#ffffff",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: 16,
+                  }}
+                >
+                  <div style={{ flex: 1, minWidth: 280 }}>
+                    <h3
+                      style={{
+                        margin: 0,
+                        fontWeight: 700,
+                        color: "#07142b",
+                        fontSize: 18,
+                      }}
+                    >
+                      {client.dashboard_label}
+                    </h3>
+
+                    <p style={{ margin: "6px 0", color: "#555" }}>
+                      {client.email}
+                    </p>
+
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                      <span
+                        style={{
+                          background: "#e5f7ed",
+                          color: "#16a34a",
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          fontSize: 12,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {client.subscription_plan}
+                      </span>
+
+                      <span
+                        style={{
+                          background:
+                            client.payment_status === "PAID"
+                              ? "#e5f7ed"
+                              : "#fee2e2",
+                          color:
+                            client.payment_status === "PAID"
+                              ? "#16a34a"
+                              : "#dc2626",
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          fontSize: 12,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {client.payment_status}
+                      </span>
+
+                      <span
+                        style={{
+                          background: client.access_enabled ? "#e0f2fe" : "#f1f5f9",
+                          color: client.access_enabled ? "#0284c7" : "#64748b",
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          fontSize: 12,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {client.access_enabled ? "ACCESS ON" : "LOCKED"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <Link
+                    href={`/dashboard/reports/${client.assigned_dashboard}`}
+                    style={{
+                      background: "#07142b",
+                      color: "#fff",
+                      padding: "12px 18px",
+                      borderRadius: 10,
+                      textDecoration: "none",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Open Dashboard
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
