@@ -21,7 +21,7 @@ export default async function ReportDetailPage({
 
   // LOCK SPECIFIC CUSTOM DASHBOARDS TO SPECIFIC EMAILS
   const protectedRefs: Record<string, string[]> = {
-    "10B": ["ken@beautuniverse.com"],
+    "10B": ["ken@beautuniverse.com", "jans103174@gmail.com"]
   };
 
   if (protectedRefs[ref] && !protectedRefs[ref].includes(userEmail)) {
