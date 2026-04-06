@@ -9,31 +9,44 @@ export default function Dashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    const checkUser = async () => {
-      const supabase = createClient();
+  const checkUser = async () => {
+    const supabase = createClient();
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-      const userEmail = (user?.email || "").toLowerCase();
+    const userEmail = (user?.email || "").toLowerCase();
 
-      // KEEP YOUR EXISTING CLIENT REDIRECTS HERE
-      // Replace these emails with your real ones
-      if (userEmail === "ken@example.com") {
-        router.replace("/dashboard/reports/10B");
-        return;
-      }
+    if (!userEmail) return;
 
-      if (userEmail === "ceo@kerogenresource.com") {
-        router.replace("/dashboard/reports/10B");
-        return;
-      }
-    };
+    // 🔥 NEW: check DB assignment
+    const { data: client } = await supabase
+      .from("client_dashboard_access")
+      .select("*")
+      .eq("email", userEmail)
+      .single();
 
-    checkUser();
-  }, [router]);
+    // ✅ If found in DB → use DB redirect
+    if (client && client.access_enabled && client.payment_status === "PAID") {
+      router.replace(`/dashboard/reports/${client.assigned_dashboard}`);
+      return;
+    }
 
+    // ⚠️ FALLBACK (KEEP YOUR OLD LOGIC SAFE)
+    if (userEmail === "ken@example.com") {
+      router.replace("/dashboard/reports/10B");
+      return;
+    }
+
+    if (userEmail === "ceo@kerogenresource.com") {
+      router.replace("/dashboard/reports/10B");
+      return;
+    }
+  };
+
+  checkUser();
+}, [router]);
   const quickLinkStyle: React.CSSProperties = {
     display: "inline-block",
     padding: "10px 16px",
