@@ -1,28 +1,86 @@
-export default function TJDeutscheBankPage() {
-  const TIMESTAMP = "2026-04-06 12:55 (UTC+8)";
-  const FILE_LABEL = "DEUTSCHE BANK TRANSFER FILE";
-  const FILE_AMOUNT = "€1,275,500,000.00 EUR";
+"use client";
 
-  const STATUS = "SUSPENDED";
-  const REVIEW_FLAG = "COMPLIANCE WINDOW LAPSED";
-  const STAGE = "RE-ACTIVATION REQUIRED";
-  const EXECUTION_STATE = "AWAITING NEW ACTIVATION PROCESS";
+import Link from "next/link";
 
-  const SYSTEM = "DEUTSCHE BANK VALIDATION NODE";
-  const LIVE_STATE = "SUSPENDED REVIEW ACTIVE";
+export default function Report10BPage() {
+  const lastUpdated = "April 6, 2026 • 9:58 AM";
+  const reference = "10B-RESTRICTED-REVIEW";
+  const status = "RESTRICTED";
+  const reviewFlag = "Threshold Review";
+  const executionState = "Pending Bank Confirmation";
+  const blockchainMinting = "No Confirmed Minting Activity";
+  const routingStatus = "Restricted";
+  const network = "Ethereum Mainnet";
+  const engine = "Compliance Review Layer";
+  const sourceBank = "BANK FRICK AG";
+  const swift = "BFRILI22XXX";
+  const amount = "€10,000,000,000.00";
+  const converted = "10,800,000,000.00 USDT";
+  const rate = "1.08";
+  const fileLabel = "10B TRANSFER FILE";
+  const liveState = "RESTRICTED REVIEW ACTIVE";
+
+  const txRows = [
+    {
+      wallet: "0xc47133a6bD653793562A1Ea25Cb1D3161fBD99cd",
+      allocation: "5,400,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+    {
+      wallet: "0xD615eFA01dB5AA907012061F9A7983E8b980D9dC",
+      allocation: "1,620,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+    {
+      wallet: "0xD11aeAE4595ccfd66d6E069ADbFf99fe49C2862C",
+      allocation: "1,620,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+    {
+      wallet: "0x7BD1936308ba81a094AAfd3f969aC0449Dd82A7C",
+      allocation: "270,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+    {
+      wallet: "0xcF65383A96D5f25F90FCFB2A93760E7719FdAd07",
+      allocation: "270,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+    {
+      wallet: "0x49489c55431fAc64A46106214454Fb9A934B047A",
+      allocation: "270,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+    {
+      wallet: "0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538",
+      allocation: "540,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+    {
+      wallet: "0x12CA2B89429218Eb08f893C63e83263Cbc1296e7",
+      allocation: "810,000,000.00 USDT",
+      note: "Restricted / Bank clearing review",
+    },
+  ];
 
   return (
     <div
       style={{
         minHeight: "100vh",
         background:
-          "radial-gradient(circle at top, #241407 0%, #120c07 38%, #070707 100%)",
+          "radial-gradient(circle at top, #2a0d0d 0%, #120909 35%, #070707 100%)",
         color: "#f5f5f5",
         padding: "32px 18px 60px",
         fontFamily: "Arial, sans-serif",
       }}
     >
-      <div style={{ maxWidth: 1380, margin: "0 auto" }}>
+      <div
+        style={{
+          maxWidth: 1380,
+          margin: "0 auto",
+        }}
+      >
+        {/* Header */}
         <div
           style={{
             display: "flex",
@@ -39,9 +97,9 @@ export default function TJDeutscheBankPage() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 10,
-                background: "rgba(240,185,11,0.10)",
-                border: "1px solid rgba(240,185,11,0.24)",
-                color: "#f0b90b",
+                background: "rgba(255,70,70,0.12)",
+                border: "1px solid rgba(255,90,90,0.28)",
+                color: "#ff8f8f",
                 padding: "8px 14px",
                 borderRadius: 999,
                 fontSize: 12,
@@ -55,11 +113,11 @@ export default function TJDeutscheBankPage() {
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  background: "#f0b90b",
-                  boxShadow: "0 0 12px rgba(240,185,11,0.9)",
+                  background: "#ff4d4f",
+                  boxShadow: "0 0 12px rgba(255,77,79,0.9)",
                 }}
               />
-              {LIVE_STATE}
+              {liveState}
             </div>
 
             <h1
@@ -71,7 +129,7 @@ export default function TJDeutscheBankPage() {
                 letterSpacing: -0.5,
               }}
             >
-              TJ Deutsche Bank Validation Dashboard
+              10B Restricted Review Dashboard
             </h1>
 
             <div
@@ -81,10 +139,7 @@ export default function TJDeutscheBankPage() {
                 fontSize: 14,
               }}
             >
-              Reference:{" "}
-              <strong style={{ color: "#ffffff" }}>
-                TJ-DEUTSCHE-SUSPENDED
-              </strong>
+              Reference: <strong style={{ color: "#ffffff" }}>{reference}</strong>
             </div>
           </div>
 
@@ -101,11 +156,12 @@ export default function TJDeutscheBankPage() {
               Last Updated
             </div>
             <div style={{ fontWeight: 700, color: "#ffffff", fontSize: 14 }}>
-              {TIMESTAMP}
+              {lastUpdated}
             </div>
           </div>
         </div>
 
+        {/* Top cards */}
         <div
           style={{
             display: "grid",
@@ -115,14 +171,10 @@ export default function TJDeutscheBankPage() {
           }}
         >
           {[
-            { label: "STATUS", value: STATUS, color: "#ff7b7b" },
-            { label: "REVIEW FLAG", value: REVIEW_FLAG, color: "#f0b90b" },
-            { label: "STAGE", value: STAGE, color: "#ffd36b" },
-            {
-              label: "EXECUTION STATE",
-              value: EXECUTION_STATE,
-              color: "#ffb86b",
-            },
+            { label: "STATUS", value: status, color: "#ff6b6b" },
+            { label: "REVIEW FLAG", value: reviewFlag, color: "#ffb86b" },
+            { label: "EXECUTION STATE", value: executionState, color: "#ffd36b" },
+            { label: "BLOCKCHAIN MINTING", value: blockchainMinting, color: "#ff8f8f" },
           ].map((item) => (
             <div
               key={item.label}
@@ -151,6 +203,7 @@ export default function TJDeutscheBankPage() {
           ))}
         </div>
 
+        {/* Main grid */}
         <div
           style={{
             display: "grid",
@@ -158,12 +211,12 @@ export default function TJDeutscheBankPage() {
             gap: 16,
           }}
         >
+          {/* Left */}
           <div style={{ display: "grid", gap: 16 }}>
             <div
               style={{
-                background:
-                  "linear-gradient(180deg, rgba(240,185,11,0.08), rgba(255,255,255,0.03))",
-                border: "1px solid rgba(240,185,11,0.16)",
+                background: "linear-gradient(180deg, rgba(255,70,70,0.08), rgba(255,255,255,0.03))",
+                border: "1px solid rgba(255,100,100,0.18)",
                 borderRadius: 24,
                 padding: 22,
               }}
@@ -179,18 +232,10 @@ export default function TJDeutscheBankPage() {
                   marginBottom: 8,
                 }}
               >
-                {FILE_LABEL}
+                {fileLabel}
               </div>
-              <div
-                style={{
-                  color: "#d1d1d1",
-                  fontSize: 14,
-                  marginBottom: 18,
-                }}
-              >
-                The file remains registered in the validation environment but
-                is currently held under suspended review pending renewed
-                activation.
+              <div style={{ color: "#d1d1d1", fontSize: 14, marginBottom: 18 }}>
+                Submitted transaction remains under restricted review pending threshold validation and bank-side confirmation.
               </div>
 
               <div
@@ -201,15 +246,14 @@ export default function TJDeutscheBankPage() {
                 }}
               >
                 {[
-                  { label: "Amount", value: FILE_AMOUNT },
-                  { label: "System", value: SYSTEM },
-                  { label: "Status", value: STATUS },
-                  { label: "Stage", value: STAGE },
-                  { label: "Review Flag", value: REVIEW_FLAG },
-                  {
-                    label: "Execution State",
-                    value: EXECUTION_STATE,
-                  },
+                  { label: "Source Bank", value: sourceBank },
+                  { label: "SWIFT", value: swift },
+                  { label: "Network", value: network },
+                  { label: "Engine", value: engine },
+                  { label: "Amount", value: amount },
+                  { label: "Converted", value: converted },
+                  { label: "Rate", value: rate },
+                  { label: "Routing Status", value: routingStatus },
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -220,22 +264,10 @@ export default function TJDeutscheBankPage() {
                       padding: 14,
                     }}
                   >
-                    <div
-                      style={{
-                        fontSize: 11,
-                        color: "#9e9e9e",
-                        marginBottom: 6,
-                      }}
-                    >
+                    <div style={{ fontSize: 11, color: "#9e9e9e", marginBottom: 6 }}>
                       {item.label}
                     </div>
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: "#fff",
-                      }}
-                    >
+                    <div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>
                       {item.value}
                     </div>
                   </div>
@@ -269,13 +301,12 @@ export default function TJDeutscheBankPage() {
                   lineHeight: 1.8,
                 }}
               >
-                The Deutsche Bank transaction file remains registered in the
-                CryptoHost validation environment; however, the previous
-                activation period is no longer active. The file is now under{" "}
-                <strong style={{ color: "#ffb86b" }}>suspended review</strong>{" "}
-                and cannot continue through execution, liquidity routing, or
-                validation progression until a new activation process is
-                completed.
+                The submitted file is currently under <strong style={{ color: "#ff8f8f" }}>restricted review</strong>.
+                Based on the present transaction volume, the file has triggered a threshold review condition and
+                cannot proceed to release or execution routing until direct banking-channel confirmation is completed.
+                In addition, <strong style={{ color: "#ffb3b3" }}>no confirmed blockchain minting activity</strong> has been
+                identified from the current file data. Status remains restricted pending manual clearance,
+                threshold validation, and execution-window confirmation.
               </div>
             </div>
 
@@ -294,7 +325,7 @@ export default function TJDeutscheBankPage() {
                   marginBottom: 16,
                 }}
               >
-                Required From Sender (TJ)
+                Restricted Allocation Review
               </div>
 
               <div style={{ overflowX: "auto" }}>
@@ -307,51 +338,49 @@ export default function TJDeutscheBankPage() {
                 >
                   <thead>
                     <tr style={{ textAlign: "left", color: "#9e9e9e" }}>
-                      <th
-                        style={{
-                          padding: "12px 10px",
-                          borderBottom: "1px solid rgba(255,255,255,0.08)",
-                        }}
-                      >
-                        Requirement
+                      <th style={{ padding: "12px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                        Wallet
                       </th>
-                      <th
-                        style={{
-                          padding: "12px 10px",
-                          borderBottom: "1px solid rgba(255,255,255,0.08)",
-                        }}
-                      >
+                      <th style={{ padding: "12px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                        Allocation
+                      </th>
+                      <th style={{ padding: "12px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
                         Status
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      "Re-initiate the activation process",
-                      "Complete the pending compliance requirement",
-                      "Reconfirm Deutsche Bank developer portal/API readiness",
-                      "Provide updated confirmation for bank-side activation",
-                      "Await renewed validation window before execution review",
-                    ].map((item) => (
-                      <tr key={item}>
+                    {txRows.map((row) => (
+                      <tr key={row.wallet}>
                         <td
                           style={{
                             padding: "12px 10px",
                             borderBottom: "1px solid rgba(255,255,255,0.06)",
                             color: "#f0f0f0",
+                            wordBreak: "break-all",
                           }}
                         >
-                          {item}
+                          {row.wallet}
                         </td>
                         <td
                           style={{
                             padding: "12px 10px",
                             borderBottom: "1px solid rgba(255,255,255,0.06)",
-                            color: "#f0b90b",
+                            color: "#ffffff",
                             fontWeight: 700,
                           }}
                         >
-                          Pending
+                          {row.allocation}
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px 10px",
+                            borderBottom: "1px solid rgba(255,255,255,0.06)",
+                            color: "#ff9e9e",
+                            fontWeight: 700,
+                          }}
+                        >
+                          {row.note}
                         </td>
                       </tr>
                     ))}
@@ -361,6 +390,7 @@ export default function TJDeutscheBankPage() {
             </div>
           </div>
 
+          {/* Right */}
           <div style={{ display: "grid", gap: 16 }}>
             <div
               style={{
@@ -383,11 +413,11 @@ export default function TJDeutscheBankPage() {
 
               <div style={{ display: "grid", gap: 12 }}>
                 {[
-                  "Previous compliance window no longer active",
-                  "Activation must be initiated again",
-                  "Execution routing currently suspended",
-                  "Validation sequence cannot proceed",
-                  "File remains in re-activation pending state",
+                  "Threshold review condition active",
+                  "Pending direct bank-side confirmation",
+                  "Execution routing not cleared",
+                  "No confirmed minting process identified",
+                  "Release state remains restricted",
                 ].map((item) => (
                   <div
                     key={item}
@@ -437,21 +467,21 @@ export default function TJDeutscheBankPage() {
                   padding: 16,
                 }}
               >
-{`[FILE] Deutsche Bank transfer file registered
-[STATUS] Suspended
-[REVIEW] Compliance window lapsed
-[STAGE] Re-activation required
-[EXECUTION] Awaiting new activation process
-[ACTION] Pending renewed compliance confirmation
-[NODE] Deutsche Bank Validation Node`}
+{`[FILE] Detected EUR amount: 10,000,000,000.00
+[CHAIN] Connected to Ethereum mainnet | chainId=1
+[AMOUNT] Extracted: 10,000,000,000.00 EUR
+[CONVERT] Converted: 10,800,000,000.00 USDT (rate 1.08)
+[REVIEW] Threshold review condition active
+[MINTING] No confirmed blockchain minting activity detected
+[EXECUTION] Release state restricted
+[ACTION] Awaiting bank confirmation and manual validation`}
               </div>
             </div>
 
             <div
               style={{
-                background:
-                  "linear-gradient(180deg, rgba(240,185,11,0.10), rgba(255,255,255,0.03))",
-                border: "1px solid rgba(240,185,11,0.18)",
+                background: "linear-gradient(180deg, rgba(255,90,90,0.10), rgba(255,255,255,0.03))",
+                border: "1px solid rgba(255,110,110,0.18)",
                 borderRadius: 24,
                 padding: 22,
               }}
@@ -473,11 +503,10 @@ export default function TJDeutscheBankPage() {
                   lineHeight: 1.8,
                 }}
               >
-                The file is not in execution-ready status at this time. The
-                prior compliance period has lapsed, and activation must be
-                performed again before the validation sequence can continue.
-                Once renewed activation is completed and confirmed, the file may
-                return to active review status.
+                The submitted transaction file remains under restricted review and is not currently in execution-ready
+                state. Threshold verification and bank-side confirmation are still required before any routing or release
+                step can be considered. No confirmed blockchain minting process has been established from the present
+                file data.
               </div>
             </div>
           </div>
@@ -492,7 +521,25 @@ export default function TJDeutscheBankPage() {
             letterSpacing: 0.4,
           }}
         >
-          Powered by CryptoHost Validation Control System
+          Powered by CryptoHost Secure Review System
+        </div>
+
+        <div style={{ marginTop: 18, textAlign: "center" }}>
+          <Link
+            href="/dashboard"
+            style={{
+              display: "inline-block",
+              color: "#ffffff",
+              textDecoration: "none",
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.10)",
+              padding: "10px 16px",
+              borderRadius: 14,
+              fontSize: 14,
+            }}
+          >
+            Back to Dashboard
+          </Link>
         </div>
       </div>
     </div>
