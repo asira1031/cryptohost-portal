@@ -35,11 +35,10 @@ export default function Dashboard() {
 
   const dashboardLinks = [
     {
-  title: "Ken — 99.5M Priority Mint",
+   title: "Ken — 99.5M LP",
   status: "ACTIVE",
   color: "#16a34a",
-  href: "/dashboard/reports/99.5M-LP",
-  note: "Priority mint dashboard",
+note: "Liquidity dashboard",
 },
     {
       title: "Ken — 10B Restricted Review",
