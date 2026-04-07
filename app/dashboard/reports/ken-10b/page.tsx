@@ -3,7 +3,8 @@
 import Link from "next/link";
 
 export default function Report10BPage() {
-  const lastUpdated = "April 7, 2026 • 5:53 PM";
+  const lastUpdated = "April 7, 2026 • 5:53 PM • v2";
+
   const reference = "LR-SIRA-10B-20260401-6077SGC";
   const status = "PARTIALLY VERIFIED";
   const reviewFlag = "NOT CLEARED FOR RELEASE";
