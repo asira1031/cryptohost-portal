@@ -57,10 +57,12 @@ export default function DashboardLayout({
               flexDirection: "column",
               gap: 12,
             }}
+            
           >
             <Link href="/dashboard" style={getStyle("/dashboard", pathname)}>
               Dashboard
             </Link>
+            <Link href="/dashboard/wallet">Wallet</Link>
 
             <Link
               href="/dashboard/client-information"
