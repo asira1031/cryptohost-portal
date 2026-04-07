@@ -36,16 +36,12 @@ export default function Dashboard() {
       const userEmail = (user?.email || "").toLowerCase().trim();
 
       if (!userEmail) {
-        setLoading(false);
+        router.replace("/login");
         return;
       }
 
-      // ONLY YOUR ADMIN EMAIL HERE
-      const adminEmails = [
-        "jans103174@gmail.com",
-      ];
+      const adminEmails = ["jans103174@gmail.com"];
 
-      // ADMIN ONLY
       if (adminEmails.includes(userEmail)) {
         setIsAdmin(true);
 
@@ -59,10 +55,8 @@ export default function Dashboard() {
         return;
       }
 
-      // NON-ADMIN MUST NEVER SEE ADMIN DASHBOARD
       setIsAdmin(false);
 
-      // DB-based client redirect
       const { data: client } = await supabase
         .from("client_dashboard_access")
         .select("*")
@@ -74,7 +68,6 @@ export default function Dashboard() {
         return;
       }
 
-      // client without assigned active dashboard
       router.replace("/dashboard/my-files");
     };
 
@@ -142,7 +135,6 @@ export default function Dashboard() {
     );
   }
 
-  // NON-ADMIN SHOULD NEVER SEE THIS PAGE CONTENT
   if (!isAdmin) {
     return (
       <div
