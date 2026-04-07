@@ -2,17 +2,17 @@ import type { CSSProperties } from "react";
 
 export default function PriorityMintPage() {
   const TIMESTAMP =
-    new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Asia/Manila",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    })
-      .format(new Date())
-      .replace(",", "") + " (UTC+8)";
+  new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Manila",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })
+    .format(new Date())
+    .replace(",", "") + " (UTC+8)";
 
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
