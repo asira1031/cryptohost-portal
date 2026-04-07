@@ -97,7 +97,7 @@ export default function Dashboard() {
       title: "Ken — 10B Restricted Review",
       status: "PAID / ACTIVE ACCESS",
       color: "#dc2626",
-      href: "/dashboard/reports/10B",
+      href: "/dashboard/reports/ken-10b",
       note: "Ken restricted review file",
     },
     {
