@@ -48,12 +48,12 @@ export default function BankApiPage() {
         >
           {[
             {
-  name: "HSBC Developer Portal",
-  url: "https://develop.hsbc.com/knowledge-article/get-started-open-banking-apis",
-},
+              name: "HSBC Developer Portal",
+              url: "https://developer.hsbc.com",
+            },
             {
               name: "Barclays Developer Portal",
-              url: "https://developer.barclays.com/apis/product-details/436bee89-6e7e-4f54-9cd9-e9dc6cb90d8f.bdn/documentation",
+              url: "https://developer.barclays.com",
             },
             {
               name: "Deutsche Bank Developer Portal",
@@ -62,6 +62,14 @@ export default function BankApiPage() {
             {
               name: "Yapily",
               url: "https://www.yapily.com",
+            },
+            {
+              name: "UBS Developer Portal",
+              url: "https://developer.ubs.com",
+            },
+            {
+              name: "Bank of America Developer Portal",
+              url: "https://developer.bankofamerica.com",
             },
           ].map((item) => (
             <a
@@ -77,6 +85,7 @@ export default function BankApiPage() {
                 border: "1px solid rgba(255,255,255,0.08)",
                 color: "#ffffff",
                 boxShadow: "0 18px 40px rgba(0,0,0,0.18)",
+                transition: "0.2s",
               }}
             >
               <div
@@ -88,8 +97,9 @@ export default function BankApiPage() {
               >
                 {item.name}
               </div>
+
               <div style={{ color: "#93c5fd", fontSize: 14 }}>
-                Open portal
+                Open portal →
               </div>
             </a>
           ))}
