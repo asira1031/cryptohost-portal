@@ -23,6 +23,7 @@ export default function Dashboard() {
   const router = useRouter();
   const [clients, setClients] = useState<ClientDashboardAccess[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const checkUserAndLoad = async () => {
@@ -32,20 +33,22 @@ export default function Dashboard() {
         data: { user },
       } = await supabase.auth.getUser();
 
-      const userEmail = (user?.email || "").toLowerCase();
+      const userEmail = (user?.email || "").toLowerCase().trim();
 
       if (!userEmail) {
         setLoading(false);
         return;
       }
 
-      // ADMIN EMAILS
+      // ONLY YOUR ADMIN EMAIL HERE
       const adminEmails = [
         "jans103174@gmail.com",
       ];
 
-      // If admin, stay on dashboard page and show admin auto list
+      // ADMIN ONLY
       if (adminEmails.includes(userEmail)) {
+        setIsAdmin(true);
+
         const { data } = await supabase
           .from("client_dashboard_access")
           .select("*")
@@ -55,6 +58,9 @@ export default function Dashboard() {
         setLoading(false);
         return;
       }
+
+      // NON-ADMIN MUST NEVER SEE ADMIN DASHBOARD
+      setIsAdmin(false);
 
       // DB-based client redirect
       const { data: client } = await supabase
@@ -68,13 +74,8 @@ export default function Dashboard() {
         return;
       }
 
-      // SAFE FALLBACKS
-      if (userEmail === "ken@example.com") {
-        router.replace("/dashboard/reports/10B");
-        return;
-      }
-
-      setLoading(false);
+      // client without assigned active dashboard
+      router.replace("/dashboard/my-files");
     };
 
     checkUserAndLoad();
@@ -137,6 +138,26 @@ export default function Dashboard() {
         }}
       >
         Loading dashboard...
+      </div>
+    );
+  }
+
+  // NON-ADMIN SHOULD NEVER SEE THIS PAGE CONTENT
+  if (!isAdmin) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#f8fafc",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 18,
+          fontWeight: 600,
+          color: "#07142b",
+        }}
+      >
+        Redirecting...
       </div>
     );
   }
