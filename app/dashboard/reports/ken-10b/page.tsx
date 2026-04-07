@@ -3,63 +3,63 @@
 import Link from "next/link";
 
 export default function Report10BPage() {
-  const lastUpdated = "April 6, 2026 • 9:58 AM";
-  const reference = "10B-RESTRICTED-REVIEW";
-  const status = "RESTRICTED";
-  const reviewFlag = "Threshold Review";
-  const executionState = "Pending Bank Confirmation";
-  const blockchainMinting = "No Confirmed Minting Activity";
-  const routingStatus = "Restricted";
+  const lastUpdated = "April 7, 2026 • 5:53 PM";
+  const reference = "LR-SIRA-10B-20260401-6077SGC";
+  const status = "PARTIALLY VERIFIED";
+  const reviewFlag = "NOT CLEARED FOR RELEASE";
+  const executionState = "HOLD / PENDING COMPLETION";
+  const blockchainMinting = "NOT AUTHORIZED";
+  const routingStatus = "Detected but not fully authenticated";
   const network = "Ethereum Mainnet";
-  const engine = "Compliance Review Layer";
-  const sourceBank = "BANK FRICK AG";
-  const swift = "BFRILI22XXX";
-  const amount = "€10,000,000,000.00";
-  const converted = "10,800,000,000.00 USDT";
-  const rate = "1.08";
-  const fileLabel = "10B TRANSFER FILE";
-  const liveState = "RESTRICTED REVIEW ACTIVE";
+  const engine = "CryptoHost Secure Validation Engine";
+  const sourceBank = "UNVERIFIED / INCOMPLETE";
+  const swift = "NOT FOUND";
+  const amount = "EUR 10,000,000,000.00";
+  const converted = "Not cleared for conversion";
+  const rate = "N/A";
+  const fileLabel = "10B VALIDATION FILE";
+  const liveState = "HOLD / PENDING COMPLETION";
 
   const txRows = [
     {
       wallet: "0xc47133a6bD653793562A1Ea25Cb1D3161fBD99cd",
       allocation: "5,400,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
     {
       wallet: "0xD615eFA01dB5AA907012061F9A7983E8b980D9dC",
       allocation: "1,620,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
     {
       wallet: "0xD11aeAE4595ccfd66d6E069ADbFf99fe49C2862C",
       allocation: "1,620,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
     {
       wallet: "0x7BD1936308ba81a094AAfd3f969aC0449Dd82A7C",
       allocation: "270,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
     {
       wallet: "0xcF65383A96D5f25F90FCFB2A93760E7719FdAd07",
       allocation: "270,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
     {
       wallet: "0x49489c55431fAc64A46106214454Fb9A934B047A",
       allocation: "270,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
     {
       wallet: "0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538",
       allocation: "540,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
     {
       wallet: "0x12CA2B89429218Eb08f893C63e83263Cbc1296e7",
       allocation: "810,000,000.00 USDT",
-      note: "Restricted / Bank clearing review",
+      note: "STATUS: 0 / Not authorized",
     },
   ];
 
@@ -80,7 +80,6 @@ export default function Report10BPage() {
           margin: "0 auto",
         }}
       >
-        {/* Header */}
         <div
           style={{
             display: "flex",
@@ -129,7 +128,7 @@ export default function Report10BPage() {
                 letterSpacing: -0.5,
               }}
             >
-              10B Restricted Review Dashboard
+              10B Validation Dashboard
             </h1>
 
             <div
@@ -161,7 +160,6 @@ export default function Report10BPage() {
           </div>
         </div>
 
-        {/* Top cards */}
         <div
           style={{
             display: "grid",
@@ -171,10 +169,10 @@ export default function Report10BPage() {
           }}
         >
           {[
-            { label: "STATUS", value: status, color: "#ff6b6b" },
-            { label: "REVIEW FLAG", value: reviewFlag, color: "#ffb86b" },
+            { label: "STATUS", value: status, color: "#ffb86b" },
+            { label: "REVIEW FLAG", value: reviewFlag, color: "#ff8f8f" },
             { label: "EXECUTION STATE", value: executionState, color: "#ffd36b" },
-            { label: "BLOCKCHAIN MINTING", value: blockchainMinting, color: "#ff8f8f" },
+            { label: "BLOCKCHAIN BROADCAST", value: blockchainMinting, color: "#ff6b6b" },
           ].map((item) => (
             <div
               key={item.label}
@@ -203,7 +201,6 @@ export default function Report10BPage() {
           ))}
         </div>
 
-        {/* Main grid */}
         <div
           style={{
             display: "grid",
@@ -211,11 +208,11 @@ export default function Report10BPage() {
             gap: 16,
           }}
         >
-          {/* Left */}
           <div style={{ display: "grid", gap: 16 }}>
             <div
               style={{
-                background: "linear-gradient(180deg, rgba(255,70,70,0.08), rgba(255,255,255,0.03))",
+                background:
+                  "linear-gradient(180deg, rgba(255,70,70,0.08), rgba(255,255,255,0.03))",
                 border: "1px solid rgba(255,100,100,0.18)",
                 borderRadius: 24,
                 padding: 22,
@@ -235,7 +232,9 @@ export default function Report10BPage() {
                 {fileLabel}
               </div>
               <div style={{ color: "#d1d1d1", fontSize: 14, marginBottom: 18 }}>
-                Submitted transaction remains under restricted review pending threshold validation and bank-side confirmation.
+                Submitted file has been structurally detected but is not cleared for
+                release. Core validation layers remain incomplete, and execution
+                remains blocked pending required institutional and settlement confirmation.
               </div>
 
               <div
@@ -250,10 +249,10 @@ export default function Report10BPage() {
                   { label: "SWIFT", value: swift },
                   { label: "Network", value: network },
                   { label: "Engine", value: engine },
-                  { label: "Amount", value: amount },
-                  { label: "Converted", value: converted },
+                  { label: "Declared Amount", value: amount },
+                  { label: "Conversion State", value: converted },
                   { label: "Rate", value: rate },
-                  { label: "Routing Status", value: routingStatus },
+                  { label: "Routing Layer", value: routingStatus },
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -301,12 +300,13 @@ export default function Report10BPage() {
                   lineHeight: 1.8,
                 }}
               >
-                The submitted file is currently under <strong style={{ color: "#ff8f8f" }}>restricted review</strong>.
-                Based on the present transaction volume, the file has triggered a threshold review condition and
-                cannot proceed to release or execution routing until direct banking-channel confirmation is completed.
-                In addition, <strong style={{ color: "#ffb3b3" }}>no confirmed blockchain minting activity</strong> has been
-                identified from the current file data. Status remains restricted pending manual clearance,
-                threshold validation, and execution-window confirmation.
+                The submitted file has been partially verified at structural level only.
+                Core ISO message formatting and transaction value were detected, however
+                the file is not cleared for release due to incomplete certificate
+                validation, missing recognized BIC/SWIFT identifiers, incomplete
+                settlement confirmation, and failed routing authentication. Execution
+                remains blocked until the required institutional and settlement layers
+                are provided and verified.
               </div>
             </div>
 
@@ -325,7 +325,7 @@ export default function Report10BPage() {
                   marginBottom: 16,
                 }}
               >
-                Restricted Allocation Review
+                Beneficiary Wallet(s)
               </div>
 
               <div style={{ overflowX: "auto" }}>
@@ -338,13 +338,28 @@ export default function Report10BPage() {
                 >
                   <thead>
                     <tr style={{ textAlign: "left", color: "#9e9e9e" }}>
-                      <th style={{ padding: "12px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                      <th
+                        style={{
+                          padding: "12px 10px",
+                          borderBottom: "1px solid rgba(255,255,255,0.08)",
+                        }}
+                      >
                         Wallet
                       </th>
-                      <th style={{ padding: "12px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                      <th
+                        style={{
+                          padding: "12px 10px",
+                          borderBottom: "1px solid rgba(255,255,255,0.08)",
+                        }}
+                      >
                         Allocation
                       </th>
-                      <th style={{ padding: "12px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                      <th
+                        style={{
+                          padding: "12px 10px",
+                          borderBottom: "1px solid rgba(255,255,255,0.08)",
+                        }}
+                      >
                         Status
                       </th>
                     </tr>
@@ -390,7 +405,6 @@ export default function Report10BPage() {
             </div>
           </div>
 
-          {/* Right */}
           <div style={{ display: "grid", gap: 16 }}>
             <div
               style={{
@@ -408,16 +422,18 @@ export default function Report10BPage() {
                   marginBottom: 16,
                 }}
               >
-                Compliance Flags
+                System Analysis
               </div>
 
               <div style={{ display: "grid", gap: 12 }}>
                 {[
-                  "Threshold review condition active",
-                  "Pending direct bank-side confirmation",
-                  "Execution routing not cleared",
-                  "No confirmed minting process identified",
-                  "Release state remains restricted",
+                  "ISO structure detected",
+                  "Transaction message identified",
+                  "Amount indexed successfully",
+                  "Certificate structure invalid",
+                  "BIC/SWIFT identifiers not found",
+                  "Settlement status incomplete",
+                  "Routing authentication failed",
                 ].map((item) => (
                   <div
                     key={item}
@@ -467,20 +483,38 @@ export default function Report10BPage() {
                   padding: 16,
                 }}
               >
-{`[FILE] Detected EUR amount: 10,000,000,000.00
-[CHAIN] Connected to Ethereum mainnet | chainId=1
-[AMOUNT] Extracted: 10,000,000,000.00 EUR
-[CONVERT] Converted: 10,800,000,000.00 USDT (rate 1.08)
-[REVIEW] Threshold review condition active
-[MINTING] No confirmed blockchain minting activity detected
-[EXECUTION] Release state restricted
-[ACTION] Awaiting bank confirmation and manual validation`}
+{`[TIME] 2026-04-07 17:53:08
+[SYSTEM] Initializing validation engine...
+
+VALIDATION RESULT
+Status: PARTIALLY VERIFIED - NOT CLEARED FOR RELEASE
+System State: HOLD / PENDING COMPLETION
+ISO Format: Detected (pacs.008 / pacs.002 / pacs.004)
+Transaction Reference: LR-SIRA-10B-20260401-6077SGC
+Declared Amount: EUR 10,000,000,000.00
+Routing Layer: Detected but not fully authenticated
+Certificate Layer: Incomplete / Non-verifiable
+
+SYSTEM ANALYSIS
+[OK] ISO STRUCTURE DETECTED
+[OK] TRANSACTION MESSAGE IDENTIFIED
+[OK] AMOUNT INDEXED
+[WARN] CERTIFICATE STRUCTURE INVALID
+[WARN] BIC/SWIFT IDENTIFIERS NOT FOUND
+[WARN] SETTLEMENT STATUS INCOMPLETE
+[WARN] ROUTING AUTHENTICATION FAILED
+
+FINAL SYSTEM STATUS
+STATUS: HOLD
+EXECUTION: BLOCKED
+BLOCKCHAIN BROADCAST: NOT AUTHORIZED`}
               </div>
             </div>
 
             <div
               style={{
-                background: "linear-gradient(180deg, rgba(255,90,90,0.10), rgba(255,255,255,0.03))",
+                background:
+                  "linear-gradient(180deg, rgba(255,90,90,0.10), rgba(255,255,255,0.03))",
                 border: "1px solid rgba(255,110,110,0.18)",
                 borderRadius: 24,
                 padding: 22,
@@ -503,10 +537,13 @@ export default function Report10BPage() {
                   lineHeight: 1.8,
                 }}
               >
-                The submitted transaction file remains under restricted review and is not currently in execution-ready
-                state. Threshold verification and bank-side confirmation are still required before any routing or release
-                step can be considered. No confirmed blockchain minting process has been established from the present
-                file data.
+                The submitted file contains detectable structural transaction elements,
+                but it is not cleared for release or execution. Critical validation
+                layers remain incomplete, including certificate verification,
+                institutional authentication, settlement acknowledgment, and secure
+                routing confirmation. Until the required banking and certificate
+                components are submitted and verified, execution and blockchain
+                broadcast remain blocked.
               </div>
             </div>
           </div>
@@ -521,7 +558,7 @@ export default function Report10BPage() {
             letterSpacing: 0.4,
           }}
         >
-          Powered by CryptoHost Secure Review System
+          Powered by CryptoHost Secure Automation
         </div>
 
         <div style={{ marginTop: 18, textAlign: "center" }}>
