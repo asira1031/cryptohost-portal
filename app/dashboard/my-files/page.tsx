@@ -71,7 +71,7 @@ export default async function MyFilesPage() {
           My Files
         </h1>
         <p style={{ opacity: 0.8, margin: 0 }}>
-          Files synced from your portal uploads and your SFTP upload folder.
+          Files synced from your uploads.
         </p>
       </div>
 
@@ -125,9 +125,27 @@ export default async function MyFilesPage() {
                 <strong>Size:</strong> {formatBytes(file.file_size)}
               </div>
 
-              <div style={{ fontSize: 13, opacity: 0.8 }}>
+              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 14 }}>
                 <strong>Created:</strong> {formatDate(file.created_at)}
               </div>
+
+              <form action="/api/files/delete" method="POST">
+                <input type="hidden" name="fileId" value={file.id} />
+                <button
+                  type="submit"
+                  style={{
+                    background: "#dc2626",
+                    color: "white",
+                    border: "none",
+                    borderRadius: 10,
+                    padding: "10px 14px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  Delete File
+                </button>
+              </form>
             </div>
           ))}
         </div>
