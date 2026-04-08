@@ -62,7 +62,20 @@ export default function DashboardLayout({
             <Link href="/dashboard" style={getStyle("/dashboard", pathname)}>
               Dashboard
             </Link>
-            <Link href="/dashboard/wallet">Wallet</Link>
+            <Link
+  href="/dashboard/wallet"
+  style={{
+    padding: "12px",
+    borderRadius: "10px",
+    display: "block",
+    background:
+      pathname === "/dashboard/wallet" ? "#1a1a1a" : "transparent",
+    color: "#ffffff",
+    fontWeight: 600,
+  }}
+>
+  Wallet
+</Link>
 
             <Link
               href="/dashboard/client-information"
