@@ -21,9 +21,10 @@ export default function PriorityMintPage() {
   const STATUS_BADGE = "MINT CONFIRMATION PENDING";
   const SYSTEM_STATUS = "ONLINE / MINT VALIDATION ACTIVE";
 
-  const MINT_PROGRESS = 90;
+  const MINT_PROGRESS = 92;
+
 const ACTIVE_TRANCHE = "5,000,000 EURC";
-const ACTIVATED_AMOUNT = "4,500,000 EURC";
+const ACTIVATED_AMOUNT = "4,600,000 EURC";
 
   const LIQUIDITY_LINE =
     "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 80% completion, but swapping remains disabled until full mint confirmation is completed.";
