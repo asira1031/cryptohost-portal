@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 
 type TokenCard = {
   symbol: string;
@@ -98,7 +99,7 @@ export default function WalletPage() {
       style={{
         padding: "24px",
         color: "#ffffff",
-        background: "#03113a",
+        background: "#041548",
         minHeight: "100vh",
       }}
     >
@@ -168,7 +169,8 @@ export default function WalletPage() {
             <div
               style={{
                 fontSize: "13px",
-                color: "#8ea7d8",
+                color: "#ffffff",
+opacity: 0.78,
                 marginBottom: "8px",
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
@@ -229,7 +231,8 @@ export default function WalletPage() {
             <div
               style={{
                 fontSize: "13px",
-                color: "#8ea7d8",
+                color: "#ffffff",
+opacity: 0.8,
                 marginBottom: "8px",
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
@@ -249,7 +252,8 @@ export default function WalletPage() {
             <div
               style={{
                 fontSize: "13px",
-                color: "#9fb3d9",
+                color: "#ffffff",
+opacity: 0.78,
                 marginTop: "6px",
               }}
             >
@@ -472,24 +476,29 @@ export default function WalletPage() {
         <ModalShell title="Receive Funds" onClose={() => setShowReceiveModal(false)}>
           <div style={{ textAlign: "center" }}>
             <div
-              style={{
-                width: "180px",
-                height: "180px",
-                margin: "0 auto 16px",
-                borderRadius: "18px",
-                background:
-                  "repeating-linear-gradient(45deg, #0e245a, #0e245a 10px, #14327d 10px, #14327d 20px)",
-                border: "1px solid #2a4ea8",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#9fb3d9",
-                fontWeight: 700,
-                fontSize: "14px",
-              }}
-            >
-              QR Preview
-            </div>
+  style={{
+    width: "200px",
+    height: "200px",
+    margin: "0 auto 16px",
+    borderRadius: "18px",
+    background: "#ffffff",
+    border: "1px solid #2a4ea8",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "12px",
+    boxSizing: "border-box",
+  }}
+>
+  <QRCodeSVG
+    value={walletAddress}
+    size={170}
+    bgColor="#ffffff"
+    fgColor="#0b163f"
+    level="H"
+    includeMargin={false}
+  />
+</div>
 
             <div
               style={{
@@ -564,7 +573,8 @@ export default function WalletPage() {
                 border: "1px solid #1a2f74",
                 borderRadius: "12px",
                 padding: "12px",
-                color: "#9fb3d9",
+                color: "#ffffff",
+opacity: 0.88,
                 fontSize: "13px",
                 lineHeight: 1.5,
               }}
