@@ -52,6 +52,10 @@ export default function BankApiPage() {
               url: "https://developer.hsbc.com",
             },
             {
+  title: "Citibank Developer Portal",
+  href: "https://developer.citi.com",
+}
+            {
               name: "Barclays Developer Portal",
               url: "https://developer.barclays.com",
             },
