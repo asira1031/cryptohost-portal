@@ -1,18 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 
 export default function PriorityMintPage() {
-  const TIMESTAMP =
-  new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Manila",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  })
-    .format(new Date())
-    .replace(",", "") + " (UTC+8)";
+  const [timestamp, setTimestamp] = useState("");
+
+  useEffect(() => {
+    const updateTimestamp = () => {
+      const formatted =
+        new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Asia/Manila",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        })
+          .format(new Date())
+          .replace(",", "") + " (UTC+8)";
+
+      setTimestamp(formatted);
+    };
+
+    updateTimestamp();
+    const interval = setInterval(updateTimestamp, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
@@ -23,8 +40,8 @@ export default function PriorityMintPage() {
 
   const MINT_PROGRESS = 92;
 
-const ACTIVE_TRANCHE = "5,000,000 EURC";
-const ACTIVATED_AMOUNT = "4,600,000 EURC";
+  const ACTIVE_TRANCHE = "5,000,000 EURC";
+  const ACTIVATED_AMOUNT = "4,600,000 EURC";
 
   const LIQUIDITY_LINE =
     "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 80% completion, but swapping remains disabled until full mint confirmation is completed.";
@@ -144,7 +161,7 @@ NOTICE
 
 SYSTEM STATUS : ONLINE — SWAP RESTRICTED UNTIL FULL MINT CONFIRMATION
 COMPLIANCE    : ${SYSTEM_NAME}
-TIMESTAMP     : ${TIMESTAMP}
+TIMESTAMP     : ${timestamp}
 REFERENCE     : 99.5M-PRIORITY-MINT
 ------------------------------------------------------------`;
 
@@ -603,7 +620,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
               </div>
 
               <div style={{ marginTop: 16, fontSize: 12, color: colors.muted }}>
-                Timestamp: {TIMESTAMP}
+                Timestamp: {timestamp}
               </div>
             </div>
 
@@ -854,7 +871,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
 
                   <div style={metricCard}>
                     <div style={labelStyle}>Timestamp</div>
-                    <div style={{ marginTop: 6, fontWeight: 700 }}>{TIMESTAMP}</div>
+                    <div style={{ marginTop: 6, fontWeight: 700 }}>{timestamp}</div>
                   </div>
                 </div>
               </div>
