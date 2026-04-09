@@ -114,6 +114,13 @@ export default function Dashboard() {
       href: "/dashboard/reports/TJDB1.275B",
       note: "TJDB 1.275B dashboard",
     },
+    {
+  title: "HSBC — 5M Validation",
+  status: "PENDING",
+  color: "#fde68a",
+  href: "/dashboard/reports/hsbclogen",
+  note: "HSBC international payment file",
+},
   ];
 
   if (loading) {
