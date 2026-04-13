@@ -5,6 +5,8 @@ import type { CSSProperties } from "react";
 
 export default function PriorityMintPage() {
   const [timestamp, setTimestamp] = useState("");
+  const [confirmIndex, setConfirmIndex] = useState(0);
+  const [lineTick, setLineTick] = useState(0);
 
   useEffect(() => {
     const updateTimestamp = () => {
@@ -31,6 +33,31 @@ export default function PriorityMintPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const confirmationLines = [
+    "FINAL CONFIRMATION PROCESS RUNNING",
+    "MINT CONFIRMATION CHECK ACTIVE",
+    "LIQUIDITY VALIDATION IN PROGRESS",
+    "ROUTING CONFIRMATION STILL PROCESSING",
+    "SWAP ENABLEMENT AWAITING FINAL CONFIRMATION",
+  ];
+
+  useEffect(() => {
+    const messageInterval = setInterval(() => {
+      setConfirmIndex((prev) => (prev + 1) % confirmationLines.length);
+    }, 1800);
+
+    const lineInterval = setInterval(() => {
+      setLineTick((prev) => (prev + 1) % 6);
+    }, 250);
+
+    return () => {
+      clearInterval(messageInterval);
+      clearInterval(lineInterval);
+    };
+  }, [confirmationLines.length]);
+
+  const runningLine = "=".repeat(18 + lineTick * 4);
+
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
 
@@ -44,7 +71,7 @@ export default function PriorityMintPage() {
   const ACTIVATED_AMOUNT = "4,750,000 EURC";
 
   const LIQUIDITY_LINE =
-    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche has reached 80% completion, but swapping remains disabled until full mint confirmation is completed.";
+    "Liquidity routing remains online and validation is active. The current 5,000,000 EURC tranche is now under continuous confirmation processing, and swapping remains disabled until full mint confirmation is completed.";
 
   const NOTICE_TITLE = "Swap Status — Temporarily Restricted";
   const NOTICE_BODY =
@@ -116,12 +143,13 @@ SYSTEM STATUS
 - Conversion Path          : EURC -> USDT
 - Swap Execution           : DISABLED (Pending Full Mint Confirmation)
 
-LIVE VALIDATION ACTIVITY
+LIVE CONFIRMATION ACTIVITY
+- Confirmation State       : RUNNING
 - Active Tranche           : ${ACTIVE_TRANCHE}
 - Activated Amount         : ${ACTIVATED_AMOUNT}
 - Progress                 : ${MINT_PROGRESS}%
-- Current Phase            : Mint confirmation monitoring
-- Withdrawal Test          : 1,000,000 returned insufficient
+- Current Phase            : Final confirmation processing
+- Routing Monitor          : ACTIVE
 - Continuity Requirement   : Full mint confirmation required before swap execution
 - Settlement Route         : EURC conversion toward USDT enablement
 
@@ -153,10 +181,9 @@ PRICE BAND
 - Current Price            : ${BAND_CURRENT}
 
 NOTICE
-- Minting progress is currently at ${MINT_PROGRESS}%
+- Confirmation process is currently running at ${MINT_PROGRESS}%
 - Withdrawal-based swapping is not enabled at this stage
-- A 1,000,000 withdrawal test returned insufficient status
-- No swap execution will proceed until full mint confirmation is completed
+- Final mint confirmation is still required before executable swap routing
 - Routing remains online and under active validation
 
 SYSTEM STATUS : ONLINE — SWAP RESTRICTED UNTIL FULL MINT CONFIRMATION
@@ -675,7 +702,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     fontWeight: 700,
                   }}
                 >
-                  Live Validation Activity
+                  LIVE CONFIRMATION ACTIVITY
                 </div>
 
                 <div
@@ -686,7 +713,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     marginBottom: 8,
                   }}
                 >
-                  +{ACTIVE_TRANCHE}
+                  {confirmationLines[confirmIndex]}
                 </div>
 
                 <div
@@ -694,21 +721,32 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     fontSize: 16,
                     fontWeight: 700,
                     color: "#9fffe0",
-                    marginBottom: 6,
+                    marginBottom: 10,
+                    fontFamily: "Consolas, Monaco, monospace",
                   }}
                 >
-                  Activated: {ACTIVATED_AMOUNT} ({MINT_PROGRESS}%)
-                </div>
-
-                <div style={{ marginTop: 6, color: "#d7fffa", lineHeight: 1.7 }}>
-                  Validation remains active. Minting progress is now at {MINT_PROGRESS}%.
-                  Swap execution is not yet enabled, and withdrawal-based attempts
-                  may return insufficient status until full mint confirmation is completed.
+                  {runningLine}
                 </div>
 
                 <div
                   style={{
-                    marginTop: 10,
+                    marginTop: 6,
+                    color: "#d7fffa",
+                    lineHeight: 1.8,
+                    fontFamily: "Consolas, Monaco, monospace",
+                    fontSize: 14,
+                  }}
+                >
+                  <div>STATUS            : RUNNING</div>
+                  <div>CONFIRMATION MODE : CONTINUOUS</div>
+                  <div>MINT PROGRESS     : {MINT_PROGRESS}%</div>
+                  <div>ROUTING STATE     : ACTIVE</div>
+                  <div>SWAP STATUS       : RESTRICTED</div>
+                </div>
+
+                <div
+                  style={{
+                    marginTop: 12,
                     height: 10,
                     borderRadius: 999,
                     background: "rgba(255,255,255,0.10)",
@@ -724,8 +762,15 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   />
                 </div>
 
-                <div style={{ fontSize: 12, marginTop: 8, color: "#8bded0" }}>
-                  Validation Status: {MINT_PROGRESS}% — No Swapping Until Full Mint Confirmation
+                <div
+                  style={{
+                    fontSize: 12,
+                    marginTop: 8,
+                    color: "#8bded0",
+                    fontFamily: "Consolas, Monaco, monospace",
+                  }}
+                >
+                  CONFIRMATION STATUS: {runningLine} RUNNING
                 </div>
               </div>
 
