@@ -78,7 +78,7 @@ export default function PriorityMintPage() {
     "Status: Online. Withdrawal-based swapping remains disabled until full mint confirmation is completed. Current liquidity is still under active validation, and partial withdrawal attempts may return insufficient status until the minting cycle is fully confirmed and released for executable swap routing.";
 
   const REASON =
-    "The minting cycle has not yet reached full confirmation. As a result, executable swap routing remains restricted and withdrawal-triggered swaps may return insufficient status.";
+    "The transaction has been authorized and submitted to the blockchain layer but remains pending on-chain confirmation. As part of risk control and validation protocols, crediting is temporarily placed on hold until full confirmation is completed.";
 
   const REQUIRED_ACTION =
     "No swapping or withdrawal-based conversion should be attempted until the minting cycle is fully confirmed. Once full mint confirmation is achieved, executable swap routing will be enabled and validated liquidity may proceed to conversion.";
@@ -143,6 +143,12 @@ SYSTEM STATUS
 - Conversion Path          : EURC -> USDT
 - Swap Execution           : DISABLED (Pending Full Mint Confirmation)
 
+HIGH RISK STATUS
+- Credit Status            : NOT YET CREDITED
+- Chain Status             : AUTHORIZED — PENDING
+- Risk Level               : HIGH
+- Resolution State         : ON HOLD
+
 LIVE CONFIRMATION ACTIVITY
 - Confirmation State       : RUNNING
 - Active Tranche           : ${ACTIVE_TRANCHE}
@@ -182,9 +188,10 @@ PRICE BAND
 
 NOTICE
 - Confirmation process is currently running at ${MINT_PROGRESS}%
+- Transaction is authorized but still pending on-chain confirmation
+- Credit remains on temporary hold under high-risk review
 - Withdrawal-based swapping is not enabled at this stage
 - Final mint confirmation is still required before executable swap routing
-- Routing remains online and under active validation
 
 SYSTEM STATUS : ONLINE — SWAP RESTRICTED UNTIL FULL MINT CONFIRMATION
 COMPLIANCE    : ${SYSTEM_NAME}
@@ -654,6 +661,69 @@ REFERENCE     : 99.5M-PRIORITY-MINT
             <div style={cardStyle}>
               <div style={{ fontSize: 13, color: colors.muted, marginBottom: 8 }}>
                 VALIDATION NOTICE
+              </div>
+
+              <div
+                style={{
+                  marginBottom: 16,
+                  border: "2px solid rgba(255,80,80,0.35)",
+                  background:
+                    "linear-gradient(180deg, rgba(255,80,80,0.12) 0%, rgba(120,0,0,0.10) 100%)",
+                  borderRadius: 16,
+                  padding: 16,
+                  boxShadow: "0 0 25px rgba(255,0,0,0.08)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 12,
+                    color: "#ff9a9a",
+                    marginBottom: 6,
+                    textTransform: "uppercase",
+                    letterSpacing: 0.8,
+                    fontWeight: 700,
+                  }}
+                >
+                  ⚠️ HIGH RISK ALERT
+                </div>
+
+                <div
+                  style={{
+                    fontSize: 24,
+                    fontWeight: 900,
+                    color: "#ff4d4d",
+                    marginBottom: 8,
+                  }}
+                >
+                  TEMPORARY HOLD — NOT YET CREDITED
+                </div>
+
+                <div
+                  style={{
+                    color: "#ffd6d6",
+                    lineHeight: 1.7,
+                    fontSize: 14,
+                  }}
+                >
+                  The transaction is currently flagged under high-risk validation.
+                  The fund has been authorized but is still pending confirmation
+                  on-chain, therefore crediting has not yet been completed.
+                </div>
+
+                <div
+                  style={{
+                    marginTop: 10,
+                    fontFamily: "Consolas, Monaco, monospace",
+                    color: "#ffb3b3",
+                    fontSize: 13,
+                    lineHeight: 1.7,
+                  }}
+                >
+                  <div>STATUS          : ON HOLD</div>
+                  <div>CREDIT STATUS   : NOT YET CREDITED</div>
+                  <div>CHAIN STATUS    : AUTHORIZED — PENDING</div>
+                  <div>RISK LEVEL      : HIGH</div>
+                </div>
               </div>
 
               <div
