@@ -76,7 +76,7 @@ export default function Report913MPage() {
               <p className="text-[10px] uppercase tracking-[0.22em] text-cyan-300/70">Reference</p>
               <p className="mt-2 break-all text-sm font-semibold text-white">913M-HBUK0W283K47PK2C</p>
               <div className="mt-3">
-                <StatusBadge label="Under Review" tone="amber" />
+                <StatusBadge label="Ready for Execution" tone="emerald" />
               </div>
             </div>
           </aside>
@@ -107,11 +107,13 @@ export default function Report913MPage() {
                     <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">Validation Notice</p>
                     <h3 className="mt-2 text-xl font-semibold text-white">Current File Status</h3>
                   </div>
-                  <StatusBadge label="Under Validation" tone="amber" />
+                  <StatusBadge label="Ready for Execution" tone="emerald" />
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
-                  This file is currently undergoing technical and compliance review. The uploaded document shows a completed transmission-level record and bank transmission metadata, but no blockchain conversion or release action has been executed within the CryptoHost environment at this stage.
+                This file has completed technical validation and compliance review. 
+                The transmission record is verified and the file is now authorized for execution. 
+                Blockchain conversion and fund release can proceed based on system conditions.
                 </div>
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
