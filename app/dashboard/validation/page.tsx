@@ -69,9 +69,10 @@ export default async function ValidationPage() {
   }
 
   const userEmail = (user.email || "").toLowerCase();
-  const isKen =
-  userEmail === "ken@beautuniverse.com" ||
-  userEmail === "jans103174@gmail.com";
+
+  const isAdmin = userEmail === "jans103174@gmail.com";
+  const isKen = userEmail === "ken@beautuniverse.com";
+  const show913MReport = isKen || isAdmin;
 
   const { data, error } = await supabase
     .from("uploaded_files")
@@ -222,10 +223,10 @@ export default async function ValidationPage() {
             }}
           >
             {paymentConfirmed
-  ? isKen
-    ? "PAID — BASIC PLAN (99 USD)"
-    : "PAID"
-  : "UNPAID"}
+              ? isKen
+                ? "PAID — BASIC PLAN (99 USD)"
+                : "PAID"
+              : "UNPAID"}
           </div>
         </div>
 
@@ -480,12 +481,81 @@ export default async function ValidationPage() {
 
         {error ? (
           <p style={{ color: "#ff8f8f" }}>{error.message}</p>
-        ) : files.length === 0 ? (
+        ) : files.length === 0 && !show913MReport ? (
           <p style={{ color: "#dbe4ff" }}>
             No uploaded files yet. Please upload the required package files.
           </p>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
+            {show913MReport && (
+              <Link
+                href="/dashboard/reports/913M"
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: 16,
+                  padding: 16,
+                  display: "grid",
+                  gap: 10,
+                  textDecoration: "none",
+                  color: "white",
+                }}
+              >
+                <div style={{ fontSize: 17, fontWeight: 800 }}>
+                  913M HSBC Validation
+                </div>
+
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                    gap: 12,
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        color: "#8ec5ff",
+                        fontSize: 12,
+                        marginBottom: 4,
+                      }}
+                    >
+                      Status
+                    </div>
+                    <div style={{ fontWeight: 800, color: "#f59e0b" }}>
+                      UNDER REVIEW
+                    </div>
+                  </div>
+
+                  <div>
+                    <div
+                      style={{
+                        color: "#8ec5ff",
+                        fontSize: 12,
+                        marginBottom: 4,
+                      }}
+                    >
+                      Type
+                    </div>
+                    <div style={{ fontSize: 13 }}>MT103 / HSBC UK</div>
+                  </div>
+
+                  <div>
+                    <div
+                      style={{
+                        color: "#8ec5ff",
+                        fontSize: 12,
+                        marginBottom: 4,
+                      }}
+                    >
+                      Reference
+                    </div>
+                    <div style={{ fontSize: 13 }}>HBUK0W283K47PK2C</div>
+                  </div>
+                </div>
+              </Link>
+            )}
+
             {files.map((file) => (
               <div
                 key={file.id}

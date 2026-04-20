@@ -121,6 +121,13 @@ export default function Dashboard() {
   href: "/dashboard/reports/hsbclogen",
   note: "HSBC international payment file",
 },
+{
+  title: "913M HSBC Validation",
+  status: "ON HOLD",
+  color: "#f59e0b",
+  href: "/dashboard/reports/913M",
+  note: "913M HSBC MT103 transmission file",
+},
   ];
 
   if (loading) {
