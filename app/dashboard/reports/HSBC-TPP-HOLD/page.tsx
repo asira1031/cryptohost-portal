@@ -1,4 +1,4 @@
-export default function HSBC913MResultPage() {
+export default function HSBCTPPHoldPage() {
   return (
     <div
       style={{
@@ -40,25 +40,25 @@ export default function HSBC913MResultPage() {
 ============================================================
 
 [ TRANSACTION SUMMARY ]
-Reference ID : HBUKG85H5CMAF590
-Amount       : € 1,001,020,109.00
-Currency     : EUR
-Value Date   : 12 August 2025
+Reference ID    : HBUKG85H5CMAF590
+Amount          : € 1,001,020,109.00
+Currency        : EUR
+Value Date      : 12 August 2025
 
 [ ACCOUNT DETAILS ]
-Sender       : MATECHPOWER LTD
-Sender Acc   : GB91HBUK40362272831120
-Beneficiary  : MATECHPOWER LTD
+Sender          : MATECHPOWER LTD
+Sender Acc      : GB91HBUK40362272831120
+Beneficiary     : MATECHPOWER LTD
 Beneficiary Acc : GB91HBUK40362272831120
 
 [ VALIDATION CHECKS ]
-✔ Infrastructure Validation .......... PASSED
-✔ Routing Alignment ................. VERIFIED
-✔ Allocation Sequencing ............. COMPLETED
-✔ System Integrity Check ............ STABLE
+✔ Infrastructure Validation ........ PASSED
+✔ Routing Alignment ............... VERIFIED
+✔ Allocation Sequencing ........... COMPLETED
+✔ System Integrity Check .......... STABLE
 
 [ SYSTEM STATE ]
-• Validation Layer ................. COMPLETED
+• Validation Layer ................ COMPLETED
 • Conversion Status ............... AUTHORIZED
 • Broadcast Status ................ READY
 
