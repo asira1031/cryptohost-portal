@@ -85,59 +85,57 @@ export default function Dashboard() {
     fontSize: 14,
   };
 
- const manualDashboards = [
-  {
-    title: "Ken — 99.5M LP",
-    status: "ACTIVE",
-    color: "#16a34a",
-    href: "/dashboard/reports/99.5M-LP",
-    note: "Liquidity dashboard",
-  },
-  {
-    title: "Ken — 10B Restricted Review",
-    status: "PAID / ACTIVE ACCESS",
-    color: "#dc2626",
-    href: "/dashboard/reports/ken-10b",
-    note: "Ken restricted review file",
-  },
-  {
-    title: "890M Dashboard",
-    status: "ACTIVE",
-    color: "#2563eb",
-    href: "/dashboard/reports/890M",
-    note: "890M client dashboard",
-  },
-  {
-    title: "TJDB1.275B Dashboard",
-    status: "ACTIVE",
-    color: "#7c3aed",
-    href: "/dashboard/reports/TJDB1.275B",
-    note: "TJDB 1.275B dashboard",
-  },
-  {
-    title: "HSBC — 5M Validation",
-    status: "PENDING",
-    color: "#fde68a",
-    href: "/dashboard/reports/hsbclogen",
-    note: "HSBC international payment file",
-  },
-  {
-    title: "913M HSBC Validation",
-    status: "ON HOLD",
-    color: "#f59e0b",
-    href: "/dashboard/reports/913M",
-    note: "913M HSBC MT103 transmission file",
-  },
-
-  // ✅ NEW — ADD THIS ONLY
-  {
-  title: "HSBC — TPP HOLD",
-  status: "READY FOR EXECUTION",
-  color: "#22c55e",
-  href: "/reports/hsbc-tpp-hold",
-  note: "HSBC transaction hold validation file",
-},
-];
+  const manualDashboards = [
+    {
+      title: "Ken — 99.5M LP",
+      status: "ACTIVE",
+      color: "#16a34a",
+      href: "/dashboard/reports/99.5M-LP",
+      note: "Liquidity dashboard",
+    },
+    {
+      title: "Ken — 10B Restricted Review",
+      status: "PAID / ACTIVE ACCESS",
+      color: "#dc2626",
+      href: "/dashboard/reports/ken-10b",
+      note: "Ken restricted review file",
+    },
+    {
+      title: "890M Dashboard",
+      status: "ACTIVE",
+      color: "#2563eb",
+      href: "/dashboard/reports/890M",
+      note: "890M client dashboard",
+    },
+    {
+      title: "TJDB1.275B Dashboard",
+      status: "ACTIVE",
+      color: "#7c3aed",
+      href: "/dashboard/reports/TJDB1.275B",
+      note: "TJDB 1.275B dashboard",
+    },
+    {
+      title: "HSBC — 5M Validation",
+      status: "PENDING",
+      color: "#fde68a",
+      href: "/dashboard/reports/hsbclogen",
+      note: "HSBC international payment file",
+    },
+    {
+      title: "913M HSBC Validation",
+      status: "ON HOLD",
+      color: "#f59e0b",
+      href: "/dashboard/reports/913M",
+      note: "913M HSBC MT103 transmission file",
+    },
+    {
+      title: "HSBC — TPP HOLD",
+      status: "READY FOR EXECUTION",
+      color: "#22c55e",
+      href: "/dashboard/reports/hsbc-tpp-hold",
+      note: "HSBC transaction hold validation file",
+    },
+  ];
 
   if (loading) {
     return (
@@ -457,7 +455,9 @@ export default function Dashboard() {
 
                       <span
                         style={{
-                          background: client.access_enabled ? "#e0f2fe" : "#f1f5f9",
+                          background: client.access_enabled
+                            ? "#e0f2fe"
+                            : "#f1f5f9",
                           color: client.access_enabled ? "#0284c7" : "#64748b",
                           padding: "4px 10px",
                           borderRadius: 999,
