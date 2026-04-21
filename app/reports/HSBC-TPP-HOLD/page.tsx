@@ -1,18 +1,29 @@
 export default function HSBCTPPHoldPage() {
-  const progress = 93;
+  const progress = 100;
 
   return (
-    <div style={{ padding: 30, color: "white", background: "#020617", minHeight: "100vh" }}>
-      
+    <div
+      style={{
+        padding: 30,
+        color: "white",
+        background: "#020617",
+        minHeight: "100vh",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      {/* HEADER */}
       <h1 style={{ fontSize: 32, marginBottom: 10 }}>
-        Transaction In Progress
+        HSBC Transaction Status
       </h1>
 
       <p style={{ fontSize: 18 }}>
-        Status: <strong>PROCESSING ({progress}%)</strong>
+        Status:{" "}
+        <strong style={{ color: "#22c55e" }}>
+          READY FOR EXECUTION (100%)
+        </strong>
       </p>
 
-      {/* Progress Bar */}
+      {/* PROGRESS BAR */}
       <div
         style={{
           width: "100%",
@@ -27,40 +38,40 @@ export default function HSBCTPPHoldPage() {
           style={{
             width: `${progress}%`,
             height: "100%",
-            background: "linear-gradient(90deg, #f0b90b, #22c55e)",
+            background: "linear-gradient(90deg, #22c55e, #16a34a)",
             borderRadius: 10,
           }}
         />
       </div>
 
+      {/* MESSAGE */}
       <p>
-        This transaction is currently in its final processing stage.
+        System validation has been successfully completed.
       </p>
 
       <p>
-        System validation has reached approximately 93% completion.
-        Core infrastructure checks, routing validation, and allocation sequencing
-        have been successfully executed.
+        All required checks including infrastructure validation, routing
+        alignment, and allocation sequencing have been verified and cleared.
       </p>
 
       <p>
-        The remaining step involves final compliance confirmation and
-        authorization alignment.
+        The transaction is now fully prepared and positioned for execution
+        under secure system conditions.
       </p>
 
       <p>
-        Processing is ongoing under secure system control.
-        No manual action is required at this stage.
+        The system is currently in a stable and ready state.
       </p>
 
+      {/* TIMESTAMP */}
       <p style={{ marginTop: 20, color: "#94a3b8" }}>
-        Timestamp: March 23, 2026 • 18:40 (UTC+8)
+        Timestamp: April 21, 2026 • 18:40 (UTC+8)
       </p>
 
+      {/* FOOTER */}
       <p style={{ marginTop: 30, color: "#64748b" }}>
         Powered by CryptoHost Secure Automation
       </p>
-
     </div>
   );
 }
