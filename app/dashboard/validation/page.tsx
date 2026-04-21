@@ -74,6 +74,10 @@ export default async function ValidationPage() {
   const isKen = userEmail === "ken@beautuniverse.com";
   const show913MReport = isKen || isAdmin;
 
+
+const isHSBCTPPHoldOwner = userEmail === "tjaslan09@gmail.com";
+const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
+
   const { data, error } = await supabase
     .from("uploaded_files")
     .select("*")
@@ -555,6 +559,74 @@ export default async function ValidationPage() {
                 </div>
               </Link>
             )}
+            {showHSBCTPPHoldReport && (
+  <Link
+    href="/dashboard/reports/hsbc-tpp-hold"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      HSBC — TPP HOLD
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+        <div style={{ fontWeight: 800, color: "#22c55e" }}>
+          READY FOR EXECUTION
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+        <div style={{ fontSize: 13 }}>HSBC Transaction Hold</div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+        <div style={{ fontSize: 13 }}>HBUKG85H5CMAF590</div>
+      </div>
+    </div>
+  </Link>
+)}
 
             {files.map((file) => (
               <div
