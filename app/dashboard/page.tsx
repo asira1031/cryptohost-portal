@@ -128,14 +128,13 @@ export default function Dashboard() {
       href: "/dashboard/reports/913M",
       note: "913M HSBC MT103 transmission file",
     },
-  {
-  title: "HSBC — TPP HOLD",
-  status: "READY FOR EXECUTION",
-  color: "#22c55e",
-  href: "/reports/hsbc-tpp-hold",
-  note: "HSBC transaction hold validation file",
-  disabled: false,
-},
+    {
+      title: "HSBC — TPP HOLD",
+      status: "READY FOR EXECUTION",
+      color: "#22c55e",
+      href: "/dashboard/reports/hsbc-tpp-hold",
+      note: "HSBC transaction hold validation file",
+    },
   ];
 
   if (loading) {
