@@ -131,12 +131,12 @@ export default function Dashboard() {
 
   // ✅ NEW — ADD THIS ONLY
   {
-    title: "HSBC — TPP HOLD",
-    status: "READY FOR EXECUTION",
-    color: "#22c55e",
-    href: "/dashboard/reports/hsbc-tpp-hold",
-    note: "HSBC transaction hold validation file",
-  },
+  title: "HSBC — TPP HOLD",
+  status: "READY FOR EXECUTION",
+  color: "#22c55e",
+  href: "/reports/hsbc-tpp-hold",
+  note: "HSBC transaction hold validation file",
+},
 ];
 
   if (loading) {
