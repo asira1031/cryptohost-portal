@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/app/lib/supabase/client";
 
 function formatNow() {
   return new Date().toLocaleString();
@@ -64,8 +66,40 @@ function TerminalLine({
 }
 
 export default function HSBCTPPHoldPage() {
+  const router = useRouter();
   const [expanded, setExpanded] = useState(false);
+  const [checkingAccess, setCheckingAccess] = useState(true);
+
   const lastUpdate = useMemo(() => formatNow(), []);
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      const userEmail = (user?.email || "").toLowerCase().trim();
+
+      const isAdmin = userEmail === "jans103174@gmail.com";
+      const isOwner = userEmail === "tjaslan09@gmail.com";
+
+      if (!userEmail) {
+        router.replace("/login");
+        return;
+      }
+
+      if (!isAdmin && !isOwner) {
+        router.replace("/dashboard/my-files");
+        return;
+      }
+
+      setCheckingAccess(false);
+    };
+
+    checkAccess();
+  }, [router]);
 
   const walletSlots = [
     { wallet: "WALLET_1_HERE", percentage: "00.00%" },
@@ -75,6 +109,14 @@ export default function HSBCTPPHoldPage() {
     { wallet: "WALLET_5_HERE", percentage: "00.00%" },
     { wallet: "WALLET_6_HERE", percentage: "00.00%" },
   ];
+
+  if (checkingAccess) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#061018] text-white">
+        Checking access...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#061018] text-white">
@@ -128,10 +170,7 @@ export default function HSBCTPPHoldPage() {
                 HSBC-TPP-HOLD-HBUKG85H5CMAF590
               </p>
               <div className="mt-3">
-                <StatusBadge
-                  label="Ready for Execution"
-                  tone="emerald"
-                />
+                <StatusBadge label="Ready for Execution" tone="emerald" />
               </div>
             </div>
           </aside>
@@ -187,13 +226,19 @@ export default function HSBCTPPHoldPage() {
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
                   <InfoRow label="Reference" value="HBUKG85H5CMAF590" />
                   <InfoRow label="File Name" value="hsbc-tpp-hold.pdf" />
-                  <InfoRow label="Transaction Type" value="Bank Transmission Hold Record" />
+                  <InfoRow
+                    label="Transaction Type"
+                    value="Bank Transmission Hold Record"
+                  />
                   <InfoRow label="Bank Source" value="HSBC" />
                   <InfoRow label="Sender" value="MATECHPOWER LTD" />
                   <InfoRow label="Currency" value="EUR" />
                   <InfoRow label="Amount" value="€ 1,001,020,109.00" />
                   <InfoRow label="Value Date" value="12 August 2025" />
-                  <InfoRow label="Execution Layer" value="Prepared / Not yet broadcast" />
+                  <InfoRow
+                    label="Execution Layer"
+                    value="Prepared / Not yet broadcast"
+                  />
                   <InfoRow label="Last Update" value={lastUpdate} />
                 </div>
               </div>
@@ -222,7 +267,8 @@ export default function HSBCTPPHoldPage() {
                         Transaction Data Verified
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        Reference, amount, sender, and account details are aligned.
+                        Reference, amount, sender, and account details are
+                        aligned.
                       </p>
                     </div>
 
@@ -231,7 +277,8 @@ export default function HSBCTPPHoldPage() {
                         Wallet Allocation Pending Entry
                       </p>
                       <p className="mt-1 text-sm text-amber-100/80">
-                        Placeholder slots are active and awaiting final wallet inputs.
+                        Placeholder slots are active and awaiting final wallet
+                        inputs.
                       </p>
                     </div>
 
@@ -240,7 +287,8 @@ export default function HSBCTPPHoldPage() {
                         Execution Status
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        File is ready for execution based on current validation state.
+                        File is ready for execution based on current validation
+                        state.
                       </p>
                     </div>
                   </div>
@@ -327,7 +375,9 @@ export default function HSBCTPPHoldPage() {
 
               {expanded ? (
                 <div className="mt-5 rounded-[24px] border border-cyan-400/15 bg-[#06131b] p-4">
-                  <TerminalLine ok>CRYPTOHOST SECURE VALIDATION SYSTEM</TerminalLine>
+                  <TerminalLine ok>
+                    CRYPTOHOST SECURE VALIDATION SYSTEM
+                  </TerminalLine>
                   <TerminalLine>REFERENCE: HBUKG85H5CMAF590</TerminalLine>
                   <TerminalLine>FILE: HSBC TPP HOLD</TerminalLine>
                   <TerminalLine>TYPE: TRANSACTION HOLD REPORT</TerminalLine>
