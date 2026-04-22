@@ -271,7 +271,7 @@ export default function Dashboard() {
               marginBottom: 14,
             }}
           >
-            Manual Dashboards
+            File Dashboards
           </h2>
 
           <div style={{ display: "grid", gap: 18 }}>
