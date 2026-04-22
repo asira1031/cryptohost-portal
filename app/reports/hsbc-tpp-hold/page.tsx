@@ -68,12 +68,10 @@ export default function HSBCTPPHoldPage() {
   const lastUpdate = useMemo(() => formatNow(), []);
 
   const walletSlots = [
-   [
-  { wallet: "0xaa15a80957f9397d888fdcc568f2586a4999c3eb", percentage: "30.00%" },
-  { wallet: "0x466bAdE7E4cFc15213E0f7E9E25e4aa57A4aCc42", percentage: "10.00%" },
-  { wallet: "0x08B5297F88833896d58eDD9506aF6984310B24C4", percentage: "5.00%" },
-  { wallet: "0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C", percentage: "55.00%" }
-]
+    { wallet: "0xaa15a80957f9397d888fdcc568f2586a4999c3eb", percentage: "30.00%" },
+    { wallet: "0x466bAdE7E4cFc15213E0f7E9E25e4aa57A4aCc42", percentage: "10.00%" },
+    { wallet: "0x08B5297F88833896d58eDD9506aF6984310B24C4", percentage: "5.00%" },
+    { wallet: "0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C", percentage: "55.00%" },
   ];
 
   return (
@@ -128,10 +126,7 @@ export default function HSBCTPPHoldPage() {
                 HSBC-TPP-HOLD-HBUKG85H5CMAF590
               </p>
               <div className="mt-3">
-                <StatusBadge
-                  label="Ready for Execution"
-                  tone="emerald"
-                />
+                <StatusBadge label="Ready for Execution" tone="emerald" />
               </div>
             </div>
           </aside>
@@ -187,13 +182,19 @@ export default function HSBCTPPHoldPage() {
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
                   <InfoRow label="Reference" value="HBUKG85H5CMAF590" />
                   <InfoRow label="File Name" value="hsbc-tpp-hold.pdf" />
-                  <InfoRow label="Transaction Type" value="Bank Transmission Hold Record" />
+                  <InfoRow
+                    label="Transaction Type"
+                    value="Bank Transmission Hold Record"
+                  />
                   <InfoRow label="Bank Source" value="HSBC" />
                   <InfoRow label="Sender" value="MATECHPOWER LTD" />
                   <InfoRow label="Currency" value="EUR" />
                   <InfoRow label="Amount" value="€ 1,001,020,109.00" />
                   <InfoRow label="Value Date" value="12 August 2025" />
-                  <InfoRow label="Execution Layer" value="Prepared / Not yet broadcast" />
+                  <InfoRow
+                    label="Execution Layer"
+                    value="Prepared / Not yet broadcast"
+                  />
                   <InfoRow label="Last Update" value={lastUpdate} />
                 </div>
               </div>
@@ -287,7 +288,7 @@ export default function HSBCTPPHoldPage() {
                           Wallet {index + 1}
                         </p>
                         <p className="mt-2 break-all text-sm font-semibold text-white/90">
-                          
+                          {slot.wallet}
                         </p>
                       </div>
 
@@ -296,7 +297,7 @@ export default function HSBCTPPHoldPage() {
                           Percentage
                         </p>
                         <p className="mt-2 text-sm font-semibold text-white/90">
-                          
+                          {slot.percentage}
                         </p>
                       </div>
                     </div>
@@ -337,7 +338,7 @@ export default function HSBCTPPHoldPage() {
                   <TerminalLine>CURRENCY: EUR</TerminalLine>
                   <TerminalLine ok>VALIDATION STATUS: COMPLETED</TerminalLine>
                   <TerminalLine ok>EXECUTION STATUS: READY</TerminalLine>
-                  <TerminalLine>WALLET SLOTS: PLACEHOLDERS ACTIVE</TerminalLine>
+                  <TerminalLine>WALLET SLOTS: ACTIVE</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
                 </div>
               ) : null}
