@@ -694,9 +694,19 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 </div>
 
                 <input
-                  type="text"
-                  value={submittedCode}
-                  onChange={(e) => setSubmittedCode(e.target.value)}
+  type="text"
+  value={submittedCode}
+  onChange={(e) => {
+    const value = e.target.value;
+    setSubmittedCode(value);
+
+    // 👉 RESET kapag binura ang input
+    if (value.trim() === "") {
+      setHasValidated(false);
+      setValidationStatus("idle");
+      setValidationMessage("");
+    }
+  }}
                   placeholder="Enter authorization / approval / release code"
                   style={{
                     width: "100%",
