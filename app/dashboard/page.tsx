@@ -85,7 +85,7 @@ export default function Dashboard() {
     fontSize: 14,
   };
 
-  const manualDashboards = [
+  const fileDashboards = [
     {
       title: "Ken — 99.5M LP",
       status: "ACTIVE",
@@ -275,7 +275,7 @@ export default function Dashboard() {
           </h2>
 
           <div style={{ display: "grid", gap: 18 }}>
-            {manualDashboards.map((item) => (
+            {fileDashboards.map((item) => (
               <div
                 key={item.href}
                 style={{
