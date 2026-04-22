@@ -81,14 +81,14 @@ export default function Report913MPage() {
       const userEmail = (user?.email || "").toLowerCase().trim();
 
       const isAdmin = userEmail === "jans103174@gmail.com";
-      const isKen = userEmail === "ken@beautuniverse.com";
+      
 
       if (!userEmail) {
         router.replace("/login");
         return;
       }
 
-      if (!isAdmin && !isKen) {
+      if (!isAdmin ) {
         router.replace("/dashboard/my-files");
         return;
       }
@@ -342,6 +342,44 @@ export default function Report913MPage() {
                   <TerminalLine>BLOCKCHAIN LAYER: NOT EXECUTED</TerminalLine>
                   <TerminalLine>COMPLIANCE REVIEW: IN PROGRESS</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
+                  <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
+<TerminalLine>------------------------------------------</TerminalLine>
+<TerminalLine ok>WALLET DISTRIBUTION STRUCTURE</TerminalLine>
+
+<TerminalLine>WALLET 1 – 31.5%</TerminalLine>
+<TerminalLine>0x51cb3febd21849b4555aabc1d667df23ada9745f</TerminalLine>
+<TerminalLine>€285,312,500.00</TerminalLine>
+
+<TerminalLine>WALLET 2 – 1.25%</TerminalLine>
+<TerminalLine>0x2BF24311d74c877a4d0EB5d5Ddd536F1129c0526</TerminalLine>
+<TerminalLine>€11,412,500.00</TerminalLine>
+
+<TerminalLine>WALLET 3 – 1.25%</TerminalLine>
+<TerminalLine>0x78e63cb6F8B32132923243e62e9FE34c3C906b55</TerminalLine>
+<TerminalLine>€11,412,500.00</TerminalLine>
+
+<TerminalLine>WALLET 4 – 1.25%</TerminalLine>
+<TerminalLine>0x7AF9086ae46B75504AeEf0EcA340177dc85dF634</TerminalLine>
+<TerminalLine>€11,412,500.00</TerminalLine>
+
+<TerminalLine>WALLET 5 – 2.5%</TerminalLine>
+<TerminalLine>0x360C2fC7613b6A94A6a6c82C6A4FEf877E721165</TerminalLine>
+<TerminalLine>€22,825,000.00</TerminalLine>
+
+<TerminalLine>WALLET 6 – 5%</TerminalLine>
+<TerminalLine>0x12CA2B89429218Eb08f893C63e83263Cbc1296e7</TerminalLine>
+<TerminalLine>€45,650,000.00</TerminalLine>
+
+<TerminalLine>WALLET 7 – 7.5%</TerminalLine>
+<TerminalLine>0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538</TerminalLine>
+<TerminalLine>€68,475,000.00</TerminalLine>
+
+<TerminalLine ok>MAIN WALLET – 50%</TerminalLine>
+<TerminalLine>0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C</TerminalLine>
+<TerminalLine>€456,500,000.00</TerminalLine>
+
+<TerminalLine>------------------------------------------</TerminalLine>
+<TerminalLine ok>TOTAL DISTRIBUTION: 100% CONFIRMED</TerminalLine>
                 </div>
               ) : null}
             </section>
