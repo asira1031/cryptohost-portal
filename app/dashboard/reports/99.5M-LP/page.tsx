@@ -11,6 +11,9 @@ export default function PriorityMintPage() {
 
   const [timestamp, setTimestamp] = useState("");
   const [submittedCode, setSubmittedCode] = useState("");
+  const [hasValidated, setHasValidated] = useState(false);
+  const [validationStatus, setValidationStatus] = useState<"idle" | "verified" | "not_verified">("idle");
+  const [validationMessage, setValidationMessage] = useState("");
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -80,7 +83,29 @@ export default function PriorityMintPage() {
 
     return () => clearInterval(interval);
   }, []);
+  
 
+// 
+const handleValidateCode = () => {
+  const cleanCode = submittedCode.trim();
+
+  if (!cleanCode) {
+    setHasValidated(true);
+    setValidationStatus("not_verified");
+    setValidationMessage("Please enter a code first.");
+    return;
+  }
+
+  if (cleanCode === "10316555") {
+    setHasValidated(true);
+    setValidationStatus("verified");
+    setValidationMessage("Authorization accepted.");
+  } else {
+    setHasValidated(true);
+    setValidationStatus("not_verified");
+    setValidationMessage("Code not valid.");
+  }
+};
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
 
