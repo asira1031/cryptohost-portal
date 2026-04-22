@@ -12,7 +12,9 @@ export default function PriorityMintPage() {
   const [timestamp, setTimestamp] = useState("");
   const [submittedCode, setSubmittedCode] = useState("");
   const [hasValidated, setHasValidated] = useState(false);
-  const [validationStatus, setValidationStatus] = useState<"idle" | "verified" | "not_verified">("idle");
+  const [validationStatus, setValidationStatus] = useState<
+    "idle" | "processing" | "on_hold" | "verified" | "not_verified"
+  >("idle");
   const [validationMessage, setValidationMessage] = useState("");
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -83,29 +85,40 @@ export default function PriorityMintPage() {
 
     return () => clearInterval(interval);
   }, []);
-  
 
-// 
-const handleValidateCode = () => {
-  const cleanCode = submittedCode.trim();
+  const handleValidateCode = () => {
+    const cleanCode = submittedCode.trim();
 
-  if (!cleanCode) {
-    setHasValidated(true);
-    setValidationStatus("not_verified");
-    setValidationMessage("Please enter a code first.");
-    return;
-  }
+    if (!cleanCode) {
+      setHasValidated(true);
+      setValidationStatus("not_verified");
+      setValidationMessage(
+        "Please enter an authorization / approval / release code first."
+      );
+      return;
+    }
 
-  if (cleanCode === "10316555") {
     setHasValidated(true);
-    setValidationStatus("verified");
-    setValidationMessage("Authorization accepted.");
-  } else {
-    setHasValidated(true);
-    setValidationStatus("not_verified");
-    setValidationMessage("Code not valid.");
-  }
-};
+    setValidationStatus("processing");
+    setValidationMessage(
+      "Authorization code submitted. Processing validation request..."
+    );
+
+    setTimeout(() => {
+      setValidationStatus("on_hold");
+      setValidationMessage(
+        "Validation is currently on hold pending full authorization review and execution path check."
+      );
+
+      setTimeout(() => {
+        setValidationStatus("not_verified");
+        setValidationMessage(
+          "The submitted authorization reference could not be verified under current validation requirements. No executable authorization record is available."
+        );
+      }, 5000);
+    }, 180000);
+  };
+
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
 
@@ -699,6 +712,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                 />
 
                 <button
+                  onClick={handleValidateCode}
                   style={{
                     width: "100%",
                     padding: "12px 16px",
@@ -718,14 +732,30 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     marginTop: 14,
                     borderRadius: 14,
                     padding: 14,
-                    background: "rgba(245,158,11,0.08)",
-                    border: "1px solid rgba(245,158,11,0.18)",
+                    minHeight: 170,
+                    background:
+                      validationStatus === "verified"
+                        ? "rgba(14,203,129,0.08)"
+                        : validationStatus === "processing"
+                        ? "rgba(59,130,246,0.10)"
+                        : "rgba(245,158,11,0.08)",
+                    border:
+                      validationStatus === "verified"
+                        ? "1px solid rgba(14,203,129,0.22)"
+                        : validationStatus === "processing"
+                        ? "1px solid rgba(59,130,246,0.22)"
+                        : "1px solid rgba(245,158,11,0.18)",
                   }}
                 >
                   <div
                     style={{
                       fontSize: 12,
-                      color: "#ffd08a",
+                      color:
+                        validationStatus === "verified"
+                          ? "#86efac"
+                          : validationStatus === "processing"
+                          ? "#93c5fd"
+                          : "#ffd08a",
                       marginBottom: 8,
                       textTransform: "uppercase",
                       letterSpacing: 0.7,
@@ -735,36 +765,103 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                     Validation Result
                   </div>
 
-                  <div
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 800,
-                      color: colors.orange,
-                      marginBottom: 8,
-                    }}
-                  >
-                    NOT VERIFIED
-                  </div>
+                  {hasValidated ? (
+                    <>
+                      <div
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 800,
+                          color:
+                            validationStatus === "verified"
+                              ? colors.green
+                              : validationStatus === "processing"
+                              ? "#60a5fa"
+                              : colors.orange,
+                          marginBottom: 8,
+                        }}
+                      >
+                        {validationStatus === "processing"
+                          ? "PROCESSING..."
+                          : validationStatus === "on_hold"
+                          ? "ON HOLD"
+                          : validationStatus === "verified"
+                          ? "VERIFIED"
+                          : "NOT VERIFIED"}
+                      </div>
 
-                  <div style={{ color: "#ffe3bf", lineHeight: 1.7, fontSize: 14 }}>
-                    The submitted authorization reference could not be verified
-                    under current validation requirements. No executable
-                    authorization record is available.
-                  </div>
+                      <div
+                        style={{
+                          color:
+                            validationStatus === "verified"
+                              ? "#d1fae5"
+                              : validationStatus === "processing"
+                              ? "#dbeafe"
+                              : "#ffe3bf",
+                          lineHeight: 1.7,
+                          fontSize: 14,
+                        }}
+                      >
+                        {validationMessage}
+                      </div>
 
-                  <div
-                    style={{
-                      marginTop: 10,
-                      fontFamily: "Consolas, Monaco, monospace",
-                      color: "#ffd8a6",
-                      fontSize: 13,
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    <div>STATUS          : NOT VERIFIED</div>
-                    <div>EXECUTION       : ON HOLD</div>
-                    <div>REVIEW STATE    : PENDING VALID AUTHORIZATION</div>
-                  </div>
+                      <div
+                        style={{
+                          marginTop: 10,
+                          fontFamily: "Consolas, Monaco, monospace",
+                          color:
+                            validationStatus === "verified"
+                              ? "#bbf7d0"
+                              : validationStatus === "processing"
+                              ? "#bfdbfe"
+                              : "#ffd8a6",
+                          fontSize: 13,
+                          lineHeight: 1.7,
+                        }}
+                      >
+                        <div>
+                          STATUS          :{" "}
+                          {validationStatus === "processing"
+                            ? "PROCESSING"
+                            : validationStatus === "on_hold"
+                            ? "ON HOLD"
+                            : validationStatus === "verified"
+                            ? "VERIFIED"
+                            : "NOT VERIFIED"}
+                        </div>
+                        <div>
+                          EXECUTION       :{" "}
+                          {validationStatus === "processing"
+                            ? "VALIDATION RUNNING"
+                            : validationStatus === "on_hold"
+                            ? "ON HOLD"
+                            : validationStatus === "verified"
+                            ? "READY FOR REVIEW"
+                            : "ON HOLD"}
+                        </div>
+                        <div>
+                          REVIEW STATE    :{" "}
+                          {validationStatus === "processing"
+                            ? "AUTHORIZATION CHECK IN PROGRESS"
+                            : validationStatus === "on_hold"
+                            ? "PENDING AUTHORIZATION REVIEW"
+                            : validationStatus === "verified"
+                            ? "AUTHORIZATION ACCEPTED"
+                            : "PENDING VALID AUTHORIZATION"}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div
+                      style={{
+                        color: "#9aa4af",
+                        fontSize: 14,
+                        lineHeight: 1.7,
+                        paddingTop: 10,
+                      }}
+                    >
+                      &nbsp;
+                    </div>
+                  )}
                 </div>
               </div>
 
