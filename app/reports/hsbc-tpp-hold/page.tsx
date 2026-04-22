@@ -68,12 +68,11 @@ export default function HSBCTPPHoldPage() {
   const lastUpdate = useMemo(() => formatNow(), []);
 
   const walletSlots = [
-    { wallet: "0xaa15a80957f9397d888fdcc568f2586a4999c3eb", percentage: "30.00%" },
-    { wallet: "0x466bAdE7E4cFc15213E0f7E9E25e4aa57A4aCc42", percentage: "10.00%" },
-    { wallet: "0x08B5297F88833896d58eDD9506aF6984310B24C4", percentage: "5.00%" },
-    { wallet: "0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C", percentage: "55.00%" },
-  ];
-
+  { wallet: "0xaa15a80957f9397d888fdcc568f2586a4999c3eb", percentage: "30.00%" },
+  { wallet: "0x466bAdE7E4cFc15213E0f7E9E25e4aa57A4aCc42", percentage: "10.00%" },
+  { wallet: "0x08B5297F88833896d58eDD9506aF6984310B24C4", percentage: "5.00%" },
+  { wallet: "0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C", percentage: "55.00%" },
+];
   return (
     <div className="min-h-screen bg-[#061018] text-white">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
