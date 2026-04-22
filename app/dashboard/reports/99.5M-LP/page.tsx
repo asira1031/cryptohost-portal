@@ -3,35 +3,58 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
+import { createClient } from "@/app/lib/supabase/client";
 
 export default function PriorityMintPage() {
   const router = useRouter();
+  const supabase = createClient();
+
   const [timestamp, setTimestamp] = useState("");
   const [submittedCode, setSubmittedCode] = useState("");
-
-  // 🔐 TEMP ADMIN ONLY ACCESS
-  const userEmail =
-    typeof window !== "undefined"
-      ? localStorage.getItem("user_email")
-      : null;
-
-  const isAdmin = userEmail === "jans103174@gmail.com";
+  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    if (!userEmail) {
-      router.replace("/login");
-      return;
-    }
+    let isMounted = true;
 
-    if (!isAdmin) {
-      router.replace("/dashboard/my-files");
-      return;
-    }
-  }, [userEmail, isAdmin, router]);
+    const checkAccess = async () => {
+      try {
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
 
-  if (!isAdmin) {
-    return null;
-  }
+        if (!isMounted) return;
+
+        if (error || !user?.email) {
+          router.replace("/login");
+          return;
+        }
+
+        const adminEmail = "jans103174@gmail.com";
+        const allowed = user.email.toLowerCase() === adminEmail.toLowerCase();
+
+        if (!allowed) {
+          router.replace("/dashboard/my-files");
+          return;
+        }
+
+        setIsAdmin(true);
+      } catch {
+        router.replace("/login");
+      } finally {
+        if (isMounted) {
+          setIsCheckingAccess(false);
+        }
+      }
+    };
+
+    checkAccess();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [router, supabase]);
 
   useEffect(() => {
     const updateTimestamp = () => {
@@ -182,6 +205,39 @@ REFERENCE     : 99.5M-PRIORITY-MINT
     color,
   });
 
+  if (isCheckingAccess) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "grid",
+          placeItems: "center",
+          background: colors.bg,
+          color: colors.text,
+          fontFamily:
+            "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+        }}
+      >
+        <div
+          style={{
+            padding: 20,
+            borderRadius: 16,
+            border: `1px solid ${colors.border}`,
+            background: `linear-gradient(180deg, ${colors.panel}, ${colors.panel2})`,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+            fontWeight: 700,
+          }}
+        >
+          Checking admin access...
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return null;
+  }
+
   return (
     <div
       style={{
@@ -262,7 +318,7 @@ REFERENCE     : 99.5M-PRIORITY-MINT
           >
             <div>
               <div style={{ fontSize: 34, fontWeight: 900, lineHeight: 1.1 }}>
-                Welcome, Client
+                Welcome, Admin
               </div>
               <div style={{ marginTop: 10 }}>
                 <span style={badgeStyle("rgba(245,158,11,0.16)", colors.orange)}>
