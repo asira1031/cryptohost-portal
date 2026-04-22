@@ -68,12 +68,12 @@ export default function HSBCTPPHoldPage() {
   const lastUpdate = useMemo(() => formatNow(), []);
 
   const walletSlots = [
-    { wallet: "WALLET_1_HERE", percentage: "00.00%" },
-    { wallet: "WALLET_2_HERE", percentage: "00.00%" },
-    { wallet: "WALLET_3_HERE", percentage: "00.00%" },
-    { wallet: "WALLET_4_HERE", percentage: "00.00%" },
-    { wallet: "WALLET_5_HERE", percentage: "00.00%" },
-    { wallet: "WALLET_6_HERE", percentage: "00.00%" },
+   [
+  { wallet: "0xaa15a80957f9397d888fdcc568f2586a4999c3eb", percentage: "30.00%" },
+  { wallet: "0x466bAdE7E4cFc15213E0f7E9E25e4aa57A4aCc42", percentage: "10.00%" },
+  { wallet: "0x08B5297F88833896d58eDD9506aF6984310B24C4", percentage: "5.00%" },
+  { wallet: "0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C", percentage: "55.00%" }
+]
   ];
 
   return (
@@ -287,7 +287,7 @@ export default function HSBCTPPHoldPage() {
                           Wallet {index + 1}
                         </p>
                         <p className="mt-2 break-all text-sm font-semibold text-white/90">
-                          {slot.wallet}
+                          
                         </p>
                       </div>
 
@@ -296,7 +296,7 @@ export default function HSBCTPPHoldPage() {
                           Percentage
                         </p>
                         <p className="mt-2 text-sm font-semibold text-white/90">
-                          {slot.percentage}
+                          
                         </p>
                       </div>
                     </div>
