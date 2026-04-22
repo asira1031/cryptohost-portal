@@ -259,6 +259,9 @@ export default function Dashboard() {
             <a href="/dashboard/subscription" style={quickLinkStyle}>
               Subscription
             </a>
+            <Link href="/dashboard/pos-validation" style={quickLinkStyle}>
+  Visa Protocol 101.1
+</Link>
           </div>
         </div>
 
