@@ -15,7 +15,6 @@ export default function POSValidationPage() {
   const [status, setStatus] = useState("");
   const [running, setRunning] = useState(false);
 
-  // CLEAR RESULT kapag empty input
   useEffect(() => {
     if (!code) {
       setStatus("");
@@ -57,47 +56,77 @@ export default function POSValidationPage() {
 
   return (
     <div className="p-6 text-white">
-      <h1 className="text-2xl font-bold mb-4">
+      <h1 className="mb-4 text-2xl font-bold">
         CryptoHost POS Validation Terminal
       </h1>
 
-      {/* CARD INPUT */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <input placeholder="Card Number" className="input" onChange={(e) => setCard(e.target.value)} />
-        <input placeholder="Card Holder Name" className="input" onChange={(e) => setName(e.target.value)} />
-        <input placeholder="Expiry (MM/YY)" className="input" onChange={(e) => setExpiry(e.target.value)} />
-        <input placeholder="CVV" className="input" onChange={(e) => setCvv(e.target.value)} />
-        <input placeholder="Amount" className="input" onChange={(e) => setAmount(e.target.value)} />
-        <input placeholder="Validation Code (7001)" className="input" onChange={(e) => setCode(e.target.value)} />
-        <input placeholder="Protocol (101.1)" className="input col-span-2" onChange={(e) => setProtocol(e.target.value)} />
+      <div className="mb-6 grid grid-cols-2 gap-4">
+        <input
+          placeholder="Card Number"
+          className="input"
+          onChange={(e) => setCard(e.target.value)}
+        />
+        <input
+          placeholder="Card Holder Name"
+          className="input"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          placeholder="Expiry (MM/YY)"
+          className="input"
+          onChange={(e) => setExpiry(e.target.value)}
+        />
+        <input
+          placeholder="CVV"
+          className="input"
+          onChange={(e) => setCvv(e.target.value)}
+        />
+        <input
+          placeholder="Amount"
+          className="input"
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <input
+          placeholder="Validation Code (7001)"
+          className="input"
+          onChange={(e) => setCode(e.target.value)}
+        />
+        <input
+          placeholder="Protocol (101.1)"
+          className="input col-span-2"
+          onChange={(e) => setProtocol(e.target.value)}
+        />
       </div>
 
-      {/* BUTTON */}
       <button
         onClick={runValidation}
-        className="bg-green-500 px-6 py-2 rounded-xl mb-6"
+        className="mb-6 rounded-xl bg-green-500 px-6 py-2"
         disabled={running}
       >
         {running ? "Processing..." : "RUN VALIDATION"}
       </button>
 
-      {/* TERMINAL */}
-      <div className="bg-black p-4 rounded-xl h-60 overflow-y-auto mb-6">
+      <div className="mb-6 h-60 overflow-y-auto rounded-xl bg-black p-4">
         {logs.map((log, i) => (
-          <p key={i} className="text-green-400 text-sm">
+          <p key={i} className="text-sm text-green-400">
             {"> " + log}
           </p>
         ))}
       </div>
 
-      {/* RESULT */}
       {status && (
-        <div className="bg-gray-900 p-4 rounded-xl">
-          <h2 className="text-xl font-bold mb-2">RESULT</h2>
+        <div className="rounded-xl bg-gray-900 p-4">
+          <h2 className="mb-2 text-xl font-bold">RESULT</h2>
           <p>Status: {status}</p>
           <p>Code: {code}</p>
           <p>Protocol: {protocol}</p>
           <p>Amount: {amount}</p>
           <p>Card: **** **** **** {card.slice(-4)}</p>
-
-          <p className="mt
+          <p className="mt-2">Card Holder: {name || "N/A"}</p>
+          <p>Expiry: {expiry || "N/A"}</p>
+          <p>CVV: {cvv ? "***" : "N/A"}</p>
+        </div>
+      )}
+    </div>
+  );
+}
