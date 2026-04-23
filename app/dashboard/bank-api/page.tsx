@@ -75,6 +75,12 @@ export default function BankApiPage() {
               name: "Bank of America Developer Portal",
               url: "https://developer.bankofamerica.com",
             },
+
+            // ✅ ADDED (Visa)
+            {
+              name: "Visa Developer Portal",
+              url: "https://developer.visa.com",
+            },
           ].map((item) => (
             <a
               key={item.name}
