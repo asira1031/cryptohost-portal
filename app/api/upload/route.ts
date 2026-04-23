@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       .from("uploaded_files")
       .insert({
         user_id: user.id,
-        uploader_email: user.email || "",
+        uploader_email: user.email,
         file_name: file.name,
         file_path: filePath,
         file_size: file.size,
