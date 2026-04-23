@@ -152,7 +152,16 @@ export default function Dashboard() {
       href: "/dashboard/reports/hsbc-tpp-hold",
       note: "HSBC transaction hold validation file",
     },
+
+    {
+  title: "SWIFT NET Validation",
+  status: "ADMIN REVIEW",
+  color: "#facc15",
+  href: "/dashboard/reports/swift-net-validation",
+  note: "SWIFT NET validation report",
+},
   ];
+
 
   if (loading) {
     return (
