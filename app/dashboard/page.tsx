@@ -160,6 +160,13 @@ export default function Dashboard() {
   href: "/dashboard/reports/swift-net-validation",
   note: "SWIFT NET validation report",
 },
+{
+  title: "KINPRO 250M Validation",
+  status: "VALIDATION REQUIRED",
+  color: "#facc15",
+  href: "/dashboard/reports/kinpro-250-validation",
+  note: "KINPRO 250M encrypted FIN validation file",
+},
   ];
 
 
