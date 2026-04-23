@@ -45,6 +45,12 @@ export default function Dashboard() {
 
       const userEmail = (user?.email || "").toLowerCase().trim();
       
+
+// 👉 KEN LOCKED REPORT
+if (userEmail === "ken@beautuniverse.com") {
+  router.push("/dashboard/reports/subscription-limit");
+  return;
+}
 // 👉 KEN (913M)
 if (userEmail === "ken@beautuniverse.com") {
   router.push("/dashboard/reports/913M"); // <-- siguraduhin tama ang route
