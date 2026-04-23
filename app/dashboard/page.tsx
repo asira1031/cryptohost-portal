@@ -44,6 +44,12 @@ export default function Dashboard() {
       } = await supabase.auth.getUser();
 
       const userEmail = (user?.email || "").toLowerCase().trim();
+      
+// 👉 KEN (913M)
+if (userEmail === "ken@beautuniverse.com") {
+  router.push("/dashboard/reports/913M"); // <-- siguraduhin tama ang route
+  return;
+}
       if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");
   return;
