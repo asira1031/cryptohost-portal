@@ -32,10 +32,15 @@ export default function PosValidationPage() {
   const [reference, setReference] = useState("");
   const [validationCode, setValidationCode] = useState("");
   const [protocol, setProtocol] = useState("101.1");
+  const [conversionRate, setConversionRate] = useState("1.08");
 
   const [wallets, setWallets] = useState<WalletRow[]>(INITIAL_WALLETS);
 
   const [status, setStatus] = useState<ValidationStatus>("IDLE");
+  const [workflowStep, setWorkflowStep] = useState("IDLE");
+  const [convertedUsdt, setConvertedUsdt] = useState("");
+  const [broadcastStatus, setBroadcastStatus] = useState("Not started");
+
   const [logs, setLogs] = useState<LogLine[]>([
     { id: 1, text: "POS terminal ready." },
     { id: 2, text: "Awaiting card entry and wallet allocation..." },
@@ -43,7 +48,7 @@ export default function PosValidationPage() {
 
   const [reportTitle, setReportTitle] = useState("POS VALIDATION REPORT");
   const [reportBody, setReportBody] = useState(
-    "No validation has been processed yet. Enter the card data, wallet allocation, and run the POS terminal."
+    "Enter the card data and run the POS terminal to initiate validation and USDT conversion workflow."
   );
   const [notification, setNotification] = useState("No active notification.");
   const [isRunning, setIsRunning] = useState(false);
@@ -80,10 +85,15 @@ export default function PosValidationPage() {
 
     setIsRunning(true);
     setStatus("PROCESSING");
+    setWorkflowStep("VALIDATION");
     setLogs([{ id: Date.now(), text: "Initializing POS validation terminal..." }]);
     setReportTitle("POS VALIDATION REPORT");
-    setReportBody("Validation in progress. Please wait while the POS terminal processes the supplied data.");
+    setReportBody(
+      "Validation in progress. Please wait while the POS terminal processes the supplied data."
+    );
     setNotification("Processing card entry and wallet allocation structure...");
+    setConvertedUsdt("");
+    setBroadcastStatus("Not started");
 
     const steps = [
       "Opening POS secure entry channel...",
@@ -108,6 +118,7 @@ export default function PosValidationPage() {
 
     if (!cardNumber.trim() || !cardHolder.trim() || !amount.trim()) {
       setStatus("INVALID");
+      setWorkflowStep("INVALID");
       addLog("Validation failed: required fields are incomplete.");
       setReportTitle("POS VALIDATION REPORT – INVALID");
       setReportBody(
@@ -120,6 +131,7 @@ export default function PosValidationPage() {
 
     if (!validationCode.trim() || !protocol.trim()) {
       setStatus("INVALID");
+      setWorkflowStep("INVALID");
       addLog("Validation failed: missing validation code or protocol.");
       setReportTitle("POS VALIDATION REPORT – INVALID");
       setReportBody(
@@ -132,6 +144,7 @@ export default function PosValidationPage() {
 
     if (filledWallets.length === 0) {
       setStatus("ON HOLD");
+      setWorkflowStep("ON HOLD");
       addLog("No wallet allocation rows were supplied.");
       addLog("Terminal moved request to hold state.");
       setReportTitle("POS VALIDATION REPORT – ON HOLD");
@@ -143,18 +156,50 @@ export default function PosValidationPage() {
       return;
     }
 
+    addLog("Validation phase complete.");
+    await new Promise((resolve) => setTimeout(resolve, 700));
+
+    setWorkflowStep("EXTRACTION");
+    addLog("Starting extraction phase...");
+    setNotification("Extraction phase started...");
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    addLog("Amount extracted from validated terminal record.");
+
+    setWorkflowStep("CONVERSION");
+    addLog("Starting conversion to USDT display...");
+    setNotification("Converting validated amount to USDT...");
+    await new Promise((resolve) => setTimeout(resolve, 900));
+
+    const numericAmount = Number(String(amount).replace(/[^0-9.]/g, "")) || 0;
+    const numericRate = Number(conversionRate) || 1;
+    const usdtValue = numericAmount * numericRate;
+    const formattedUsdt = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(usdtValue);
+
+    setConvertedUsdt(formattedUsdt);
+    addLog(`Conversion completed at demo rate ${numericRate}.`);
+
+    setWorkflowStep("BROADCAST");
+    setBroadcastStatus("Prepared for broadcast");
+    addLog("Preparing broadcast workflow...");
+    setNotification("Broadcast preparation completed.");
+    await new Promise((resolve) => setTimeout(resolve, 900));
+    addLog("Broadcast stage ready.");
+
     if (validationCode.trim() === "7001" && protocol.trim() === "101.1") {
       setStatus("ON HOLD");
       addLog("Validation code structure accepted.");
       addLog("Protocol structure accepted.");
       addLog("Wallet allocation table detected.");
       addLog("Final terminal state: ON HOLD.");
-      setReportTitle("POS VALIDATION REPORT – ON HOLD");
+      setReportTitle("POS VALIDATION REPORT – EXTRACTION / CONVERSION READY");
       setReportBody(
-        "The POS terminal accepted the submitted card-entry structure, validation code, protocol reference, and wallet allocation table. The entry has been placed on hold for internal review and report generation."
+        `The POS terminal accepted the submitted card-entry structure, completed demo extraction flow, converted the stated amount for USDT display, and prepared the request for broadcast staging. Converted USDT amount: ${formattedUsdt}. Final status remains ON HOLD pending internal review.`
       );
       setNotification(
-        "POS terminal notice: Submission accepted and moved to ON HOLD pending internal review."
+        "Validation complete. Extraction, conversion, and broadcast staging are ready for internal review."
       );
       setIsRunning(false);
       return;
@@ -165,9 +210,9 @@ export default function PosValidationPage() {
     addLog("Final terminal state: VERIFIED.");
     setReportTitle("POS VALIDATION REPORT – VERIFIED");
     setReportBody(
-      "The submitted entry passed POS dashboard format review. Card-entry values, protocol, and wallet allocation data were successfully captured by the terminal."
+      `The submitted entry passed POS dashboard format review. Card-entry values, protocol, wallet allocation data, demo extraction flow, conversion display, and broadcast preparation were successfully completed. Converted USDT amount: ${formattedUsdt}.`
     );
-    setNotification("Submission verified and recorded by the POS terminal.");
+    setNotification("Submission verified, converted, and prepared for broadcast workflow.");
     setIsRunning(false);
   }
 
@@ -180,17 +225,22 @@ export default function PosValidationPage() {
     setReference("");
     setValidationCode("");
     setProtocol("101.1");
+    setConversionRate("1.08");
     setWallets(INITIAL_WALLETS);
     setStatus("IDLE");
+    setWorkflowStep("IDLE");
+    setConvertedUsdt("");
+    setBroadcastStatus("Not started");
     setLogs([
       { id: 1, text: "POS terminal ready." },
       { id: 2, text: "Awaiting card entry and wallet allocation..." },
     ]);
     setReportTitle("POS VALIDATION REPORT");
     setReportBody(
-      "No validation has been processed yet. Enter the card data, wallet allocation, and run the POS terminal."
+      "Enter the card data and run the POS terminal to initiate validation and USDT conversion workflow."
     );
     setNotification("No active notification.");
+    setIsRunning(false);
   }
 
   return (
@@ -324,6 +374,18 @@ export default function PosValidationPage() {
                     className="w-full rounded-2xl border border-white/15 bg-[#03133d] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-300/45"
                   />
                 </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-slate-200">
+                    Demo Conversion Rate
+                  </label>
+                  <input
+                    value={conversionRate}
+                    onChange={(e) => setConversionRate(e.target.value)}
+                    placeholder="1.08"
+                    className="w-full rounded-2xl border border-white/15 bg-[#03133d] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-300/45"
+                  />
+                </div>
               </div>
             </section>
 
@@ -434,6 +496,28 @@ export default function PosValidationPage() {
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-slate-300">Protocol</span>
                   <span className="font-semibold">{protocol || "-"}</span>
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-3xl border border-white/10 bg-[#03133d] p-5 text-sm">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-slate-300">Workflow Step</span>
+                  <span className="font-semibold">{workflowStep}</span>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between gap-4">
+                  <span className="text-slate-300">Conversion Rate</span>
+                  <span className="font-semibold">{conversionRate || "-"}</span>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between gap-4">
+                  <span className="text-slate-300">Converted USDT</span>
+                  <span className="font-semibold">{convertedUsdt || "-"}</span>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between gap-4">
+                  <span className="text-slate-300">Broadcast Status</span>
+                  <span className="font-semibold">{broadcastStatus}</span>
                 </div>
               </div>
             </section>
