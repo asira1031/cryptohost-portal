@@ -19,11 +19,20 @@ type ClientDashboardAccess = {
   updated_at?: string;
 };
 
+type UploadedFileRow = {
+  id: string;
+  file_name: string;
+  uploader_email: string | null;
+  created_at?: string;
+  status?: string | null;
+};
+
 export default function Dashboard() {
   const router = useRouter();
   const [clients, setClients] = useState<ClientDashboardAccess[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [uploads, setUploads] = useState<UploadedFileRow[]>([]);
 
   useEffect(() => {
     const checkUserAndLoad = async () => {
@@ -51,6 +60,13 @@ export default function Dashboard() {
           .order("created_at", { ascending: false });
 
         setClients((data || []) as ClientDashboardAccess[]);
+
+        const { data: uploadData } = await supabase
+          .from("uploaded_files")
+          .select("id, file_name, uploader_email, created_at, status")
+          .order("created_at", { ascending: false });
+
+        setUploads((uploadData || []) as UploadedFileRow[]);
         setLoading(false);
         return;
       }
@@ -259,9 +275,10 @@ export default function Dashboard() {
             <a href="/dashboard/subscription" style={quickLinkStyle}>
               Subscription
             </a>
+
             <Link href="/dashboard/pos-validation" style={quickLinkStyle}>
-  Visa Protocol 101.1
-</Link>
+              Visa Protocol 101.1
+            </Link>
           </div>
         </div>
 
@@ -354,6 +371,109 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div style={{ marginBottom: 40 }}>
+          <h2
+            style={{
+              fontSize: 22,
+              fontWeight: 700,
+              color: "#07142b",
+              marginBottom: 8,
+            }}
+          >
+            Recent Uploads
+          </h2>
+
+          <p
+            style={{
+              color: "#6b7280",
+              marginBottom: 18,
+              fontSize: 15,
+            }}
+          >
+            Admin-only view of uploaded client files
+          </p>
+
+          {uploads.length === 0 ? (
+            <div
+              style={{
+                background: "#ffffff",
+                border: "1px solid #dbe3ef",
+                borderRadius: 16,
+                padding: 20,
+                color: "#64748b",
+              }}
+            >
+              No uploads found
+            </div>
+          ) : (
+            <div style={{ display: "grid", gap: 16 }}>
+              {uploads.map((file) => (
+                <div
+                  key={file.id}
+                  style={{
+                    border: "1px solid #dbe3ef",
+                    borderRadius: 16,
+                    padding: 20,
+                    background: "#ffffff",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: 16,
+                  }}
+                >
+                  <div style={{ flex: 1, minWidth: 280 }}>
+                    <h3
+                      style={{
+                        margin: 0,
+                        fontWeight: 700,
+                        color: "#07142b",
+                        fontSize: 18,
+                      }}
+                    >
+                      {file.file_name}
+                    </h3>
+
+                    <p style={{ margin: "6px 0", color: "#555" }}>
+                      {file.uploader_email || "No email"} uploaded this file
+                    </p>
+
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                      <span
+                        style={{
+                          background: "#e0f2fe",
+                          color: "#0284c7",
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          fontSize: 12,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {file.status || "uploaded"}
+                      </span>
+
+                      <span
+                        style={{
+                          background: "#f1f5f9",
+                          color: "#64748b",
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          fontSize: 12,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {file.created_at
+                          ? new Date(file.created_at).toLocaleString()
+                          : "No date"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div>
