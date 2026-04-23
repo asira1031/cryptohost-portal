@@ -116,74 +116,82 @@ if (userEmail === "ken@beautuniverse.com") {
     fontWeight: 600,
     fontSize: 14,
   };
+const fileDashboards = [
+  {
+    title: "Ken — 99.5M LP",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/99.5M-LP",
+    note: "Liquidity dashboard",
+  },
+  {
+    title: "Ken — 10B Restricted Review",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/ken-10b",
+    note: "Ken restricted review file",
+  },
+  {
+    title: "890M Dashboard",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/890M",
+    note: "890M client dashboard",
+  },
+  {
+    title: "TJDB1.275B Dashboard",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/TJDB1.275B",
+    note: "TJDB 1.275B dashboard",
+  },
+  {
+    title: "HSBC — 5M Validation",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/hsbclogen",
+    note: "HSBC international payment file",
+  },
+  {
+    title: "913M HSBC Validation",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/913M",
+    note: "913M HSBC MT103 transmission file",
+  },
+  {
+    title: "HSBC — TPP HOLD",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/hsbc-tpp-hold",
+    note: "HSBC transaction hold validation file",
+  },
 
-  const fileDashboards = [
-    {
-      title: "Ken — 99.5M LP",
-      status: "ACTIVE",
-      color: "#16a34a",
-      href: "/dashboard/reports/99.5M-LP",
-      note: "Liquidity dashboard",
-    },
-    {
-      title: "Ken — 10B Restricted Review",
-      status: "PAID / ACTIVE ACCESS",
-      color: "#dc2626",
-      href: "/dashboard/reports/ken-10b",
-      note: "Ken restricted review file",
-    },
-    {
-      title: "890M Dashboard",
-      status: "ACTIVE",
-      color: "#2563eb",
-      href: "/dashboard/reports/890M",
-      note: "890M client dashboard",
-    },
-    {
-      title: "TJDB1.275B Dashboard",
-      status: "ACTIVE",
-      color: "#7c3aed",
-      href: "/dashboard/reports/TJDB1.275B",
-      note: "TJDB 1.275B dashboard",
-    },
-    {
-      title: "HSBC — 5M Validation",
-      status: "PENDING",
-      color: "#fde68a",
-      href: "/dashboard/reports/hsbclogen",
-      note: "HSBC international payment file",
-    },
-    {
-      title: "913M HSBC Validation",
-      status: "ON HOLD",
-      color: "#f59e0b",
-      href: "/dashboard/reports/913M",
-      note: "913M HSBC MT103 transmission file",
-    },
-    {
-      title: "HSBC — TPP HOLD",
-      status: "READY FOR EXECUTION",
-      color: "#22c55e",
-      href: "/dashboard/reports/hsbc-tpp-hold",
-      note: "HSBC transaction hold validation file",
-    },
+  {
+    title: "SWIFT NET Validation",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/swift-net-validation",
+    note: "SWIFT NET validation report",
+  },
 
-    {
-  title: "SWIFT NET Validation",
-  status: "ADMIN REVIEW",
-  color: "#facc15",
-  href: "/dashboard/reports/swift-net-validation",
-  note: "SWIFT NET validation report",
-},
-{
-  title: "KINPRO 250M Validation",
-  status: "VALIDATION REQUIRED",
-  color: "#facc15",
-  href: "/dashboard/reports/kinpro-250-validation",
-  note: "KINPRO 250M encrypted FIN validation file",
-},
-  ];
+  {
+    title: "KINPRO 250M Validation",
+    status: "VALIDATED",
+    color: "#16a34a",
+    href: "/dashboard/reports/kinpro-250-validation",
+    note: "KINPRO 250M encrypted FIN validation file",
+  },
 
+  // 🔥 INCOMING AUTO SLOT (for new uploads)
+  {
+    title: "New Uploaded File",
+    status: "PROCESSING",
+    color: "#06b6d4",
+    href: "/dashboard/reports/processing",
+    note: "File is currently under validation processing",
+  },
+];
 
   if (loading) {
     return (

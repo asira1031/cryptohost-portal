@@ -111,119 +111,154 @@ export default async function MyFilesPage() {
         </div>
       ) : (
         <div style={{ display: "grid", gap: 14 }}>
-          {filesWithUrls.map((file) => (
-            <div
-              key={file.id}
-              style={{
-                background: "#111827",
-                border: "1px solid #1f2937",
-                borderRadius: 14,
-                padding: 18,
-              }}
-            >
+          {filesWithUrls.map((file) => {
+            const validateHref = `/dashboard/reports/processing?fileId=${encodeURIComponent(
+              file.id
+            )}&fileName=${encodeURIComponent(file.file_name)}`;
+
+            return (
               <div
+                key={file.id}
                 style={{
-                  fontSize: 18,
-                  fontWeight: 700,
-                  marginBottom: 8,
-                  color: "#f9fafb",
-                  wordBreak: "break-word",
+                  background: "#111827",
+                  border: "1px solid #1f2937",
+                  borderRadius: 14,
+                  padding: 18,
                 }}
               >
-                {file.file_name}
-              </div>
+                <div
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 700,
+                    marginBottom: 8,
+                    color: "#f9fafb",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {file.file_name}
+                </div>
 
-              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4, wordBreak: "break-word" }}>
-                <strong>Path:</strong> {file.file_path}
-              </div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    opacity: 0.8,
+                    marginBottom: 4,
+                    wordBreak: "break-word",
+                  }}
+                >
+                  <strong>Path:</strong> {file.file_path}
+                </div>
 
-              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4 }}>
-                <strong>Status:</strong> {file.status || "uploaded"}
-              </div>
+                <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4 }}>
+                  <strong>Status:</strong> {file.status || "uploaded"}
+                </div>
 
-              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4 }}>
-                <strong>Type:</strong> {file.mime_type || "unknown"}
-              </div>
+                <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4 }}>
+                  <strong>Type:</strong> {file.mime_type || "unknown"}
+                </div>
 
-              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4 }}>
-                <strong>Size:</strong> {formatBytes(file.file_size)}
-              </div>
+                <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4 }}>
+                  <strong>Size:</strong> {formatBytes(file.file_size)}
+                </div>
 
-              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 14 }}>
-                <strong>Created:</strong> {formatDate(file.created_at)}
-              </div>
+                <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 14 }}>
+                  <strong>Created:</strong> {formatDate(file.created_at)}
+                </div>
 
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
-                {file.openUrl ? (
-                  <>
-                    <a
-                      href={file.openUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    flexWrap: "wrap",
+                    marginBottom: 14,
+                  }}
+                >
+                  {file.openUrl ? (
+                    <>
+                      <a
+                        href={file.openUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-block",
+                          background: "#2563eb",
+                          color: "white",
+                          textDecoration: "none",
+                          borderRadius: 10,
+                          padding: "10px 14px",
+                          fontWeight: 700,
+                        }}
+                      >
+                        Open
+                      </a>
+
+                      <a
+                        href={file.openUrl}
+                        download={file.file_name}
+                        style={{
+                          display: "inline-block",
+                          background: "#374151",
+                          color: "white",
+                          textDecoration: "none",
+                          borderRadius: 10,
+                          padding: "10px 14px",
+                          fontWeight: 700,
+                        }}
+                      >
+                        Download
+                      </a>
+                    </>
+                  ) : (
+                    <div
                       style={{
-                        display: "inline-block",
-                        background: "#2563eb",
-                        color: "white",
-                        textDecoration: "none",
+                        background: "#3f1d1d",
+                        color: "#fca5a5",
+                        border: "1px solid #7f1d1d",
                         borderRadius: 10,
                         padding: "10px 14px",
                         fontWeight: 700,
                       }}
                     >
-                      Open
-                    </a>
+                      File link unavailable
+                    </div>
+                  )}
 
-                    <a
-                      href={file.openUrl}
-                      download={file.file_name}
-                      style={{
-                        display: "inline-block",
-                        background: "#374151",
-                        color: "white",
-                        textDecoration: "none",
-                        borderRadius: 10,
-                        padding: "10px 14px",
-                        fontWeight: 700,
-                      }}
-                    >
-                      Download
-                    </a>
-                  </>
-                ) : (
-                  <div
+                  <a
+                    href={validateHref}
                     style={{
-                      background: "#3f1d1d",
-                      color: "#fca5a5",
-                      border: "1px solid #7f1d1d",
-                      borderRadius: 10,
-                      padding: "10px 14px",
-                      fontWeight: 700,
-                    }}
-                  >
-                    File link unavailable
-                  </div>
-                )}
-
-                <form action="/api/files/delete" method="POST">
-                  <input type="hidden" name="fileId" value={file.id} />
-                  <button
-                    type="submit"
-                    style={{
-                      background: "#dc2626",
+                      display: "inline-block",
+                      background: "#06b6d4",
                       color: "white",
-                      border: "none",
+                      textDecoration: "none",
                       borderRadius: 10,
                       padding: "10px 14px",
                       fontWeight: 700,
-                      cursor: "pointer",
                     }}
                   >
-                    Delete File
-                  </button>
-                </form>
+                    Validate
+                  </a>
+
+                  <form action="/api/files/delete" method="POST">
+                    <input type="hidden" name="fileId" value={file.id} />
+                    <button
+                      type="submit"
+                      style={{
+                        background: "#dc2626",
+                        color: "white",
+                        border: "none",
+                        borderRadius: 10,
+                        padding: "10px 14px",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                      }}
+                    >
+                      Delete File
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
