@@ -12,6 +12,10 @@ type UploadedFile = {
   created_at: string;
 };
 
+type UploadedFileWithUrl = UploadedFile & {
+  openUrl: string | null;
+};
+
 function formatBytes(bytes?: number | null) {
   if (!bytes || bytes <= 0) return "0 B";
 
@@ -62,6 +66,25 @@ export default async function MyFilesPage() {
 
   const uploadedFiles = (files || []) as UploadedFile[];
 
+  const filesWithUrls: UploadedFileWithUrl[] = await Promise.all(
+    uploadedFiles.map(async (file) => {
+      let openUrl: string | null = null;
+
+      if (file.file_path) {
+        const { data } = await supabase.storage
+          .from("client-files")
+          .createSignedUrl(file.file_path, 60 * 60);
+
+        openUrl = data?.signedUrl ?? null;
+      }
+
+      return {
+        ...file,
+        openUrl,
+      };
+    })
+  );
+
   return (
     <div style={{ padding: 24, color: "white" }}>
       <AutoSyncOnOpen />
@@ -75,7 +98,7 @@ export default async function MyFilesPage() {
         </p>
       </div>
 
-      {uploadedFiles.length === 0 ? (
+      {filesWithUrls.length === 0 ? (
         <div
           style={{
             background: "#111827",
@@ -88,7 +111,7 @@ export default async function MyFilesPage() {
         </div>
       ) : (
         <div style={{ display: "grid", gap: 14 }}>
-          {uploadedFiles.map((file) => (
+          {filesWithUrls.map((file) => (
             <div
               key={file.id}
               style={{
@@ -104,12 +127,13 @@ export default async function MyFilesPage() {
                   fontWeight: 700,
                   marginBottom: 8,
                   color: "#f9fafb",
+                  wordBreak: "break-word",
                 }}
               >
                 {file.file_name}
               </div>
 
-              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4 }}>
+              <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 4, wordBreak: "break-word" }}>
                 <strong>Path:</strong> {file.file_path}
               </div>
 
@@ -129,23 +153,75 @@ export default async function MyFilesPage() {
                 <strong>Created:</strong> {formatDate(file.created_at)}
               </div>
 
-              <form action="/api/files/delete" method="POST">
-                <input type="hidden" name="fileId" value={file.id} />
-                <button
-                  type="submit"
-                  style={{
-                    background: "#dc2626",
-                    color: "white",
-                    border: "none",
-                    borderRadius: 10,
-                    padding: "10px 14px",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
-                >
-                  Delete File
-                </button>
-              </form>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
+                {file.openUrl ? (
+                  <>
+                    <a
+                      href={file.openUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: "inline-block",
+                        background: "#2563eb",
+                        color: "white",
+                        textDecoration: "none",
+                        borderRadius: 10,
+                        padding: "10px 14px",
+                        fontWeight: 700,
+                      }}
+                    >
+                      Open
+                    </a>
+
+                    <a
+                      href={file.openUrl}
+                      download={file.file_name}
+                      style={{
+                        display: "inline-block",
+                        background: "#374151",
+                        color: "white",
+                        textDecoration: "none",
+                        borderRadius: 10,
+                        padding: "10px 14px",
+                        fontWeight: 700,
+                      }}
+                    >
+                      Download
+                    </a>
+                  </>
+                ) : (
+                  <div
+                    style={{
+                      background: "#3f1d1d",
+                      color: "#fca5a5",
+                      border: "1px solid #7f1d1d",
+                      borderRadius: 10,
+                      padding: "10px 14px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    File link unavailable
+                  </div>
+                )}
+
+                <form action="/api/files/delete" method="POST">
+                  <input type="hidden" name="fileId" value={file.id} />
+                  <button
+                    type="submit"
+                    style={{
+                      background: "#dc2626",
+                      color: "white",
+                      border: "none",
+                      borderRadius: 10,
+                      padding: "10px 14px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Delete File
+                  </button>
+                </form>
+              </div>
             </div>
           ))}
         </div>

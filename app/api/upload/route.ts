@@ -7,9 +7,10 @@ export async function POST(req: Request) {
 
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (!user) {
+    if (userError || !user) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     const formData = await req.formData();
-    const file = formData.get("file") as File;
+    const file = formData.get("file") as File | null;
 
     if (!file) {
       return NextResponse.json(
@@ -29,28 +30,29 @@ export async function POST(req: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const filePath = `${user.id}/${Date.now()}-${file.name}`;
+    const safeFileName = file.name.replace(/\s+/g, "_");
+    const filePath = `${user.id}/${Date.now()}-${safeFileName}`;
 
-    // Upload to Supabase storage
     const { error: uploadError } = await supabase.storage
       .from("client-files")
       .upload(filePath, buffer, {
-        contentType: file.type,
+        contentType: file.type || "application/octet-stream",
+        upsert: false,
       });
 
     if (uploadError) {
       throw uploadError;
     }
 
-    // Save record to database
     const { error: insertError } = await supabase
       .from("uploaded_files")
       .insert({
         user_id: user.id,
+        uploader_email: user.email || "",
         file_name: file.name,
         file_path: filePath,
         file_size: file.size,
-        mime_type: file.type,
+        mime_type: file.type || "application/octet-stream",
         status: "uploaded",
       });
 
@@ -67,7 +69,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        error: error.message || "Upload failed",
+        error: error?.message || "Upload failed",
       },
       { status: 500 }
     );
