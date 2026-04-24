@@ -6,7 +6,7 @@ export default function FundPage() {
       </h1>
 
       <p style={{ marginBottom: "20px" }}>
-        Logged in as: jans103174@gmail.com
+        Logged in as: 
       </p>
 
       {/* COIN BUTTONS */}
