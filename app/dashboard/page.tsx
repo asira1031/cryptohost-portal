@@ -65,46 +65,55 @@ if (userEmail === "ken@beautuniverse.com") {
         return;
       }
 
-      const adminEmails = ["jans103174@gmail.com"];
+     const adminEmails = ["jans103174@gmail.com"];
 
-      if (adminEmails.includes(userEmail)) {
-        setIsAdmin(true);
+// 👉 ADMIN
+if (adminEmails.includes(userEmail)) {
+  setIsAdmin(true);
 
-        const { data } = await supabase
-          .from("client_dashboard_access")
-          .select("*")
-          .order("created_at", { ascending: false });
+  const { data } = await supabase
+    .from("client_dashboard_access")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-        setClients((data || []) as ClientDashboardAccess[]);
+  setClients((data || []) as ClientDashboardAccess[]);
 
-        const { data: uploadData } = await supabase
-          .from("uploaded_files")
-          .select("id, file_name, file_path, uploader_email, created_at, status")
-          .order("created_at", { ascending: false });
+  const { data: uploadData } = await supabase
+    .from("uploaded_files")
+    .select("id, file_name, file_path, uploader_email, created_at, status")
+    .order("created_at", { ascending: false });
 
-        setUploads((uploadData || []) as UploadedFileRow[]);
-        setLoading(false);
-        return;
-      }
+  setUploads((uploadData || []) as UploadedFileRow[]);
+  setLoading(false);
+  return;
+}
 
-      setIsAdmin(false);
+// 👉 KEN — direct to 99.5M dashboard
+if (userEmail === "ken@beautuniverse.com") {
+  setIsAdmin(false);
+  router.replace("/dashboard/reports/99.5M-LP");
+  return;
+}
 
-      const { data: client } = await supabase
-        .from("client_dashboard_access")
-        .select("*")
-        .eq("email", userEmail)
-        .single();
+// 👉 OTHER USERS
+setIsAdmin(false);
 
-      if (client && client.access_enabled && client.payment_status === "PAID") {
-        router.replace(`/dashboard/reports/${client.assigned_dashboard}`);
-        return;
-      }
+const { data: client } = await supabase
+  .from("client_dashboard_access")
+  .select("*")
+  .eq("email", userEmail)
+  .single();
 
-      router.replace("/dashboard/my-files");
-    };
+if (client && client.access_enabled && client.payment_status === "PAID") {
+  router.replace(`/dashboard/reports/${client.assigned_dashboard}`);
+  return;
+}
 
-    checkUserAndLoad();
-  }, [router]);
+router.replace("/dashboard/my-files");
+};
+
+checkUserAndLoad();
+}, [router]);
 
   const quickLinkStyle: React.CSSProperties = {
     display: "inline-block",
