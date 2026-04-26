@@ -88,8 +88,13 @@ if (adminEmails.includes(userEmail)) {
   return;
 }
 
-// 👉 KEN — direct to 99.5M dashboard
-if (userEmail.toLowerCase() === "ceo@kerogenresource.com") {
+// 👉 KEROGEN — direct to 99.5M dashboard
+const kerogenEmails = [
+  "ceo@kerogenresource.com",
+  "support@kerogencorp.com",
+];
+
+if (kerogenEmails.includes(userEmail.toLowerCase().trim())) {
   setIsAdmin(false);
   router.replace("/dashboard/reports/99.5M-LP");
   return;
