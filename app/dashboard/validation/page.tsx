@@ -78,6 +78,10 @@ export default async function ValidationPage() {
 const isHSBCTPPHoldOwner = userEmail === "tjaslan09@gmail.com";
 const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
 
+const isKerogenClient = userEmail === "ceo@kerogenresource.com";
+  const show995MLPReport = isKerogenClient || isAdmin;
+
+
   const { data, error } = await supabase
     .from("uploaded_files")
     .select("*")

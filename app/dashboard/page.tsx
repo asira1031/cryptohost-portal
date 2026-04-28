@@ -45,27 +45,30 @@ export default function Dashboard() {
 
       const userEmail = (user?.email || "").toLowerCase().trim();
       
-
 // 👉 KEN LOCKED REPORT
 if (userEmail === "ken@beautuniverse.com") {
   router.push("/dashboard/reports/subscription-limit");
   return;
 }
+
 // 👉 KEN (913M)
 if (userEmail === "ken@beautuniverse.com") {
-  router.push("/dashboard/reports/913M"); // <-- siguraduhin tama ang route
+  router.push("/dashboard/reports/913M");
   return;
 }
-      if (userEmail === "yuinpin@gmail.com") {
+
+// 👉 YUINPIN
+if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");
   return;
 }
-      if (!userEmail) {
-        router.replace("/login");
-        return;
-      }
 
-     const adminEmails = ["jans103174@gmail.com"];
+if (!userEmail) {
+  router.replace("/login");
+  return;
+}
+
+const adminEmails = ["jans103174@gmail.com"];
 
 // 👉 ADMIN
 if (adminEmails.includes(userEmail)) {
@@ -88,10 +91,9 @@ if (adminEmails.includes(userEmail)) {
   return;
 }
 
-// 👉 KEROGEN — direct to 99.5M dashboard
+// 👉 KEROGEN — EXCLUSIVE 99.5M-LP
 const kerogenEmails = [
   "ceo@kerogenresource.com",
-  "support@kerogencorp.com",
 ];
 
 if (kerogenEmails.includes(userEmail.toLowerCase().trim())) {
@@ -99,7 +101,6 @@ if (kerogenEmails.includes(userEmail.toLowerCase().trim())) {
   router.replace("/dashboard/reports/99.5M-LP");
   return;
 }
-
 // 👉 OTHER USERS
 setIsAdmin(false);
 
