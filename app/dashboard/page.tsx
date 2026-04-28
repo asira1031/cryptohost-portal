@@ -67,7 +67,15 @@ if (!userEmail) {
   router.replace("/login");
   return;
 }
+const email = userEmail.toLowerCase().trim();
 
+if (
+  email === "ceo@kerogenresource.com" ||
+  email === "asira1031@gmail.com"
+) {
+  router.replace("/dashboard/reports/99.5M-LP");
+  return;
+}
 const adminEmails = ["jans103174@gmail.com"];
 
 // 👉 ADMIN
