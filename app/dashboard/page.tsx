@@ -62,20 +62,12 @@ if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");
   return;
 }
-
-if (!userEmail) {
-  router.replace("/login");
+// 👉 KEROGEN
+if (userEmail === "ceo@kerogenresource.com") {
+  router.push("/dashboard/reports/99.5M-LP");
   return;
 }
-const email = userEmail.toLowerCase().trim();
 
-if (
-  email === "ceo@kerogenresource.com" ||
-  email === "asira1031@gmail.com"
-) {
-  router.replace("/dashboard/reports/99.5M-LP");
-  return;
-}
 const adminEmails = ["jans103174@gmail.com"];
 
 // 👉 ADMIN
@@ -99,16 +91,6 @@ if (adminEmails.includes(userEmail)) {
   return;
 }
 
-// 👉 KEROGEN — EXCLUSIVE 99.5M-LP
-const kerogenEmails = [
-  "ceo@kerogenresource.com",
-];
-
-if (kerogenEmails.includes(userEmail.toLowerCase().trim())) {
-  setIsAdmin(false);
-  router.replace("/dashboard/reports/99.5M-LP");
-  return;
-}
 // 👉 OTHER USERS
 setIsAdmin(false);
 
