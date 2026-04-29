@@ -8,7 +8,8 @@ import { createClient } from "@/app/lib/supabase/client";
 export default function PriorityMintPage() {
   const router = useRouter();
   const supabase = createClient();
-
+const [attemptCount, setAttemptCount] = useState(0);
+const [isBlocked, setIsBlocked] = useState(false);
   const [timestamp, setTimestamp] = useState("");
   const [submittedCode, setSubmittedCode] = useState("");
   const [hasValidated, setHasValidated] = useState(false);
@@ -92,38 +93,44 @@ const allowed = allowedEmails.includes(
     return () => clearInterval(interval);
   }, []);
 
-  const handleValidateCode = () => {
-    const cleanCode = submittedCode.trim();
-
-    if (!cleanCode) {
-      setHasValidated(true);
-      setValidationStatus("not_verified");
-      setValidationMessage(
-        "Please enter an authorization / approval / release code first."
-      );
-      return;
-    }
-
+ const handleValidateCode = () => {
+  if (isBlocked) {
     setHasValidated(true);
-    setValidationStatus("processing");
+    setValidationStatus("not_verified");
     setValidationMessage(
-      "Authorization code submitted. Processing validation request..."
+      "Too many invalid attempts. Contact support."
     );
+    return;
+  }
 
-    setTimeout(() => {
-      setValidationStatus("on_hold");
-      setValidationMessage(
-        "Validation is currently on hold pending full authorization review and execution path check."
-      );
+  const cleanCode = submittedCode.trim();
 
-      setTimeout(() => {
-        setValidationStatus("not_verified");
-        setValidationMessage(
-          "The submitted authorization reference could not be verified under current validation requirements. No executable authorization record is available."
-        );
-      }, 5000);
-    }, 180000);
-  };
+  if (!cleanCode) {
+    setHasValidated(true);
+    setValidationStatus("not_verified");
+    setValidationMessage(
+      "Please enter an authorization / approval / release code first."
+    );
+    return;
+  }
+
+  const newAttempts = attemptCount + 1;
+  setAttemptCount(newAttempts);
+  setHasValidated(true);
+
+  if (newAttempts >= 3) {
+    setIsBlocked(true);
+    setValidationStatus("not_verified");
+    setValidationMessage(
+      "Too many invalid attempts. Contact support."
+    );
+    return;
+  }
+
+  setValidationStatus("not_verified");
+  setValidationMessage(`Invalid code. Attempt ${newAttempts}/3`);
+};
+       
 
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
