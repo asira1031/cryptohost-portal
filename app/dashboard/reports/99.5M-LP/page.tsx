@@ -36,8 +36,14 @@ export default function PriorityMintPage() {
           return;
         }
 
-        const adminEmail = "jans103174@gmail.com";
-        const allowed = user.email.toLowerCase() === adminEmail.toLowerCase();
+        const allowedEmails = [
+  "jans103174@gmail.com",
+  "ceo@kerogenresource.com",
+];
+
+const allowed = allowedEmails.includes(
+  user.email.toLowerCase().trim()
+);;
 
         if (!allowed) {
           router.replace("/dashboard/my-files");
