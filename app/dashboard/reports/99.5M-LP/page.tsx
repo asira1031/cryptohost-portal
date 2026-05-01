@@ -13,9 +13,9 @@ const [isBlocked, setIsBlocked] = useState(false);
   const [timestamp, setTimestamp] = useState("");
   const [submittedCode, setSubmittedCode] = useState("");
   const [hasValidated, setHasValidated] = useState(false);
-  const [validationStatus, setValidationStatus] = useState<
-    "idle" | "processing" | "on_hold" | "verified" | "not_verified"
-  >("idle");
+ const [validationStatus, setValidationStatus] = useState<
+  "idle" | "processing" | "on_hold" | "verified" | "not_verified" | "blocked"
+>("idle");
   const [validationMessage, setValidationMessage] = useState("");
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -42,16 +42,29 @@ const [isBlocked, setIsBlocked] = useState(false);
   "ceo@kerogenresource.com",
 ];
 
-const allowed = allowedEmails.includes(
-  user.email.toLowerCase().trim()
-);;
+// STEP 1
+const email = user?.email?.toLowerCase()?.trim() || "";
 
-        if (!allowed) {
-          router.replace("/dashboard/my-files");
-          return;
-        }
+// 🔴 BLOCK FIRST
+if (email === "ceo@kerogenresource.com") {
+  setIsAdmin(true);
+  setIsBlocked(true);
+  setValidationStatus("blocked");
+  setValidationMessage("This account has been blocked. Contact support.");
+  setIsCheckingAccess(false);
+  return;
+}
 
-        setIsAdmin(true);
+// STEP 3
+const allowed = allowedEmails.includes(email);
+
+if (!allowed) {
+  router.replace("/dashboard/my-files");
+  return;
+}
+
+// FINAL
+setIsAdmin(true);
       } catch {
         router.replace("/login");
       } finally {
@@ -96,7 +109,7 @@ const allowed = allowedEmails.includes(
  const handleValidateCode = () => {
   if (isBlocked) {
     setHasValidated(true);
-    setValidationStatus("not_verified");
+    setValidationStatus("blocked");
     setValidationMessage(
       "Too many invalid attempts. Contact support."
     );
@@ -120,7 +133,7 @@ const allowed = allowedEmails.includes(
 
   if (newAttempts >= 3) {
     setIsBlocked(true);
-    setValidationStatus("not_verified");
+    setValidationStatus("blocked");
     setValidationMessage(
       "Too many invalid attempts. Contact support."
     );
