@@ -747,21 +747,23 @@ REFERENCE     : 99.5M-PRIORITY-MINT
                   }}
                 />
 
-                <button
-                  onClick={handleValidateCode}
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    borderRadius: 12,
-                    border: "none",
-                    background: "rgba(0,255,195,0.14)",
-                    color: "#8fffe5",
-                    fontWeight: 800,
-                    cursor: "pointer",
-                  }}
-                >
-                  Validate Code
-                </button>
+               <button
+  onClick={handleValidateCode}
+  disabled={true}
+  style={{
+    width: "100%",
+    padding: "12px 16px",
+    borderRadius: 12,
+    border: "none",
+    background: "rgba(0,255,195,0.14)",
+    color: "#8fffe5",
+    fontWeight: 800,
+    cursor: "not-allowed",
+    opacity: 0.5,
+  }}
+>
+  Validate Code
+</button>
 
                 <div
                   style={{
