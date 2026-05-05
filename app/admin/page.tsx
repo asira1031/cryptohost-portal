@@ -23,9 +23,11 @@ type Deposit = {
 const ADMIN_EMAILS = [
   "jans103174@gmail.com",
   "robertryanp1407@gmail.com"
-];
+].map(e => e.toLowerCase());
+
                     
 export default function AdminPage() {
+  
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string>("");
   const [error, setError] = useState("");
@@ -40,6 +42,7 @@ export default function AdminPage() {
       setLoading(true);
       setError("");
       setSuccess("");
+      
 
       const {
         data: { user },
