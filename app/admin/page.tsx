@@ -20,9 +20,11 @@ type Deposit = {
   created_at: string;
   amount?: number | null;
 };
-
-const ADMIN_EMAIL = "jans103174@gmail.com";
-
+const ADMIN_EMAILS = [
+  "jans103174@gmail.com",
+  "robertryanp1407@gmail.com"
+];
+                    
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string>("");
@@ -55,14 +57,13 @@ export default function AdminPage() {
 
       setUserEmail(user.email || "");
 
-      if ((user.email || "").toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-        setAuthorized(false);
-        setError("This account is not authorized to access the admin panel.");
-        setDeposits([]);
-        setLoading(false);
-        return;
-      }
-
+      if (!ADMIN_EMAILS.includes((user.email || "").toLowerCase())) {
+  setAuthorized(false);
+  setError("This account is not authorized to access the admin panel.");
+  setDeposits([]);
+  setLoading(false);
+  return;
+}
       setAuthorized(true);
 
       const res = await fetch("/api/admin/deposits", {
