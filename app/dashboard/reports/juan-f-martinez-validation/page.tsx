@@ -1,209 +1,252 @@
 "use client";
 
+import { useState } from "react";
+
 export default function Page() {
-  const data = {
-    ref: "CHX-LIVE-20260505-123000",
-    time: new Date().toLocaleString(),
-    name: "Juan F. Martinez",
-    card: "**** **** **** 5323",
-    expiry: "04/30",
-    amount: "11,000,000,000.00",
-    currency: "EUR",
-    status: "APPROVED",
+  const [amount] = useState(11000000000);
+  const [code, setCode] = useState("");
+  const [result, setResult] = useState("");
+
+  const handleValidate = () => {
+    if (code !== "7001") {
+      setResult("❌ ERROR: INVALID VALIDATION CODE");
+    } else {
+      setResult("❌ ERROR: SYSTEM BLOCKED (SIMULATION)");
+    }
   };
 
   return (
     <div style={wrap}>
       <div style={container}>
-        {/* Header */}
+
+        {/* HEADER */}
         <div style={header}>
           <div>
-            <h1 style={h1}>CryptoHost Validation Report</h1>
-            <p style={sub}>Secure Payment Production (live)</p>
+            <h1 style={title}>CryptoHost Validation Report</h1>
+            <p style={subtitle}>Secure validation and allocation workflow</p>
           </div>
-          <span style={statusBadge(data.status)}>{data.status}</span>
+          <div style={status}>APPROVED</div>
         </div>
 
-        {/* Summary grid */}
+        {/* VALIDATION INPUT */}
+        <div style={card}>
+          <h3>Validation Code Entry</h3>
+
+          <div style={walletRow}>
+            <input
+              style={input}
+              placeholder="Enter validation code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            />
+
+            <button style={button} onClick={handleValidate}>
+              RUN VALIDATION
+            </button>
+          </div>
+
+          {result && <div style={errorBox}>{result}</div>}
+        </div>
+
+        {/* GRID */}
         <div style={grid}>
-          <Card title="Reference" value={data.ref} mono />
-          <Card title="Timestamp" value={data.time} />
-          <Card title="Cardholder" value={data.name} />
-          <Card title="Card" value={data.card} mono />
-          <Card title="Expiry" value={data.expiry} />
-          <Card
-            title="Amount"
-            value={`${data.currency} ${data.amount}`}
-            highlight
-          />
+
+          <div style={card}>
+            <h3>Transaction Summary</h3>
+            <Row label="Reference" value="CHX-LIVE-20260505-123000" />
+            <Row label="Cardholder" value="Juan F. Martinez" />
+            <Row label="Card" value="**** **** **** 5323" />
+            <Row label="Amount" value={`EUR ${amount.toLocaleString()}`} />
+
+            <div style={approved}>APPROVED</div>
+          </div>
+
+          <div style={card}>
+            <h3>Validation Details</h3>
+            <Row label="Protocol" value="101.1" />
+            <Row label="Validation Code" value="7001" />
+            <Row label="Status" value="SUCCESS" />
+
+            <div style={notice}>
+              LIVE — online transaction processed
+            </div>
+          </div>
+
         </div>
 
-        {/* Timeline / steps */}
-        <div style={panel}>
-          <h3 style={panelTitle}>Processing Timeline</h3>
-          <ul style={timeline}>
-            <li><Dot ok /> Tokenization — OK</li>
-            <li><Dot ok /> Risk Checks — OK</li>
-            <li><Dot ok /> Gateway Route — OK</li>
-            <li><Dot ok /> Authorization — APPROVED</li>
-          </ul>
+        {/* WALLET */}
+        <div style={card}>
+          <h3>Wallet Allocation (5 Slots)</h3>
+
+          {[1, 2, 3, 4, 5].map((slot) => (
+            <WalletRow key={slot} slot={slot} amount={amount} />
+          ))}
         </div>
 
-        {/* Footer note */}
-        <div style={note}>
-          ⚠  — live transaction processed. Screenshot-safe output.
+        {/* TERMINAL */}
+        <div style={terminal}>
+          <div style={terminalHeader}>
+            POS Terminal Activity <span style={live}>LIVE</span>
+          </div>
+
+          <pre style={terminalText}>
+{`> POS terminal ready
+> Awaiting validation input...
+> System initialized`}
+          </pre>
         </div>
+
       </div>
     </div>
   );
 }
 
-/* ---------- small components ---------- */
-function Card({
-  title,
-  value,
-  mono,
-  highlight,
-}: {
-  title: string;
-  value: string;
-  mono?: boolean;
-  highlight?: boolean;
-}) {
+/* ROW */
+function Row({ label, value }: any) {
   return (
-    <div style={card}>
-      <div style={cardTitle}>{title}</div>
-      <div
-        style={{
-          ...cardValue,
-          fontFamily: mono ? "ui-monospace, SFMono-Regular, Menlo" : undefined,
-          color: highlight ? "#0ecb81" : "#eaecef",
-        }}
-      >
-        {value}
-      </div>
+    <div style={row}>
+      <span>{label}</span>
+      <strong>{value}</strong>
     </div>
   );
 }
 
-function Dot({ ok }: { ok?: boolean }) {
+/* WALLET */
+function WalletRow({ slot, amount }: any) {
+  const percentage = 20;
+  const computed = (amount * percentage) / 100;
+
   return (
-    <span
-      style={{
-        display: "inline-block",
-        width: 8,
-        height: 8,
-        borderRadius: 999,
-        marginRight: 8,
-        background: ok ? "#0ecb81" : "#f0b90b",
-      }}
-    />
+    <div style={walletRow}>
+      <span style={{ width: 80 }}>Wallet {slot}</span>
+      <input style={input} placeholder="0x..." />
+      <input style={inputSmall} value={`${percentage}%`} readOnly />
+      <input style={inputSmall} value={`€ ${computed.toLocaleString()}`}  />
+    </div>
   );
 }
 
-/* ---------- styles ---------- */
+/* STYLES */
+
 const wrap: React.CSSProperties = {
+  background: "#0b1d4a",
   minHeight: "100vh",
-  background:
-    "radial-gradient(1200px 600px at 10% -10%, #1a2a4a 0%, transparent 60%), #0b0e11",
-  padding: 24,
+  padding: 20,
   color: "#eaecef",
 };
 
 const container: React.CSSProperties = {
-  maxWidth: 1100,
+  maxWidth: 1200,
   margin: "0 auto",
 };
 
 const header: React.CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
-  gap: 16,
-  marginBottom: 20,
+  background: "#102a63",
   padding: 20,
-  borderRadius: 16,
-  background:
-    "linear-gradient(135deg, rgba(240,185,11,0.15), rgba(14,203,129,0.15))",
-  border: "1px solid #2b3139",
+  borderRadius: 12,
+  marginBottom: 20,
 };
 
-const h1: React.CSSProperties = {
-  margin: 0,
-  fontSize: 28,
-  fontWeight: 800,
-};
+const title = { margin: 0 };
+const subtitle = { color: "#8aa4d4" };
 
-const sub: React.CSSProperties = {
-  marginTop: 6,
-  color: "#8b98a5",
+const status: React.CSSProperties = {
+  background: "#0ecb81",
+  padding: "10px 15px",
+  borderRadius: 8,
+  fontWeight: "bold",
+  color: "#000",
 };
-
-const statusBadge = (status: string): React.CSSProperties => ({
-  padding: "8px 14px",
-  borderRadius: 999,
-  background: "rgba(14,203,129,0.15)",
-  color: "#0ecb81",
-  fontWeight: 800,
-  border: "1px solid rgba(14,203,129,0.35)",
-});
 
 const grid: React.CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-  gap: 16,
-  marginBottom: 20,
+  gridTemplateColumns: "1fr 1fr",
+  gap: 20,
 };
 
 const card: React.CSSProperties = {
-  background: "#161a1e",
-  border: "1px solid #2b3139",
-  borderRadius: 14,
-  padding: 16,
-  boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
-};
-
-const cardTitle: React.CSSProperties = {
-  color: "#8b98a5",
-  fontSize: 12,
-  letterSpacing: 0.6,
-  textTransform: "uppercase",
-  marginBottom: 8,
-};
-
-const cardValue: React.CSSProperties = {
-  fontSize: 18,
-  fontWeight: 700,
-};
-
-const panel: React.CSSProperties = {
-  background: "#161a1e",
-  border: "1px solid #2b3139",
-  borderRadius: 14,
-  padding: 16,
-  marginBottom: 16,
-};
-
-const panelTitle: React.CSSProperties = {
-  margin: 0,
-  marginBottom: 10,
-  fontSize: 16,
-  fontWeight: 800,
-};
-
-const timeline: React.CSSProperties = {
-  listStyle: "none",
-  padding: 0,
-  margin: 0,
-  lineHeight: 1.9,
-  color: "#c9d1d9",
-};
-
-const note: React.CSSProperties = {
-  background: "#0f1419",
-  border: "1px dashed #2b3139",
+  background: "#102a63",
+  padding: 20,
   borderRadius: 12,
-  padding: 14,
-  color: "#8b98a5",
+  marginBottom: 20,
+};
+
+const row: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "8px 0",
+  borderBottom: "1px solid #1e3a8a",
+};
+
+const approved: React.CSSProperties = {
+  marginTop: 15,
+  background: "#0ecb81",
+  padding: 10,
   textAlign: "center",
+  borderRadius: 8,
+  fontWeight: "bold",
+  color: "#000",
+};
+
+const notice = {
+  marginTop: 15,
+  color: "#aaa",
+};
+
+const walletRow: React.CSSProperties = {
+  display: "flex",
+  gap: 10,
+  marginTop: 10,
+};
+
+const input: React.CSSProperties = {
+  flex: 1,
+  padding: 8,
+  borderRadius: 6,
+  border: "none",
+};
+
+const inputSmall: React.CSSProperties = {
+  width: 120,
+  padding: 8,
+  borderRadius: 6,
+  border: "none",
+};
+
+const button: React.CSSProperties = {
+  background: "#0ecb81",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: 6,
+  fontWeight: "bold",
+  cursor: "pointer",
+};
+
+const errorBox: React.CSSProperties = {
+  marginTop: 10,
+  background: "#ff4d4f",
+  padding: 10,
+  borderRadius: 6,
+  fontWeight: "bold",
+};
+
+const terminal: React.CSSProperties = {
+  background: "#000",
+  padding: 15,
+  borderRadius: 12,
+};
+
+const terminalHeader = {
+  marginBottom: 10,
+};
+
+const live = {
+  color: "#0ecb81",
+  marginLeft: 10,
+};
+
+const terminalText = {
+  color: "#0ecb81",
 };
