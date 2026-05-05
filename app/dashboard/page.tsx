@@ -187,6 +187,13 @@ const fileDashboards = [
     href: "/dashboard/reports/kinpro-250-validation",
     note: "KINPRO 250M encrypted FIN validation file",
   },
+  {
+  title: "JUAN F. MARTINEZ VALIDATION",
+  status: "VALIDATED",
+  color: "#0ecb81",
+  href: "/dashboard/reports/juan-f-martinez-validation",
+  note: "Juan F. Martinez secure payment validation report",
+},
 
   // 🔥 INCOMING AUTO SLOT (for new uploads)
   {
