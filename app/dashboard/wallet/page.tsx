@@ -1,12 +1,8 @@
 "use client";
-
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
-
-
-import { QRCodeSVG } from "qrcode.react";
-import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/app/lib/supabase/client";
+
 type TokenCard = {
   symbol: string;
   name: string;
@@ -28,7 +24,7 @@ export default function WalletPage() {
   const [showSendModal, setShowSendModal] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
-  const walletAddress = "0xC47133A6bd653793562A1Ea25Cb1D3161fBD99cD";
+ const defaultWalletAddress = "0xC47133A6bd653793562A1Ea25Cb1D3161fBD99cD";
 
  const supabase = createClient();
 

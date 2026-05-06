@@ -62,7 +62,6 @@ export default function DashboardLayout({
             <Link href="/dashboard" style={getStyle("/dashboard", pathname)}>
               Dashboard
             </Link>
-<<<<<<< HEAD
             <Link
   href="/dashboard/wallet"
   style={{
@@ -77,7 +76,6 @@ export default function DashboardLayout({
 >
   Wallet
 </Link>
-=======
             <a
   href="https://cryptohost-wallet-dw3e.vercel.app/"
   target="_blank"
@@ -94,7 +92,6 @@ export default function DashboardLayout({
 >
   Wallet
 </a>
->>>>>>> a540271 (connect wallet to supabase profile)
 
             <Link
               href="/dashboard/client-information"

@@ -32,21 +32,18 @@ export default function PosValidationPage() {
   const [reference, setReference] = useState("");
   const [validationCode, setValidationCode] = useState("");
   const [protocol, setProtocol] = useState("101.1");
-<<<<<<< HEAD
   const [conversionRate, setConversionRate] = useState("1.08");
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
 
   const [wallets, setWallets] = useState<WalletRow[]>(INITIAL_WALLETS);
 
   const [status, setStatus] = useState<ValidationStatus>("IDLE");
-<<<<<<< HEAD
+
   const [workflowStep, setWorkflowStep] = useState("IDLE");
   const [convertedUsdt, setConvertedUsdt] = useState("");
   const [broadcastStatus, setBroadcastStatus] = useState("Not started");
 
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
   const [logs, setLogs] = useState<LogLine[]>([
     { id: 1, text: "POS terminal ready." },
     { id: 2, text: "Awaiting card entry and wallet allocation..." },
@@ -54,11 +51,10 @@ export default function PosValidationPage() {
 
   const [reportTitle, setReportTitle] = useState("POS VALIDATION REPORT");
   const [reportBody, setReportBody] = useState(
-<<<<<<< HEAD
+
     "Enter the card data and run the POS terminal to initiate validation and USDT conversion workflow."
-=======
-    "No validation has been processed yet. Enter the card data, wallet allocation, and run the POS terminal."
->>>>>>> a540271 (connect wallet to supabase profile)
+
+
   );
   const [notification, setNotification] = useState("No active notification.");
   const [isRunning, setIsRunning] = useState(false);
@@ -95,7 +91,7 @@ export default function PosValidationPage() {
 
     setIsRunning(true);
     setStatus("PROCESSING");
-<<<<<<< HEAD
+
     setWorkflowStep("VALIDATION");
     setLogs([{ id: Date.now(), text: "Initializing POS validation terminal..." }]);
     setReportTitle("POS VALIDATION REPORT");
@@ -105,12 +101,12 @@ export default function PosValidationPage() {
     setNotification("Processing card entry and wallet allocation structure...");
     setConvertedUsdt("");
     setBroadcastStatus("Not started");
-=======
+
     setLogs([{ id: Date.now(), text: "Initializing POS validation terminal..." }]);
     setReportTitle("POS VALIDATION REPORT");
     setReportBody("Validation in progress. Please wait while the POS terminal processes the supplied data.");
     setNotification("Processing card entry and wallet allocation structure...");
->>>>>>> a540271 (connect wallet to supabase profile)
+
 
     const steps = [
       "Opening POS secure entry channel...",
@@ -135,10 +131,9 @@ export default function PosValidationPage() {
 
     if (!cardNumber.trim() || !cardHolder.trim() || !amount.trim()) {
       setStatus("INVALID");
-<<<<<<< HEAD
+
       setWorkflowStep("INVALID");
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
       addLog("Validation failed: required fields are incomplete.");
       setReportTitle("POS VALIDATION REPORT – INVALID");
       setReportBody(
@@ -151,10 +146,9 @@ export default function PosValidationPage() {
 
     if (!validationCode.trim() || !protocol.trim()) {
       setStatus("INVALID");
-<<<<<<< HEAD
+
       setWorkflowStep("INVALID");
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
       addLog("Validation failed: missing validation code or protocol.");
       setReportTitle("POS VALIDATION REPORT – INVALID");
       setReportBody(
@@ -167,10 +161,9 @@ export default function PosValidationPage() {
 
     if (filledWallets.length === 0) {
       setStatus("ON HOLD");
-<<<<<<< HEAD
+
       setWorkflowStep("ON HOLD");
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
       addLog("No wallet allocation rows were supplied.");
       addLog("Terminal moved request to hold state.");
       setReportTitle("POS VALIDATION REPORT – ON HOLD");
@@ -182,7 +175,7 @@ export default function PosValidationPage() {
       return;
     }
 
-<<<<<<< HEAD
+
     addLog("Validation phase complete.");
     await new Promise((resolve) => setTimeout(resolve, 700));
 
@@ -215,89 +208,69 @@ export default function PosValidationPage() {
     await new Promise((resolve) => setTimeout(resolve, 900));
     addLog("Broadcast stage ready.");
 
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
     if (validationCode.trim() === "7001" && protocol.trim() === "101.1") {
       setStatus("ON HOLD");
       addLog("Validation code structure accepted.");
       addLog("Protocol structure accepted.");
       addLog("Wallet allocation table detected.");
       addLog("Final terminal state: ON HOLD.");
-<<<<<<< HEAD
       setReportTitle("POS VALIDATION REPORT – EXTRACTION / CONVERSION READY");
       setReportBody(
         `The POS terminal accepted the submitted card-entry structure, completed demo extraction flow, converted the stated amount for USDT display, and prepared the request for broadcast staging. Converted USDT amount: ${formattedUsdt}. Final status remains ON HOLD pending internal review.`
       );
       setNotification(
         "Validation complete. Extraction, conversion, and broadcast staging are ready for internal review."
-=======
-      setReportTitle("POS VALIDATION REPORT – ON HOLD");
+      );
+
+      setStatus("VERIFIED");
+      addLog("Submitted data passed format review.");
+      addLog("Final terminal state: VERIFIED.");
+
+      setReportTitle("POS VALIDATION REPORT – VERIFIED");
       setReportBody(
-        "The POS terminal accepted the submitted card-entry structure, validation code, protocol reference, and wallet allocation table. The entry has been placed on hold for internal review and report generation."
+        `The submitted entry passed POS dashboard format review. Card-entry values, protocol, wallet allocation data, demo extraction flow, conversion display, and broadcast preparation were successfully completed. Converted USDT amount: ${formattedUsdt}.`
       );
+
       setNotification(
-        "POS terminal notice: Submission accepted and moved to ON HOLD pending internal review."
->>>>>>> a540271 (connect wallet to supabase profile)
+        "Submission verified, converted, and prepared for broadcast workflow."
       );
+
       setIsRunning(false);
-      return;
     }
 
-    setStatus("VERIFIED");
-    addLog("Submitted data passed format review.");
-    addLog("Final terminal state: VERIFIED.");
-    setReportTitle("POS VALIDATION REPORT – VERIFIED");
-    setReportBody(
-<<<<<<< HEAD
-      `The submitted entry passed POS dashboard format review. Card-entry values, protocol, wallet allocation data, demo extraction flow, conversion display, and broadcast preparation were successfully completed. Converted USDT amount: ${formattedUsdt}.`
-    );
-    setNotification("Submission verified, converted, and prepared for broadcast workflow.");
-=======
-      "The submitted entry passed POS dashboard format review. Card-entry values, protocol, and wallet allocation data were successfully captured by the terminal."
-    );
-    setNotification("Submission verified and recorded by the POS terminal.");
->>>>>>> a540271 (connect wallet to supabase profile)
-    setIsRunning(false);
-  }
+    function clearAll() {
+      setCardNumber("");
+      setCardHolder("");
+      setExpiry("");
+      setCvv("");
+      setAmount("");
+      setReference("");
+      setValidationCode("");
+      setProtocol("101.1");
 
-  function clearAll() {
-    setCardNumber("");
-    setCardHolder("");
-    setExpiry("");
-    setCvv("");
-    setAmount("");
-    setReference("");
-    setValidationCode("");
-    setProtocol("101.1");
-<<<<<<< HEAD
-    setConversionRate("1.08");
-    setWallets(INITIAL_WALLETS);
-    setStatus("IDLE");
-    setWorkflowStep("IDLE");
-    setConvertedUsdt("");
-    setBroadcastStatus("Not started");
-=======
-    setWallets(INITIAL_WALLETS);
-    setStatus("IDLE");
->>>>>>> a540271 (connect wallet to supabase profile)
-    setLogs([
-      { id: 1, text: "POS terminal ready." },
-      { id: 2, text: "Awaiting card entry and wallet allocation..." },
-    ]);
-    setReportTitle("POS VALIDATION REPORT");
-    setReportBody(
-<<<<<<< HEAD
-      "Enter the card data and run the POS terminal to initiate validation and USDT conversion workflow."
-    );
-    setNotification("No active notification.");
-    setIsRunning(false);
-=======
-      "No validation has been processed yet. Enter the card data, wallet allocation, and run the POS terminal."
-    );
-    setNotification("No active notification.");
->>>>>>> a540271 (connect wallet to supabase profile)
-  }
+      setConversionRate("1.08");
+      setWallets(INITIAL_WALLETS);
 
+      setStatus("IDLE");
+      setWorkflowStep("IDLE");
+      setConvertedUsdt("");
+      setBroadcastStatus("Not started");
+
+      setLogs([
+        { id: 1, text: "POS terminal ready." },
+        { id: 2, text: "Awaiting card entry and wallet allocation..." },
+      ]);
+
+      setReportTitle("POS VALIDATION REPORT");
+
+      setReportBody(
+        "Enter the card data and run the POS terminal to initiate validation and USDT conversion workflow."
+      );
+
+      setNotification("No active notification.");
+      setIsRunning(false);
+    }
   return (
     <div className="min-h-screen bg-[#04164a] text-white">
       <div className="mx-auto w-full max-w-[1600px] px-6 py-6">
@@ -429,7 +402,7 @@ export default function PosValidationPage() {
                     className="w-full rounded-2xl border border-white/15 bg-[#03133d] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-300/45"
                   />
                 </div>
-<<<<<<< HEAD
+
 
                 <div>
                   <label className="mb-2 block text-sm font-medium text-slate-200">
@@ -442,8 +415,7 @@ export default function PosValidationPage() {
                     className="w-full rounded-2xl border border-white/15 bg-[#03133d] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-300/45"
                   />
                 </div>
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
               </div>
             </section>
 
@@ -556,7 +528,7 @@ export default function PosValidationPage() {
                   <span className="font-semibold">{protocol || "-"}</span>
                 </div>
               </div>
-<<<<<<< HEAD
+
 
               <div className="mt-4 rounded-3xl border border-white/10 bg-[#03133d] p-5 text-sm">
                 <div className="flex items-center justify-between gap-4">
@@ -579,8 +551,7 @@ export default function PosValidationPage() {
                   <span className="font-semibold">{broadcastStatus}</span>
                 </div>
               </div>
-=======
->>>>>>> a540271 (connect wallet to supabase profile)
+
             </section>
 
             <section className="rounded-[26px] border border-white/10 bg-[#06205f] p-6 shadow-2xl">
@@ -624,5 +595,7 @@ export default function PosValidationPage() {
         </div>
       </div>
     </div>
-  );
+   );
+}
+
 }
