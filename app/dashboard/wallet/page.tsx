@@ -3,6 +3,10 @@
 import React, { useMemo, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
+
+import { QRCodeSVG } from "qrcode.react";
+import { useEffect, useMemo, useState } from "react";
+import { createClient } from "@/app/lib/supabase/client";
 type TokenCard = {
   symbol: string;
   name: string;
@@ -26,6 +30,31 @@ export default function WalletPage() {
 
   const walletAddress = "0xC47133A6bd653793562A1Ea25Cb1D3161fBD99cD";
 
+ const supabase = createClient();
+
+const [walletAddress, setWalletAddress] = useState("");
+
+useEffect(() => {
+  async function loadWallet() {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) return;
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("wallet_address")
+      .eq("id", user.id)
+      .single();
+
+    if (profile?.wallet_address) {
+      setWalletAddress(profile.wallet_address);
+    }
+  }
+
+  loadWallet();
+}, []);
   const shortAddress = useMemo(() => {
     return `${walletAddress.slice(0, 8)}...${walletAddress.slice(-6)}`;
   }, [walletAddress]);
