@@ -62,20 +62,7 @@ export default function DashboardLayout({
             <Link href="/dashboard" style={getStyle("/dashboard", pathname)}>
               Dashboard
             </Link>
-            <Link
-  href="/dashboard/wallet"
-  style={{
-    padding: "12px",
-    borderRadius: "10px",
-    display: "block",
-    background:
-      pathname === "/dashboard/wallet" ? "#1a1a1a" : "transparent",
-    color: "#ffffff",
-    fontWeight: 600,
-  }}
->
-  Wallet
-</Link>
+          
             <a
   href="https://cryptohost-wallet-dw3e.vercel.app/"
   target="_blank"
@@ -90,7 +77,7 @@ export default function DashboardLayout({
     fontWeight: 700,
   }}
 >
-  Wallet
+  CryptoHost Wallet
 </a>
 
             <Link
