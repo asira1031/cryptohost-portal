@@ -52,7 +52,7 @@ if (userEmail === "ken@beautuniverse.com") {
 }
 
 // 👉 KEN (913M)
-if (userEmail === "ken@beautuniverse.com") {
+if (userEmail === "asira1031@gmail.com") {
   router.push("/dashboard/reports/913M");
   return;
 }
