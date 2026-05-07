@@ -71,7 +71,7 @@ export default async function ValidationPage() {
   const userEmail = (user.email || "").toLowerCase();
 
   const isAdmin = userEmail === "jans103174@gmail.com";
-  const isKen = userEmail === "ken@beautuniverse.com";
+  const isKen = userEmail === "asira1031@gmail.com";
   const show913MReport = isKen || isAdmin;
 
 
