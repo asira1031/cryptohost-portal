@@ -12,9 +12,8 @@ export default function Page() {
   const fetchPrices = async () => {
     try {
       const res = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin&vs_currencies=usd&include_24hr_change=true"
-      );
-
+  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple&order=market_cap_desc&per_page=5&page=1&sparkline=false&price_change_percentage=1h,24h,7d"
+);
       const data = await res.json();
       setPrices(data);
     } catch (err) {
@@ -159,39 +158,99 @@ export default function Page() {
 ))}
         </div>
         {/* LIVE TOKEN PRICES */}
+{/* LIVE TOKEN PRICES */}
 <div style={{ ...card, marginTop: 18 }}>
-  <h3>Live Token Prices</h3>
+  <h3 style={{ marginBottom: 16 }}>Live Crypto Market</h3>
 
-  {[
-    ["BTC", "bitcoin"],
-    ["ETH", "ethereum"],
-    ["USDT", "tether"],
-    ["BNB", "binancecoin"],
-  ].map(([symbol, id]) => (
-    <div
-      key={symbol}
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "12px 0",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
-      }}
-    >
-      <span>{symbol}</span>
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "50px 1.7fr 1fr 1fr 1fr 1.3fr 1.4fr",
+      padding: "10px 0",
+      borderBottom: "1px solid rgba(255,255,255,0.08)",
+      fontSize: 13,
+      opacity: 0.7,
+    }}
+  >
+    <span>#</span>
+    <span>Coin</span>
+    <span>Price</span>
+    <span>1h</span>
+    <span>24h</span>
+    <span>24h Volume</span>
+    <span>Market Cap</span>
+  </div>
 
-      <span>
-        {prices?.[id]?.usd
-          ? `$${prices[id].usd.toLocaleString()}`
-          : "Loading..."}
-      </span>
-    </div>
-  ))}
+  {prices ? (
+    prices.map((coin: any, index: number) => (
+      <div
+        key={coin.id}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "50px 1.7fr 1fr 1fr 1fr 1.3fr 1.4fr",
+          alignItems: "center",
+          padding: "14px 0",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          fontSize: 14,
+        }}
+      >
+        <span>{index + 1}</span>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <img
+            src={coin.image}
+            alt={coin.symbol}
+            style={{ width: 24, height: 24 }}
+          />
+          <strong>{coin.name}</strong>
+          <span style={{ opacity: 0.6 }}>
+            {coin.symbol.toUpperCase()}
+          </span>
+        </div>
+
+        <span>
+          ${coin.current_price?.toLocaleString()}
+        </span>
+
+        <span
+          style={{
+            color:
+              coin.price_change_percentage_1h_in_currency >= 0
+                ? "#00e676"
+                : "#ff4d4d",
+          }}
+        >
+          {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
+        </span>
+
+        <span
+          style={{
+            color:
+              coin.price_change_percentage_24h_in_currency >= 0
+                ? "#00e676"
+                : "#ff4d4d",
+          }}
+        >
+          {coin.price_change_percentage_24h_in_currency?.toFixed(1)}%
+        </span>
+
+        <span>
+          ${coin.total_volume?.toLocaleString()}
+        </span>
+
+        <span>
+          ${coin.market_cap?.toLocaleString()}
+        </span>
+      </div>
+    ))
+  ) : (
+    <p style={{ marginTop: 16 }}>Loading market data...</p>
+  )}
 
   <p style={{ fontSize: 12, opacity: 0.6, marginTop: 10 }}>
     Updates every 30 seconds
   </p>
 </div>
-
         {/* TERMINAL */}
         <div style={terminal}>
           <div style={terminalHeader}>
