@@ -1,11 +1,32 @@
 "use client";
+import { useState, useEffect } from "react";
 
-import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 export default function Page() {
   const [amount] = useState(11000000000);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
+  const [prices, setPrices] = useState<any>(null);
+
+  useEffect(() => {
+  const fetchPrices = async () => {
+    try {
+      const res = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin&vs_currencies=usd&include_24hr_change=true"
+      );
+
+      const data = await res.json();
+      setPrices(data);
+    } catch (err) {
+      console.error("Price fetch error:", err);
+    }
+  };
+
+  fetchPrices();
+
+  const interval = setInterval(fetchPrices, 30000);
+  return () => clearInterval(interval);
+}, []);
 
   // Example creation time
   // Replace this with your real database timestamp later
