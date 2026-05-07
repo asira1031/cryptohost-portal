@@ -158,6 +158,39 @@ export default function Page() {
   </div>
 ))}
         </div>
+        {/* LIVE TOKEN PRICES */}
+<div style={{ ...card, marginTop: 18 }}>
+  <h3>Live Token Prices</h3>
+
+  {[
+    ["BTC", "bitcoin"],
+    ["ETH", "ethereum"],
+    ["USDT", "tether"],
+    ["BNB", "binancecoin"],
+  ].map(([symbol, id]) => (
+    <div
+      key={symbol}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "12px 0",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+      }}
+    >
+      <span>{symbol}</span>
+
+      <span>
+        {prices?.[id]?.usd
+          ? `$${prices[id].usd.toLocaleString()}`
+          : "Loading..."}
+      </span>
+    </div>
+  ))}
+
+  <p style={{ fontSize: 12, opacity: 0.6, marginTop: 10 }}>
+    Updates every 30 seconds
+  </p>
+</div>
 
         {/* TERMINAL */}
         <div style={terminal}>
