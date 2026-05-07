@@ -69,6 +69,8 @@ export default function Report913MPage() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
+  const [approvalCode, setApprovalCode] = useState("");
+const [approvalResult, setApprovalResult] = useState("");
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -100,6 +102,33 @@ export default function Report913MPage() {
   }, [router]);
 
   const lastUpdate = useMemo(() => formatNow(), []);
+
+  const handleApproval = () => {
+  const cleanCode = approvalCode.trim();
+
+  if (cleanCode.length < 6 || cleanCode.length > 20) {
+    setApprovalResult("❌ Invalid Approval Code");
+    return;
+  }
+
+  const createdAt = new Date("2026-05-07T00:00:00").getTime();
+  const now = Date.now();
+
+  const hoursPassed =
+    (now - createdAt) / (1000 * 60 * 60);
+
+  if (hoursPassed < 24) {
+    setApprovalResult("⏳ Processing");
+    return;
+  }
+
+  if (hoursPassed < 72) {
+    setApprovalResult("🔐 Confirmation");
+    return;
+  }
+
+  setApprovalResult("❌ Unauthorized");
+};
 
   if (checkingAccess) {
     return (
@@ -291,6 +320,38 @@ export default function Report913MPage() {
                   <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
                     Notice to Client
                   </p>
+                  <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
+  <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
+    Approval System
+  </p>
+
+  <h3 className="mt-2 text-xl font-semibold text-white">
+    Approval Code Validation
+  </h3>
+
+  <input
+    type="text"
+    value={approvalCode}
+    onChange={(e) => setApprovalCode(e.target.value)}
+    placeholder="Enter 6 to 20 digit approval code"
+    maxLength={20}
+    className="mt-5 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none"
+  />
+
+  <button
+    type="button"
+    onClick={handleApproval}
+    className="mt-4 rounded-2xl border border-cyan-400/25 bg-cyan-500/15 px-5 py-3 text-sm font-medium text-cyan-200 transition hover:bg-cyan-500/25"
+  >
+    Run Approval
+  </button>
+
+  {approvalResult ? (
+    <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white">
+      {approvalResult}
+    </div>
+  ) : null}
+</section>
                   <h3 className="mt-2 text-xl font-semibold text-white">
                     System Summary
                   </h3>
@@ -349,34 +410,42 @@ export default function Report913MPage() {
 <TerminalLine>WALLET 1 – 31.5%</TerminalLine>
 <TerminalLine>0x51cb3febd21849b4555aabc1d667df23ada9745f</TerminalLine>
 <TerminalLine>€285,312,500.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine>WALLET 2 – 1.25%</TerminalLine>
 <TerminalLine>0x2BF24311d74c877a4d0EB5d5Ddd536F1129c0526</TerminalLine>
 <TerminalLine>€11,412,500.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine>WALLET 3 – 1.25%</TerminalLine>
 <TerminalLine>0x78e63cb6F8B32132923243e62e9FE34c3C906b55</TerminalLine>
 <TerminalLine>€11,412,500.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine>WALLET 4 – 1.25%</TerminalLine>
 <TerminalLine>0x7AF9086ae46B75504AeEf0EcA340177dc85dF634</TerminalLine>
 <TerminalLine>€11,412,500.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine>WALLET 5 – 2.5%</TerminalLine>
 <TerminalLine>0x360C2fC7613b6A94A6a6c82C6A4FEf877E721165</TerminalLine>
 <TerminalLine>€22,825,000.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine>WALLET 6 – 5%</TerminalLine>
 <TerminalLine>0x12CA2B89429218Eb08f893C63e83263Cbc1296e7</TerminalLine>
 <TerminalLine>€45,650,000.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine>WALLET 7 – 7.5%</TerminalLine>
 <TerminalLine>0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538</TerminalLine>
 <TerminalLine>€68,475,000.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine ok>MAIN WALLET – 50%</TerminalLine>
 <TerminalLine>0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C</TerminalLine>
 <TerminalLine>€456,500,000.00</TerminalLine>
+<TerminalLine>TXN HASH: ______________________________</TerminalLine>
 
 <TerminalLine>------------------------------------------</TerminalLine>
 <TerminalLine ok>TOTAL DISTRIBUTION: 100% CONFIRMED</TerminalLine>
