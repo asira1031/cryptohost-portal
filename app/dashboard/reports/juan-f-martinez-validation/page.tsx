@@ -43,7 +43,7 @@ export default function Page() {
   }
 
   // After 72 hours
-  setResult("❌ Protocol 101 Code Invalid");
+  setResult("❌ Protocol Code Invalid");
 };
   return (
     <div style={wrap}>
@@ -93,7 +93,7 @@ export default function Page() {
 
           <div style={card}>
             <h3>Validation Details</h3>
-            <Row label="Protocol" value="101.1" />
+            <Row label="Protocol" value="101.8" />
             <Row label="Validation Code" value="7001" />
             <Row label="Status" value="SUCCESS" />
 
@@ -109,8 +109,33 @@ export default function Page() {
           <h3>Wallet Allocation (5 Slots)</h3>
 
           {[1, 2, 3, 4, 5].map((slot) => (
-            <WalletRow key={slot} slot={slot} amount={amount} />
-          ))}
+  <div key={slot}>
+    <WalletRow slot={slot} amount={amount} />
+
+    <div
+      style={{
+        marginTop: 8,
+        marginBottom: 14,
+        paddingLeft: 6,
+      }}
+    >
+      <input
+        type="text"
+        placeholder={`Wallet ${slot} TXN Hash`}
+        style={{
+          width: "100%",
+          padding: "10px 12px",
+          borderRadius: 10,
+          border: "1px solid rgba(255,255,255,0.08)",
+          background: "rgba(255,255,255,0.04)",
+          color: "#fff",
+          outline: "none",
+          fontSize: 13,
+        }}
+      />
+    </div>
+  </div>
+))}
         </div>
 
         {/* TERMINAL */}
