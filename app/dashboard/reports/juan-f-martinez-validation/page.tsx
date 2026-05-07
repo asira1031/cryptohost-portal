@@ -1,20 +1,45 @@
 "use client";
 
 import { useState } from "react";
-
+import { supabase } from "@/lib/supabase";
 export default function Page() {
   const [amount] = useState(11000000000);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
 
-  const handleValidate = () => {
-    if (code !== "7001") {
-      setResult("❌ ERROR: INVALID VALIDATION CODE");
-    } else {
-      setResult("❌ ERROR: SYSTEM BLOCKED (SIMULATION)");
-    }
-  };
+  // Example creation time
+  // Replace this with your real database timestamp later
+  const createdAt = new Date("2026-05-02T00:00:00");
 
+  const handleValidate = async () => {
+  const { data, error } = await supabase
+    .from("deposits")
+    .select("*")
+    .eq("protocol_code", code)
+    .single();
+
+  // Code not found
+  if (error || !data) {
+    setResult("❌ ERROR: INVALID VALIDATION CODE");
+    return;
+  }
+
+  // Check expiration
+  const createdAt = new Date(data.created_at).getTime();
+  const now = Date.now();
+
+  const hoursPassed =
+    (now - createdAt) / (1000 * 60 * 60);
+
+  // Expire after 72 hours
+  if (hoursPassed >= 72) {
+    setResult("❌ Invalid Protocol Code");
+    return;
+  }
+
+  // Valid
+  setResult("✅ Protocol Code Valid");
+};
   return (
     <div style={wrap}>
       <div style={container}>
