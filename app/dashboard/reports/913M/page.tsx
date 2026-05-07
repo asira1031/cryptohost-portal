@@ -268,7 +268,7 @@ const [prices, setPrices] = useState<any>(null);
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
                   <InfoRow label="Reference" value="HBUK0W283K47PK2C" />
-                  <InfoRow label="File Name" value="913M HBUK0W283K47PK2C_l.pdf" />
+                  <InfoRow label="File Name" value="913M HBUK0W283K47PK2C_1" />
                   <InfoRow
                     label="Transaction Type"
                     value="MT103 / Financial Transmission"
