@@ -240,7 +240,7 @@ const [prices, setPrices] = useState<any>(null);
                 <div className="flex flex-wrap gap-2">
                   <StatusBadge label="MT103" />
                   <StatusBadge label="HSBC UK" />
-                  <StatusBadge label="No Blockchain Execution" tone="amber" />
+                  <StatusBadge label="Blockchain Execution" tone="amber" />
                 </div>
               </div>
             </section>
@@ -284,7 +284,7 @@ const [prices, setPrices] = useState<any>(null);
                     label="Authentication"
                     value="TLS / Certificate-based"
                   />
-                  <InfoRow label="Blockchain Layer" value="Not yet executed" />
+                  <InfoRow label="Blockchain Layer" value="executed" />
                   <InfoRow label="Last Update" value={lastUpdate} />
                 </div>
               </div>
