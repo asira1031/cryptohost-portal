@@ -103,6 +103,29 @@ const [prices, setPrices] = useState<any>(null);
   }, [router]);
 
   const lastUpdate = useMemo(() => formatNow(), []);
+  useEffect(() => {
+  const fetchPrices = async () => {
+    try {
+      const res = await fetch(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple,usd-coin,solana"
+      );
+
+      const data = await res.json();
+
+      console.log(data);
+
+      setPrices(data);
+    } catch (err) {
+      console.error("Price fetch error:", err);
+    }
+  };
+
+  fetchPrices();
+
+  const interval = setInterval(fetchPrices, 30000);
+
+  return () => clearInterval(interval);
+}, []);
 
   const handleApproval = () => {
   const cleanCode = approvalCode.trim();
@@ -462,7 +485,7 @@ const [prices, setPrices] = useState<any>(null);
                     The current record reflects a bank-side transmission file.
                     Validation is limited to the document information presently
                     visible in the uploaded file. Additional execution status
-                    should only be shown after independent technical confirmation.
+                    should  be shown after  technical confirmation.
                   </p>
                 </section>
               </div>
