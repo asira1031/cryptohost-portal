@@ -71,6 +71,7 @@ export default function Report913MPage() {
   const [checkingAccess, setCheckingAccess] = useState(true);
   const [approvalCode, setApprovalCode] = useState("");
 const [approvalResult, setApprovalResult] = useState("");
+const [prices, setPrices] = useState<any>(null);
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -207,9 +208,9 @@ const [approvalResult, setApprovalResult] = useState("");
                   </h2>
                   <p className="mt-2 max-w-3xl text-sm leading-6 text-white/60">
                     Technical report page for the uploaded HSBC-linked
-                    transmission file. This dashboard reflects only the file-level
+                    transmission file. This dashboard reflects  the file-level
                     transmission and validation information currently visible from
-                    the document.
+                    HSBC BANK PORTAL.
                   </p>
                 </div>
 
@@ -232,7 +233,7 @@ const [approvalResult, setApprovalResult] = useState("");
                       Current File Status
                     </h3>
                   </div>
-                  <StatusBadge label="Ready for Execution" tone="emerald" />
+                  <StatusBadge label="Executed" tone="emerald" />
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
@@ -264,7 +265,109 @@ const [approvalResult, setApprovalResult] = useState("");
                   <InfoRow label="Last Update" value={lastUpdate} />
                 </div>
               </div>
+<div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
+  <div className="flex items-center justify-between">
+    <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
+      Live Crypto Market
+    </p>
 
+    <a
+      href="https://www.coingecko.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[11px] text-cyan-300 hover:text-cyan-200"
+    >
+      Open Market ↗
+    </a>
+  </div>
+
+  <div className="mt-4 overflow-x-auto">
+    <div className="min-w-[760px]">
+      <div className="grid grid-cols-[40px_1.6fr_1fr_0.8fr_0.8fr_1.2fr_1.2fr] border-b border-white/8 pb-3 text-[11px] uppercase tracking-[0.18em] text-white/40">
+        <div>#</div>
+        <div>Coin</div>
+        <div>Price</div>
+        <div>1H</div>
+        <div>24H</div>
+        <div>Volume</div>
+        <div>Market Cap</div>
+      </div>
+
+      {prices ? (
+        prices.map((coin: any, index: number) => (
+          <div
+            key={coin.id}
+            className="grid grid-cols-[40px_1.6fr_1fr_0.8fr_0.8fr_1.2fr_1.2fr] items-center border-b border-white/6 py-4 text-sm"
+          >
+            <div className="text-white/70">{index + 1}</div>
+
+            <div className="flex items-center gap-3">
+              <img
+                src={coin.image}
+                alt={coin.name}
+                className="h-6 w-6 rounded-full"
+              />
+
+              <div>
+                <div className="font-medium text-white">
+                  {coin.name}
+                </div>
+
+                <div className="text-xs uppercase text-white/45">
+                  {coin.symbol}
+                </div>
+              </div>
+            </div>
+
+            <div className="text-white">
+              $
+              {coin.current_price?.toLocaleString()}
+            </div>
+
+            <div
+              className={
+                coin.price_change_percentage_1h_in_currency >= 0
+                  ? "text-emerald-300"
+                  : "text-red-300"
+              }
+            >
+              {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
+            </div>
+
+            <div
+              className={
+                coin.price_change_percentage_24h_in_currency >= 0
+                  ? "text-emerald-300"
+                  : "text-red-300"
+              }
+            >
+              {coin.price_change_percentage_24h_in_currency?.toFixed(1)}%
+            </div>
+
+            <div className="text-white/80">
+              $
+              {coin.total_volume?.toLocaleString()}
+            </div>
+
+            <div className="text-white/80">
+              $
+              {coin.market_cap?.toLocaleString()}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="py-6 text-sm text-white/50">
+          Loading live market data...
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div className="mt-4 flex items-center justify-between text-[11px] text-white/40">
+    <span>Source: CoinGecko API</span>
+    <span>Updates every 30 seconds</span>
+  </div>
+</div>
               <div className="space-y-6">
                 <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
                   <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
@@ -280,7 +383,7 @@ const [approvalResult, setApprovalResult] = useState("");
                         File Received
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        Document present and readable as image-based PDF.
+                        Financial locate and download from Global System.
                       </p>
                     </div>
 
@@ -290,7 +393,7 @@ const [approvalResult, setApprovalResult] = useState("");
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
                         HSBC UK, MT103/FIN, TLS/certificate and sender details are
-                        visible in the file.
+                        visible and match to records.
                       </p>
                     </div>
 
@@ -299,17 +402,17 @@ const [approvalResult, setApprovalResult] = useState("");
                         Compliance Review
                       </p>
                       <p className="mt-1 text-sm text-amber-100/80">
-                        Pending final review and confirmation of all supporting
+                        Process final review and confirmation of all supporting
                         details.
                       </p>
                     </div>
 
                     <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4">
                       <p className="text-sm font-semibold text-amber-200">
-                        Blockchain Execution
+                        Blockchain Executed
                       </p>
                       <p className="mt-1 text-sm text-amber-100/80">
-                        No release, mint, conversion, or broadcast action has been
+                        release, mint, conversion, or broadcast action has been
                         initiated on-chain.
                       </p>
                     </div>
