@@ -20,8 +20,8 @@ export default function LoginPage() {
     setMessage("");
 
     const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+      email: email.trim().toLowerCase(),
+password: password.trim(),
     });
 
     if (error) {
