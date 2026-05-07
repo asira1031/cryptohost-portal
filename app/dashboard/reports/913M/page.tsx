@@ -214,7 +214,7 @@ const [prices, setPrices] = useState<any>(null);
                 913M-HBUK0W283K47PK2C
               </p>
               <div className="mt-3">
-                <StatusBadge label="Ready for Execution" tone="emerald" />
+                <StatusBadge label="executed" tone="emerald" />
               </div>
             </div>
           </aside>
@@ -526,7 +526,7 @@ const [prices, setPrices] = useState<any>(null);
                   <TerminalLine>CURRENCY: EUR</TerminalLine>
                   <TerminalLine>AUTH MODE: TLS / CERTIFICATE-BASED</TerminalLine>
                   <TerminalLine ok>TRANSMISSION LEVEL: COMPLETED</TerminalLine>
-                  <TerminalLine>BLOCKCHAIN LAYER: NOT EXECUTED</TerminalLine>
+                  <TerminalLine>BLOCKCHAIN LAYER:  EXECUTED</TerminalLine>
                   <TerminalLine>COMPLIANCE REVIEW: IN PROGRESS</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
