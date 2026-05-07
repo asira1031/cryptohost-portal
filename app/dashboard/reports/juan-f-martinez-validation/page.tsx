@@ -24,21 +24,26 @@ export default function Page() {
     return;
   }
 
-  // Check expiration
   const createdAt = new Date(data.created_at).getTime();
   const now = Date.now();
 
   const hoursPassed =
     (now - createdAt) / (1000 * 60 * 60);
 
-  // Expire after 72 hours
-  if (hoursPassed >= 72) {
-    setResult("❌ Invalid Protocol Code");
+  // 0–24 hours
+  if (hoursPassed < 24) {
+    setResult("⏳ Processing");
     return;
   }
 
-  // Valid
-  setResult("✅ Protocol Code Valid");
+  // 24–72 hours
+  if (hoursPassed < 72) {
+    setResult("🔍 Validating");
+    return;
+  }
+
+  // After 72 hours
+  setResult("❌ Protocol 101 Code Invalid");
 };
   return (
     <div style={wrap}>
