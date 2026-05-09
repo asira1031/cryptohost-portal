@@ -1,25 +1,63 @@
 "use client";
 
 import { useState } from "react";
-
+import { createClient } from "@/app/lib/supabase/client";
 
 export default function MandatedUploadPage() {
+  const supabase = createClient();
+
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState("");
 
-  const mandatedCode = "MANDATETJTURKIEST001";
+  const sourceCode = "PARTNERTJAUSTRALIA001";
 
   const handleUpload = async () => {
-    if (!file) {
-      setStatus("❌ Please select a file first.");
-      return;
+    try {
+      if (!file) {
+        setStatus("❌ Please select a file.");
+        return;
+      }
+
+      setStatus("⏳ Uploading file...");
+
+      const filename = `${Date.now()}-${file.name}`;
+
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from("uploads")
+        .upload(filename, file);
+
+      if (uploadError) {
+        setStatus(`❌ ${uploadError.message}`);
+        return;
+      }
+
+      // Get public URL
+      const { data } = supabase.storage
+        .from("uploads")
+        .getPublicUrl(filename);
+
+      // Save DB row
+      const { error: dbError } = await supabase
+        .from("uploaded_files")
+        .insert({
+          file_name: file.name,
+          file_url: data.publicUrl,
+          source_type: "mandated",
+          source_code: sourceCode,
+          status: "uploaded",
+        });
+
+      if (dbError) {
+        setStatus(`❌ ${dbError.message}`);
+        return;
+      }
+
+      setStatus("✅ File uploaded successfully.");
+    } catch (err) {
+      console.error(err);
+      setStatus("❌ Upload failed.");
     }
-
-    setStatus("⏳ Preparing upload...");
-
-    setTimeout(() => {
-      setStatus(`✅ File ready for mandated validation: ${mandatedCode}`);
-    }, 1000);
   };
 
   return (
@@ -46,11 +84,11 @@ export default function MandatedUploadPage() {
         </p>
 
         <h1 style={{ fontSize: 30 }}>
-          TJ Turkiest Mandated Upload
+          TJ Australia Partner Upload
         </h1>
 
         <p style={{ opacity: 0.7 }}>
-          Code: {mandatedCode}
+          Code: {sourceCode}
         </p>
 
         <div style={{ marginTop: 24 }}>
@@ -67,20 +105,6 @@ export default function MandatedUploadPage() {
             }}
           />
         </div>
-
-        {file && (
-          <div
-            style={{
-              marginTop: 18,
-              background: "rgba(255,255,255,0.05)",
-              padding: 14,
-              borderRadius: 12,
-            }}
-          >
-            <p><strong>Selected:</strong> {file.name}</p>
-            <p><strong>Size:</strong> {(file.size / 1024).toFixed(2)} KB</p>
-          </div>
-        )}
 
         <button
           onClick={handleUpload}
