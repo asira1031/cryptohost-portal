@@ -165,6 +165,13 @@ const fileDashboards = [
     note: "913M HSBC MT103 transmission file",
   },
   {
+  title: "10BKen — Validation Report",
+  status: "VALIDATED",
+  color: "#16a34a",
+  href: "/dashboard/reports/10bken",
+  note: "10BKen secure validation dashboard",
+},
+  {
     title: "HSBC — TPP HOLD",
     status: "VALIDATED",
     color: "#16a34a",

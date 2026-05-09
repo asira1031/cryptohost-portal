@@ -81,6 +81,11 @@ const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
 const isKerogenClient = userEmail === "ceo@kerogenresource.com";
   const show995MLPReport = isKerogenClient || isAdmin;
 
+  const is10BKenClient =
+  userEmail === "asira1031@gmail.com";
+
+const show10BKenReport =
+  is10BKenClient || isAdmin;
 
   const { data, error } = await supabase
     .from("uploaded_files")
@@ -563,6 +568,56 @@ const isKerogenClient = userEmail === "ceo@kerogenresource.com";
                 </div>
               </Link>
             )}
+            {show10BKenReport && (
+  <Link
+    href="/dashboard/reports/10bken"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      10B Ken Validation
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div style={{ color: "#8ec5ff", fontSize: 12, marginBottom: 4 }}>
+          Status
+        </div>
+        <div style={{ fontWeight: 800, color: "#f59e0b" }}>
+          UNDER REVIEW
+        </div>
+      </div>
+
+      <div>
+        <div style={{ color: "#8ec5ff", fontSize: 12, marginBottom: 4 }}>
+          Type
+        </div>
+        <div style={{ fontSize: 13 }}>MT103 / Barclays</div>
+      </div>
+
+      <div>
+        <div style={{ color: "#8ec5ff", fontSize: 12, marginBottom: 4 }}>
+          Reference
+        </div>
+        <div style={{ fontSize: 13 }}>10B-KEN</div>
+      </div>
+    </div>
+  </Link>
+)}
             {showHSBCTPPHoldReport && (
   <Link
     href="/dashboard/reports/hsbc-tpp-hold"
@@ -631,6 +686,7 @@ const isKerogenClient = userEmail === "ceo@kerogenresource.com";
     </div>
   </Link>
 )}
+
 
             {files.map((file) => (
               <div
