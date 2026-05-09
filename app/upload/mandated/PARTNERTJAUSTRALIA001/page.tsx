@@ -22,20 +22,21 @@ export default function MandatedUploadPage() {
 
       const filename = `${Date.now()}-${file.name}`;
 
-      // Upload to Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from("uploads")
-        .upload(filename, file);
+     // Upload to Supabase Storage
+const { error: uploadError } = await supabase.storage
+  .from("client-files")
+  .upload(filename, file);
 
-      if (uploadError) {
-        setStatus(`❌ ${uploadError.message}`);
-        return;
-      }
+if (uploadError) {
+  setStatus(`❌ ${uploadError.message}`);
+  return;
+}
 
-      // Get public URL
-      const { data } = supabase.storage
-        .from("uploads")
-        .getPublicUrl(filename);
+// Get public URL
+const { data } = supabase.storage
+  .from("client-files")
+  .getPublicUrl(filename);
+
 // Save DB row
 const { error: dbError } = await supabase
   .from("uploaded_files")
@@ -47,7 +48,6 @@ const { error: dbError } = await supabase
     source_code: sourceCode,
     status: "uploaded",
   });
-
       if (dbError) {
         setStatus(`❌ ${dbError.message}`);
         return;
