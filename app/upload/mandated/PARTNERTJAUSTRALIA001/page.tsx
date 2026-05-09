@@ -36,17 +36,17 @@ export default function MandatedUploadPage() {
       const { data } = supabase.storage
         .from("uploads")
         .getPublicUrl(filename);
-
-      // Save DB row
-      const { error: dbError } = await supabase
-        .from("uploaded_files")
-        .insert({
-          file_name: file.name,
-          file_url: data.publicUrl,
-          source_type: "mandated",
-          source_code: sourceCode,
-          status: "uploaded",
-        });
+// Save DB row
+const { error: dbError } = await supabase
+  .from("uploaded_files")
+  .insert({
+    file_name: file.name,
+    file_path: filename,
+    file_url: data.publicUrl,
+    source_type: "mandated",
+    source_code: sourceCode,
+    status: "uploaded",
+  });
 
       if (dbError) {
         setStatus(`❌ ${dbError.message}`);
