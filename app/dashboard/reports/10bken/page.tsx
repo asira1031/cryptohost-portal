@@ -65,7 +65,7 @@ function TerminalLine({
   );
 }
 
-export default function Report913MPage() {
+export default function Report10bPage() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
