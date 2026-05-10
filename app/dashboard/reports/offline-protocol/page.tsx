@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
 export default function Page() {
-  const [amount] = useState(11000000000);
+  const [amount] = useState(0);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
   const [prices, setPrices] = useState<any[]>([]);
@@ -244,8 +244,8 @@ function Row({ label, value }: any) {
 }
 
 function WalletRow({ slot, amount }: any) {
-  const percentage = 20;
-  const computed = (amount * percentage) / 100;
+  const percentage = 0;
+  const computed = (amount * percentage) / 0;
 
   return (
     <div style={walletRow}>
