@@ -109,9 +109,9 @@ export default function Page() {
           </div>
 
           <div style={card}>
-            <h3>Validation Details</h3>
+            <h3>Authorization Details</h3>
             <Row label="Protocol" value="201 Offline-Protocol" />
-            <Row label="Validation Code" value="000000" />
+            <Row label="Authorization Code" value="000000" />
             <Row label="Status" value="OFFLINE" />
 
             <div style={notice}>Offline transaction protocol initialized</div>
