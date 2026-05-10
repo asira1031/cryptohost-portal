@@ -34,7 +34,7 @@ export default function Page() {
 
   const handleValidate = async () => {
     if (!code.trim()) {
-      setResult("❌ ERROR: PLEASE ENTER AUTHORIZATION  CODE");
+      setResult("❌ ERROR: PLEASE ENTER VALIDATION CODE");
       return;
     }
 
@@ -45,7 +45,7 @@ export default function Page() {
       .single();
 
     if (error || !data) {
-      setResult("❌ ERROR: INVALID AUTHORIZATION  CODE");
+      setResult("❌ ERROR: INVALID VALIDATION CODE");
       return;
     }
 
@@ -79,18 +79,18 @@ export default function Page() {
         </div>
 
         <div style={card}>
-          <h3>Authorization Code Entry</h3>
+          <h3>Validation Code Entry</h3>
 
           <div style={walletRow}>
             <input
               style={input}
-              placeholder="Enter Authorization code"
+              placeholder="Enter validation code"
               value={code}
               onChange={(e) => setCode(e.target.value)}
             />
 
             <button style={button} onClick={handleValidate}>
-              RUN 
+              RUN VALIDATION
             </button>
           </div>
 
@@ -244,8 +244,8 @@ function Row({ label, value }: any) {
 }
 
 function WalletRow({ slot, amount }: any) {
-  const percentage = 0;
-  const computed = (amount * percentage) / 0;
+  const percentage = 20;
+  const computed = (amount * percentage) / 100;
 
   return (
     <div style={walletRow}>
