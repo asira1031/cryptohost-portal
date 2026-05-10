@@ -81,6 +81,9 @@ const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
 const isKerogenClient = userEmail === "ceo@kerogenresource.com";
   const show995MLPReport = isKerogenClient || isAdmin;
 
+  const isOfflineProtocolClient = userEmail === "asira1031@gmail.com";
+const showOfflineProtocolReport = isOfflineProtocolClient || isAdmin;
+
   const is10BKenClient =
   userEmail === "asira1031@gmail.com";
 

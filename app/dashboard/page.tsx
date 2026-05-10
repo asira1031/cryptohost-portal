@@ -67,6 +67,11 @@ if (userEmail === "ceo@kerogenresource.com") {
   router.push("/dashboard/reports/99.5M-LP");
   return;
 }
+// 👉 201 Offline-Protocol
+if (userEmail === "asira1031@gmail.com") {
+  router.push("/dashboard/reports/offline-protocol");
+  return;
+}
 
 const adminEmails = ["jans103174@gmail.com"];
 
@@ -170,6 +175,13 @@ const fileDashboards = [
   color: "#16a34a",
   href: "/dashboard/reports/10bken",
   note: "10BKen secure validation dashboard",
+},
+{
+  title: "201 Offline-Protocol",
+  status: "OFFLINE",
+  color: "#f59e0b",
+  href: "/dashboard/reports/offline-protocol",
+  note: "201 secure offline protocol dashboard",
 },
   {
     title: "HSBC — TPP HOLD",
