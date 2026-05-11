@@ -114,7 +114,7 @@ export default function Page() {
 
           <div style={card}>
             <h3>Validation Details</h3>
-            <Row label="Protocol" value="101.8" />
+            <Row label="Protocol" value="101" />
             <Row label="Validation Code" value="000000" />
             <Row label="Status" value="Active" />
 
