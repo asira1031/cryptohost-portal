@@ -103,9 +103,10 @@ export default function Page() {
 
           <div style={card}>
             <h3>Transaction Summary</h3>
-            <Row label="Reference" value="CHX-LIVE-20260505-123000" />
+            <Row label="Reference" value="CHX-LIVE-20260506-123100" />
+             <Row label="Bank Name" value="JP Morgan Chase Bank N.A." />
             <Row label="Cardholder" value="Juan F. Martinez" />
-            <Row label="Card" value="**** **** **** 5323" />
+            <Row label="Card" value="4347690281773459" />
             <Row label="Amount" value={`EUR ${amount.toLocaleString()}`} />
 
             <div style={approved}>APPROVED</div>
@@ -115,7 +116,7 @@ export default function Page() {
             <h3>Validation Details</h3>
             <Row label="Protocol" value="101.8" />
             <Row label="Validation Code" value="000000" />
-            <Row label="Status" value="===========" />
+            <Row label="Status" value="Active" />
 
             <div style={notice}>
               LIVE — online transaction processed
@@ -281,8 +282,8 @@ function Row({ label, value }: any) {
 
 /* WALLET */
 function WalletRow({ slot, amount }: any) {
-  const percentage = 20;
-  const computed = (amount * percentage) / 100;
+  const percentage = 0;
+  const computed = (amount * percentage) / 0;
 
   return (
     <div style={walletRow}>
