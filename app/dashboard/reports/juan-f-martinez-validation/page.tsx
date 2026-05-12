@@ -28,22 +28,32 @@ export default function Page() {
 
   // LIVE PRICE FETCHER
   useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const res = await fetch(
-          "[api.coingecko.com](https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple&order=market_cap_desc&per_page=5&page=1&sparkline=false&price_change_percentage=1h,24h,7d)"
-        );
-        const data = await res.json();
-        setPrices(data);
-      } catch (err) {
-        console.error("Price fetch error:", err);
-      }
-    };
+  const fetchPrices = async () => {
+    try {
+      const res = await fetch(
+        "[api.coingecko.com](https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple&order=market_cap_desc&per_page=5&page=1&sparkline=false&price_change_percentage=1h,24h,7d)",
+        { cache: "no-store" }   // 🔥 FIX for VERCEL (prevents caching)
+      );
 
-    fetchPrices();
-    const interval = setInterval(fetchPrices, 30000);
-    return () => clearInterval(interval);
-  }, []);
+      console.log("Crypto fetch status:", res.status);
+
+      if (!res.ok) {
+        console.error("API error:", await res.text());
+        return;
+      }
+
+      const data = await res.json();
+      setPrices(data);
+    } catch (err) {
+      console.error("Price fetch error:", err);
+    }
+  };
+
+  fetchPrices();
+  const interval = setInterval(fetchPrices, 30000);
+  return () => clearInterval(interval);
+}, []);
+
 
   // VALIDATION
   const handleValidate = async () => {
