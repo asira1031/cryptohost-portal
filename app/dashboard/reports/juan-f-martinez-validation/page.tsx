@@ -1,85 +1,84 @@
 "use client";
 import { useState, useEffect } from "react";
-
 import { supabase } from "@/lib/supabase";
+
 export default function Page() {
   const [amount] = useState(500000000);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
   const [prices, setPrices] = useState<any>(null);
+
+  // SUCCESS BOX STYLE
   const success = {
-  padding: "8px 12px",
-  backgroundColor: "#e6ffed",
-  color: "#057a28",
-  border: "1px solid #057a28",
-  borderRadius: "6px",
-  marginTop: "12px",
-  fontWeight: "600"
-};
-
-
-  useEffect(() => {
-  const fetchPrices = async () => {
-    try {
-      const res = await fetch(
-  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple&order=market_cap_desc&per_page=5&page=1&sparkline=false&price_change_percentage=1h,24h,7d"
-);
-      const data = await res.json();
-      setPrices(data);
-    } catch (err) {
-      console.error("Price fetch error:", err);
-    }
+    padding: "8px 12px",
+    backgroundColor: "#e6ffed",
+    color: "#057a28",
+    border: "1px solid #057a28",
+    borderRadius: "6px",
+    marginTop: "12px",
+    fontWeight: "600",
   };
 
-  fetchPrices();
+  // 🔥 REAL-TIME CLOCK — ALWAYS LIVE
+  const [now, setNow] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
-  const interval = setInterval(fetchPrices, 30000);
-  return () => clearInterval(interval);
-}, []);
+  // LIVE PRICE FETCHER
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const res = await fetch(
+          "[api.coingecko.com](https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple&order=market_cap_desc&per_page=5&page=1&sparkline=false&price_change_percentage=1h,24h,7d)"
+        );
+        const data = await res.json();
+        setPrices(data);
+      } catch (err) {
+        console.error("Price fetch error:", err);
+      }
+    };
 
-  // Example creation time
-  // Replace this with your real database timestamp later
-  const createdAt = new Date("2026-05-02T00:00:00");
+    fetchPrices();
+    const interval = setInterval(fetchPrices, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
+  // VALIDATION
   const handleValidate = async () => {
-  const { data, error } = await supabase
-    .from("deposits")
-    .select("*")
-    .eq("protocol_code", code)
-    .single();
+    const { data, error } = await supabase
+      .from("deposits")
+      .select("*")
+      .eq("protocol_code", code)
+      .single();
 
-  // Code not found
-  if (error || !data) {
-    setResult("❌ ERROR: INVALID VALIDATION CODE");
-    return;
-  }
+    if (error || !data) {
+      setResult("❌ ERROR: INVALID VALIDATION CODE");
+      return;
+    }
 
-  const createdAt = new Date(data.created_at).getTime();
-  const now = Date.now();
-  
+    const createdAt = new Date(data.created_at).getTime();
+    const nowTime = Date.now();
 
-  const hoursPassed =
-    (now - createdAt) / (1000 * 60 * 60);
+    const hoursPassed = (nowTime - createdAt) / (1000 * 60 * 60);
 
-  // 0–24 hours
-  if (hoursPassed < 24) {
-    setResult("⏳ Processing");
-    return;
-  }
+    if (hoursPassed < 24) {
+      setResult("⏳ Processing");
+      return;
+    }
 
-  // 24–72 hours
-  if (hoursPassed < 72) {
-    setResult("🔍 Validating");
-    return;
-  }
+    if (hoursPassed < 72) {
+      setResult("🔍 Validating");
+      return;
+    }
 
-  // After 72 hours
-  setResult("❌ Protocol Code Invalid");
-};
+    setResult("❌ Protocol Code Invalid");
+  };
+
   return (
     <div style={wrap}>
       <div style={container}>
-
         {/* HEADER */}
         <div style={header}>
           <div>
@@ -111,11 +110,11 @@ export default function Page() {
 
         {/* GRID */}
         <div style={grid}>
-
+          {/* TRANSACTION SUMMARY */}
           <div style={card}>
             <h3>Transaction Summary</h3>
             <Row label="Reference" value="CHX-LIVE-20260506-123100" />
-             <Row label="Bank Name" value="JP Morgan Chase Bank N.A." />
+            <Row label="Bank Name" value="JP Morgan Chase Bank N.A." />
             <Row label="Cardholder" value="Juan F. Martinez" />
             <Row label="Card" value="4347690281773459" />
             <Row label="Amount" value={`EUR ${amount.toLocaleString()}`} />
@@ -123,168 +122,176 @@ export default function Page() {
             <div style={approved}>APPROVED</div>
           </div>
 
+          {/* TLS CARD — FIXED + LIVE TIME */}
           <div style={card}>
-  <h3>JPMorgan TLS Validation</h3>
+            <h3>JPMorgan TLS Validation</h3>
 
-  <Row label="Target Host" value="api.jpmorgan.com" />
-  <Row label="Target Port" value="443" />
-  <Row
-    label="Check Time"
-    value="2026-05-12 14:47:56"
-  />
+            <Row label="Target Host" value="api.jpmorgan.com" />
+            <Row label="Target Port" value="443" />
+            <Row label="Check Time" value={now.toLocaleString()} />
 
-  <Row label="TLS Version" value="TLSv1.3" />
-  <Row label="Cipher Suite" value="TLS_AES_128_GCM_SHA256" />
+            <Row label="TLS Version" value="TLSv1.3" />
+            <Row label="Cipher Suite" value="TLS_AES_128_GCM_SHA256" />
 
-  <Row
-    label="Server Subject"
-    value="JPMorgan Chase & Co. (developer-na.jpmorgan.com)"
-  />
+            <Row
+              label="Server Subject"
+              value="JPMorgan Chase & Co. (developer-na.jpmorgan.com)"
+            />
 
-  <Row
-    label="Server Issuer"
-    value="DigiCert EV RSA CA G2"
-  />
+            <Row label="Server Issuer" value="DigiCert EV RSA CA G2" />
 
-  <div style={notice}>
-    LIVE — Secure TLS handshake completed successfully
-  </div>
+            <div style={notice}>
+              LIVE — Secure TLS handshake completed successfully
+            </div>
 
-  <div style={success}>
-    STATUS: SECURE CHANNEL VERIFIED
-  </div>
-</div>
-
-
+            <div style={success}>STATUS: SECURE CHANNEL VERIFIED</div>
+          </div>
         </div>
 
-        {/* WALLET */}
+        {/* WALLET ALLOCATION */}
         <div style={card}>
           <h3>Wallet Allocation (5 Slots)</h3>
 
           {[1, 2, 3, 4, 5].map((slot) => (
-  <div key={slot}>
-    <WalletRow slot={slot} amount={amount} />
+            <div key={slot}>
+              <WalletRow slot={slot} amount={amount} />
 
-    <div
-      style={{
-        marginTop: 8,
-        marginBottom: 14,
-        paddingLeft: 6,
-      }}
-    >
-      <input
-        type="text"
-        placeholder={`Wallet ${slot} TXN Hash`}
-        style={{
-          width: "100%",
-          padding: "10px 12px",
-          borderRadius: 10,
-          border: "1px solid rgba(255,255,255,0.08)",
-          background: "rgba(255,255,255,0.04)",
-          color: "#fff",
-          outline: "none",
-          fontSize: 13,
-        }}
-      />
-    </div>
-  </div>
-))}
-        </div>
-        {/* LIVE TOKEN PRICES */}
-{/* LIVE TOKEN PRICES */}
-<div style={{ ...card, marginTop: 18 }}>
-  <h3 style={{ marginBottom: 16 }}>Live Crypto Market</h3>
-
-  <div
-    style={{
-      display: "grid",
-      gridTemplateColumns: "50px 1.7fr 1fr 1fr 1fr 1.3fr 1.4fr",
-      padding: "10px 0",
-      borderBottom: "1px solid rgba(255,255,255,0.08)",
-      fontSize: 13,
-      opacity: 0.7,
-    }}
-  >
-    <span>#</span>
-    <span>Coin</span>
-    <span>Price</span>
-    <span>1h</span>
-    <span>24h</span>
-    <span>24h Volume</span>
-    <span>Market Cap</span>
-  </div>
-
-  {prices ? (
-    prices.map((coin: any, index: number) => (
-      <div
-        key={coin.id}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "50px 1.7fr 1fr 1fr 1fr 1.3fr 1.4fr",
-          alignItems: "center",
-          padding: "14px 0",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-          fontSize: 14,
-        }}
-      >
-        <span>{index + 1}</span>
-
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <img
-            src={coin.image}
-            alt={coin.symbol}
-            style={{ width: 24, height: 24 }}
-          />
-          <strong>{coin.name}</strong>
-          <span style={{ opacity: 0.6 }}>
-            {coin.symbol.toUpperCase()}
-          </span>
+              <div
+                style={{
+                  marginTop: 8,
+                  marginBottom: 14,
+                  paddingLeft: 6,
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder={`Wallet ${slot} TXN Hash`}
+                  style={{
+                    width: "100%",
+                    padding: "10px 12px",
+                    borderRadius: 10,
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "rgba(255,255,255,0.04)",
+                    color: "#fff",
+                    outline: "none",
+                    fontSize: 13,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
 
-        <span>
-          ${coin.current_price?.toLocaleString()}
-        </span>
+        {/* LIVE CRYPTO PRICES */}
+        <div style={{ ...card, marginTop: 18 }}>
+          <h3 style={{ marginBottom: 16 }}>Live Crypto Market</h3>
 
-        <span
-          style={{
-            color:
-              coin.price_change_percentage_1h_in_currency >= 0
-                ? "#00e676"
-                : "#ff4d4d",
-          }}
-        >
-          {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
-        </span>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "50px 1.7fr 1fr 1fr 1fr 1.3fr 1.4fr",
+              padding: "10px 0",
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              fontSize: 13,
+              opacity: 0.7,
+            }}
+          >
+            <span>#</span>
+            <span>Coin</span>
+            <span>Price</span>
+            <span>1h</span>
+            <span>24h</span>
+            <span>24h Volume</span>
+            <span>Market Cap</span>
+          </div>
 
-        <span
-          style={{
-            color:
-              coin.price_change_percentage_24h_in_currency >= 0
-                ? "#00e676"
-                : "#ff4d4d",
-          }}
-        >
-          {coin.price_change_percentage_24h_in_currency?.toFixed(1)}%
-        </span>
+          {prices ? (
+            prices.map((coin: any, index: number) => (
+              <div
+                key={coin.id}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "50px 1.7fr 1fr 1fr 1fr 1.3fr 1.4fr",
+                  alignItems: "center",
+                  padding: "14px 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  fontSize: 14,
+                }}
+              >
+                <span>{index + 1}</span>
 
-        <span>
-          ${coin.total_volume?.toLocaleString()}
-        </span>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <img
+                    src={coin.image}
+                    alt={coin.symbol}
+                    style={{ width: 24, height: 24 }}
+                  />
+                  <strong>{coin.name}</strong>
+                  <span style={{ opacity: 0.6 }}>
+                    {coin.symbol.toUpperCase()}
+                  </span>
+                </div>
 
-        <span>
-          ${coin.market_cap?.toLocaleString()}
-        </span>
-      </div>
-    ))
-  ) : (
-    <p style={{ marginTop: 16 }}>Loading market data...</p>
-  )}
+                <span>${coin.current_price?.toLocaleString()}</span>
 
-  <p style={{ fontSize: 12, opacity: 0.6, marginTop: 10 }}>
-    Updates every 30 seconds
-  </p>
-</div>
+                <span
+                  style={{
+                    color:
+                      coin.price_change_percentage_1h_in_currency >=
+                      0
+                        ? "#00e676"
+                        : "#ff4d4d",
+                  }}
+                >
+                  {coin.price_change_percentage_1h_in_currency?.toFixed(
+                    1
+                  )}
+                  %
+                </span>
+
+                <span
+                  style={{
+                    color:
+                      coin.price_change_percentage_24h_in_currency >=
+                      0
+                        ? "#00e676"
+                        : "#ff4d4d",
+                  }}
+                >
+                  {coin.price_change_percentage_24h_in_currency?.toFixed(
+                    1
+                  )}
+                  %
+                </span>
+
+                <span>${coin.total_volume?.toLocaleString()}</span>
+
+                <span>${coin.market_cap?.toLocaleString()}</span>
+              </div>
+            ))
+          ) : (
+            <p style={{ marginTop: 16 }}>Loading market data...</p>
+          )}
+
+          <p
+            style={{
+              fontSize: 12,
+              opacity: 0.6,
+              marginTop: 10,
+            }}
+          >
+            Updates every 30 seconds
+          </p>
+        </div>
+
         {/* TERMINAL */}
         <div style={terminal}>
           <div style={terminalHeader}>
@@ -297,7 +304,6 @@ export default function Page() {
 > System initialized`}
           </pre>
         </div>
-
       </div>
     </div>
   );
@@ -316,14 +322,18 @@ function Row({ label, value }: any) {
 /* WALLET */
 function WalletRow({ slot, amount }: any) {
   const percentage = 0;
-  const computed = (amount * percentage) / 0;
+  const computed = 0;
 
   return (
     <div style={walletRow}>
       <span style={{ width: 80 }}>Wallet {slot}</span>
       <input style={input} placeholder="0x..." />
       <input style={inputSmall} value={`${percentage}%`} readOnly />
-      <input style={inputSmall} value={`€ ${computed.toLocaleString()}`}  />
+      <input
+        style={inputSmall}
+        value={`€ ${computed.toLocaleString()}`}
+        readOnly
+      />
     </div>
   );
 }
@@ -440,15 +450,6 @@ const terminal: React.CSSProperties = {
   borderRadius: 12,
 };
 
-const terminalHeader = {
-  marginBottom: 10,
-};
-
-const live = {
-  color: "#0ecb81",
-  marginLeft: 10,
-};
-
-const terminalText = {
-  color: "#0ecb81",
-};
+const terminalHeader = { marginBottom: 10 };
+const live = { color: "#0ecb81", marginLeft: 10 };
+const terminalText = { color: "#0ecb81" };
