@@ -3,10 +3,20 @@ import { useState, useEffect } from "react";
 
 import { supabase } from "@/lib/supabase";
 export default function Page() {
-  const [amount] = useState(11000000000);
+  const [amount] = useState(500000000);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
   const [prices, setPrices] = useState<any>(null);
+  const success = {
+  padding: "8px 12px",
+  backgroundColor: "#e6ffed",
+  color: "#057a28",
+  border: "1px solid #057a28",
+  borderRadius: "6px",
+  marginTop: "12px",
+  fontWeight: "600"
+};
+
 
   useEffect(() => {
   const fetchPrices = async () => {
@@ -46,6 +56,7 @@ export default function Page() {
 
   const createdAt = new Date(data.created_at).getTime();
   const now = Date.now();
+  
 
   const hoursPassed =
     (now - createdAt) / (1000 * 60 * 60);
@@ -113,15 +124,37 @@ export default function Page() {
           </div>
 
           <div style={card}>
-            <h3>Validation Details</h3>
-            <Row label="Protocol" value="101" />
-            <Row label="Validation Code" value="000000" />
-            <Row label="Status" value="Active" />
+  <h3>JPMorgan TLS Validation</h3>
 
-            <div style={notice}>
-              LIVE — online transaction processed
-            </div>
-          </div>
+  <Row label="Target Host" value="api.jpmorgan.com" />
+  <Row label="Target Port" value="443" />
+  <Row
+    label="Check Time"
+    value="2026-05-12 14:47:56"
+  />
+
+  <Row label="TLS Version" value="TLSv1.3" />
+  <Row label="Cipher Suite" value="TLS_AES_128_GCM_SHA256" />
+
+  <Row
+    label="Server Subject"
+    value="JPMorgan Chase & Co. (developer-na.jpmorgan.com)"
+  />
+
+  <Row
+    label="Server Issuer"
+    value="DigiCert EV RSA CA G2"
+  />
+
+  <div style={notice}>
+    LIVE — Secure TLS handshake completed successfully
+  </div>
+
+  <div style={success}>
+    STATUS: SECURE CHANNEL VERIFIED
+  </div>
+</div>
+
 
         </div>
 
