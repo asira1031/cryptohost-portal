@@ -9,7 +9,11 @@ export default function MandatedUploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState("");
 
-  const sourceCode = "PARTNERTJAUSTRALIA001";
+  const partner = {
+    country: "Turkey",
+    partnerName: "SAFA Turkey Agent",
+    sourceCode: "PARTNERTURKEYA001",
+  };
 
   const handleUpload = async () => {
     try {
@@ -20,34 +24,38 @@ export default function MandatedUploadPage() {
 
       setStatus("⏳ Uploading file...");
 
-      const filename = `${Date.now()}-${file.name}`;
+      // Better filename
+      const filename = `${partner.sourceCode}-${Date.now()}-${file.name}`;
 
-     // Upload to Supabase Storage
-const { error: uploadError } = await supabase.storage
-  .from("client-files")
-  .upload(filename, file);
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from("client-files")
+        .upload(filename, file);
 
-if (uploadError) {
-  setStatus(`❌ ${uploadError.message}`);
-  return;
-}
+      if (uploadError) {
+        setStatus(`❌ ${uploadError.message}`);
+        return;
+      }
 
-// Get public URL
-const { data } = supabase.storage
-  .from("client-files")
-  .getPublicUrl(filename);
+      // Get public URL
+      const { data } = supabase.storage
+        .from("client-files")
+        .getPublicUrl(filename);
 
-// Save DB row
-const { error: dbError } = await supabase
-  .from("uploaded_files")
-  .insert({
-    file_name: file.name,
-    file_path: filename,
-    file_url: data.publicUrl,
-    source_type: "mandated",
-    source_code: sourceCode,
-    status: "uploaded",
-  });
+      // Save DB row
+      const { error: dbError } = await supabase
+        .from("uploaded_files")
+        .insert({
+          file_name: file.name,
+          file_path: filename,
+          file_url: data.publicUrl,
+          source_type: "mandated",
+          source_code: partner.sourceCode,
+          country: partner.country,
+          partner_name: partner.partnerName,
+          status: "uploaded",
+        });
+
       if (dbError) {
         setStatus(`❌ ${dbError.message}`);
         return;
@@ -79,16 +87,26 @@ const { error: dbError } = await supabase
           border: "1px solid rgba(255,255,255,0.1)",
         }}
       >
-        <p style={{ color: "#22d3ee", fontSize: 12, letterSpacing: 2 }}>
+        <p
+          style={{
+            color: "#22d3ee",
+            fontSize: 12,
+            letterSpacing: 2,
+          }}
+        >
           MANDATED PORTAL
         </p>
 
         <h1 style={{ fontSize: 30 }}>
-          TJ Australia Partner Upload
+          {partner.partnerName} Upload
         </h1>
 
         <p style={{ opacity: 0.7 }}>
-          Code: {sourceCode}
+          Country: {partner.country}
+        </p>
+
+        <p style={{ opacity: 0.7 }}>
+          Code: {partner.sourceCode}
         </p>
 
         <div style={{ marginTop: 24 }}>
