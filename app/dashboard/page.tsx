@@ -72,6 +72,10 @@ if (userEmail === "asira1031@gmail.com") {
   router.push("/dashboard/reports/offline-protocol");
   return;
 }
+if (userEmail === "asira1031@gmail.com") {
+  router.push("/dashboard/reports/tj-burning-token");
+  return;
+}
 
 const adminEmails = ["jans103174@gmail.com"];
 
@@ -219,6 +223,13 @@ const fileDashboards = [
   color: "#f59e0b",
   href: "/dashboard/reports/6B",
   note: "6B Deutsche Bank AG validation dashboard",
+},
+{
+  title: "TJBURNING TOKEN",
+  status: "BURN REQUIRED",
+  color: "#f59e0b",
+  href: "/dashboard/reports/tj-burning-token",
+  note: "Institutional redemption portal",
 },
 
   // 🔥 INCOMING AUTO SLOT (for new uploads)
