@@ -71,6 +71,48 @@ export default async function ReportsPage() {
         </div>
       ) : (
         <div style={{ display: "grid", gap: 16 }}>
+          <Link
+  href="/dashboard/reports/6B"
+  style={{
+    background: "#0f172a",
+    border: "1px solid #1e293b",
+    borderRadius: 12,
+    padding: 20,
+    textDecoration: "none",
+    color: "#e2e8f0",
+    display: "block",
+  }}
+>
+  <h2
+    style={{
+      marginBottom: 10,
+      color: "#f8fafc",
+      fontSize: 20,
+    }}
+  >
+    6B Deutsche Bank AG Validation
+  </h2>
+
+  <p style={{ margin: "0 0 6px 0", color: "#cbd5e1" }}>
+    <strong>Status:</strong>{" "}
+    <span style={{ color: "#facc15" }}>
+      UNDER REVIEW
+    </span>
+  </p>
+
+  <p style={{ margin: "0 0 12px 0", color: "#94a3b8" }}>
+    <strong>Reference:</strong> DEUTDEDBSTG
+  </p>
+
+  <div
+    style={{
+      color: "#facc15",
+      fontWeight: "bold",
+    }}
+  >
+    View Report →
+  </div>
+</Link>
           {reports.map((item) => (
             <div
               key={item.id}
