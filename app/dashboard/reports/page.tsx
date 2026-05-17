@@ -34,24 +34,29 @@ export default async function ReportsPage() {
     );
   }
 
-  return (
-    <div
+ return (
+  <div
+    style={{
+      padding: 24,
+      minHeight: "100vh",
+      background: "#020617",
+      color: "#e2e8f0",
+    }}
+  >
+
+    <div style={{ color: "red", fontSize: 40 }}>
+      TEST REPORT PAGE
+    </div>
+
+    <h1
       style={{
-        padding: 24,
-        minHeight: "100vh",
-        background: "#020617",
-        color: "#e2e8f0",
+        marginBottom: 10,
+        fontSize: 32,
+        color: "#f8fafc",
       }}
     >
-      <h1
-        style={{
-          marginBottom: 10,
-          fontSize: 32,
-          color: "#f8fafc",
-        }}
-      >
-        Reports
-      </h1>
+      Reports
+    </h1>
 
       <p style={{ marginBottom: 24, color: "#94a3b8" }}>
         View your uploaded financial files and validation status.
