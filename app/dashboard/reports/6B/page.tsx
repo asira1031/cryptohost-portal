@@ -233,7 +233,7 @@ if (!isAdmin) {
                     6B Validation Report
                   </h2>
                   <p className="mt-2 max-w-3xl text-sm leading-6 text-white/60">
-                    Technical report page for the uploaded HSBC-linked
+                    Technical report page for the uploaded DEUTSCHE BANK-linked
                     transmission file. This dashboard reflects  the file-level
                     transmission and validation information currently visible from
                      DEUTSCHE BANK AG  PORTAL.
