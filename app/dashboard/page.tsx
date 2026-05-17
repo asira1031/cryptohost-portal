@@ -213,6 +213,13 @@ const fileDashboards = [
   href: "/dashboard/reports/juan-f-martinez-validation",
   note: "Juan F. Martinez secure payment validation report",
 },
+{
+  title: "6B Deutsche Bank AG Validation",
+  status: "UNDER REVIEW",
+  color: "#f59e0b",
+  href: "/dashboard/reports/6B",
+  note: "6B Deutsche Bank AG validation dashboard",
+},
 
   // 🔥 INCOMING AUTO SLOT (for new uploads)
   {
