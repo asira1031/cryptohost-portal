@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/server";
+import { useState } from "react";
 
 type UploadedFile = {
   id: string;
@@ -58,7 +59,7 @@ function getStatusStyles(kind: "locked" | "incomplete" | "complete") {
 
 export default async function ValidationPage() {
   const supabase = await createClient();
-
+  const show6BReport = true;
   const {
     data: { user },
     error: userError,
@@ -647,6 +648,7 @@ const show10BKenReport =
                 </div>
               </Link>
             )}
+            
             {show10BKenReport && (
   <Link
     href="/dashboard/reports/10bken"
@@ -693,6 +695,81 @@ const show10BKenReport =
           Reference
         </div>
         <div style={{ fontSize: 13 }}>10B-KEN</div>
+      </div>
+    </div>
+  </Link>
+)}
+{show6BReport && (
+  <Link
+    href="/dashboard/reports/6B"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      6B Deutsche Bank AG Validation
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#f59e0b" }}>
+          UNDER REVIEW
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          MT103 / Deutsche Bank AG
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          DEUTDEDBSTG
+        </div>
       </div>
     </div>
   </Link>
