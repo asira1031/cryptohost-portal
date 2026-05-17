@@ -72,7 +72,7 @@ if (userEmail === "asira1031@gmail.com") {
   router.push("/dashboard/reports/offline-protocol");
   return;
 }
-if (userEmail === "asira1031@gmail.com") {
+if (userEmail === "tjaslan09@gmail.com") {
   router.push("/dashboard/reports/tj-burning-token");
   return;
 }
@@ -230,6 +230,7 @@ const fileDashboards = [
   color: "#f59e0b",
   href: "/dashboard/reports/tj-burning-token",
   note: "Institutional redemption portal",
+  
 },
 
   // 🔥 INCOMING AUTO SLOT (for new uploads)
