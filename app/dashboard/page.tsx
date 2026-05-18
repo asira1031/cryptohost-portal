@@ -130,13 +130,14 @@ checkUserAndLoad();
     fontWeight: 600,
     fontSize: 14,
   };
-const fileDashboards = [
+const fileDashboards: any[] = [
   {
     title: "Ken — 99.5M LP",
     status: "VALIDATED",
     color: "#16a34a",
     href: "/dashboard/reports/99.5M-LP",
     note: "Liquidity dashboard",
+    enabled: false,
   },
   {
     title: "Ken — 10B Restricted Review",
