@@ -172,7 +172,7 @@ const [prices, setPrices] = useState<any>(null);
                 CryptoHost
               </p>
               <h1 className="mt-2 text-xl font-semibold text-white">
-                Validation Portal
+                Validation Portal 
               </h1>
               <p className="mt-2 text-sm text-white/50">
                 Secure client report dashboard

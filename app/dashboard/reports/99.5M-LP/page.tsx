@@ -150,17 +150,16 @@ setIsAdmin(true);
   const FILE_LABEL = "99.5M LIQUIDITY FILE";
   const FILE_AMOUNT = "99,500,000.00 EUR";
 
-  const STAGE_LABEL = "RELEASE STAGE — PENDING SENDER AUTHORIZATION";
-  const STATUS_BADGE = "AUTHORIZATION REQUIRED";
-  const SYSTEM_STATUS = "PENDING AUTHORIZATION SUBMISSION";
+  const STAGE_LABEL = "SUBSCRIPTION REQUIRED — ACCESS TEMPORARILY DISABLED";
+ const STATUS_BADGE = "SUBSCRIPTION REQUIRED";
+  const SYSTEM_STATUS = "ACCOUNT SUSPENDED";
 
   const AUTHORIZATION_LINE =
     "Execution is currently on hold pending sender-side submission of the required authorization reference and supporting release data.";
+const NOTICE_TITLE = "Dashboard Suspended — Subscription Required";
 
-  const NOTICE_TITLE = "Release Stage — Pending Sender Authorization";
-  const NOTICE_BODY =
-    "This file is currently awaiting sender-provided authorization data. Release validation cannot continue until the required approval reference and supporting release credentials are submitted for review.";
-
+const NOTICE_BODY =
+  "This dashboard is temporarily suspended pending subscription renewal. Access to validation, release processing, and authorization review is currently disabled until the subscription is reactivated.";
   const REASON =
     "No executable authorization reference has been submitted yet. The file remains in a pending state until sender-side approval data is provided for validation review.";
 
