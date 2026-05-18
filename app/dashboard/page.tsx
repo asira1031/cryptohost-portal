@@ -131,13 +131,14 @@ checkUserAndLoad();
     fontSize: 14,
   };
 const fileDashboards: any[] = [
-  {
-    title: "Ken — 99.5M LP",
-    status: "VALIDATED",
-    color: "#16a34a",
-    href: "/dashboard/reports/99.5M-LP",
-    note: "Liquidity dashboard",
-    enabled: false,
+  
+    {
+  title: "Ken — 99.5M LP",
+  status: "SUBSCRIPTION REQUIRED",
+  color: "#dc2626",
+  href: "/dashboard/reports/99.5M-LP",
+  note: "Account temporarily suspended",
+
   },
   {
     title: "Ken — 10B Restricted Review",

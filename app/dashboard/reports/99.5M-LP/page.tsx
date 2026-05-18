@@ -50,7 +50,9 @@ if (email === "ceo@kerogenresource.com") {
   setIsAdmin(true);
   setIsBlocked(true);
   setValidationStatus("blocked");
-  setValidationMessage("This account has been blocked. Contact support.");
+  setValidationMessage(
+    "Subscription required. This dashboard is temporarily suspended. Please contact support to reactivate access."
+  );
   setIsCheckingAccess(false);
   return;
 }
