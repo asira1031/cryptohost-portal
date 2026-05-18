@@ -386,7 +386,9 @@ const fileDashboards: any[] = [
           </h2>
 
           <div style={{ display: "grid", gap: 18 }}>
-            {fileDashboards.map((item) => (
+            {fileDashboards
+  .filter((item) => item.enabled !== false)
+  .map((item) => (
               <div
                 key={item.href}
                 style={{
