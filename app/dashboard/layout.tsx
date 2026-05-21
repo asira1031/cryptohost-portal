@@ -116,11 +116,25 @@ export default function DashboardLayout({
             </Link>
 
             <Link
-              href="/dashboard/validation"
-              style={getStyle("/dashboard/validation", pathname)}
-            >
-              Validation
-            </Link>
+  href="/dashboard/validation"
+  style={getStyle("/dashboard/validation", pathname)}
+>
+  Validation
+</Link>
+
+<Link
+  href="/dashboard/convert"
+  style={getStyle("/dashboard/convert", pathname)}
+>
+  Convert
+</Link>
+
+<Link
+  href="/dashboard/broadcast"
+  style={getStyle("/dashboard/broadcast", pathname)}
+>
+  Broadcast
+</Link>
 
             <Link
               href="/dashboard/fund"
