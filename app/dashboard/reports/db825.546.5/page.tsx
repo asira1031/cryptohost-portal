@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
-  
+import {
+  LineChart,
+  Line,
+  ResponsiveContainer,
+} from "recharts";  
 function formatNow() {
   return new Date().toLocaleString();
 }
@@ -106,12 +110,11 @@ const [prices, setPrices] = useState<any>(null);
   useEffect(() => {
   const fetchPrices = async () => {
     try {
-      const res = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple,usd-coin,solana"
-      );
+     const res = await fetch(
+  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple,usd-coin,solana&sparkline=true&price_change_percentage=1h,24h"
+);
 
-      const data = await res.json();
-
+const data = await res.json();
       console.log(data);
 
       setPrices(data);
@@ -379,9 +382,10 @@ const [prices, setPrices] = useState<any>(null);
           </div>
         ))
       ) : (
-        <div className="py-6 text-sm text-white/50">
-          Loading live market data...
-        </div>
+       <div className="py-6 text-sm text-white/50">
+ <div className="mt-2 h-[40px] w-[120px] rounded-xl bg-gradient-to-r from-red-500/20 to-emerald-500/20 border border-white/10" />
+</div>
+ 
       )}
     </div>
   </div>
