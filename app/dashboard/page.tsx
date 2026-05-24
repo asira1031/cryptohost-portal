@@ -76,6 +76,11 @@ if (userEmail === "tjaslan09@gmail.com") {
   router.push("/dashboard/reports/tj-burning-token");
   return;
 }
+// 👉 DB825.546.5
+if (userEmail === "asira1031@gmail.com") {
+  router.push("/dashboard/reports/db825.546.5");
+  return;
+}
 
 const adminEmails = ["jans103174@gmail.com"];
 
@@ -233,6 +238,13 @@ const fileDashboards: any[] = [
   href: "/dashboard/reports/tj-burning-token",
   note: "Institutional redemption portal",
   
+},
+{
+  title: "DB825.546.5",
+  status: "UNDER REVIEW",
+  color: "#f59e0b",
+  href: "/dashboard/reports/db825.546.5",
+  note: "Settlement validation dashboard",
 },
 
   // 🔥 INCOMING AUTO SLOT (for new uploads)
