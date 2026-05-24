@@ -239,7 +239,7 @@ const [prices, setPrices] = useState<any>(null);
 
                 <div className="flex flex-wrap gap-2">
                   <StatusBadge label="MT103" />
-                  <StatusBadge label="HSBC UK" />
+                  <StatusBadge label="DEUTSCHE BANK AG" />
                   <StatusBadge label="Blockchain Execution" tone="amber" />
                 </div>
               </div>
@@ -295,13 +295,13 @@ const [prices, setPrices] = useState<any>(null);
     </p>
 
     <a
-      href="https://www.coingecko.com/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-[11px] text-cyan-300 hover:text-cyan-200"
-    >
-      Open Market ↗
-    </a>
+  href="https://www.coingecko.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-[11px] font-medium text-cyan-300 hover:text-cyan-200"
+>
+  ● LIVE MARKET FEED ↗
+</a>
   </div>
 
   <div className="mt-4 overflow-x-auto">
@@ -407,6 +407,7 @@ const [prices, setPrices] = useState<any>(null);
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
                         Financial locate and download from Global System.
+                        Results "UNKNOWN"
                       </p>
                     </div>
 
@@ -535,7 +536,7 @@ const [prices, setPrices] = useState<any>(null);
       </TerminalLine>
 
       <TerminalLine>
-        SENDER: MATECHPOWER LTD
+        SENDER: DASBOB TERMINALS GMBH
       </TerminalLine>
 
       <TerminalLine>
