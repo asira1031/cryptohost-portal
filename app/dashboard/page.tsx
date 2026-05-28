@@ -230,11 +230,11 @@ const fileDashboards: any[] = [
     note: "KINPRO 250M encrypted FIN validation file",
   },
   {
-  title: "JUAN F. MARTINEZ VALIDATION",
+  title: "JAGDISH I.ROCHANI VALIDATION",
   status: "VALIDATED",
   color: "#0ecb81",
-  href: "/dashboard/reports/juan-f-martinez-validation",
-  note: "Juan F. Martinez secure payment validation report",
+  href: "/dashboard/reports/jagdish-rochani-validation",
+  note: "Jagdish I. Rochani secure payment validation report",
 },
 {
   title: "6B Deutsche Bank AG Validation",
