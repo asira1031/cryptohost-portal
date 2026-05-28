@@ -238,7 +238,7 @@ const [prices, setPrices] = useState<any>(null);
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <StatusBadge label="MT103" />
+                  <StatusBadge label="LEDGER TO LEDGER" />
                   <StatusBadge label="BARCLAYS BANK PLC" />
                   <StatusBadge label="Blockchain Execution" tone="amber" />
                 </div>
@@ -256,7 +256,7 @@ const [prices, setPrices] = useState<any>(null);
                       Current File Status
                     </h3>
                   </div>
-                  <StatusBadge label="Executed" tone="emerald" />
+                  <StatusBadge label="Execution" tone="emerald" />
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
@@ -271,7 +271,7 @@ const [prices, setPrices] = useState<any>(null);
                   <InfoRow label="File Name" value="1B GB26BUKB20769043248232" />
                   <InfoRow
                     label="Transaction Type"
-                    value="MT103 / Financial Transmission LEDGER TO LEDGER"
+                    value="CASH / Financial Transmission LEDGER TO LEDGER"
                   />
                   <InfoRow
                     label="Bank Source"
@@ -284,7 +284,7 @@ const [prices, setPrices] = useState<any>(null);
                     label="Authentication"
                     value="TLS / Certificate-based"
                   />
-                  <InfoRow label="Blockchain Layer" value="executed" />
+                  <InfoRow label="Blockchain Layer" value="execution" />
                   <InfoRow label="Last Update" value={lastUpdate} />
                 </div>
               </div>
@@ -415,7 +415,7 @@ const [prices, setPrices] = useState<any>(null);
                         Transmission Metadata Detected
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        BARCLAYS BANK PLC, MT103/FIN, TLS/certificate and sender details are
+                        BARCLAYS BANK PLC, CASH/FIN, TLS/certificate and sender details are
                         visible and match to records.
                       </p>
                     </div>
@@ -518,7 +518,7 @@ const [prices, setPrices] = useState<any>(null);
                   </TerminalLine>
                   <TerminalLine>BARC CODE: 889671471BCCCFRR6</TerminalLine>
                   <TerminalLine>FILE: 1B BARC-DEUT682415</TerminalLine>
-                  <TerminalLine>TYPE: MT103 /  LEDGER TO LEDGER TRANSMISSION</TerminalLine>
+                  <TerminalLine>TYPE: CASH /  LEDGER TO LEDGER TRANSMISSION</TerminalLine>
                   <TerminalLine>
                     BANK SOURCE: BARCLAYS BANK PLC ( BUKBGB22XXX)
                   </TerminalLine>
@@ -526,7 +526,7 @@ const [prices, setPrices] = useState<any>(null);
                   <TerminalLine>CURRENCY: EUR</TerminalLine>
                   <TerminalLine>AUTH MODE: TLS / CERTIFICATE-BASED</TerminalLine>
                   <TerminalLine ok>TRANSMISSION LEVEL: COMPLETED</TerminalLine>
-                  <TerminalLine>BLOCKCHAIN LAYER:  EXECUTED</TerminalLine>
+                  <TerminalLine>BLOCKCHAIN LAYER:  READY</TerminalLine>
                   <TerminalLine>COMPLIANCE REVIEW: IN PROGRESS</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
