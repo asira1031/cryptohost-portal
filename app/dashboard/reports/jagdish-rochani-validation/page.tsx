@@ -127,7 +127,7 @@ export default function Page() {
           <div style={card}>
             <h3>Transaction Summary</h3>
             <Row label="Reference" value="CHX-LIVE-G818-3124929DB-HSBC-26718459" />
-            <Row label="Bank Name" value="HSBC GERMANY." />
+            <Row label="Bank Name" value="Bank of Baroda." />
             <Row label="Cardholder" value="Jagdish Rochani" />
             <Row label="Card" value="4029851103586660" />
             <Row label="Amount" value={`EUR ${amount.toLocaleString()}`} />
