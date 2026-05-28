@@ -200,6 +200,13 @@ const fileDashboards: any[] = [
   note: "10BKen secure validation dashboard",
 },
 {
+  title: "101 Online-Protocol",
+  status: "ONLINE",
+  color: "#0ecb81",
+  href: "/dashboard/reports/protocol-101",
+  note: "Secure online protocol initialized",
+},
+{
   title: "201 Offline-Protocol",
   status: "OFFLINE",
   color: "#f59e0b",

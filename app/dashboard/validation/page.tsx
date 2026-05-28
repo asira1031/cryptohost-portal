@@ -74,6 +74,12 @@ export default async function ValidationPage() {
   const isKen = userEmail === "asira1031@gmail.com";
   const show913MReport = isKen || isAdmin;
 
+  const isProtocol101Owner =
+  userEmail === "tjaslan09@gmail.com";
+
+const showProtocol101Report =
+  isProtocol101Owner || isAdmin;
+
 
 const isHSBCTPPHoldOwner = userEmail === "tjaslan09@gmail.com";
 const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
@@ -580,6 +586,87 @@ const show1BFUNDSReport =
 
         <div style={{ fontSize: 13 }}>
           OFF201PRTKEN
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{showProtocol101Report && (
+  <Link
+    href="/dashboard/reports/protocol-101"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      101 Online-Protocol
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns:
+          "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div
+          style={{
+            fontWeight: 800,
+            color: "#0ecb81",
+          }}
+        >
+          ONLINE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Secure Online Protocol
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          ONL101PRTKEN
         </div>
       </div>
     </div>
