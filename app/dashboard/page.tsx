@@ -56,7 +56,11 @@ if (userEmail === "asira1031@gmail.com") {
   router.push("/dashboard/reports/913M");
   return;
 }
-
+// 👉 1BFUNDS
+if (userEmail === "asira1031@gmail.com") {
+  router.push("/dashboard/reports/1BFUNDS");
+  return;
+}
 // 👉 YUINPIN
 if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");
@@ -166,6 +170,7 @@ const fileDashboards: any[] = [
     href: "/dashboard/reports/TJDB1.275B",
     note: "TJDB 1.275B dashboard",
   },
+  
   {
     title: "HSBC — 5M Validation",
     status: "VALIDATED",
@@ -180,6 +185,13 @@ const fileDashboards: any[] = [
     href: "/dashboard/reports/913M",
     note: "913M HSBC MT103 transmission file",
   },
+  {
+  title: "1BFUNDS Dashboard",
+  status: "VALIDATED",
+  color: "#16a34a",
+  href: "/dashboard/reports/1BFUNDS",
+  note: "1BFUNDS validation dashboard",
+},
   {
   title: "10BKen — Validation Report",
   status: "VALIDATED",

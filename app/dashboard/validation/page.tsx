@@ -90,6 +90,10 @@ const showOfflineProtocolReport = isOfflineProtocolClient || isAdmin;
 const show10BKenReport =
   is10BKenClient || isAdmin;
 
+  const is1BFUNDSClient = userEmail === "asira1031@gmail.com";
+const show1BFUNDSReport =
+  is1BFUNDSClient || isAdmin;
+
   const { data, error } = await supabase
     .from("uploaded_files")
     .select("*")
