@@ -415,7 +415,7 @@ const [prices, setPrices] = useState<any>(null);
                         Transmission Metadata Detected
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        HSBC UK, MT103/FIN, TLS/certificate and sender details are
+                        BARCLAYS BANK PLC, MT103/FIN, TLS/certificate and sender details are
                         visible and match to records.
                       </p>
                     </div>
@@ -522,7 +522,7 @@ const [prices, setPrices] = useState<any>(null);
                   <TerminalLine>
                     BANK SOURCE: BARCLAYS BANK PLC ( BUKBGB22XXX)
                   </TerminalLine>
-                  <TerminalLine>SENDER: MATECHPOWER LTD</TerminalLine>
+                  <TerminalLine>SENDER: PT. INDHO TAMA PERSADA</TerminalLine>
                   <TerminalLine>CURRENCY: EUR</TerminalLine>
                   <TerminalLine>AUTH MODE: TLS / CERTIFICATE-BASED</TerminalLine>
                   <TerminalLine ok>TRANSMISSION LEVEL: COMPLETED</TerminalLine>
