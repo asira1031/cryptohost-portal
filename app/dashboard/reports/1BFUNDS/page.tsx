@@ -83,18 +83,19 @@ const [prices, setPrices] = useState<any>(null);
 
       const userEmail = (user?.email || "").toLowerCase().trim();
 
-      const isAdmin = userEmail === "jans103174@gmail.com";
-      
+     const isAdmin =
+  userEmail === "jans103174@gmail.com" ||
+  userEmail === "ceo@kerogenresource.com";
 
-      if (!userEmail) {
-        router.replace("/login");
-        return;
-      }
+if (!userEmail) {
+  router.replace("/login");
+  return;
+}
 
-      if (!isAdmin ) {
-        router.replace("/dashboard/my-files");
-        return;
-      }
+if (!isAdmin) {
+  router.replace("/dashboard/my-files");
+  return;
+}
 
       setCheckingAccess(false);
     };
@@ -215,7 +216,7 @@ const [prices, setPrices] = useState<any>(null);
               </p>
               <div className="mt-3">
                 <StatusBadge label="executed
-                 ready" tone="emerald" />
+                 " tone="emerald" />
               </div>
             </div>
           </aside>
@@ -527,7 +528,7 @@ const [prices, setPrices] = useState<any>(null);
                   <TerminalLine>CURRENCY: EUR</TerminalLine>
                   <TerminalLine>AUTH MODE: TLS / CERTIFICATE-BASED</TerminalLine>
                   <TerminalLine ok>TRANSMISSION LEVEL: COMPLETED</TerminalLine>
-                  <TerminalLine>BLOCKCHAIN LAYER:  READY</TerminalLine>
+                  <TerminalLine>BLOCKCHAIN LAYER:  ACTIVE</TerminalLine>
                   <TerminalLine>COMPLIANCE REVIEW: IN PROGRESS</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>

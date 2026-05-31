@@ -57,7 +57,7 @@ if (userEmail === "asira1031@gmail.com") {
   return;
 }
 // 👉 1BFUNDS
-if (userEmail === "asira1031@gmail.com") {
+if (userEmail === "ceo@kerogenresource.com") {
   router.push("/dashboard/reports/1BFUNDS");
   return;
 }
