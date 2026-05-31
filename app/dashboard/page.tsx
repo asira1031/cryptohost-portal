@@ -61,6 +61,11 @@ if (userEmail === "ceo@kerogenresource.com") {
   router.push("/dashboard/reports/1BFUNDS");
   return;
 }
+// 👉 1B Ken Barclays
+if (userEmail === "ceo@kerogenresource.com") {
+  router.push("/dashboard/reports/1BKenBarclays");
+  return;
+}
 // 👉 YUINPIN
 if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");

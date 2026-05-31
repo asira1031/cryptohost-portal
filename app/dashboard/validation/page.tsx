@@ -101,6 +101,12 @@ const show10BKenReport =
 
 const show1BFUNDSReport =
   is1BFUNDSClient || isAdmin;
+  
+  const is1BKenBarclaysClient =
+  userEmail === "ceo@kerogenresource.com";
+
+const show1BKenBarclaysReport =
+  is1BKenBarclaysClient || isAdmin;
 
   const { data, error } = await supabase
     .from("uploaded_files")
@@ -586,6 +592,81 @@ if (!paymentConfirmed) {
 
         <div style={{ fontSize: 13 }}>
           OFF201PRTKEN
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{show1BKenBarclaysReport && (
+  <Link
+    href="/dashboard/reports/1BKenBarclays"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      1B Ken Barclays
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#22c55e" }}>
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Client Validation Dashboard
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          1BKENBARCLAYS
         </div>
       </div>
     </div>
