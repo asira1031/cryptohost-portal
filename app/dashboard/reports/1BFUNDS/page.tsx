@@ -214,7 +214,8 @@ const [prices, setPrices] = useState<any>(null);
                 1B-251364873390811009ARCGB22XXX
               </p>
               <div className="mt-3">
-                <StatusBadge label="execution ready" tone="emerald" />
+                <StatusBadge label="executed
+                 ready" tone="emerald" />
               </div>
             </div>
           </aside>
@@ -256,7 +257,7 @@ const [prices, setPrices] = useState<any>(null);
                       Current File Status
                     </h3>
                   </div>
-                  <StatusBadge label="Execution" tone="emerald" />
+                  <StatusBadge label="Executed" tone="emerald" />
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
@@ -284,7 +285,7 @@ const [prices, setPrices] = useState<any>(null);
                     label="Authentication"
                     value="TLS / Certificate-based"
                   />
-                  <InfoRow label="Blockchain Layer" value="execution" />
+                  <InfoRow label="Blockchain Layer" value="executed" />
                   <InfoRow label="Last Update" value={lastUpdate} />
                 </div>
               </div>
@@ -432,7 +433,7 @@ const [prices, setPrices] = useState<any>(null);
 
                     <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4">
                       <p className="text-sm font-semibold text-amber-200">
-                        Blockchain Execution Pending
+                        Blockchain Executed Active
                       </p>
                       <p className="mt-1 text-sm text-amber-100/80">
                         release, mint, conversion, or broadcast action has been
