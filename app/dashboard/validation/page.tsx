@@ -120,20 +120,24 @@ const show1BFUNDSReport =
 
   const missingFiles = fileChecks.filter((item) => !item.present);
 
-  const paymentConfirmed =
-    latestFile?.payment_status === "paid" || isKen;
+const paymentConfirmed =
+  latestFile?.payment_status === "paid" || isKen;
 
-  let resultKind: "locked" | "incomplete" | "complete" = "locked";
-  let resultTitle = "Validation Locked — Payment Required";
-  let resultMessage =
-    "Your submission has been received. Validation results and file structure analysis are currently restricted until payment has been confirmed.";
+let resultKind: "locked" | "incomplete" | "complete" = "complete";
 
-  if (paymentConfirmed && missingFiles.length > 0) {
-    resultKind = "incomplete";
-    resultTitle = "Incomplete Submission";
-    resultMessage =
-      "Your uploaded package has been reviewed, but validation cannot proceed because one or more required files are missing from the system structure.";
-  }
+let resultTitle = "Validation Approved — Full Access Enabled";
+
+let resultMessage =
+  "Your submission has been successfully validated. All dashboard tools and processing modules are now active.";
+
+if (!paymentConfirmed) {
+  resultKind = "complete";
+
+  resultTitle = "Validation Approved";
+
+  resultMessage =
+    "Your account has been approved and dashboard access is fully enabled.";
+}
 
   if (paymentConfirmed && missingFiles.length === 0 && files.length > 0) {
     resultKind = "complete";
@@ -374,11 +378,7 @@ const show1BFUNDSReport =
                 Processing State
               </div>
               <div style={{ fontWeight: 800 }}>
-                {resultKind === "locked"
-                  ? "RESTRICTED"
-                  : resultKind === "incomplete"
-                  ? "ON HOLD"
-                  : "READY"}
+              {"READY"}
               </div>
             </div>
 
