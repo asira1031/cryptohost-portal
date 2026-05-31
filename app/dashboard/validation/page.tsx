@@ -612,7 +612,7 @@ if (!paymentConfirmed) {
     }}
   >
     <div style={{ fontSize: 17, fontWeight: 800 }}>
-      1B Ken Barclays
+      1Barclays
     </div>
 
     <div

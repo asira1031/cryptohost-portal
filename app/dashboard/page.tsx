@@ -264,6 +264,13 @@ note: "Client access approved",
   
 },
 {
+  title: "1Barclays Dashboard",
+  status: "ACTIVE",
+  color: "#16a34a",
+  href: "/dashboard/reports/1Barclays",
+  note: "1Barclays client validation dashboard",
+},
+{
   title: "DB825.546.5",
   status: "UNDER REVIEW",
   color: "#f59e0b",
