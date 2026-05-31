@@ -415,7 +415,7 @@ const [prices, setPrices] = useState<any>(null);
                         Transmission Metadata Detected
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        HSBC UK, MT103/FIN, TLS/certificate and sender details are
+                        Barclays, MT103/FIN, TLS/certificate and sender details are
                         visible and match to records.
                       </p>
                     </div>

@@ -535,37 +535,37 @@ const [prices, setPrices] = useState<any>(null);
 <TerminalLine>WALLET 1 – 22.5%</TerminalLine>
 <TerminalLine>0x34CD790d7c148dDA50F42677aD27cD429223C019</TerminalLine>
 <TerminalLine>€225,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+<TerminalLine>TXN HASH: 0x36b4bbcaf1473b07ab025e0373c89d2830570f306905caa6ba7444b8881f9947</TerminalLine>
 
 <TerminalLine>WALLET 2 – 5%</TerminalLine>
 <TerminalLine>0xC3803daA2D632211007391B98FC19fbC65738F5C</TerminalLine>
 <TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+<TerminalLine>TXN HASH: 0xd057606826a02750e7cbbc07f7c98a1b1aecb37b8735a634020c3648f12ea861</TerminalLine>
 
 <TerminalLine>WALLET 3 – 5%</TerminalLine>
 <TerminalLine>0xBfCAF252856A8F2cd7C68ac9d12808454A487C76</TerminalLine>
 <TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+<TerminalLine>TXN HASH: 0xe3a58bccc37d728bae1a450a8e98d675ca17ef3a71eb466d54ee53a8eb4553c8</TerminalLine>
 
 <TerminalLine>WALLET 4 – 5%</TerminalLine>
 <TerminalLine>0x49489c55431fAc64A46106214454Fb9A934B047A</TerminalLine>
 <TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+<TerminalLine>TXN HASH: 0x731eb48e59c3d901b4e0233ffb4495e6772cd4bc39d0a0ad30ce04730aad7f5a</TerminalLine>
 
 <TerminalLine>WALLET 5 – 7.5%</TerminalLine>
 <TerminalLine>0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538</TerminalLine>
 <TerminalLine>€75,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+<TerminalLine>TXN HASH: 0xd6db50d67c19c39b5e04168dff3e0d85d92f9f7c5e84dddc495cf3c1c3eacbe1</TerminalLine>
 
 <TerminalLine>WALLET 6 – 5%</TerminalLine>
 <TerminalLine>0x0668431F1FF68a6FcC5dAcc4FDE03DA861284894</TerminalLine>
 <TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+<TerminalLine>TXN HASH: 0x641d34ae330c7c64c7c458081f82841605b666d2d6685fa5e5a75f3d3a9e07aa</TerminalLine>
 
 <TerminalLine ok>MAIN WALLET – 55%</TerminalLine>
 <TerminalLine>0xc47133a6bd653793562a1ea25cb1d3161fbd99cd</TerminalLine>
 <TerminalLine>€550,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+<TerminalLine>TXN HASH: 0x46bbf0238491094faccf87f860a1e06946e4c0c66dbb05ca5409f624a0c27989</TerminalLine>
 <TerminalLine>------------------------------------------</TerminalLine>
 <TerminalLine ok>TOTAL DISTRIBUTION: 100% CONFIRMED</TerminalLine>
                 </div>
