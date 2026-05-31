@@ -143,10 +143,10 @@ const fileDashboards: any[] = [
   
     {
   title: "Ken — 99.5M LP",
-  status: "SUBSCRIPTION REQUIRED",
-  color: "#dc2626",
-  href: "/dashboard/reports/99.5M-LP",
-  note: "Account temporarily suspended",
+status: "ACTIVE",
+color: "#16a34a",
+href: "/dashboard/reports/99.5M-LP",
+note: "Client access approved",
 
   },
   {

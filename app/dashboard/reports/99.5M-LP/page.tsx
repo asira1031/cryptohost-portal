@@ -41,17 +41,16 @@ const [isBlocked, setIsBlocked] = useState(false);
   "jans103174@gmail.com",
   "ceo@kerogenresource.com",
 ];
-
 // STEP 1
 const email = user?.email?.toLowerCase()?.trim() || "";
 
-// 🔴 BLOCK FIRST
+// ✅ ACTIVATE CLIENT ACCESS
 if (email === "ceo@kerogenresource.com") {
   setIsAdmin(true);
-  setIsBlocked(true);
-  setValidationStatus("blocked");
+  setIsBlocked(false);
+  setValidationStatus("verified");
   setValidationMessage(
-    "Subscription required. This dashboard is temporarily suspended. Please contact support to reactivate access."
+    "Access granted. Welcome to the dashboard."
   );
   setIsCheckingAccess(false);
   return;
