@@ -597,7 +597,7 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
-{show1BKenBarclaysReport && (
+{true && (
   <Link
     href="/dashboard/reports/1BKenBarclays"
     style={{
