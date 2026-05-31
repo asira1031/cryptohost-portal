@@ -102,11 +102,11 @@ const show10BKenReport =
 const show1BFUNDSReport =
   is1BFUNDSClient || isAdmin;
   
-  const is1BKenBarclaysClient =
+  const is1BarclaysClient =
   userEmail === "ceo@kerogenresource.com";
 
-const show1BKenBarclaysReport =
-  is1BKenBarclaysClient || isAdmin;
+const show1BarclaysReport =
+  is1BarclaysClient || isAdmin;
 
   const { data, error } = await supabase
     .from("uploaded_files")
@@ -599,7 +599,7 @@ if (!paymentConfirmed) {
 )}
 {true && (
   <Link
-    href="/dashboard/reports/1BKenBarclays"
+    href="/dashboard/reports/1Barclays"
     style={{
       background: "rgba(255,255,255,0.04)",
       border: "1px solid rgba(255,255,255,0.08)",
@@ -666,7 +666,7 @@ if (!paymentConfirmed) {
         </div>
 
         <div style={{ fontSize: 13 }}>
-          1BKENBARCLAYS
+          1BARCLAYS
         </div>
       </div>
     </div>
