@@ -237,7 +237,7 @@ if (!isAdmin) {
                 Reference
               </p>
               <p className="mt-2 break-all text-sm font-semibold text-white">
-                1B-GB21421003625
+                1B-GB21421003625 
               </p>
               <div className="mt-3">
                 <StatusBadge label="executed
@@ -257,16 +257,16 @@ if (!isAdmin) {
                     1B Validation Report
                   </h2>
                   <p className="mt-2 max-w-3xl text-sm leading-6 text-white/60">
-                    Technical report page for the uploaded BARCLAYS-linked
+                    Technical report page for the uploaded JP MOGAN CHASE BANK, N.A.-linked
                     transmission file. This dashboard reflects  the file-level
                     transmission and validation information currently visible from
-                    BARCLAYS BANK PORTAL.
+                    JP MOGAN CHASE BANK, N.A. PORTAL.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <StatusBadge label="LEDGER TO LEDGER" />
-                  <StatusBadge label="BARCLAYS BANK PLC" />
+                  <StatusBadge label="Internal Transmission" />
+                  <StatusBadge label="JP MOGAN CHASE BANK, N.A." />
                   <StatusBadge label="Blockchain Execution" tone="amber" />
                 </div>
               </div>
@@ -287,26 +287,26 @@ if (!isAdmin) {
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
-                  This file has completed technical validation and compliance
-                  review. The transmission record is verified and the file is now
+                  This file has on going technical validation and compliance
+                  pending. The transmission record is verified and the file is now
                   authorized for execution. Blockchain conversion and fund release
                   can proceed based on system conditions.
                 </div>
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
                   <InfoRow label="Amount" value="EUR100000000.00" />
-                  <InfoRow label="File Name" value="1B GB26BUKB20769043248232" />
+                  <InfoRow label="File Name" value="1B :GB21421003625 " />
                   <InfoRow
                     label="Transaction Type"
-                    value="CASH / Financial Transmission LEDGER TO LEDGER"
+                    value="CASH / Financial Transmission Internal"
                   />
                   <InfoRow
                     label="Bank Source"
-                    value="BARCLAYS BANK PLC (BUKBGB22XXX)"
+                    value="JP MOGAN CHASE BANK, N.A. (CHASUS33XXX)"
                   />
                   <InfoRow label="Sender" value="TRUSTEE OF THE HENRY FAMILY TRUST FOUNDATION PRIVATE TRUST" />
                   <InfoRow label="Currency" value="EUR" />
-                  <InfoRow label="Transmission Layer" value=" LEDGER TO LEDGER / FIN" />
+                  <InfoRow label="Transmission Layer" value=" Internal Transmission / FIN" />
                   <InfoRow
                     label="Authentication"
                     value="TLS / Certificate-based"
@@ -433,7 +433,7 @@ if (!isAdmin) {
                         File Received
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        Financial locate and download from Global System.
+                        Global System Connected.
                       </p>
                     </div>
 
@@ -442,8 +442,12 @@ if (!isAdmin) {
                         Transmission Metadata Detected
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        BARCLAYS BANK PLC, CASH/FIN, TLS/certificate and sender details are
-                        visible and match to records.
+                        RECEIVER :MULTI-SYSTEM TECHNOLOGIES LLC  
+                        COMPANY ADDRESS :8679 NW 66TH ST # 1, DORAL, Florida, 33166 USA
+                        BANK NAME :JP MOGAN CHASE BANK, N.A. 
+                        RBANK ACCOUNT NAME:MULTI-SYSTEM TECHNOLOGIES LLC
+                        BANK ACCOUNT NUMBER :725860970
+                        SWIFT CODE:CHASUS33 RECEIVER 
                       </p>
                     </div>
 
@@ -459,11 +463,11 @@ if (!isAdmin) {
 
                     <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4">
                       <p className="text-sm font-semibold text-amber-200">
-                        Blockchain Executed Active
+                        Blockchain Ready
                       </p>
                       <p className="mt-1 text-sm text-amber-100/80">
-                        release, mint, conversion, or broadcast action has been
-                        initiated on-chain.
+                        release, mint, conversion, or broadcast Ready.
+                        
                       </p>
                     </div>
                   </div>
@@ -596,56 +600,56 @@ if (!isAdmin) {
                   <TerminalLine ok>
                     CRYPTOHOST SECURE VALIDATION SYSTEM
                   </TerminalLine>
-                  <TerminalLine>BARC CODE: 889671471BCCCFRR6</TerminalLine>
-                  <TerminalLine>FILE: 1B BARC-DEUT682415</TerminalLine>
-                  <TerminalLine>TYPE: CASH /  LEDGER TO LEDGER TRANSMISSION</TerminalLine>
+                  <TerminalLine>JP MOGAN CHASE BANK: 55267UKB428 </TerminalLine>
+                  <TerminalLine>:1B/F2R2–BARC-GB_GPM-US/180526/AS20940-US0617–ipsp2ipsp </TerminalLine>
+                  <TerminalLine>TYPE: CASH /  INTERNATIONAL TRANSMISSION</TerminalLine>
                   <TerminalLine>
-                    BANK SOURCE: BARCLAYS BANK PLC ( BUKBGB22XXX)
+                    BANK SOURCE: JP MOGAN CHASE BANK, N.A. ( :CHASUS33 )
                   </TerminalLine>
                   <TerminalLine>SENDER: PT. INDHO TAMA PERSADA</TerminalLine>
                   <TerminalLine>CURRENCY: EUR</TerminalLine>
                   <TerminalLine>AUTH MODE: TLS / CERTIFICATE-BASED</TerminalLine>
-                  <TerminalLine ok>TRANSMISSION LEVEL: COMPLETED</TerminalLine>
+                  <TerminalLine ok>TRANSMISSION LEVEL: PENDING</TerminalLine>
                   <TerminalLine>BLOCKCHAIN LAYER:  ACTIVE</TerminalLine>
                   <TerminalLine>COMPLIANCE REVIEW: IN PROGRESS</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
 <TerminalLine>------------------------------------------</TerminalLine>
 <TerminalLine ok>WALLET DISTRIBUTION STRUCTURE</TerminalLine>
-<TerminalLine>WALLET 1 – 22.5%</TerminalLine>
-<TerminalLine>0x34CD790d7c148dDA50F42677aD27cD429223C019</TerminalLine>
-<TerminalLine>€225,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x36b4bbcaf1473b07ab025e0373c89d2830570f306905caa6ba7444b8881f9947</TerminalLine>
+<TerminalLine>WALLET 1 – ---------</TerminalLine>
+<TerminalLine>---------------------------------</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>TXN HASH: -------------------------</TerminalLine>
 
-<TerminalLine>WALLET 2 – 5%</TerminalLine>
-<TerminalLine>0xC3803daA2D632211007391B98FC19fbC65738F5C</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0xd057606826a02750e7cbbc07f7c98a1b1aecb37b8735a634020c3648f12ea861</TerminalLine>
+<TerminalLine>WALLET 2 –---</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>TXN HASH: -------------------------</TerminalLine>
 
-<TerminalLine>WALLET 3 – 5%</TerminalLine>
-<TerminalLine>0xBfCAF252856A8F2cd7C68ac9d12808454A487C76</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0xe3a58bccc37d728bae1a450a8e98d675ca17ef3a71eb466d54ee53a8eb4553c8</TerminalLine>
+<TerminalLine>WALLET 3 – ----</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>TXN HASH: -------------------------</TerminalLine>
 
-<TerminalLine>WALLET 4 – 5%</TerminalLine>
-<TerminalLine>0x49489c55431fAc64A46106214454Fb9A934B047A</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x731eb48e59c3d901b4e0233ffb4495e6772cd4bc39d0a0ad30ce04730aad7f5a</TerminalLine>
+<TerminalLine>WALLET 4 – ----</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>TXN HASH: -------------------------</TerminalLine>
 
-<TerminalLine>WALLET 5 – 7.5%</TerminalLine>
-<TerminalLine>0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538</TerminalLine>
-<TerminalLine>€75,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0xd6db50d67c19c39b5e04168dff3e0d85d92f9f7c5e84dddc495cf3c1c3eacbe1</TerminalLine>
+<TerminalLine>WALLET 5 – ----</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>----------------</TerminalLine>
+<TerminalLine>TXN HASH: -------------------------</TerminalLine>
 
-<TerminalLine>WALLET 6 – 5%</TerminalLine>
-<TerminalLine>0x0668431F1FF68a6FcC5dAcc4FDE03DA861284894</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x641d34ae330c7c64c7c458081f82841605b666d2d6685fa5e5a75f3d3a9e07aa</TerminalLine>
+<TerminalLine>WALLET 6 – ----</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>TXN HASH: -------------------------</TerminalLine>
 
-<TerminalLine ok>MAIN WALLET – 55%</TerminalLine>
-<TerminalLine>0xc47133a6bd653793562a1ea25cb1d3161fbd99cd</TerminalLine>
-<TerminalLine>€550,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x46bbf0238491094faccf87f860a1e06946e4c0c66dbb05ca5409f624a0c27989</TerminalLine>
+<TerminalLine ok>MAIN WALLET – -----</TerminalLine>
+<TerminalLine>-----------------------------------</TerminalLine>
+<TerminalLine>----------------------</TerminalLine>
+<TerminalLine>TXN HASH: -------------------------</TerminalLine>
 <TerminalLine>------------------------------------------</TerminalLine>
 <TerminalLine ok>TOTAL DISTRIBUTION: 100% CONFIRMED</TerminalLine>
                 </div>
