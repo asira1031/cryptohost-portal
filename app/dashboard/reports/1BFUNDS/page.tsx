@@ -442,8 +442,18 @@ if (!isAdmin) {
                         Transmission Metadata Detected
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        BARCLAYS BANK PLC, CASH/FIN, TLS/certificate and sender details are
-                        visible and match to records.
+                        BARCLAYS BANK PLC, WITH FULL BANKING RESPONSIBILITY, 
+                        HEREBY CONFIRM THE ISSUANCE OF A LEDGER-TO-LEDGER CASH TRANSFER 
+                        DIRECT TO A COMMON ACCOUNT FOR FURTHER CREDIT TO 
+                        TRUSTEE OF THE HENRY FAMILY TRUST FOUNDATION PRIVATE TRUST,
+                         DATED 27/05/2026 20:20:02. THIS LEDGER-TO-LEDGER CASH TRANSFER
+                          DIRECT TO THE COMMON ACCOUNT IS FOR AN AMOUNT OF EUR 1,000,000,000.00.
+                           THE INTERNAL LEDGER TRANSFER HAS BEEN SENT TO HENRY TRUSTEE OF THE HENRY FAMILY TRUST FOUNDATION PRIVATE TRUST, 
+                           ACCOUNT NUMBER: GB26BUKB20769043248232.
+                            WE HEREBY AUTHORIZE BARCLAYS BANK PLC TO DOWNLOAD 
+                            AND CREDIT FUNDS TO TRUSTEE OF THE HENRY FAMILY TRUST FOUNDATION PRIVATE TRUST. 
+                            PLEASE ADVISE BENEFICIARY OF THE SAID TRANSFER. THIS TRANSFER WAS EXECUTED VIA LEDGER-TO-COMMON 
+                            ACCOUNT DIRECTLY ON: 27/05/2026 20:20:02 +0100  
                       </p>
                     </div>
 
