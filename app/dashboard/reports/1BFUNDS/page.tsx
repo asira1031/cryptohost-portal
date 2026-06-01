@@ -522,27 +522,27 @@ if (!isAdmin) {
 
   <div className="mt-6 rounded-2xl border border-white/8 bg-black/40 p-4 font-mono text-[12px] text-green-400">
     <div className="animate-pulse">
-      AUTHORIZATION CODE ............ STANDBY
+      AUTHORIZATION CODE ............ 
     </div>
 
     <div className="mt-2 animate-pulse">
-      APPROVAL CODE ................. WAITING
+      APPROVAL CODE ................. 
     </div>
 
     <div className="mt-2 animate-pulse">
-      RELEASE CODE .................. PENDING
+      RELEASE CODE .................. 
     </div>
 
     <div className="mt-2 animate-pulse">
-      ONE TIME PIN .................. ENCRYPTED
+      ONE TIME PIN .................. 
     </div>
 
     <div className="mt-2 animate-pulse">
-      FINAL CODE .................... LOCKED
+      FINAL CODE .................... 
     </div>
 
     <div className="mt-2 animate-pulse">
-      TRANSACTION CODE .............. VERIFYING
+      TRANSACTION CODE .............. 
     </div>
   </div>
 
