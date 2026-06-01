@@ -304,7 +304,7 @@ if (!isAdmin) {
                     label="Bank Source"
                     value="JP MOGAN CHASE BANK, N.A. (CHASUS33XXX)"
                   />
-                  <InfoRow label="Sender" value="TRUSTEE OF THE HENRY FAMILY TRUST FOUNDATION PRIVATE TRUST" />
+                  <InfoRow label="Sender" value=":MULTI-SYSTEM TECHNOLOGIES LLC " />
                   <InfoRow label="Currency" value="EUR" />
                   <InfoRow label="Transmission Layer" value=" Internal Transmission / FIN" />
                   <InfoRow
