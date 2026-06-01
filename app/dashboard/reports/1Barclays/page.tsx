@@ -110,7 +110,7 @@ const [prices, setPrices] = useState<any>(null);
 
      const isAdmin =
   userEmail === "jans103174@gmail.com" ||
-  userEmail === "asira1031@gmail.com";
+  userEmail === "ceo@kerogenresource.com";
 
 if (!userEmail) {
   router.replace("/login");
@@ -240,7 +240,7 @@ if (!isAdmin) {
                 1B-GB21421003625 
               </p>
               <div className="mt-3">
-                <StatusBadge label="executed
+                <StatusBadge label="execution pending
                  " tone="emerald" />
               </div>
             </div>
@@ -283,7 +283,7 @@ if (!isAdmin) {
                       Current File Status
                     </h3>
                   </div>
-                  <StatusBadge label="Executed" tone="emerald" />
+                  <StatusBadge label="Execution Pending" tone="emerald" />
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
