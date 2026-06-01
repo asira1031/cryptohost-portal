@@ -16,6 +16,31 @@ function StatusBadge({
   label: string;
   tone?: "cyan" | "amber" | "emerald" | "red";
 }) {
+  const [approvalCode, setApprovalCode] = useState("");
+const [approvalResult, setApprovalResult] = useState("");
+
+const handleApproval = async () => {
+  setApprovalResult("");
+
+  const phases = [
+    "AUTHORIZATION CODE VERIFIED...",
+    "APPROVAL CODE PROCESSING...",
+    "RELEASE CODE VALIDATING...",
+    "ONE TIME PIN MATCHING...",
+    "FINAL CODE ENCRYPTION...",
+    "TRANSACTION CODE VERIFYING...",
+  ];
+
+  for (const phase of phases) {
+    setApprovalResult(phase);
+
+    await new Promise((resolve) =>
+      setTimeout(resolve, 3000)
+    );
+  }
+
+  setApprovalResult("INVALID");
+};
   const toneClass =
     tone === "emerald"
       ? "border-emerald-400/30 bg-emerald-500/15 text-emerald-200"
@@ -444,52 +469,105 @@ if (!isAdmin) {
                   </div>
                 </section>
 
-                <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
-                    Notice to Client
-                  </p>
-                  <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
+             <section className="rounded-[30px] border border-white/8 bg-[#07131b] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:p-6">
   <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
     Approval System
   </p>
 
-  <h3 className="mt-2 text-xl font-semibold text-white">
+  <div className="mt-3 flex items-center gap-2">
+    <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
+
+    <div className="text-xs tracking-[0.22em] text-green-300">
+      LIVE VALIDATION NETWORK
+    </div>
+  </div>
+
+  <h3 className="mt-4 text-2xl font-semibold text-white">
     Approval Code Validation
   </h3>
 
-  <input
-    type="text"
-    value={approvalCode}
-    onChange={(e) => setApprovalCode(e.target.value)}
-    placeholder="Enter 6 to 20 digit approval code"
-    maxLength={20}
-    className="mt-5 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none"
-  />
+  <p className="mt-2 text-sm leading-7 text-slate-300">
+    Enter authorization or approval sequence code to begin
+    institutional validation routing and transaction confirmation.
+  </p>
 
-  <button
-    type="button"
-    onClick={handleApproval}
-    className="mt-4 rounded-2xl border border-cyan-400/25 bg-cyan-500/15 px-5 py-3 text-sm font-medium text-cyan-200 transition hover:bg-cyan-500/25"
-  >
-    Run Approval
-  </button>
+  <div className="mt-6 rounded-2xl border border-cyan-400/10 bg-black/30 p-4">
+    <div className="flex items-center justify-between">
+      <span className="text-[11px] uppercase tracking-[0.24em] text-cyan-300/60">
+        Secure Validation Slot
+      </span>
+
+      <span className="animate-pulse text-[11px] uppercase tracking-[0.24em] text-green-400">
+        Active
+      </span>
+    </div>
+
+    <input
+      type="text"
+      value={approvalCode}
+      onChange={(e) => setApprovalCode(e.target.value)}
+      placeholder="ENTER AUTHORIZATION CODE"
+      maxLength={20}
+      className="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm tracking-[0.20em] text-cyan-100 outline-none transition focus:border-cyan-400/40 focus:bg-cyan-500/5"
+    />
+
+    <button
+      type="button"
+      onClick={handleApproval}
+      className="mt-5 w-full rounded-2xl border border-cyan-400/20 bg-cyan-500/10 px-5 py-4 text-sm font-semibold tracking-[0.18em] text-cyan-200 transition duration-300 hover:bg-cyan-500/20"
+    >
+      RUN VALIDATION SYSTEM
+    </button>
+  </div>
+
+  <div className="mt-6 rounded-2xl border border-white/8 bg-black/40 p-4 font-mono text-[12px] text-green-400">
+    <div className="animate-pulse">
+      AUTHORIZATION CODE ............ STANDBY
+    </div>
+
+    <div className="mt-2 animate-pulse">
+      APPROVAL CODE ................. WAITING
+    </div>
+
+    <div className="mt-2 animate-pulse">
+      RELEASE CODE .................. PENDING
+    </div>
+
+    <div className="mt-2 animate-pulse">
+      ONE TIME PIN .................. ENCRYPTED
+    </div>
+
+    <div className="mt-2 animate-pulse">
+      FINAL CODE .................... LOCKED
+    </div>
+
+    <div className="mt-2 animate-pulse">
+      TRANSACTION CODE .............. VERIFYING
+    </div>
+  </div>
 
   {approvalResult ? (
-    <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white">
-      {approvalResult}
+    <div className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-sm text-red-300 shadow-[0_0_25px_rgba(239,68,68,0.15)]">
+      <div className="text-xs uppercase tracking-[0.24em] text-red-400/70">
+        Validation Result
+      </div>
+
+      <div className="mt-2 text-lg font-semibold tracking-[0.15em]">
+        {approvalResult}
+      </div>
     </div>
   ) : null}
 </section>
-                  <h3 className="mt-2 text-xl font-semibold text-white">
-                    System Summary
-                  </h3>
-                  <p className="mt-4 text-sm leading-7 text-white/72">
-                    The current record reflects a bank-side transmission file.
-                    Validation is limited to the document information presently
-                    visible in the uploaded file. Additional execution status
-                    should  be shown after  technical confirmation.
-                  </p>
-                </section>
+
+<section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
+  <h3 className="text-xl font-semibold text-white">
+    System Summary
+  </h3>
+
+  <p className="mt-4 text-sm leading-7 text-white/72">
+  </p>
+</section>
+
               </div>
             </section>
 
@@ -574,7 +652,7 @@ if (!isAdmin) {
               ) : null}
             </section>
           </main>
-        </div>
+                 </div>
       </div>
     </div>
   );
