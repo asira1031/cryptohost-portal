@@ -512,22 +512,50 @@ if (!isAdmin) {
       </span>
     </div>
 
-    <input
-      type="text"
-      value={approvalCode}
-      onChange={(e) => setApprovalCode(e.target.value)}
-      placeholder="ENTER AUTHORIZATION CODE"
-      maxLength={20}
-      className="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm tracking-[0.20em] text-cyan-100 outline-none transition focus:border-cyan-400/40 focus:bg-cyan-500/5"
-    />
+  {(() => {
+  const startDate = new Date("2026-06-01");
+  const today = new Date();
 
-    <button
-      type="button"
-      onClick={handleApproval}
-      className="mt-5 w-full rounded-2xl border border-cyan-400/20 bg-cyan-500/10 px-5 py-4 text-sm font-semibold tracking-[0.18em] text-cyan-200 transition duration-300 hover:bg-cyan-500/20"
-    >
-      RUN VALIDATION SYSTEM
-    </button>
+  const daysPassed = Math.floor(
+    (today.getTime() - startDate.getTime()) /
+      (1000 * 60 * 60 * 24)
+  );
+
+  const progress = Math.min(45 + daysPassed, 100);
+
+  const filledBars = Math.floor(progress / 5);
+  const emptyBars = 20 - filledBars;
+
+  const progressBar =
+    "█".repeat(filledBars) +
+    "░".repeat(emptyBars);
+
+  return (
+    <div className="mt-6 rounded-2xl border border-cyan-400/10 bg-black/30 p-5">
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] uppercase tracking-[0.24em] text-cyan-300/60">
+          Validation Progress
+        </span>
+
+        <span className="animate-pulse text-[11px] uppercase tracking-[0.24em] text-amber-300">
+          LIVE
+        </span>
+      </div>
+
+      <div className="mt-5 font-mono text-lg tracking-[0.18em] text-green-400">
+        {progressBar} {progress}%
+      </div>
+
+      <div className="mt-4 animate-pulse text-sm text-amber-200">
+        ========= VALIDATION IN PROGRESS =========
+      </div>
+
+      <div className="mt-2 text-xs text-white/50">
+        Please wait until verification process is completed.
+      </div>
+    </div>
+  );
+})()}
   </div>
 
   <div className="mt-6 rounded-2xl border border-white/8 bg-black/40 p-4 font-mono text-[12px] text-green-400">
