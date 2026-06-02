@@ -7,26 +7,32 @@ const WALLET_ALLOCATIONS = [
   {
     wallet: "0xd5cde5c24d72aadfb18345b148a51d0bb88af00b",
     percentage: 7.5,
+    txHash: "46ff8153b7e294e196311e6948128aac7ff4d69679ffc7b579ad29d6cad1fbf4",
   },
   {
     wallet: "0x4d4ac8E9570177C99c4de51c46b1E54fb13F467a",
     percentage: 20,
+    txHash: "f78670e8b4c6f95bdb29a0f51b45cb48796f4d37f2e71142e3a0d224b2394eed",
   },
   {
     wallet: "0x292fb7BeE8beA9e71570a8e810b25e9851D6deb7",
     percentage: 3.75,
+    txHash: "e5f1bf61d79c04e7df412c5476b756c87af1aca70419591253378bdbf686744e",
   },
   {
-    wallet: "0x0e3cBb59277356C2d0a8F70d170893328E0f6692",
+    wallet: "0xaa15a80957f9397d888fdcc568f2586a4999c3eb",
     percentage: 3.75,
+    txHash: "3fbfff6f28c5e58bda7c80629e95cc829bc4320837ced4a7d92fd33dc8b2805e",
   },
   {
-    wallet: "0x08B5297F88833896d58eDD9506aF6984310B24C4",
+    wallet: "0xe0d459c56B6317630f453A4DCAa60f6bd87189be",
     percentage: 10,
+    txHash: "0dcee9a437cada1bc15b40310ba6de57389d0f3d20d5143a26bd1a7866ea6b53",
   },
   {
     wallet: "0xc47133a6bd653793562a1ea25cb1d3161fbd99cd",
     percentage: 55,
+    txHash: "5883dfc8a574dfb058b436a001f46a58108275a8ec9d78068f398d13f35d7f9e",
   },
 ];
 
