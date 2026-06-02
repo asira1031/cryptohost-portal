@@ -58,24 +58,17 @@ if (userEmail === "asira1031@gmail.com") {
 }
 // 👉 1BFUNDS
 if (userEmail === "ceo@kerogenresource.com") {
-  router.push("/dashboard/reports/1BFUNDS");
+ router.push("/dashboard");
   return;
 }
-// 👉 1B Ken Barclays
-if (userEmail === "ceo@kerogenresource.com") {
-  router.push("/dashboard/reports/1Barclays");
-  return;
-}
+
 // 👉 YUINPIN
 if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");
   return;
 }
-// 👉 KEROGEN
-if (userEmail === "ceo@kerogenresource.com") {
-  router.push("/dashboard/reports/99.5M-LP");
-  return;
-}
+
+
 // 👉 201 Offline-Protocol
 if (userEmail === "asira1031@gmail.com") {
   router.push("/dashboard/reports/offline-protocol");
