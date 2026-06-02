@@ -75,7 +75,7 @@ export default function Page() {
     }
 
     setCode(fake);
-  }, 120);
+  }, 40);
 
   return () => clearInterval(interval);
 }, []);
@@ -146,7 +146,7 @@ export default function Page() {
     animation: "pulse 1s infinite",
   }}
 >
-  ███ RUNNING VALIDATION SEQUENCE ███
+  ███ LOCATING IN PROGRESS  ███
 </div>
 
             <button style={button} onClick={handleValidate}>
