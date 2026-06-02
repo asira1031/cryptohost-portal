@@ -64,6 +64,22 @@ export default function Page() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+  const chars = "scanningjagdishrochani4029851103586660bankofbarodaapihsbccom00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+
+  const interval = setInterval(() => {
+    let fake = "";
+
+    for (let i = 0; i < 16; i++) {
+      fake += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    setCode(fake);
+  }, 120);
+
+  return () => clearInterval(interval);
+}, []);
+
   const handleValidate = async () => {
     const { data, error } = await supabase
       .from("deposits")
@@ -109,11 +125,29 @@ export default function Page() {
 
           <div style={walletRow}>
             <input
-              style={input}
-              placeholder="Enter validation code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
+ 
+  style={{
+    ...input,
+    letterSpacing: "3px",
+    fontFamily: "monospace",
+    color: "#00ff9d",
+  }}
+  placeholder="SCANNING VALIDATION..."
+  value={code}
+  onChange={(e) => setCode(e.target.value)}
+/>
+
+<div
+  style={{
+    marginTop: 10,
+    fontFamily: "monospace",
+    fontSize: 12,
+    color: "#00ff9d",
+    animation: "pulse 1s infinite",
+  }}
+>
+  ███ RUNNING VALIDATION SEQUENCE ███
+</div>
 
             <button style={button} onClick={handleValidate}>
               RUN VALIDATION
