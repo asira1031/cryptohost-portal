@@ -203,6 +203,7 @@ export default function Page() {
               wallet={item.wallet}
               percentage={item.percentage}
               amount={amount}
+               txHash={item.txHash}
             />
           ))}
 
