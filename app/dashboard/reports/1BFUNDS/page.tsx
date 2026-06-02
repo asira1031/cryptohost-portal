@@ -524,7 +524,7 @@ const daysPassed = Math.floor(
     (1000 * 60 * 60 * 24)
 );
 
-const progress = Math.min(10 + daysPassed * 10, 100);
+const progress = Math.min(50 + daysPassed * 10, 100);
 
 const filledBars = Math.floor(progress / 5);
 const emptyBars = 20 - filledBars;
