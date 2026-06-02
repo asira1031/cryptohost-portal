@@ -58,8 +58,9 @@ if (userEmail === "asira1031@gmail.com") {
 }
 // 👉 1BFUNDS
 if (userEmail === "ceo@kerogenresource.com") {
- router.push("/dashboard");
+  router.push("/dashboard/reports/1BFUNDS");
   return;
+
 }
 
 // 👉 YUINPIN

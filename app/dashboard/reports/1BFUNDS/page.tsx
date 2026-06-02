@@ -98,6 +98,8 @@ export default function Report1BPage() {
 const [approvalResult, setApprovalResult] = useState("");
 const [prices, setPrices] = useState<any>(null);
 
+
+
   useEffect(() => {
     const checkAccess = async () => {
       const supabase = createClient();
@@ -513,22 +515,23 @@ if (!isAdmin) {
     </div>
 
   {(() => {
+    
   const startDate = new Date("2026-06-01");
-  const today = new Date();
+const today = new Date();
 
-  const daysPassed = Math.floor(
-    (today.getTime() - startDate.getTime()) /
-      (1000 * 60 * 60 * 24)
-  );
+const daysPassed = Math.floor(
+  (today.getTime() - startDate.getTime()) /
+    (1000 * 60 * 60 * 24)
+);
 
-  const progress = Math.min(45 + daysPassed, 100);
+const progress = Math.min(10 + daysPassed * 10, 100);
 
-  const filledBars = Math.floor(progress / 5);
-  const emptyBars = 20 - filledBars;
+const filledBars = Math.floor(progress / 5);
+const emptyBars = 20 - filledBars;
 
-  const progressBar =
-    "█".repeat(filledBars) +
-    "░".repeat(emptyBars);
+const progressBar =
+  "█".repeat(filledBars) +
+  "░".repeat(emptyBars);
 
   return (
     <div className="mt-6 rounded-2xl border border-cyan-400/10 bg-black/30 p-5">
