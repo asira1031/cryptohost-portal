@@ -76,7 +76,23 @@ export default function Report825MPage() {
   const [approvalCode, setApprovalCode] = useState("");
 const [approvalResult, setApprovalResult] = useState("");
 const [prices, setPrices] = useState<any>(null);
+const [blockNumber, setBlockNumber] =
+  useState<number | null>(null);
 
+  useEffect(() => {
+  async function loadBlock() {
+    try {
+      const res = await fetch("/api/block");
+      const data = await res.json();
+
+      setBlockNumber(data.blockNumber);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  loadBlock();
+}, []);
   useEffect(() => {
     const checkAccess = async () => {
       const supabase = createClient();
@@ -263,10 +279,13 @@ const data = await res.json();
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
-                  This file has completed technical validation and compliance
-                  review. The transmission record is verified and the file is now
-                  authorized for execution. Blockchain conversion and fund release
-                  can proceed based on system conditions.
+                   "document_type": "IP to IP Transfer Confirmation",
+                    "bank": "Deutsche Bank",
+                    "beneficiary_bank": "Union Bank of the Philippines",
+                    "currency": "EUR",
+                    "amount": "825,546,500.00",
+                    "source_file": "IPtoIP terminal-UNION BANK.pdf",
+                    "note": "Extracted from visible document content; verify against original file."
                 </div>
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
@@ -575,137 +594,81 @@ const data = await res.json();
         WALLET DISTRIBUTION STRUCTURE
       </TerminalLine>
 
-      <TerminalLine>
-        WALLET 1 – 31.5%
-      </TerminalLine>
-
-      <TerminalLine>
-        0x51cb3febd21849b4555aabc1d667df23ada9745f
-      </TerminalLine>
-
-      <TerminalLine>
-        €285,312,500.00
-      </TerminalLine>
-
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
-
-      <TerminalLine>
-        WALLET 2 – 1.25%
-      </TerminalLine>
-
-      <TerminalLine>
-        0x2BF24311d74c877a4d0EB5d5Ddd536F1129c0526
-      </TerminalLine>
-
-      <TerminalLine>
-        €11,412,500.00
-      </TerminalLine>
-
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
-
-      <TerminalLine>
-        WALLET 3 – 1.25%
-      </TerminalLine>
-
-      <TerminalLine>
-        0x78e63cb6F8B32132923243e62e9FE34c3C906b55
-      </TerminalLine>
-
-      <TerminalLine>
-        €11,412,500.00
-      </TerminalLine>
-
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
-
-      <TerminalLine>
-        WALLET 4 – 1.25%
-      </TerminalLine>
-
-      <TerminalLine>
-        0x7AF9086ae46B75504AeEf0EcA340177dc85dF634
-      </TerminalLine>
-
-      <TerminalLine>
-        €11,412,500.00
-      </TerminalLine>
-
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
-
-      <TerminalLine>
-        WALLET 5 – 2.5%
-      </TerminalLine>
-
-      <TerminalLine>
-        0x360C2fC7613b6A94A6a6c82C6A4FEf877E721165
-      </TerminalLine>
-
-      <TerminalLine>
-        €22,825,000.00
-      </TerminalLine>
-
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
-
-      <TerminalLine>
-        WALLET 6 – 5%
-      </TerminalLine>
-
-      <TerminalLine>
-        0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
-      </TerminalLine>
-
-      <TerminalLine>
-        €45,650,000.00
-      </TerminalLine>
-
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
-
-      <TerminalLine>
-        WALLET 7 – 7.5%
-      </TerminalLine>
-
-      <TerminalLine>
-        0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538
-      </TerminalLine>
-
-      <TerminalLine>
-        €68,475,000.00
-      </TerminalLine>
-
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
-
       <TerminalLine ok>
-        MAIN WALLET – 50%
-      </TerminalLine>
+  WALLET DISTRIBUTION STRUCTURE
+</TerminalLine>
 
-      <TerminalLine>
-        0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C
-      </TerminalLine>
+<TerminalLine>
+  WALLET 1 – 55%
+</TerminalLine>
 
-      <TerminalLine>
-        €456,500,000.00
-      </TerminalLine>
+<TerminalLine>
+  0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+</TerminalLine>
 
-      <TerminalLine>
-        TXN HASH: ______________________________
-      </TerminalLine>
+<TerminalLine>
+  €454,050,575.00
+</TerminalLine>
 
-      <TerminalLine>
-        ------------------------------------------
-      </TerminalLine>
+<TerminalLine>
+  BLOCK: {blockNumber ?? "Loading..."}
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 2 – 32.5%
+</TerminalLine>
+
+<TerminalLine>
+  0x410DACb2b5cDA1071Ce053E132A521697e9179c0
+</TerminalLine>
+
+<TerminalLine>
+  €268,302,612.50
+</TerminalLine>
+
+<TerminalLine>
+  BLOCK: {blockNumber ?? "Loading..."}
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 3 – 7.5%
+</TerminalLine>
+
+<TerminalLine>
+  0xA3fdAE01E9eaDd0a86403830824fEf489240486f
+</TerminalLine>
+
+<TerminalLine>
+  €61,915,987.50
+</TerminalLine>
+
+<TerminalLine>
+  BLOCK: {blockNumber ?? "Loading..."}
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 4 – 5%
+</TerminalLine>
+
+<TerminalLine>
+  0xe0d459c56B6317630f453A4DCAa60f6bd87189be
+</TerminalLine>
+
+<TerminalLine>
+  €41,277,325.00
+</TerminalLine>
+
+<TerminalLine>
+  BLOCK: {blockNumber ?? "Loading..."}
+</TerminalLine>
+
+<TerminalLine>
+  ------------------------------------------
+</TerminalLine>
+
+<TerminalLine ok>
+  TOTAL DISTRIBUTION: 100% CONFIRMED
+</TerminalLine>
 
            <TerminalLine ok>
         TOTAL DISTRIBUTION: 100% CONFIRMED
