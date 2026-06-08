@@ -622,44 +622,78 @@ if (!isAdmin) {
                   <TerminalLine>COMPLIANCE REVIEW: IN PROGRESS</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
                   <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
-<TerminalLine>------------------------------------------</TerminalLine>
-<TerminalLine ok>WALLET DISTRIBUTION STRUCTURE</TerminalLine>
-<TerminalLine>WALLET 1 – 22.5%</TerminalLine>
-<TerminalLine>0x34CD790d7c148dDA50F42677aD27cD429223C019</TerminalLine>
-<TerminalLine>€225,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x36b4bbcaf1473b07ab025e0373c89d2830570f306905caa6ba7444b8881f9947</TerminalLine>
 
-<TerminalLine>WALLET 2 – 5%</TerminalLine>
-<TerminalLine>0xC3803daA2D632211007391B98FC19fbC65738F5C</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0xd057606826a02750e7cbbc07f7c98a1b1aecb37b8735a634020c3648f12ea861</TerminalLine>
+                  <div className="mt-4 rounded-[20px] border border-white/10 bg-[#031017] p-4">
+                    <pre className="whitespace-pre-wrap font-mono text-[12px] leading-6 text-cyan-100/90">
+============================================================================================
+CRYPTOHOST ::  BARCLAYS BANK PLC  � SECURE CHANNEL CHECK (TLS)
+============================================================================================
+Target Host     : api.barclays.com
+Target Port     : 443
+--------------------------------------------------------------------------------------------
+[true] TLS handshake successful with api.barclays.com
+Reason          : [Errno 11001] getaddrinfo DUPLICATION api.barclays.com
+--------------------------------------------------------------------------------------------
+STATUS          : NETWORK / TLS CONNECTED
+============================================================================================
 
-<TerminalLine>WALLET 3 – 5%</TerminalLine>
-<TerminalLine>0xBfCAF252856A8F2cd7C68ac9d12808454A487C76</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0xe3a58bccc37d728bae1a450a8e98d675ca17ef3a71eb466d54ee53a8eb4553c8</TerminalLine>
+C:\\Users\\USER\\AppData\\Roaming\\Python\\Python312\\site-packages\\web3\\__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+WALLET DISTRIBUTION STRUCTURE
+------------------------------------------------------------
+Wallet : 0x34CD790d7c148dDA50F42677aD27cD429223C019
+Percent: 22.5%
+Amount : �22,500,000.00
+------------------------------------------------------------
+Wallet : 0xC3803daA2D632211007391B98FC19fbC65738F5C
+Percent: 5.0%
+Amount : �5,000,000.00
+------------------------------------------------------------
+Wallet : 0xBfCAF252856A8F2cd7C68ac9d12808454A487C76
+Percent: 5.0%
+Amount : �5,000,000.00
+------------------------------------------------------------
+Wallet : 0x49489c55431fAc64A46106214454Fb9A934B047A
+Percent: 5.0%
+Amount : �5,000,000.00
+------------------------------------------------------------
+Wallet : 0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538
+Percent: 7.5%
+Amount : �7,500,000.00
+------------------------------------------------------------
+Wallet : 0x0668431F1FF68a6FcC5dAcc4FDE03DA861284894
+Percent: 5.0%
+Amount : �5,000,000.00
+------------------------------------------------------------
+Wallet : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+Percent: 50.0%
+Amount : �50,000,000.00
+------------------------------------------------------------
+Connected to Ethereum
+Sender: 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
 
-<TerminalLine>WALLET 4 – 5%</TerminalLine>
-<TerminalLine>0x49489c55431fAc64A46106214454Fb9A934B047A</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x731eb48e59c3d901b4e0233ffb4495e6772cd4bc39d0a0ad30ce04730aad7f5a</TerminalLine>
+============================================================================================
+CRYPTOHOST :: CONNECTION STATUS (DISPLAY)
+============================================================================================
+[OK] Connected to Blockchain RPC (Ethereum Mainnet via Alchemy)
+     RPC: https://eth-mainnet.g.alchemy.com/v2/gaZRkg_BK7Eou-s9f5NpV
+     Chain ID: 1
+[DISPLAY] Connected to Binance for EUR to USDT conversion
+         (Status output  � this code call Binance endpoints)
+[DISPLAY] Connected to BARCLAYS Bank API system
+         (Status output  �  BARCLAYS Bank API requests/mTLS/OAuth exist in this script)
+============================================================================================
 
-<TerminalLine>WALLET 5 – 7.5%</TerminalLine>
-<TerminalLine>0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538</TerminalLine>
-<TerminalLine>€75,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0xd6db50d67c19c39b5e04168dff3e0d85d92f9f7c5e84dddc495cf3c1c3eacbe1</TerminalLine>
+Traceback (most recent call last):
+  File "c:\L TO L\import socket.py", line 179, in
+Sender token balance: treasury on hold,...
+Required total     : 100000000.0
+    raise Exception("token balance  distributed")
 
-<TerminalLine>WALLET 6 – 5%</TerminalLine>
-<TerminalLine>0x0668431F1FF68a6FcC5dAcc4FDE03DA861284894</TerminalLine>
-<TerminalLine>€50,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x641d34ae330c7c64c7c458081f82841605b666d2d6685fa5e5a75f3d3a9e07aa</TerminalLine>
+                    </pre>
+                  </div>
+Exception: rebroadcast transaction not permitted: token balance  distributed
 
-<TerminalLine ok>MAIN WALLET – 55%</TerminalLine>
-<TerminalLine>0xc47133a6bd653793562a1ea25cb1d3161fbd99cd</TerminalLine>
-<TerminalLine>€550,000,000.00</TerminalLine>
-<TerminalLine>TXN HASH: 0x46bbf0238491094faccf87f860a1e06946e4c0c66dbb05ca5409f624a0c27989</TerminalLine>
-<TerminalLine>------------------------------------------</TerminalLine>
-<TerminalLine ok>TOTAL DISTRIBUTION: 100% CONFIRMED</TerminalLine>
                 </div>
               ) : null}
             </section>
