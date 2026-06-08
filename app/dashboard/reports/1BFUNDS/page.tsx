@@ -16,31 +16,6 @@ function StatusBadge({
   label: string;
   tone?: "cyan" | "amber" | "emerald" | "red";
 }) {
-  const [approvalCode, setApprovalCode] = useState("");
-const [approvalResult, setApprovalResult] = useState("");
-
-const handleApproval = async () => {
-  setApprovalResult("");
-
-  const phases = [
-    "AUTHORIZATION CODE VERIFIED...",
-    "APPROVAL CODE PROCESSING...",
-    "RELEASE CODE VALIDATING...",
-    "ONE TIME PIN MATCHING...",
-    "FINAL CODE ENCRYPTION...",
-    "TRANSACTION CODE VERIFYING...",
-  ];
-
-  for (const phase of phases) {
-    setApprovalResult(phase);
-
-    await new Promise((resolve) =>
-      setTimeout(resolve, 3000)
-    );
-  }
-
-  setApprovalResult("INVALID");
-};
   const toneClass =
     tone === "emerald"
       ? "border-emerald-400/30 bg-emerald-500/15 text-emerald-200"
@@ -58,6 +33,8 @@ const handleApproval = async () => {
     </span>
   );
 }
+
+
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
@@ -97,6 +74,9 @@ export default function Report1BPage() {
   const [approvalCode, setApprovalCode] = useState("");
 const [approvalResult, setApprovalResult] = useState("");
 const [prices, setPrices] = useState<any>(null);
+const [attempts, setAttempts] = useState(0);
+const [blocked, setBlocked] = useState(false);
+const [validating, setValidating] = useState(false);
 
 
 
@@ -520,57 +500,74 @@ if (!isAdmin) {
   onChange={(e) => setApprovalCode(e.target.value)}
   placeholder="ENTER VALIDATION CODE"
   maxLength={20}
-  className="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm tracking-[0.20em] text-cyan-100 outline-none"
+  disabled={blocked || validating}
+  className="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm tracking-[0.20em] text-cyan-100 outline-none disabled:opacity-50"
 />
 
 <button
   type="button"
   onClick={handleApproval}
-  className="mt-5 w-full rounded-2xl border border-cyan-400/20 bg-cyan-500/10 px-5 py-4 text-sm font-semibold tracking-[0.18em] text-cyan-200"
+  disabled={blocked || validating}
+  className="mt-5 w-full rounded-2xl border border-cyan-400/20 bg-cyan-500/10 px-5 py-4 text-sm font-semibold tracking-[0.18em] text-cyan-200 disabled:opacity-40"
 >
-  RUN VALIDATION SYSTEM
+  {blocked
+    ? "ACCESS BLOCKED"
+    : validating
+    ? "VALIDATION IN PROGRESS..."
+    : "RUN VALIDATION SYSTEM"}
 </button>
+</div>
+
+<div className="mt-6 rounded-2xl border border-white/8 bg-black/40 p-4 font-mono text-[12px] text-green-400">
+  <div className="animate-pulse">
+    AUTHORIZATION CODE ............
   </div>
 
-  <div className="mt-6 rounded-2xl border border-white/8 bg-black/40 p-4 font-mono text-[12px] text-green-400">
-    <div className="animate-pulse">
-      AUTHORIZATION CODE ............ 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      APPROVAL CODE ................. 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      RELEASE CODE .................. 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      ONE TIME PIN .................. 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      FINAL CODE .................... 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      TRANSACTION CODE .............. 
-    </div>
+  <div className="mt-2 animate-pulse">
+    APPROVAL CODE .................
   </div>
 
-  {approvalResult ? (
-    <div className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-sm text-red-300 shadow-[0_0_25px_rgba(239,68,68,0.15)]">
-      <div className="text-xs uppercase tracking-[0.24em] text-red-400/70">
-        Validation Result
-      </div>
+  <div className="mt-2 animate-pulse">
+    RELEASE CODE ..................
+  </div>
 
-      <div className="mt-2 text-lg font-semibold tracking-[0.15em]">
-        {approvalResult}
-      </div>
+  <div className="mt-2 animate-pulse">
+    ONE TIME PIN ..................
+  </div>
+
+  <div className="mt-2 animate-pulse">
+    FINAL CODE ....................
+  </div>
+
+  <div className="mt-2 animate-pulse">
+    TRANSACTION CODE ..............
+  </div>
+</div>
+
+{approvalResult && (
+  <div
+    className={`mt-6 rounded-2xl p-5 text-sm shadow-[0_0_25px_rgba(239,68,68,0.15)] ${
+      blocked
+        ? "border border-red-600/30 bg-red-600/10 text-red-300"
+        : "border border-red-500/20 bg-red-500/10 text-red-300"
+    }`}
+  >
+    <div className="text-xs uppercase tracking-[0.24em] text-red-400/70">
+      Validation Result
     </div>
-  ) : null}
+
+    <div className="mt-2 text-lg font-semibold tracking-[0.15em]">
+      {approvalResult}
+    </div>
+
+    {!blocked && attempts > 0 && (
+      <div className="mt-3 text-xs text-red-400">
+        Failed Attempts: {attempts}/3
+      </div>
+    )}
+  </div>
+)}
 </section>
-
 <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
   <h3 className="text-xl font-semibold text-white">
     System Summary
