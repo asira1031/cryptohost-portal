@@ -80,6 +80,12 @@ export default async function ValidationPage() {
 const showProtocol101Report =
   isProtocol101Owner || isAdmin;
 
+  const isDeutscheBankClient =
+  userEmail === "asira1031@gmail.com";
+
+const showDeutscheBankReport =
+  isDeutscheBankClient || isAdmin;
+
 
 const isHSBCTPPHoldOwner = userEmail === "tjaslan09@gmail.com";
 const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
@@ -673,6 +679,87 @@ if (!paymentConfirmed) {
 
         <div style={{ fontSize: 13 }}>
           1BARCLAYS
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{showDeutscheBankReport && (
+  <Link
+    href="/dashboard/reports/deutsche-bank-ag"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      Deutsche Bank AG
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns:
+          "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div
+          style={{
+            fontWeight: 800,
+            color: "#0ecb81",
+          }}
+        >
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Deutsche Bank Validation
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          DEUTDEFFXXX
         </div>
       </div>
     </div>

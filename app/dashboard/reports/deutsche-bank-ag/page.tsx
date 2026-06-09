@@ -230,7 +230,7 @@ const data = await res.json();
                 Reference
               </p>
               <p className="mt-2 break-all text-sm font-semibold text-white">
-                825M-UBPHPHMMXXX
+                1B-DEUTDEFFXXX
               </p>
               <div className="mt-3">
                 <StatusBadge label="executed" tone="emerald" />
@@ -246,13 +246,13 @@ const data = await res.json();
                     Active File Summary
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
-                    825M Validation Report
+                    1B-DEUTDEFFXXX Validation Report
                   </h2>
                   <p className="mt-2 max-w-3xl text-sm leading-6 text-white/60">
-                    Technical report page for the uploaded UNION BANK-linked
+                    Technical report page for the uploaded 1B-DEUTSCHE BANK AG-linked
                     transmission file. This dashboard reflects  the file-level
                     transmission and validation information currently visible from
-                    UNION BANK OF THE PHILIPPINES PORTAL.
+                    DEUTSCHE BANK PORTAL.
                   </p>
                 </div>
 
@@ -281,25 +281,25 @@ const data = await res.json();
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
                    "document_type": "IP to IP Transfer Confirmation",
                     "bank": "Deutsche Bank",
-                    "beneficiary_bank": "Union Bank of the Philippines",
+                    "beneficiary_bank": "PT.BANK NEGARA INDONESIA (PERSERO)TBK",
                     "currency": "EUR",
-                    "amount": "825,546,500.00",
-                    "source_file": "IPtoIP terminal-UNION BANK.pdf",
+                    "amount": "1,000,000,000.00",
+                    "source_file": "SERVER to SERVER terminal-DEUTSCHE BANK.pdf",
                     "note": "Extracted from visible document content; verify against original file."
                 </div>
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
-                  <InfoRow label="Reference" value="UBP2026704540520" />
-                  <InfoRow label="File Name" value="825M UBP2026704540520_1" />
+                  <InfoRow label="Reference" value="DEUT997856743216" />
+                  <InfoRow label="File Name" value="1B-DEUTDEFFXXX" />
                   <InfoRow
                     label="Transaction Type"
-                    value="MT103 / Financial Transmission"
+                    value="MT103/202 / Financial Transmission"
                   />
                   <InfoRow
                     label="Bank Source"
                     value="DEUTSCHE BANK AG (DEUTDEDB320)"
                   />
-                  <InfoRow label="Sender" value="DASBOB TERMINALS GMBH" />
+                  <InfoRow label="Sender" value="KINPRO HOLDING GMBH" />
                   <InfoRow label="Currency" value="EUR" />
                   <InfoRow label="Transmission Layer" value="SWIFT / FIN" />
                   <InfoRow
@@ -430,7 +430,7 @@ const data = await res.json();
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
                         Financial locate and download from Global System.
-                        Results "UNKNOWN"
+                        Results "FILERECEIVED" with timestamp and file hash are logged
                       </p>
                     </div>
 
@@ -543,11 +543,11 @@ const data = await res.json();
       </TerminalLine>
 
       <TerminalLine>
-        REFERENCE: 142230 20052026DEUTDEDB3206376595111
+        TRANSACTION NUMBER: DE35600700240141936500
       </TerminalLine>
 
       <TerminalLine>
-        FILE: 825M UBP2026704540520_1.pdf
+        FILE: 1B-DEUTDEFFXXX
       </TerminalLine>
 
       <TerminalLine>
@@ -559,7 +559,7 @@ const data = await res.json();
       </TerminalLine>
 
       <TerminalLine>
-        SENDER: DASBOB TERMINALS GMBH
+        SENDER: KINPRO HOLDING GMBH
       </TerminalLine>
 
       <TerminalLine>
@@ -597,79 +597,79 @@ const data = await res.json();
       <TerminalLine ok>
   WALLET DISTRIBUTION STRUCTURE
 </TerminalLine>
-
 <TerminalLine>
-  WALLET 1 – 55%
+  WALLET 1 – 20%
+</TerminalLine>
+<TerminalLine>
+  0xfc786E6Aa704D4D1F68D39F72dD9B5D0dcF9CC35
+</TerminalLine>
+<TerminalLine>
+  €200,000,000.00
 </TerminalLine>
 
+<TerminalLine>
+  WALLET 2 – 10%
+</TerminalLine>
+<TerminalLine>
+  0x99671479af96Dd1b1e59f822E5fA8e449B354AB7
+</TerminalLine>
+<TerminalLine>
+  €100,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 3 – 6.5%
+</TerminalLine>
+<TerminalLine>
+  0x6Bc12EE1151C7893a6AeFE1be90a41BF651cfE7F
+</TerminalLine>
+<TerminalLine>
+  €65,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 4 – 3.5%
+</TerminalLine>
+<TerminalLine>
+  0x720DC8dEc99e296B59F773294Aa402d6c7E97868
+</TerminalLine>
+<TerminalLine>
+  €35,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 5 – 5%
+</TerminalLine>
+<TerminalLine>
+  0x9B8537dec9584790e9d1d054E7cE6cEBe80Bfa29
+</TerminalLine>
+<TerminalLine>
+  €50,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 6 – 5%
+</TerminalLine>
+<TerminalLine>
+  0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
+</TerminalLine>
+<TerminalLine>
+  €50,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 7 – 50%
+</TerminalLine>
 <TerminalLine>
   0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
 </TerminalLine>
-
 <TerminalLine>
-  €454,050,575.00
-</TerminalLine>
-
-<TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 2 – 32.5%
-</TerminalLine>
-
-<TerminalLine>
-  0x410DACb2b5cDA1071Ce053E132A521697e9179c0
-</TerminalLine>
-
-<TerminalLine>
-  €268,302,612.50
-</TerminalLine>
-
-<TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 3 – 7.5%
-</TerminalLine>
-
-<TerminalLine>
-  0xA3fdAE01E9eaDd0a86403830824fEf489240486f
-</TerminalLine>
-
-<TerminalLine>
-  €61,915,987.50
-</TerminalLine>
-
-<TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 4 – 5%
-</TerminalLine>
-
-<TerminalLine>
-  0xe0d459c56B6317630f453A4DCAa60f6bd87189be
-</TerminalLine>
-
-<TerminalLine>
-  €41,277,325.00
-</TerminalLine>
-
-<TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
-</TerminalLine>
-
-<TerminalLine>
-  ------------------------------------------
+  €500,000,000.00
 </TerminalLine>
 
 <TerminalLine ok>
-  TOTAL DISTRIBUTION: 100% CONFIRMED
+  TOTAL DISTRIBUTION: €1,000,000,000.00 (100%)
 </TerminalLine>
-
            <TerminalLine ok>
         TOTAL DISTRIBUTION: 100% CONFIRMED
       </TerminalLine>

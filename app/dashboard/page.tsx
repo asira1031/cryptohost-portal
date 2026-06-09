@@ -256,6 +256,7 @@ note: "Client access approved",
   href: "/dashboard/reports/6B",
   note: "6B Deutsche Bank AG validation dashboard",
 },
+
 {
   title: "TJBURNING TOKEN",
   status: "BURN REQUIRED",
@@ -263,6 +264,13 @@ note: "Client access approved",
   href: "/dashboard/reports/tj-burning-token",
   note: "Institutional redemption portal",
   
+},
+{
+  title: "DEUTSCHE BANK AG",
+  status: "ACTIVE",
+  color: "#22c55e",
+  href: "/dashboard/reports/deutsche-bank-ag",
+  note: "Deutsche Bank validation portal",
 },
 {
   title: "1Barclays Dashboard",
