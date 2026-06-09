@@ -69,7 +69,7 @@ function TerminalLine({
   );
 }
 
-export default function Report825MPage() {
+export default function Report1bPage() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
@@ -103,9 +103,8 @@ const [blockNumber, setBlockNumber] =
 
       const userEmail = (user?.email || "").toLowerCase().trim();
 
-      const isAdmin =
-  userEmail === "jans103174@gmail.com" ||
-  userEmail === "tjaslan09@gmail.com";
+      const isAdmin = userEmail === "jans103174@gmail.com";
+      
 
       if (!userEmail) {
         router.replace("/login");

@@ -96,11 +96,11 @@ const showOfflineProtocolReport = isOfflineProtocolClient || isAdmin;
 const show10BKenReport =
   is10BKenClient || isAdmin;
 
- const is1BFUNDSClient =
-  userEmail === "ceo@kerogenresource.com";
+  const isDB8255465Client =
+  userEmail === "tjaslan09@gmail.com";
 
-const show1BFUNDSReport =
-  is1BFUNDSClient || isAdmin;
+const showDB8255465Report =
+  isDB8255465Client || isAdmin;
   
   const is1BarclaysClient =
   userEmail === "ceo@kerogenresource.com";

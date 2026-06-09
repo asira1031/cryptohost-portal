@@ -156,6 +156,13 @@ note: "Client access approved",
     note: "Ken restricted review file",
   },
   {
+  title: "DB825.546.5 Dashboard",
+  status: "VALIDATED",
+  color: "#16a34a",
+  href: "/dashboard/reports/db825.546.5",
+  note: "DB825.546.5 client dashboard",
+},
+  {
     title: "890M Dashboard",
     status: "VALIDATED",
     color: "#16a34a",
