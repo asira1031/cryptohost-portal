@@ -273,7 +273,7 @@ note: "Client access approved",
 },
 {
   title: "DB825.546.5",
-  status: "UNDER REVIEW",
+  status: "ACTIVE",
   color: "#f59e0b",
   href: "/dashboard/reports/db825.546.5",
   note: "Settlement validation dashboard",
