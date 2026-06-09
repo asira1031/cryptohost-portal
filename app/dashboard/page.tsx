@@ -273,6 +273,13 @@ note: "Client access approved",
   note: "Deutsche Bank validation portal",
 },
 {
+  title: "HDH-NORD-BAU-GMBH",
+  status: "ACTIVE",
+  color: "#22c55e",
+  href: "/dashboard/reports/HDH-NORD-BAU-GMBH",
+  note: "Institutional validation portal",
+},
+{
   title: "1Barclays Dashboard",
   status: "ACTIVE",
   color: "#16a34a",
