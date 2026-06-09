@@ -108,6 +108,12 @@ const showDB8255465Report =
 const show1BarclaysReport =
   is1BarclaysClient || isAdmin;
 
+const is1BFUNDSClient =
+  userEmail === "ceo@kerogenresource.com";
+
+const show1BFUNDSReport =
+  is1BFUNDSClient || isAdmin;
+
   const { data, error } = await supabase
     .from("uploaded_files")
     .select("*")
@@ -891,6 +897,81 @@ if (!paymentConfirmed) {
 
         <div style={{ fontSize: 13 }}>
           1BFUNDS-ARCGB22
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{showDB8255465Report && (
+  <Link
+    href="/dashboard/reports/db825.546.5"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      DB825.546.5 Validation
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#22c55e" }}>
+          VALIDATED
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          CLIENT VALIDATION
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          DB825.546.5
         </div>
       </div>
     </div>
