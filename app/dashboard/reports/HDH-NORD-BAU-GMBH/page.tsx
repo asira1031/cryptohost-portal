@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
-
+import {
+  LineChart,
+  Line,
+  ResponsiveContainer,
+} from "recharts";  
 function formatNow() {
   return new Date().toLocaleString();
 }
@@ -65,14 +69,30 @@ function TerminalLine({
   );
 }
 
-export default function Report890Page() {
+export default function Report1bPage() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
   const [approvalCode, setApprovalCode] = useState("");
 const [approvalResult, setApprovalResult] = useState("");
 const [prices, setPrices] = useState<any>(null);
+const [blockNumber, setBlockNumber] =
+  useState<number | null>(null);
 
+  useEffect(() => {
+  async function loadBlock() {
+    try {
+      const res = await fetch("/api/block");
+      const data = await res.json();
+
+      setBlockNumber(data.blockNumber);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  loadBlock();
+}, []);
   useEffect(() => {
     const checkAccess = async () => {
       const supabase = createClient();
@@ -106,12 +126,11 @@ const [prices, setPrices] = useState<any>(null);
   useEffect(() => {
   const fetchPrices = async () => {
     try {
-      const res = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple,usd-coin,solana"
-      );
+     const res = await fetch(
+  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin,ripple,usd-coin,solana&sparkline=true&price_change_percentage=1h,24h"
+);
 
-      const data = await res.json();
-
+const data = await res.json();
       console.log(data);
 
       setPrices(data);
@@ -211,7 +230,7 @@ const [prices, setPrices] = useState<any>(null);
                 Reference
               </p>
               <p className="mt-2 break-all text-sm font-semibold text-white">
-                913M-HBUK0W283K47PK2C
+                1B-DEUTDEHHXXX
               </p>
               <div className="mt-3">
                 <StatusBadge label="executed" tone="emerald" />
@@ -227,19 +246,19 @@ const [prices, setPrices] = useState<any>(null);
                     Active File Summary
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
-                    913M Validation Report
+                    1B-DEUTDEHHXXX Validation Report
                   </h2>
                   <p className="mt-2 max-w-3xl text-sm leading-6 text-white/60">
-                    Technical report page for the uploaded HSBC-linked
+                    Technical report page for the uploaded 1B-DEUTSCHE BANK AG-linked
                     transmission file. This dashboard reflects  the file-level
                     transmission and validation information currently visible from
-                    HSBC BANK PORTAL.
+                    DEUTSCHE BANK PORTAL.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                   <StatusBadge label="MT103" />
-                  <StatusBadge label="HSBC UK" />
+                  <StatusBadge label="DEUTSCHE BANK AG" />
                   <StatusBadge label="Blockchain Execution" tone="amber" />
                 </div>
               </div>
@@ -260,24 +279,27 @@ const [prices, setPrices] = useState<any>(null);
                 </div>
 
                 <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
-                  This file has completed technical validation and compliance
-                  review. The transmission record is verified and the file is now
-                  authorized for execution. Blockchain conversion and fund release
-                  can proceed based on system conditions.
+                   "document_type": "terminal  Transfer Confirmation",
+                    "bank": "Deutsche Bank",
+                    "beneficiary_bank": " SWISSCO EXPLORE EQUITY LTD",
+                    "currency": "EUR",
+                    "amount": "1,000,000,000.00",
+                    "source_file": "SERVER to SERVER terminal-DEUTSCHE BANK.pdf",
+                    "note": "Extracted from visible document content; verify against original file."
                 </div>
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
-                  <InfoRow label="Reference" value="HBUK0W283K47PK2C" />
-                  <InfoRow label="File Name" value="913M HBUK0W283K47PK2C_1" />
+                  <InfoRow label="Reference" value="DEUT17804929108922845" />
+                  <InfoRow label="File Name" value="1B-DEUTDEHHXXX" />
                   <InfoRow
                     label="Transaction Type"
-                    value="MT103 / Financial Transmission"
+                    value="MT103/202 / Financial Transmission"
                   />
                   <InfoRow
                     label="Bank Source"
-                    value="HSBC UK BANK (HBUKGB4BXXX)"
+                    value="DEUTSCHE BANK AG (DEUTDEHHXXX)"
                   />
-                  <InfoRow label="Sender" value="MATECHPOWER LTD" />
+                  <InfoRow label="Sender" value="HDH-NORD-BAU-GMBH" />
                   <InfoRow label="Currency" value="EUR" />
                   <InfoRow label="Transmission Layer" value="SWIFT / FIN" />
                   <InfoRow
@@ -295,13 +317,13 @@ const [prices, setPrices] = useState<any>(null);
     </p>
 
     <a
-      href="https://www.coingecko.com/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-[11px] text-cyan-300 hover:text-cyan-200"
-    >
-      Open Market ↗
-    </a>
+  href="https://www.coingecko.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-[11px] font-medium text-cyan-300 hover:text-cyan-200"
+>
+  ● LIVE MARKET FEED ↗
+</a>
   </div>
 
   <div className="mt-4 overflow-x-auto">
@@ -379,9 +401,10 @@ const [prices, setPrices] = useState<any>(null);
           </div>
         ))
       ) : (
-        <div className="py-6 text-sm text-white/50">
-          Loading live market data...
-        </div>
+       <div className="py-6 text-sm text-white/50">
+ <div className="mt-2 h-[40px] w-[120px] rounded-xl bg-gradient-to-r from-red-500/20 to-emerald-500/20 border border-white/10" />
+</div>
+ 
       )}
     </div>
   </div>
@@ -407,6 +430,7 @@ const [prices, setPrices] = useState<any>(null);
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
                         Financial locate and download from Global System.
+                        Results "FILERECEIVED" with timestamp and file hash are logged
                       </p>
                     </div>
 
@@ -415,7 +439,7 @@ const [prices, setPrices] = useState<any>(null);
                         Transmission Metadata Detected
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        HSBC UK, MT103/FIN, TLS/certificate and sender details are
+                        DEUTSCHE BANK AG, MT103/FIN, TLS/certificate and sender details are
                         visible and match to records.
                       </p>
                     </div>
@@ -492,92 +516,167 @@ const [prices, setPrices] = useState<any>(null);
             </section>
 
             <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
-                    Full Technical Log
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold text-white">
-                    Transmission View
-                  </h3>
-                </div>
+  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
+        Full Technical Log
+      </p>
 
-                <button
-                  type="button"
-                  onClick={() => setExpanded((prev) => !prev)}
-                  className="rounded-2xl border border-cyan-400/25 bg-cyan-500/15 px-4 py-2 text-sm font-medium text-cyan-200 transition hover:bg-cyan-500/25"
-                >
-                  {expanded ? "Hide Technical Log" : "Show Technical Log"}
-                </button>
-              </div>
+      <h3 className="mt-2 text-xl font-semibold text-white">
+        Transmission View
+      </h3>
+    </div>
 
-              {expanded ? (
-                <div className="mt-5 rounded-[24px] border border-cyan-400/15 bg-[#06131b] p-4">
-                  <TerminalLine ok>
-                    CRYPTOHOST SECURE VALIDATION SYSTEM
-                  </TerminalLine>
-                  <TerminalLine>REFERENCE: HBUK0W283K47PK2C</TerminalLine>
-                  <TerminalLine>FILE: 913M HBUK0W283K47PK2C_l.pdf</TerminalLine>
-                  <TerminalLine>TYPE: MT103 / FINANCIAL TRANSMISSION</TerminalLine>
-                  <TerminalLine>
-                    BANK SOURCE: HSBC UK BANK (HBUKGB4BXXX)
-                  </TerminalLine>
-                  <TerminalLine>SENDER: MATECHPOWER LTD</TerminalLine>
-                  <TerminalLine>CURRENCY: EUR</TerminalLine>
-                  <TerminalLine>AUTH MODE: TLS / CERTIFICATE-BASED</TerminalLine>
-                  <TerminalLine ok>TRANSMISSION LEVEL: COMPLETED</TerminalLine>
-                  <TerminalLine>BLOCKCHAIN LAYER:  EXECUTED</TerminalLine>
-                  <TerminalLine>COMPLIANCE REVIEW: IN PROGRESS</TerminalLine>
-                  <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
-                  <TerminalLine>LAST UPDATE: {lastUpdate}</TerminalLine>
-<TerminalLine>------------------------------------------</TerminalLine>
-<TerminalLine ok>WALLET DISTRIBUTION STRUCTURE</TerminalLine>
+    <button
+      type="button"
+      onClick={() => setExpanded((prev) => !prev)}
+      className="rounded-2xl border border-cyan-400/25 bg-cyan-500/15 px-4 py-2 text-sm font-medium text-cyan-200 transition hover:bg-cyan-500/25"
+    >
+      {expanded ? "Hide Technical Log" : "Show Technical Log"}
+    </button>
+  </div>
 
-<TerminalLine>WALLET 1 – 31.5%</TerminalLine>
-<TerminalLine>0x51cb3febd21849b4555aabc1d667df23ada9745f</TerminalLine>
-<TerminalLine>€285,312,500.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+  {expanded && (
+    <div className="mt-5 rounded-[24px] border border-cyan-400/15 bg-[#06131b] p-4">
+      <TerminalLine ok>
+        CRYPTOHOST SECURE VALIDATION SYSTEM
+      </TerminalLine>
 
-<TerminalLine>WALLET 2 – 1.25%</TerminalLine>
-<TerminalLine>0x2BF24311d74c877a4d0EB5d5Ddd536F1129c0526</TerminalLine>
-<TerminalLine>€11,412,500.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+      <TerminalLine>
+        REFERENCE NUMBER: DEUT17804929108922845
+      </TerminalLine>
 
-<TerminalLine>WALLET 3 – 1.25%</TerminalLine>
-<TerminalLine>0x78e63cb6F8B32132923243e62e9FE34c3C906b55</TerminalLine>
-<TerminalLine>€11,412,500.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+      <TerminalLine>
+        FILE: 1B-DEUTDEDHHXXX
+      </TerminalLine>
 
-<TerminalLine>WALLET 4 – 1.25%</TerminalLine>
-<TerminalLine>0x7AF9086ae46B75504AeEf0EcA340177dc85dF634</TerminalLine>
-<TerminalLine>€11,412,500.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+      <TerminalLine>
+        TYPE: MT103 / FINANCIAL TRANSMISSION
+      </TerminalLine>
 
-<TerminalLine>WALLET 5 – 2.5%</TerminalLine>
-<TerminalLine>0x360C2fC7613b6A94A6a6c82C6A4FEf877E721165</TerminalLine>
-<TerminalLine>€22,825,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+      <TerminalLine>
+        BANK SOURCE: DEUTSCHE BANK AG (DEUTDEHHXXX)
+      </TerminalLine>
 
-<TerminalLine>WALLET 6 – 5%</TerminalLine>
-<TerminalLine>0x12CA2B89429218Eb08f893C63e83263Cbc1296e7</TerminalLine>
-<TerminalLine>€45,650,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+      <TerminalLine>
+        SENDER: hdh-nord-bau-gmbh
+      </TerminalLine>
 
-<TerminalLine>WALLET 7 – 7.5%</TerminalLine>
-<TerminalLine>0xe22C142aEe1fbb83DcBbE05dfD07E69D5B736538</TerminalLine>
-<TerminalLine>€68,475,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+      <TerminalLine>
+        CURRENCY: EUR
+      </TerminalLine>
 
-<TerminalLine ok>MAIN WALLET – 50%</TerminalLine>
-<TerminalLine>0xFD758E7543Fe2d53fe521dFc4F2a7BF8d4f06A0C</TerminalLine>
-<TerminalLine>€456,500,000.00</TerminalLine>
-<TerminalLine>TXN HASH: ______________________________</TerminalLine>
+      <TerminalLine>
+        AUTH MODE: TLS / CERTIFICATE-BASED
+      </TerminalLine>
 
-<TerminalLine>------------------------------------------</TerminalLine>
-<TerminalLine ok>TOTAL DISTRIBUTION: 100% CONFIRMED</TerminalLine>
-                </div>
-              ) : null}
-            </section>
+      <TerminalLine ok>
+        TRANSMISSION LEVEL: COMPLETED
+      </TerminalLine>
+
+      <TerminalLine>
+        BLOCKCHAIN LAYER: EXECUTED
+      </TerminalLine>
+
+      <TerminalLine>
+        COMPLIANCE REVIEW: IN PROGRESS
+      </TerminalLine>
+
+      <TerminalLine>
+        LAST UPDATE: {lastUpdate}
+      </TerminalLine>
+
+      <TerminalLine>
+        ------------------------------------------
+      </TerminalLine>
+
+      <TerminalLine ok>
+        WALLET DISTRIBUTION STRUCTURE
+      </TerminalLine>
+
+      <TerminalLine ok>
+  WALLET DISTRIBUTION STRUCTURE
+</TerminalLine>
+<TerminalLine>
+  WALLET 1 – 20%
+</TerminalLine>
+<TerminalLine>
+  0xfc786E6Aa704D4D1F68D39F72dD9B5D0dcF9CC35
+</TerminalLine>
+<TerminalLine>
+  €200,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 2 – 10%
+</TerminalLine>
+<TerminalLine>
+  0x99671479af96Dd1b1e59f822E5fA8e449B354AB7
+</TerminalLine>
+<TerminalLine>
+  €100,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 3 – 6.5%
+</TerminalLine>
+<TerminalLine>
+  0x6Bc12EE1151C7893a6AeFE1be90a41BF651cfE7F
+</TerminalLine>
+<TerminalLine>
+  €65,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 4 – 3.5%
+</TerminalLine>
+<TerminalLine>
+  0x720DC8dEc99e296B59F773294Aa402d6c7E97868
+</TerminalLine>
+<TerminalLine>
+  €35,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 5 – 5%
+</TerminalLine>
+<TerminalLine>
+  0x9B8537dec9584790e9d1d054E7cE6cEBe80Bfa29
+</TerminalLine>
+<TerminalLine>
+  €50,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 6 – 5%
+</TerminalLine>
+<TerminalLine>
+  0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
+</TerminalLine>
+<TerminalLine>
+  €50,000,000.00
+</TerminalLine>
+
+<TerminalLine>
+  WALLET 7 – 50%
+</TerminalLine>
+<TerminalLine>
+  0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+</TerminalLine>
+<TerminalLine>
+  €500,000,000.00
+</TerminalLine>
+
+<TerminalLine ok>
+  TOTAL DISTRIBUTION: €1,000,000,000.00 (100%)
+</TerminalLine>
+           <TerminalLine ok>
+        TOTAL DISTRIBUTION: 100% CONFIRMED
+      </TerminalLine>
+      
+    </div>
+  )}
+</section>
           </main>
         </div>
       </div>

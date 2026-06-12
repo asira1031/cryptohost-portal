@@ -80,6 +80,12 @@ export default async function ValidationPage() {
 const showProtocol101Report =
   isProtocol101Owner || isAdmin;
 
+  const isDeutscheBankClient =
+  userEmail === "asira1031@gmail.com";
+
+const showDeutscheBankReport =
+  isDeutscheBankClient || isAdmin;
+
 
 const isHSBCTPPHoldOwner = userEmail === "tjaslan09@gmail.com";
 const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
@@ -90,23 +96,35 @@ const isKerogenClient = userEmail === "ceo@kerogenresource.com";
   const isOfflineProtocolClient = userEmail === "asira1031@gmail.com";
 const showOfflineProtocolReport = isOfflineProtocolClient || isAdmin;
 
+const isHDHNordBauClient =
+  userEmail === "asira1031@gmail.com";
+
+const showHDHNordBauReport =
+  isHDHNordBauClient || isAdmin;
+
   const is10BKenClient =
   userEmail === "asira1031@gmail.com";
 
 const show10BKenReport =
   is10BKenClient || isAdmin;
 
- const is1BFUNDSClient =
-  userEmail === "ceo@kerogenresource.com";
+  const isDB8255465Client =
+  userEmail === "tjaslan09@gmail.com";
 
-const show1BFUNDSReport =
-  is1BFUNDSClient || isAdmin;
+const showDB8255465Report =
+  isDB8255465Client || isAdmin;
   
   const is1BarclaysClient =
   userEmail === "ceo@kerogenresource.com";
 
 const show1BarclaysReport =
   is1BarclaysClient || isAdmin;
+
+const is1BFUNDSClient =
+  userEmail === "ceo@kerogenresource.com";
+
+const show1BFUNDSReport =
+  is1BFUNDSClient || isAdmin;
 
   const { data, error } = await supabase
     .from("uploaded_files")
@@ -672,6 +690,87 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
+{showDeutscheBankReport && (
+  <Link
+    href="/dashboard/reports/deutsche-bank-ag"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      Deutsche Bank AG
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns:
+          "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div
+          style={{
+            fontWeight: 800,
+            color: "#0ecb81",
+          }}
+        >
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Deutsche Bank Validation
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          DEUTDEFFXXX
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
 {showProtocol101Report && (
   <Link
     href="/dashboard/reports/protocol-101"
@@ -748,6 +847,87 @@ if (!paymentConfirmed) {
 
         <div style={{ fontSize: 13 }}>
           ONL101PRTKEN
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{showHDHNordBauReport && (
+  <Link
+    href="/dashboard/reports/HDH-NORD-BAU-GMBH"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      HDH-NORD-BAU-GMBH
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns:
+          "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div
+          style={{
+            fontWeight: 800,
+            color: "#0ecb81",
+          }}
+        >
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Corporate Validation Portal
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          HDH-NORD-BAU-GMBH
         </div>
       </div>
     </div>
@@ -891,6 +1071,81 @@ if (!paymentConfirmed) {
 
         <div style={{ fontSize: 13 }}>
           1BFUNDS-ARCGB22
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{showDB8255465Report && (
+  <Link
+    href="/dashboard/reports/db825.546.5"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      DB825.546.5 Validation
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#22c55e" }}>
+          VALIDATED
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          CLIENT VALIDATION
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          DB825.546.5
         </div>
       </div>
     </div>

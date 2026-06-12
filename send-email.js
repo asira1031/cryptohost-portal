@@ -23,7 +23,7 @@ async function sendMail() {
       from: '"CryptoHost Validation Department" <asira1031@gmail.com>',
 
       // MAIN RECEIVER
-      to: "safamell@protonmail.com",
+      to: "brian02odhiambo@gmail.com",
 
       // FURNISH / COPY
       cc: "asira1031@gmail.com",
