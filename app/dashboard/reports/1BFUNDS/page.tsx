@@ -16,31 +16,7 @@ function StatusBadge({
   label: string;
   tone?: "cyan" | "amber" | "emerald" | "red";
 }) {
-  const [approvalCode, setApprovalCode] = useState("");
-const [approvalResult, setApprovalResult] = useState("");
 
-const handleApproval = async () => {
-  setApprovalResult("");
-
-  const phases = [
-    "AUTHORIZATION CODE VERIFIED...",
-    "APPROVAL CODE PROCESSING...",
-    "RELEASE CODE VALIDATING...",
-    "ONE TIME PIN MATCHING...",
-    "FINAL CODE ENCRYPTION...",
-    "TRANSACTION CODE VERIFYING...",
-  ];
-
-  for (const phase of phases) {
-    setApprovalResult(phase);
-
-    await new Promise((resolve) =>
-      setTimeout(resolve, 3000)
-    );
-  }
-
-  setApprovalResult("INVALID");
-};
   const toneClass =
     tone === "emerald"
       ? "border-emerald-400/30 bg-emerald-500/15 text-emerald-200"
@@ -92,13 +68,55 @@ function TerminalLine({
 
 export default function Report1BPage() {
   const router = useRouter();
+  
   const [expanded, setExpanded] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
+  const [attempts, setAttempts] = useState(0);
+  const [isBlocked, setIsBlocked] = useState(false);
   const [approvalCode, setApprovalCode] = useState("");
-const [approvalResult, setApprovalResult] = useState("");
-const [prices, setPrices] = useState<any>(null);
+  const [approvalResult, setApprovalResult] = useState("");
 
+  const [prices, setPrices] = useState<any>(null);
 
+ const handleValidate = () => {
+  if (isBlocked) {
+    setApprovalResult(
+      "🔒 Validation Portal Locked - Please Contact Support"
+    );
+    return;
+  }
+
+  const cleanCode = approvalCode.trim();
+
+  if (cleanCode.length < 6) {
+    setApprovalResult("❌ Invalid Approval Code");
+    return;
+  }
+
+  setApprovalResult(
+    "⏳ Validation In Progress (Estimated Time: 1 Minute)"
+  );
+
+  setTimeout(() => {
+    const newAttempts = attempts + 1;
+
+    setAttempts(newAttempts);
+
+    if (newAttempts >= 3) {
+      setIsBlocked(true);
+
+      setApprovalResult(
+        "🔒 Validation Portal Locked - Please Contact Support"
+      );
+
+      return;
+    }
+
+    setApprovalResult(
+      `❌ Invalid Approval Code (${newAttempts}/3)`
+    );
+  }, 1 * 60 * 1000);
+};
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -155,32 +173,7 @@ if (!isAdmin) {
   return () => clearInterval(interval);
 }, []);
 
-  const handleApproval = () => {
-  const cleanCode = approvalCode.trim();
-
-  if (cleanCode.length < 6 || cleanCode.length > 20) {
-    setApprovalResult("❌ Invalid Approval Code");
-    return;
-  }
-
-  const createdAt = new Date("2026-05-07T00:00:00").getTime();
-  const now = Date.now();
-
-  const hoursPassed =
-    (now - createdAt) / (1000 * 60 * 60);
-
-  if (hoursPassed < 24) {
-    setApprovalResult("⏳ Processing");
-    return;
-  }
-
-  if (hoursPassed < 72) {
-    setApprovalResult("🔐 Confirmation");
-    return;
-  }
-
-  setApprovalResult("❌ Unauthorized");
-};
+  
 
   if (checkingAccess) {
     return (
@@ -481,7 +474,7 @@ if (!isAdmin) {
                   </div>
                 </section>
 
-             <section className="rounded-[30px] border border-white/8 bg-[#07131b] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:p-6">
+  <section className="rounded-[30px] border border-white/8 bg-[#07131b] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:p-6">
   <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
     Approval System
   </p>
@@ -514,90 +507,40 @@ if (!isAdmin) {
       </span>
     </div>
 
-  {(() => {
-    
-  const startDate = new Date("2026-06-01");
-const today = new Date();
+    <input
+      type="text"
+      value={approvalCode}
+      onChange={(e) => setApprovalCode(e.target.value)}
+      placeholder="Enter Approval Code"
+      className="mt-4 w-full rounded-xl border border-cyan-400/20 bg-black/40 px-4 py-3 text-white outline-none"
+    />
 
-const daysPassed = Math.floor(
-  (today.getTime() - startDate.getTime()) /
-    (1000 * 60 * 60 * 24)
-);
+    <button
+      type="button"
+      onClick={handleValidate}
+      className="mt-4 rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-black transition hover:bg-cyan-400"
+    >
+      Validate
+    </button>
 
-const progress = Math.min(50 + daysPassed * 10, 100);
+    {approvalResult && (
+      <div className="mt-6 rounded-xl border border-cyan-400/10 bg-black/40 p-4">
+        <div className="text-[11px] uppercase tracking-[0.24em] text-cyan-300/60">
+          Validation Result
+        </div>
 
-const filledBars = Math.floor(progress / 5);
-const emptyBars = 20 - filledBars;
-
-const progressBar =
-  "█".repeat(filledBars) +
-  "░".repeat(emptyBars);
-
-  return (
-    <div className="mt-6 rounded-2xl border border-cyan-400/10 bg-black/30 p-5">
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] uppercase tracking-[0.24em] text-cyan-300/60">
-          Validation Progress
-        </span>
-
-        <span className="animate-pulse text-[11px] uppercase tracking-[0.24em] text-amber-300">
-          LIVE
-        </span>
+        <div
+          className={`mt-3 font-semibold ${
+            approvalResult.includes("Invalid")
+              ? "text-red-400"
+              : "text-green-400"
+          }`}
+        >
+          {approvalResult}
+        </div>
       </div>
-
-      <div className="mt-5 font-mono text-lg tracking-[0.18em] text-green-400">
-        {progressBar} {progress}%
-      </div>
-
-      <div className="mt-4 animate-pulse text-sm text-amber-200">
-        ========= VALIDATION IN PROGRESS =========
-      </div>
-
-      <div className="mt-2 text-xs text-white/50">
-        Please wait until verification process is completed.
-      </div>
-    </div>
-  );
-})()}
+    )}
   </div>
-
-  <div className="mt-6 rounded-2xl border border-white/8 bg-black/40 p-4 font-mono text-[12px] text-green-400">
-    <div className="animate-pulse">
-      AUTHORIZATION CODE ............ 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      APPROVAL CODE ................. 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      RELEASE CODE .................. 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      ONE TIME PIN .................. 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      FINAL CODE .................... 
-    </div>
-
-    <div className="mt-2 animate-pulse">
-      TRANSACTION CODE .............. 
-    </div>
-  </div>
-
-  {approvalResult ? (
-    <div className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-sm text-red-300 shadow-[0_0_25px_rgba(239,68,68,0.15)]">
-      <div className="text-xs uppercase tracking-[0.24em] text-red-400/70">
-        Validation Result
-      </div>
-
-      <div className="mt-2 text-lg font-semibold tracking-[0.15em]">
-        {approvalResult}
-      </div>
-    </div>
-  ) : null}
 </section>
 
 <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
