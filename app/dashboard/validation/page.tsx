@@ -87,12 +87,12 @@ const showDeutscheBankReport =
   isDeutscheBankClient || isAdmin;
 
   const isLucrumHoldingsClient =
-  userEmail === "asira1031@gmail.com";
+  userEmail === "pthenu@gmail.com";
 
 const showLucrumHoldingsReport =
   isLucrumHoldingsClient || isAdmin;
   const isLucrumClient =
-  userEmail === "asira1031@gmail.com";
+  userEmail === "pthenu@gmail.com";
 
 const showLucrumReport =
   isLucrumClient || isAdmin;

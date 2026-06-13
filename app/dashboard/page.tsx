@@ -51,7 +51,7 @@ if (userEmail === "ken@beautuniverse.com") {
   return;
 }
 // 👉 LUCRUM (975M)
-if (userEmail === "asira1031@gmail.com") {
+if (userEmail === "pthenu@gmail.com") {
   router.push("/dashboard/reports/lucrum-holdings-inc");
   return;
 }

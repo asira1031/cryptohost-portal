@@ -153,13 +153,36 @@ export default function LucrumHoldingsIncPage() {
                       <h2 className="mt-3 text-3xl font-semibold text-white">
                         Current File Status
                       </h2>
+                      
                     </div>
 
                     <div className="rounded-full border border-amber-400/35 bg-amber-500/12 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-amber-300">
                       Admin Review Required
                     </div>
                   </div>
+<div className="mt-4 rounded-[20px] border border-red-500/30 bg-red-500/10 p-5">
+  <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-300">
+    System Notice
+  </p>
 
+  <p className="mt-3 text-white">
+    System Notice
+
+The Ethereum smart contract currently blocks all conversion and internal transfer operations associated with this transmission.
+
+Conversion services through the primary contract are temporarily unavailable.
+
+Users may proceed using an independent smart contract, subject to their own verification, authorization, and compliance procedures.
+
+Status: PRIMARY CONTRACT CONVERSION DISABLED
+Network: Ethereum
+Transfer Mode: Independent Smart Contract Required
+  </p>
+
+  <p className="mt-3 text-red-300 font-semibold">
+    Status: SUSPENDED 
+  </p>
+</div>
                   <div className="rounded-[24px] border border-amber-500/30 bg-amber-500/10 p-5 text-[17px] leading-8 text-amber-100">
                     This file contains a structured M1 funds transmission record with
                     S2S upload metadata, AES/FIN formatting declarations, sender and
