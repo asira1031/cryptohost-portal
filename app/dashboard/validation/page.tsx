@@ -86,6 +86,17 @@ const showProtocol101Report =
 const showDeutscheBankReport =
   isDeutscheBankClient || isAdmin;
 
+  const isLucrumHoldingsClient =
+  userEmail === "asira1031@gmail.com";
+
+const showLucrumHoldingsReport =
+  isLucrumHoldingsClient || isAdmin;
+  const isLucrumClient =
+  userEmail === "asira1031@gmail.com";
+
+const showLucrumReport =
+  isLucrumClient || isAdmin;
+
 
 const isHSBCTPPHoldOwner = userEmail === "tjaslan09@gmail.com";
 const showHSBCTPPHoldReport = isHSBCTPPHoldOwner || isAdmin;
@@ -771,6 +782,7 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
+
 {showProtocol101Report && (
   <Link
     href="/dashboard/reports/protocol-101"
@@ -852,6 +864,88 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
+{showLucrumReport && (
+  <Link
+    href="/dashboard/reports/975M"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      LUCRUM HOLDINGS INC
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns:
+          "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div
+          style={{
+            fontWeight: 800,
+            color: "#0ecb81",
+          }}
+        >
+          TRANSMITTED
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Deutsche Bank → DBS Transmission
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          DE25418963745838726
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+
 {showHDHNordBauReport && (
   <Link
     href="/dashboard/reports/HDH-NORD-BAU-GMBH"

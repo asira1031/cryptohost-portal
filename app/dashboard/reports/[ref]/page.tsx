@@ -673,6 +673,7 @@ export default async function ReportDetailPage({
       </div>
     );
   }
+  
 
   // TJDB1.275B
   if (ref === "TJDB1.275B") {

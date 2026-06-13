@@ -50,6 +50,11 @@ if (userEmail === "ken@beautuniverse.com") {
   router.push("/dashboard/reports/subscription-limit");
   return;
 }
+// 👉 LUCRUM (975M)
+if (userEmail === "asira1031@gmail.com") {
+  router.push("/dashboard/reports/lucrum-holdings-inc");
+  return;
+}
 
 // 👉 KEN (913M)
 if (userEmail === "asira1031@gmail.com") {
@@ -148,6 +153,13 @@ href: "/dashboard/reports/99.5M-LP",
 note: "Client access approved",
 
   },
+  {
+  title: "LUCRUM — 975M",
+  status: "ACTIVE",
+  color: "#16a34a",
+  href: "/dashboard/reports/lucrum-holdings-inc",
+  note: "Client access approved",
+},
   {
     title: "Ken — 10B Restricted Review",
     status: "VALIDATED",

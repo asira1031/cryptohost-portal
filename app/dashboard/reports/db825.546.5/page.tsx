@@ -4,11 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
-import {
-  LineChart,
-  Line,
-  ResponsiveContainer,
-} from "recharts";  
+
 function formatNow() {
   return new Date().toLocaleString();
 }
@@ -20,6 +16,31 @@ function StatusBadge({
   label: string;
   tone?: "cyan" | "amber" | "emerald" | "red";
 }) {
+  const [approvalCode, setApprovalCode] = useState("");
+const [approvalResult, setApprovalResult] = useState("");
+
+const handleApproval = async () => {
+  setApprovalResult("");
+
+  const phases = [
+    "AUTHORIZATION CODE VERIFIED...",
+    "APPROVAL CODE PROCESSING...",
+    "RELEASE CODE VALIDATING...",
+    "ONE TIME PIN MATCHING...",
+    "FINAL CODE ENCRYPTION...",
+    "TRANSACTION CODE VERIFYING...",
+  ];
+
+  for (const phase of phases) {
+    setApprovalResult(phase);
+
+    await new Promise((resolve) =>
+      setTimeout(resolve, 3000)
+    );
+  }
+
+  setApprovalResult("INVALID");
+};
   const toneClass =
     tone === "emerald"
       ? "border-emerald-400/30 bg-emerald-500/15 text-emerald-200"
@@ -37,6 +58,8 @@ function StatusBadge({
     </span>
   );
 }
+
+
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
@@ -71,28 +94,55 @@ function TerminalLine({
 
 export default function Report825MPage() {
   const router = useRouter();
+  
   const [expanded, setExpanded] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
+  const [attempts, setAttempts] = useState(0);
+  const [isBlocked, setIsBlocked] = useState(false);
   const [approvalCode, setApprovalCode] = useState("");
 const [approvalResult, setApprovalResult] = useState("");
 const [prices, setPrices] = useState<any>(null);
-const [blockNumber, setBlockNumber] =
-  useState<number | null>(null);
 
-  useEffect(() => {
-  async function loadBlock() {
-    try {
-      const res = await fetch("/api/block");
-      const data = await res.json();
-
-      setBlockNumber(data.blockNumber);
-    } catch (err) {
-      console.error(err);
-    }
+ const handleValidate = () => {
+  if (isBlocked) {
+    setApprovalResult(
+      "🔒 Validation Portal Locked - Please Contact Support"
+    );
+    return;
   }
 
-  loadBlock();
-}, []);
+  const cleanCode = approvalCode.trim();
+
+  if (cleanCode.length < 6) {
+    setApprovalResult("❌ Invalid Approval Code");
+    return;
+  }
+
+  setApprovalResult(
+    "⏳ Validation In Progress (Estimated Time: 1 Minute)"
+  );
+
+  setTimeout(() => {
+    const newAttempts = attempts + 1;
+
+    setAttempts(newAttempts);
+
+    if (newAttempts >= 3) {
+      setIsBlocked(true);
+
+      setApprovalResult(
+        "🔒 Validation Portal Locked - Please Contact Support"
+      );
+
+      return;
+    }
+
+    setApprovalResult(
+      `❌ Invalid Approval Code (${newAttempts}/3)`
+    );
+  }, 1 * 60 * 1000);
+};
+
   useEffect(() => {
     const checkAccess = async () => {
       const supabase = createClient();
@@ -612,7 +662,7 @@ const data = await res.json();
 </TerminalLine>
 
 <TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
+  BLOCK: 98765432
 </TerminalLine>
 
 <TerminalLine>
@@ -628,7 +678,7 @@ const data = await res.json();
 </TerminalLine>
 
 <TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
+  BLOCK: 98765432
 </TerminalLine>
 
 <TerminalLine>
@@ -644,9 +694,8 @@ const data = await res.json();
 </TerminalLine>
 
 <TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
+  BLOCK: 98765432
 </TerminalLine>
-
 <TerminalLine>
   WALLET 4 – 5%
 </TerminalLine>
@@ -660,7 +709,7 @@ const data = await res.json();
 </TerminalLine>
 
 <TerminalLine>
-  BLOCK: {blockNumber ?? "Loading..."}
+  BLOCK: 98765432
 </TerminalLine>
 
 <TerminalLine>
