@@ -669,6 +669,48 @@ C:\\Users\\USER\\AppData\\Roaming\\Python\\Python312\\site-packages\\web3\\__ini
 
       <div>Amount : {wallet.amount}</div>
       <br />
+      ```tsx
+{walletsWithHashes.map((wallet) => (
+  <div
+    key={wallet.address}
+    className="border-b border-cyan-500/20 pb-4"
+  >
+    <div>Wallet : {wallet.address}</div>
+    <br />
+
+    <div>Percent: {wallet.percent}%</div>
+    <br />
+
+    <div>Amount : {wallet.amount}</div>
+    <br />
+
+    <div>Extracted Amount : €0.00</div>
+    <br />
+
+    <div>Conversion : €0.00 USDT</div>
+    <br />
+
+    <div>Approval Hash : {wallet.approvalHash}</div>
+    <br />
+
+    <div>Reference Transaction : 1 USDT Verification Transfer</div>
+    <br />
+
+    <div>TX Hash : VACANT</div>
+    <br />
+
+    <div>Status : PENDING APPROVAL</div>
+    <br />
+
+    <div>Approval Window : 72 HOURS</div>
+    <br />
+
+    <div>Expiration Rule : AUTO REJECT IF NO REAL FUND TRANSMITTED</div>
+    <br />
+  </div>
+))}
+```
+
 
       <div>Reference Transaction : 1 USDT Verification Transfer</div>
 <br />
