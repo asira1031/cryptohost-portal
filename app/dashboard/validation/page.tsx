@@ -63,6 +63,7 @@ export default async function ValidationPage() {
     data: { user },
     error: userError,
   } = await supabase.auth.getUser();
+  
 
   if (userError || !user) {
     redirect("/login");
@@ -79,6 +80,12 @@ export default async function ValidationPage() {
 
 const showProtocol101Report =
   isProtocol101Owner || isAdmin;
+
+  const isRoyalBankClient =
+  userEmail === "asira1031@gmail.com";
+
+const showRoyalBankReport =
+  isRoyalBankClient || isAdmin;
 
   const isDeutscheBankClient =
   userEmail === "asira1031@gmail.com";
@@ -626,6 +633,84 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
+```tsx
+{showRoyalBankReport && (
+  <Link
+    href="/dashboard/reports/royal-bank"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      Royal Bank Validation Report
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#10b981" }}>
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Bank
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Royal Bank of Canada
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          RBC-561117-9
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+```
+
 {true && (
   <Link
     href="/dashboard/reports/1Barclays"

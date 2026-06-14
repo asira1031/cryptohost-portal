@@ -284,6 +284,16 @@ note: "Client access approved",
   href: "/dashboard/reports/deutsche-bank-ag",
   note: "Deutsche Bank validation portal",
 },
+
+{
+  title: "ROYAL BANK OF CANADA (CAYMAN) LTD",
+  status: "ACTIVE",
+  color: "#22c55e",
+  href: "/dashboard/reports/royal-bank",
+  note: "Royal Bank validation portal",
+},
+
+
 {
   title: "HDH-NORD-BAU-GMBH",
   status: "ACTIVE",
