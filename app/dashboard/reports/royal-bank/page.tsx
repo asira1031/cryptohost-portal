@@ -1,5 +1,6 @@
 "use client";
-
+import crypto from "crypto";
+import { walletsWithHashes } from "../../../../src/lib/walletHash";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -649,136 +650,44 @@ STATUS          : NETWORK / TLS CONNECTED
 C:\\Users\\USER\\AppData\\Roaming\\Python\\Python312\\site-packages\\web3\\__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
   import pkg_resources
 
-WALLET DISTRIBUTION STRUCTURE
+```tsx
+<div className="space-y-6">
+  <div className="font-bold text-cyan-300">
+    WALLET DISTRIBUTION STRUCTURE
+  </div>
+
+  {walletsWithHashes.map((wallet) => (
+    <div
+      key={wallet.address}
+      className="border-b border-cyan-500/20 pb-4"
+    >
+      <div>Wallet : {wallet.address}</div>
+      <br />
+
+      <div>Percent: {wallet.percent}%</div>
+      <br />
+
+      <div>Amount : {wallet.amount}</div>
+      <br />
+
+      <div>Reference Transaction : 1 USDT Verification Transfer</div>
+<br />
+
+<div>TX Hash : VACANT</div>
+<br />
+
+<div>Status : PENDING APPROVAL</div>
+<br />
+
+<div>Approval Window : 72 HOURS</div>
+<br />
+
+<div>Expiration Rule : AUTO REJECT IF NO REAL FUND TRANSMITTED</div>
+    </div>
+  ))}
+</div>
+```
 
-
-Wallet : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
-
-
-Percent: 30.0%
-
-
-Amount : €30,000,000.00
-
-
-Extracted Amount :00000000000000
-
-
-Conversion :00000000000000
-
-
-Transaction Hash :xxxxxxxxxxxxxxxxxx
-
-
-
-Wallet : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
-
-Percent: 5.0%
-
-
-Amount : €5,000,000.00
-
-
-Extracted Amount :00000000000000
-
-
-Conversion :00000000000000
-
-
-Transaction Hash :xxxxxxxxxxxxxxxxxxxx
-
-
-
-Wallet : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
-
-
-Percent: 5.0%
-
-
-Amount : €5,000,000.00
-
-
-Extracted Amount :00000000000000
-
-
-Conversion :00000000000000
-
-
-Transaction Hash :xxxxxxxxxxxxxxxxxxxx
-
-Wallet : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
-
-
-Percent: 8.0%
-
-
-Amount : €8,000,000.00
-
-
-Extracted Amount :00000000000000
-
-
-Conversion :00000000000000
-
-
-Transaction Hash :xxxxxxxxxxxxxxxxxxxx
-
-
-
-
-Wallet : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
-
-
-Percent: 2.0%
-
-
-Amount : €2,000,000.00
-
-
-Extracted Amount :00000000000000
-
-
-Conversion :00000000000000
-
-
-Transaction Hash :xxxxxxxxxxxxxxxxxxxx
-
-
-Wallet : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
-
-
-Percent: 40.0%
-
-
-Amount : €150,000,000.00
-
-
-Extracted Amount :00000000000000
-
-
-Conversion :
-
-
-Transaction Hash :xxxxxxxxxxxxxxxxxxxx
-
-Wallet : 0x4e0b4d9930d85200eb4ace7633b3f2c25bc79991
-
-
-Percent: 10.0%
-
-
-Amount : €150,000,000.00
-
-
-Extracted Amount :00000000000000
-
-
-
-Conversion :00000000000000
-
-
-
-Transaction Hash :xxxxxxxxxxxxxxxxxxxx
 
 Connected to Ethereum
 
