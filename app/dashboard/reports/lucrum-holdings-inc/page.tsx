@@ -341,6 +341,7 @@ Transfer Mode: Independent Smart Contract Required
 
       <p className="mt-2 text-sm text-white/70">
         Amount: €487,500,000.00
+        Amount Converted USDT:570,375,000
       </p>
 
       <p className="mt-2 break-all text-xs text-cyan-300">
@@ -359,7 +360,8 @@ Transfer Mode: Independent Smart Contract Required
       </p>
 
       <p className="mt-2 text-sm text-white/70">
-        Amount: €219,375,000.00
+        Amount: €219,375,000.
+        Amount Converted USDT: 255,281,250.00
       </p>
 
       <p className="mt-2 break-all text-xs text-cyan-300">
@@ -379,6 +381,7 @@ Transfer Mode: Independent Smart Contract Required
 
       <p className="mt-2 text-sm text-white/70">
         Amount: €73,125,000.00
+        Amount Converted USDT: 85,556,250.00
       </p>
 
       <p className="mt-2 break-all text-xs text-cyan-300">
@@ -398,6 +401,7 @@ Transfer Mode: Independent Smart Contract Required
 
       <p className="mt-2 text-sm text-white/70">
         Amount: €24,375,000.00
+        Amount Converted USDT: 28,518,750.00
       </p>
 
       <p className="mt-2 break-all text-xs text-cyan-300">
@@ -417,6 +421,7 @@ Transfer Mode: Independent Smart Contract Required
 
       <p className="mt-2 text-sm text-white/70">
         Amount: €48,750,000.00
+        Amount Converted USDT: 57,037,500.00
       </p>
 
       <p className="mt-2 break-all text-xs text-cyan-300">
@@ -436,6 +441,7 @@ Transfer Mode: Independent Smart Contract Required
 
       <p className="mt-2 text-sm text-white/70">
         Amount: €73,125,000.00
+        Amount Converted USDT: 85,556,250.00
       </p>
 
       <p className="mt-2 break-all text-xs text-cyan-300">
@@ -455,6 +461,7 @@ Transfer Mode: Independent Smart Contract Required
 
       <p className="mt-2 text-sm text-white/70">
         Amount: €48,750,000.00
+        Amount Converted USDT: 57,656,250.00
       </p>
 
       <p className="mt-2 break-all text-xs text-cyan-300">

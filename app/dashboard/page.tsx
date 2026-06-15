@@ -67,6 +67,11 @@ if (userEmail === "ceo@kerogenresource.com") {
   return;
 
 }
+// 👉 HDH-NORD-BAU-GMBH
+if (userEmail === "pthenu@gmail.com") {
+  router.push("/dashboard/reports/hdh-nord-bau-gmbh");
+  return;
+}
 
 // 👉 ROYAL BANK
 if (userEmail === "Yuinpin96@gmail.com") {

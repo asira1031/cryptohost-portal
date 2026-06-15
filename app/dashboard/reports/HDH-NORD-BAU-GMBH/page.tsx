@@ -590,91 +590,150 @@ const data = await res.json();
         ------------------------------------------
       </TerminalLine>
 
-      <TerminalLine ok>
-        WALLET DISTRIBUTION STRUCTURE
-      </TerminalLine>
+      {/* WALLET DISTRIBUTION */}
+<div className="mt-6 rounded-[24px] border border-cyan-500/15 bg-[#03111c]/50 p-5">
+  <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-300/70">
+    Wallet Distribution
+  </p>
 
-      <TerminalLine ok>
-  WALLET DISTRIBUTION STRUCTURE
-</TerminalLine>
-<TerminalLine>
-  WALLET 1 – 20%
-</TerminalLine>
-<TerminalLine>
-  0xfc786E6Aa704D4D1F68D39F72dD9B5D0dcF9CC35
-</TerminalLine>
-<TerminalLine>
-  €200,000,000.00
-</TerminalLine>
+  <div className="mt-4 space-y-4">
 
-<TerminalLine>
-  WALLET 2 – 10%
-</TerminalLine>
-<TerminalLine>
-  0x99671479af96Dd1b1e59f822E5fA8e449B354AB7
-</TerminalLine>
-<TerminalLine>
-  €100,000,000.00
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 3 – 6.5%
-</TerminalLine>
-<TerminalLine>
-  0x6Bc12EE1151C7893a6AeFE1be90a41BF651cfE7F
-</TerminalLine>
-<TerminalLine>
-  €65,000,000.00
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 4 – 3.5%
-</TerminalLine>
-<TerminalLine>
-  0x720DC8dEc99e296B59F773294Aa402d6c7E97868
-</TerminalLine>
-<TerminalLine>
-  €35,000,000.00
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 5 – 5%
-</TerminalLine>
-<TerminalLine>
-  0x9B8537dec9584790e9d1d054E7cE6cEBe80Bfa29
-</TerminalLine>
-<TerminalLine>
-  €50,000,000.00
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 6 – 5%
-</TerminalLine>
-<TerminalLine>
-  0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
-</TerminalLine>
-<TerminalLine>
-  €50,000,000.00
-</TerminalLine>
-
-<TerminalLine>
-  WALLET 7 – 50%
-</TerminalLine>
-<TerminalLine>
-  0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
-</TerminalLine>
-<TerminalLine>
-  €500,000,000.00
-</TerminalLine>
-
-<TerminalLine ok>
-  TOTAL DISTRIBUTION: €1,000,000,000.00 (100%)
-</TerminalLine>
-           <TerminalLine ok>
-        TOTAL DISTRIBUTION: 100% CONFIRMED
-      </TerminalLine>
-      
+    {/* MAIN WALLET */}
+    <div className="rounded-[20px] border border-emerald-500/20 bg-[#041826] p-4">
+      <p className="font-semibold text-emerald-300">
+        Main Wallet — 50%
+      </p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €500,000,000.00
+        <br />
+        Amount Converted USDT: 585,000,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: 0xa9f5a915b1f8964a6d29cc2cb4f9bd508dec5d9c85cbbc189b00819475fe359c
+      </p>
     </div>
+
+    {/* WALLET 1 */}
+    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
+      <p className="font-semibold text-white">Wallet 1 — 10%</p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €100,000,000.00
+        <br />
+        Amount Converted USDT: 117,000,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0x73F28E4dd954Cd7b866dF1162aD9C14FF989f083
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: 0x9756f2bf44db5ebcc5f471577f94eb1282ce8d5862abb68db4aef98234aff654
+      </p>
+    </div>
+
+    {/* WALLET 2 */}
+    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
+      <p className="font-semibold text-white">Wallet 2 — 7.5%</p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €75,000,000.00
+        <br />
+        Amount Converted USDT: 87,750,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0x79D672d9e58c46A6140Ac0FA7363088D424eEFFf
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: 0xa2374e87932e2e8f0bb2cc0578b7aad57294b093bf26b40e43d19733111b1296
+      </p>
+    </div>
+
+    {/* WALLET 3 */}
+    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
+      <p className="font-semibold text-white">Wallet 3 — 5%</p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €50,000,000.00
+        <br />
+        Amount Converted USDT: 58,500,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0xAeA32590B18c346fB92d75241FCf70c0a1572C94
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: 0x14a0d31ec8eb4e3b26abcc517f614684105bd769336a74fb7e9cf7fb3f4f076e
+      </p>
+    </div>
+
+    {/* WALLET 4 */}
+    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
+      <p className="font-semibold text-white">Wallet 4 — 10%</p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €100,000,000.00
+        <br />
+        Amount Converted USDT: 117,000,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0xB1eb03c6466726090472378f4141FD0aA8692757
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: pending confirmation
+      
+      </p>
+    </div>
+
+    {/* WALLET 5 */}
+    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
+      <p className="font-semibold text-white">Wallet 5 — 2.5%</p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €25,000,000.00
+        <br />
+        Amount Converted USDT: 29,250,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0x0c5E492929C27bc009e8e85EDa1B559E49390255
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: 0x89f490c3b4fa78a3a664eaf464337725573b28b83d4b1b4dc838999a2512687d
+      </p>
+    </div>
+
+    {/* WALLET 6 */}
+    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
+      <p className="font-semibold text-white">Wallet 6 — 7.5%</p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €75,000,000.00
+        <br />
+        Amount Converted USDT: 87,750,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0x708DdCb0E920f072081c8438Ca198f74158738ec
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: 0xe12cfb9a044f8c11e93235c071dedc358b596dd9c52f1c90309a535f29568536
+      </p>
+    </div>
+
+    {/* WALLET 7 */}
+    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
+      <p className="font-semibold text-white">Wallet 7 — 7.5%</p>
+      <p className="mt-2 text-sm text-white/70">
+        Amount: €75,000,000.00
+        <br />
+        Amount Converted USDT: 87,750,000.00
+      </p>
+      <p className="mt-2 break-all text-xs text-cyan-300">
+        Wallet: 0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
+      </p>
+      <p className="mt-1 break-all text-xs text-amber-300">
+        Hash: 0xcceff5274dc8e49e0b1ca8590f0b780dafe96cb86085bddca66df6fa112fc255
+      </p>
+    </div>
+
+  </div>
+</div>
+
+</div>
+    
   )}
 </section>
           </main>
