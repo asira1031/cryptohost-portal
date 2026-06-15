@@ -82,7 +82,7 @@ const showProtocol101Report =
   isProtocol101Owner || isAdmin;
 
   const isRoyalBankClient =
-  userEmail === "asira1031@gmail.com";
+  userEmail === "Yuinpin96@gmail.com";
 
 const showRoyalBankReport =
   isRoyalBankClient || isAdmin;

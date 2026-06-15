@@ -93,7 +93,7 @@ const [validating, setValidating] = useState(false);
 
      const isAdmin =
   userEmail === "jans103174@gmail.com" ||
-  userEmail === "asira1031@gmail.com";
+  userEmail === "Yuinpin96@gmail.com";
 
 if (!userEmail) {
   router.replace("/login");
@@ -635,106 +635,198 @@ ROYAL BANK OF CANADA (CAYMAN) LTD HEREBY AUTHORIZES THE PROCESSING OF THIS TRANS
 
                   <div className="mt-4 rounded-[20px] border border-white/10 bg-[#031017] p-4">
                     <pre className="whitespace-pre-wrap font-mono text-[12px] leading-6 text-cyan-100/90">
-============================================================================================
-CRYPTOHOST ::  ROYAL BANK OF CANADA  SECURE CHANNEL CHECK (TLS)
-============================================================================================
-Target Host     : api.royalbank.com
-Target Port     : 443
---------------------------------------------------------------------------------------------
-[true] TLS handshake successful with api.royalbank.com
+[OK] Connected Successfully
+Chain ID : 1
+Latest Block : 25315429
+Sender Address : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+Gas Price : 113440779
+Nonce Test : 155
+======================================================================
+Enter Total Broadcast Amount : 100000000
+======================================================================
+How many recipient wallets? : 7
+======================================================================
+Wallet #1 Address : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
+Wallet #1 Percentage : 30
+======================================================================
+Wallet #2 Address : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
+Wallet #2 Percentage : 5
+======================================================================
+Wallet #3 Address : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
+Wallet #3 Percentage : 5
+======================================================================
+Wallet #4 Address : 0x4e0b4d9930d85200eb4ace7633b3f2c25bc79991
+Wallet #4 Percentage : 10
+======================================================================
+Wallet #5 Address : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+Wallet #5 Percentage : 40
+======================================================================
+Wallet #6 Address : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
+Wallet #6 Percentage : 8
+======================================================================
+Wallet #7 Address : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
+Wallet #7 Percentage : 2
+======================================================================
+[OK] Percentage Validation Passed
+======================================================================
+BROADCAST PREVIEW
+======================================================================
+Recipient #1
+Wallet     : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
+Percentage : 30.0%
+Amount     : 30000000.0
+--------------------------------------------------
+Recipient #2
+Wallet     : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
+Percentage : 5.0%
+Amount     : 5000000.0
+--------------------------------------------------
+Recipient #3
+Wallet     : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
+Percentage : 5.0%
+Amount     : 5000000.0
+--------------------------------------------------
+Recipient #4
+Wallet     : 0x4e0b4d9930d85200eb4ace7633b3f2c25bc79991
+Percentage : 10.0%
+Amount     : 10000000.0
+--------------------------------------------------
+Recipient #5
+Wallet     : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+Percentage : 40.0%
+Amount     : 40000000.0
+--------------------------------------------------
+Recipient #6
+Wallet     : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
+Percentage : 8.0%
+Amount     : 8000000.0
+--------------------------------------------------
+Recipient #7
+Wallet     : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
+Percentage : 2.0%
+Amount     : 2000000.0
+--------------------------------------------------
+======================================================================
+CONFIRM MAINNET BROADCAST? (yes/no) : yes
+======================================================================
+[STARTING MAINNET BROADCAST]
+======================================================================
 
---------------------------------------------------------------------------------------------
-STATUS          : NETWORK / TLS CONNECTED
-============================================================================================
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
 
-C:\\Users\\USER\\AppData\\Roaming\\Python\\Python312\\site-packages\\web3\\__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
-  import pkg_resources
+[TX 1] Broadcasting...
+BLOCK : 25315440
+STATUS : 1
+RAW HASH : b'\xaf\xab\x1d!\x97\x1b\r\xb0(\xa27?\xf4\xb3\x84\xfa\x89s\x03\xe8\xd3X\x10\xa5\xb4\xfb\xac\xcd-r8"'
+HEX HASH : 0xafab1d21971b0db028a2373ff4b384fa897303e8d35810a5b4fbaccd2d723822
+[SUCCESS]
+Recipient : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
+Amount Proof : 30000000.0
+TX HASH : 0xafab1d21971b0db028a2373ff4b384fa897303e8d35810a5b4fbaccd2d723822
+https://etherscan.io/tx/0xafab1d21971b0db028a2373ff4b384fa897303e8d35810a5b4fbaccd2d723822
+--------------------------------------------------
 
-```tsx
-<div className="space-y-6">
-  <div className="font-bold text-cyan-300">
-    WALLET DISTRIBUTION STRUCTURE
-  </div>
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
 
-  {walletsWithHashes.map((wallet) => (
-    <div
-      key={wallet.address}
-      className="border-b border-cyan-500/20 pb-4"
-    >
-      <div>Wallet : {wallet.address}</div>
-      <br />
+[TX 2] Broadcasting...
+BLOCK : 25315441
+STATUS : 1
+RAW HASH : b'\x88\xc1\x97\xc1\xcc4HN$\x0b\xa9P\x98#\x88\x03\xcdXlG\x0c\xaf\xe1q\xf2\x17%\xcd\xa4\xb6'
+HEX HASH : 0x88c197c1cc347d484e247d0ba95098238803cd586c470cafe171f21725cda4b6
+[SUCCESS]
+Recipient : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
+Amount Proof : 5000000.0
+TX HASH : 0x88c197c1cc347d484e247d0ba95098238803cd586c470cafe171f21725cda4b6
+https://etherscan.io/tx/0x88c197c1cc347d484e247d0ba95098238803cd586c470cafe171f21725cda4b6
+--------------------------------------------------
 
-      <div>Percent: {wallet.percent}%</div>
-      <br />
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
 
-      <div>Amount : {wallet.amount}</div>
-      <br />
-      ```tsx
-{walletsWithHashes.map((wallet) => (
-  <div
-    key={wallet.address}
-    className="border-b border-cyan-500/20 pb-4"
-  >
-    <div>Wallet : {wallet.address}</div>
-    <br />
+[TX 3] Broadcasting...
+[PENDING]
+Receipt not available yet
+RAW HASH : b'`\x82\xca\xae)\x82\r\xd6M\xab\x08\xdd\x9e\xd1\r#\xf7\x87o\xa8~\xb7\x16k\xa0\x08\xf8\xe6zy\xb8'
+HEX HASH : 0x6082caae29820dd64dab08dd9ed10d7d23f7876fa87eb7166ba008f8e67a79b8
+[SUCCESS]
+Recipient : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
+Amount Proof : 5000000.0
+TX HASH : 0x6082caae29820dd64dab08dd9ed10d7d23f7876fa87eb7166ba008f8e67a79b8
+https://etherscan.io/tx/0x6082caae29820dd64dab08dd9ed10d7d23f7876fa87eb7166ba008f8e67a79b8
+--------------------------------------------------
 
-    <div>Percent: {wallet.percent}%</div>
-    <br />
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0x4e0B4D9930D85200EB4ACE7633B3f2c25BC79991
 
-    <div>Amount : {wallet.amount}</div>
-    <br />
+[TX 4] Broadcasting...
+BLOCK : 25315444
+STATUS : 1
+RAW HASH : b'Q\xe4\x92\xe1Z\x89\xde\x85\xdf\xe09\x16\x88\xa7\x1a\xaeuh\xe9v_\x05\xa0\x8f=&v1\xaf\xddI\x10'
+HEX HASH : 0x51e492e15a89de85dfe0391688a71aae7568e9765f05a08f3d267631afdd4910
+[SUCCESS]
+Recipient : 0x4e0B4D9930D85200EB4ACE7633B3f2c25BC79991
+Amount Proof : 10000000.0
+TX HASH : 0x51e492e15a89de85dfe0391688a71aae7568e9765f05a08f3d267631afdd4910
+https://etherscan.io/tx/0x51e492e15a89de85dfe0391688a71aae7568e9765f05a08f3d267631afdd4910
+--------------------------------------------------
 
-    <div>Extracted Amount : €0.00</div>
-    <br />
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0xc47133a6bD653793562A1Ea25Cb1D3161fBD99cd
 
-    <div>Conversion : €0.00 USDT</div>
-    <br />
+[TX 5] Broadcasting...
+BLOCK : 25315445
+STATUS : 1
+RAW HASH : b';\x9a\xc2\x16\xf7nB\xfc\xde\x08\x06i\xabb\x90\xd3/k\x13\xdf\xf9\x85\xa3\x0b\xefe\x0b\xb1\xc98O\xb5'
+HEX HASH : 0x3b9ac216f76e42fcde080669ab6290d32f6b13dff985a30bef650bb1c9384fb5
+[SUCCESS]
+Recipient : 0xc47133a6bD653793562A1Ea25Cb1D3161fBD99cd
+Amount Proof : 40000000.0
+TX HASH : 0x3b9ac216f76e42fcde080669ab6290d32f6b13dff985a30bef650bb1c9384fb5
+https://etherscan.io/tx/0x3b9ac216f76e42fcde080669ab6290d32f6b13dff985a30bef650bb1c9384fb5
+--------------------------------------------------
 
-    <div>Approval Hash : {wallet.approvalHash}</div>
-    <br />
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
 
-    <div>Reference Transaction : 1 USDT Verification Transfer</div>
-    <br />
+[TX 6] Broadcasting...
+BLOCK : 25315446
+STATUS : 1
+RAW HASH : b'\x9a\xee\xfa\xde\x03\xb4\xe92\x8bZB\x9f9\xe5\xe1F\xa7$\xe6\xb5\xd3O\xa7\n\xdf9\xb5\xbe\xb8\xa1\xf3\xbb'
+HEX HASH : 0x9aeefade03b4e9328b5a429f39e5e146a724e6b5d34fa70adf39b5beb8a1f3bb
+[SUCCESS]
+Recipient : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
+Amount Proof : 8000000.0
+TX HASH : 0x9aeefade03b4e9328b5a429f39e5e146a724e6b5d34fa70adf39b5beb8a1f3bb
+https://etherscan.io/tx/0x9aeefade03b4e9328b5a429f39e5e146a724e6b5d34fa70adf39b5beb8a1f3bb
+--------------------------------------------------
 
-    <div>TX Hash : VACANT</div>
-    <br />
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
 
-    <div>Status : PENDING APPROVAL</div>
-    <br />
+[TX 7] Broadcasting...
+BLOCK : 25315447
+STATUS : 1
+RAW HASH : b'G3\xb1;\x07\xfaV\xd2\xab\xa1p+\xe0\xc1.\xcc\x0fk\x11\x1c;ku\xb0m\xa0_\xa4\xf8\xfa\x9d'
+HEX HASH : 0x4733b13b07fa56d2aba1702be0c12ecc0f6b111c3b6b75b06da05fa4f8fa289d
+[SUCCESS]
+Recipient : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
+Amount Proof : 2000000.0
+TX HASH : 0x4733b13b07fa56d2aba1702be0c12ecc0f6b111c3b6b75b06da05fa4f8fa289d
+https://etherscan.io/tx/0x4733b13b07fa56d2aba1702be0c12ecc0f6b111c3b6b75b06da05fa4f8fa289d
+--------------------------------------------------
+======================================================================
+ALL MAINNET BROADCASTS COMPLETE
+======================================================================
 
-    <div>Approval Window : 72 HOURS</div>
-    <br />
-
-    <div>Expiration Rule : AUTO REJECT IF NO REAL FUND TRANSMITTED</div>
-    <br />
-  </div>
-))}
-```
-
-
-      <div>Reference Transaction : 1 USDT Verification Transfer</div>
-<br />
-
-<div>TX Hash : VACANT</div>
-<br />
-
-<div>Status : PENDING APPROVAL</div>
-<br />
-
-<div>Approval Window : 72 HOURS</div>
-<br />
-
-<div>Expiration Rule : AUTO REJECT IF NO REAL FUND TRANSMITTED</div>
-    </div>
-  ))}
-</div>
-```
-
-
-Connected to Ethereum
-
-
-Sender: 0xdAC17F958D2ee523a2206206994597C13D831ec7
 
 ============================================================================================
 CRYPTOHOST :: CONNECTION STATUS (DISPLAY)
