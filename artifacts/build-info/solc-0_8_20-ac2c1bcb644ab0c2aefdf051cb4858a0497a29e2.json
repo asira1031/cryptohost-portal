@@ -1,0 +1,42 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_20-ac2c1bcb644ab0c2aefdf051cb4858a0497a29e2",
+  "solcVersion": "0.8.20",
+  "solcLongVersion": "0.8.20+commit.a1b79de6",
+  "compilerType": "solc",
+  "userSourceNameMap": {
+    "contracts/ApprovalRegistry.sol": "project/contracts/ApprovalRegistry.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "shanghai",
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/ApprovalRegistry.sol": {
+        "content": "\r\n// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.20;\r\n\r\ncontract ApprovalRegistry {\r\n\r\n    enum Status {\r\n        Pending,\r\n        Approved,\r\n        Rejected,\r\n        Expired\r\n    }\r\n\r\n    struct ApprovalRequest {\r\n        uint256 id;\r\n        string approvalHash;\r\n        string requestedAmount;\r\n        uint256 createdAt;\r\n        uint256 expiresAt;\r\n        Status status;\r\n    }\r\n\r\n    uint256 public requestCount;\r\n\r\n    mapping(uint256 => ApprovalRequest) public requests;\r\n\r\n    event RequestCreated(\r\n        uint256 indexed id,\r\n        string approvalHash,\r\n        string requestedAmount\r\n    );\r\n\r\n    event RequestApproved(uint256 indexed id);\r\n\r\n    event RequestRejected(uint256 indexed id);\r\n\r\n    event RequestExpired(uint256 indexed id);\r\n\r\n    function createRequest(\r\n        string memory approvalHash,\r\n        string memory requestedAmount\r\n    ) public {\r\n\r\n        requestCount++;\r\n\r\n        requests[requestCount] = ApprovalRequest({\r\n            id: requestCount,\r\n            approvalHash: approvalHash,\r\n            requestedAmount: requestedAmount,\r\n            createdAt: block.timestamp,\r\n            expiresAt: block.timestamp + 72 hours,\r\n            status: Status.Pending\r\n        });\r\n\r\n        emit RequestCreated(\r\n            requestCount,\r\n            approvalHash,\r\n            requestedAmount\r\n        );\r\n    }\r\n\r\n    function approveRequest(uint256 id) public {\r\n\r\n        require(\r\n            requests[id].status == Status.Pending,\r\n            \"Request is not pending\"\r\n        );\r\n\r\n        requests[id].status = Status.Approved;\r\n\r\n        emit RequestApproved(id);\r\n    }\r\n\r\n    function rejectRequest(uint256 id) public {\r\n\r\n        require(\r\n            requests[id].status == Status.Pending,\r\n            \"Request is not pending\"\r\n        );\r\n\r\n        requests[id].status = Status.Rejected;\r\n\r\n        emit RequestRejected(id);\r\n    }\r\n\r\n    function expireRequest(uint256 id) public {\r\n\r\n        require(\r\n            block.timestamp > requests[id].expiresAt,\r\n            \"Not expired yet\"\r\n        );\r\n\r\n        require(\r\n            requests[id].status == Status.Pending,\r\n            \"Already processed\"\r\n        );\r\n\r\n        requests[id].status = Status.Expired;\r\n\r\n        emit RequestExpired(id);\r\n    }\r\n\r\n    function getRequest(\r\n        uint256 id\r\n    )\r\n        public\r\n        view\r\n        returns (\r\n            uint256 requestId,\r\n            string memory approvalHash,\r\n            string memory requestedAmount,\r\n            uint256 createdAt,\r\n            uint256 expiresAt,\r\n            Status status\r\n        )\r\n    {\r\n        ApprovalRequest memory r = requests[id];\r\n\r\n        return (\r\n            r.id,\r\n            r.approvalHash,\r\n            r.requestedAmount,\r\n            r.createdAt,\r\n            r.expiresAt,\r\n            r.status\r\n        );\r\n    }\r\n}\r\n\r\n"
+      }
+    }
+  }
+}

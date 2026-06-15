@@ -16,31 +16,7 @@ function StatusBadge({
   label: string;
   tone?: "cyan" | "amber" | "emerald" | "red";
 }) {
-  const [approvalCode, setApprovalCode] = useState("");
-const [approvalResult, setApprovalResult] = useState("");
-
-const handleApproval = async () => {
-  setApprovalResult("");
-
-  const phases = [
-    "AUTHORIZATION CODE VERIFIED...",
-    "APPROVAL CODE PROCESSING...",
-    "RELEASE CODE VALIDATING...",
-    "ONE TIME PIN MATCHING...",
-    "FINAL CODE ENCRYPTION...",
-    "TRANSACTION CODE VERIFYING...",
-  ];
-
-  for (const phase of phases) {
-    setApprovalResult(phase);
-
-    await new Promise((resolve) =>
-      setTimeout(resolve, 3000)
-    );
-  }
-
-  setApprovalResult("INVALID");
-};
+ 
   const toneClass =
     tone === "emerald"
       ? "border-emerald-400/30 bg-emerald-500/15 text-emerald-200"
@@ -91,57 +67,70 @@ function TerminalLine({
     </div>
   );
 }
-
 export default function Report1BPage() {
-  const router = useRouter();
-  
-  const [expanded, setExpanded] = useState(false);
-  const [checkingAccess, setCheckingAccess] = useState(true);
-  const [attempts, setAttempts] = useState(0);
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [approvalCode, setApprovalCode] = useState("");
+const router = useRouter();
+
+const [expanded, setExpanded] = useState(false);
+const [checkingAccess, setCheckingAccess] = useState(true);
+
+const [attempts, setAttempts] = useState(0);
+
+
+const [approvalCode, setApprovalCode] = useState("");
 const [approvalResult, setApprovalResult] = useState("");
+
+const [validationStatus, setValidationStatus] = useState<
+"idle" | "running" | "invalid" | "blocked"
+
+> ("idle");
+
 const [prices, setPrices] = useState<any>(null);
 
- const handleValidate = () => {
-  if (isBlocked) {
-    setApprovalResult(
-      "🔒 Validation Portal Locked - Please Contact Support"
-    );
+const handleValidate = () => {
+  
+  if (!approvalCode.trim()) {
     return;
   }
 
-  const cleanCode = approvalCode.trim();
-
-  if (cleanCode.length < 6) {
-    setApprovalResult("❌ Invalid Approval Code");
-    return;
-  }
+  setValidationStatus("running");
 
   setApprovalResult(
-    "⏳ Validation In Progress (Estimated Time: 1 Minute)"
+    "VALIDATING...\n\nRUNNING VALIDATION PROCESS..."
   );
 
   setTimeout(() => {
-    const newAttempts = attempts + 1;
+    const nextAttempt = attempts + 1;
 
-    setAttempts(newAttempts);
+    setAttempts(nextAttempt);
 
-    if (newAttempts >= 3) {
-      setIsBlocked(true);
+    if (nextAttempt >= 3) {
+      setValidationStatus("invalid");
 
-      setApprovalResult(
-        "🔒 Validation Portal Locked - Please Contact Support"
-      );
+      setApprovalResult("UNAUTHORIZED");
+
+      setTimeout(() => {
+        setApprovalResult("");
+        setApprovalCode("");
+        setValidationStatus("idle");
+      }, 3000);
 
       return;
     }
 
-    setApprovalResult(
-      `❌ Invalid Approval Code (${newAttempts}/3)`
-    );
-  }, 1 * 60 * 1000);
+    setValidationStatus("invalid");
+
+    setApprovalResult("INVALID CODE");
+
+    setTimeout(() => {
+      setApprovalResult("");
+      setApprovalCode("");
+      setValidationStatus("idle");
+    }, 3000);
+
+  }, 5000);
 };
+
+
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -520,102 +509,95 @@ if (!isAdmin) {
     Enter authorization or approval sequence code to begin
     institutional validation routing and transaction confirmation.
   </p>
+<div className="mt-6 rounded-2xl border border-cyan-400/10 bg-black/30 p-5">
+  <div className="flex items-center justify-between">
+    <span className="text-[11px] uppercase tracking-[0.24em] text-cyan-300/60">
+      Secure Validation Slot
+    </span>
 
-  <div className="mt-6 rounded-2xl border border-cyan-400/10 bg-black/30 p-4">
-    <div className="flex items-center justify-between">
-      <span className="text-[11px] uppercase tracking-[0.24em] text-cyan-300/60">
-        Secure Validation Slot
-      </span>
-
-      <span className="animate-pulse text-[11px] uppercase tracking-[0.24em] text-green-400">
-        Active
-      </span>
-    </div>
-
-  {(() => {
-    
-  const startDate = new Date("2026-06-01");
-const today = new Date();
-
-const daysPassed = Math.floor(
-  (today.getTime() - startDate.getTime()) /
-    (1000 * 60 * 60 * 24)
-);
-
-const progress = Math.min(50 + daysPassed * 10, 100);
-
-const filledBars = Math.floor(progress / 5);
-const emptyBars = 20 - filledBars;
-
-const progressBar =
-  "█".repeat(filledBars) +
-  "░".repeat(emptyBars);
-
-  return (
-    <div className="mt-6 rounded-2xl border border-cyan-400/10 bg-black/30 p-5">
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] uppercase tracking-[0.24em] text-cyan-300/60">
-          Validation Progress
-        </span>
-
-        <span className="animate-pulse text-[11px] uppercase tracking-[0.24em] text-amber-300">
-          LIVE
-        </span>
-      </div>
-
-      <div className="mt-5 font-mono text-lg tracking-[0.18em] text-green-400">
-        {progressBar} {progress}%
-      </div>
-
-      <div className="mt-4 animate-pulse text-sm text-amber-200">
-        ========= VALIDATION IN PROGRESS =========
-      </div>
-
-      <div className="mt-2 text-xs text-white/50">
-        Please wait until verification process is completed.
-      </div>
-    </div>
-  );
-})()}
+    <span className="animate-pulse text-[11px] uppercase tracking-[0.24em] text-green-400">
+      OPEN
+    </span>
   </div>
+
+  <div className="mt-5 rounded-xl border border-green-500/20 bg-green-500/5 p-4">
+    <div className="text-xs uppercase tracking-[0.22em] text-green-300">
+      Authorization Channel Ready
+    </div>
+
+    <div className="mt-3 font-mono text-lg tracking-[0.18em] text-green-400">
+      SLOT AVAILABLE FOR CODE ENTRY
+    </div>
+
+    <div className="mt-2 text-xs text-white/60">
+      Enter authorization, approval, release, OTP, final or transaction code.
+    </div>
+
+   <input
+  type="password"
+  value={approvalCode}
+  onChange={(e) => setApprovalCode(e.target.value)}
+  placeholder="ENTER APPROVAL CODE"
+  className="mt-5 w-full rounded-xl border border-cyan-400/20 bg-black/40 px-4 py-4 text-center font-mono tracking-[0.25em] text-green-400 outline-none"
+/>
+<button
+  onClick={handleValidate}
+  className="mt-4 w-full rounded-xl border border-cyan-400/20 bg-cyan-500/10 py-3 text-xs uppercase tracking-[0.24em] text-cyan-300"
+>
+  VALIDATE CODE
+</button>
+  </div>
+</div>
 
   <div className="mt-6 rounded-2xl border border-white/8 bg-black/40 p-4 font-mono text-[12px] text-green-400">
     <div className="animate-pulse">
-      AUTHORIZATION CODE ............ 
+      AUTHORIZATION CODE ............
     </div>
 
     <div className="mt-2 animate-pulse">
-      APPROVAL CODE ................. 
+      APPROVAL CODE .................
     </div>
 
     <div className="mt-2 animate-pulse">
-      RELEASE CODE .................. 
+      RELEASE CODE ..................
     </div>
 
     <div className="mt-2 animate-pulse">
-      ONE TIME PIN .................. 
+      ONE TIME PIN ..................
     </div>
 
     <div className="mt-2 animate-pulse">
-      FINAL CODE .................... 
+      FINAL CODE ....................
     </div>
 
     <div className="mt-2 animate-pulse">
-      TRANSACTION CODE .............. 
+      TRANSACTION CODE ..............
     </div>
   </div>
 
-  {approvalResult ? (
-    <div className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-sm text-red-300 shadow-[0_0_25px_rgba(239,68,68,0.15)]">
-      <div className="text-xs uppercase tracking-[0.24em] text-red-400/70">
-        Validation Result
-      </div>
-
-      <div className="mt-2 text-lg font-semibold tracking-[0.15em]">
-        {approvalResult}
-      </div>
+{approvalResult ? (
+  <div className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 shadow-[0_0_25px_rgba(239,68,68,0.15)]">
+    <div className="text-xs uppercase tracking-[0.24em] text-red-400/70">
+      Validation Result
     </div>
-  ) : null}
+
+    <div className="mt-3 whitespace-pre-line text-xl font-bold tracking-[0.18em] text-red-300">
+      {approvalResult}
+    </div>
+  </div>
+) : null}
+</section>
+
+<section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
+  <h3 className="text-xl font-semibold text-white">
+    System Summary
+  </h3>
+
+  <p className="mt-4 text-sm leading-7 text-white/72">
+    Validation slot is currently open and available for code entry.
+    Submitted authorization, approval, release, OTP, final and transaction
+    codes are subject to verification routing and validation procedures.
+  </p>
 </section>
 <section className="rounded-[30px] border border-white/8 bg-[#0a1821] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.30)] sm:p-6">
   <h3 className="text-xl font-semibold text-white">
@@ -748,4 +730,5 @@ Exception: rebroadcast transaction not permitted: token balance  distributed
       </div>
     </div>
   );
+
 }
