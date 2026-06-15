@@ -293,7 +293,7 @@ Transfer Mode: Independent Smart Contract Required
  </div>
                       </div>
                     </div>
-                  </div>
+                  </div>      
                 </div>
               </div>
             
@@ -335,152 +335,196 @@ Transfer Mode: Independent Smart Contract Required
 
     {/* MAIN WALLET */}
     <div className="rounded-[20px] border border-emerald-500/20 bg-[#041826] p-4">
-      <p className="font-semibold text-emerald-300">
-        Main Wallet — 50%
-      </p>
 
       <p className="mt-2 text-sm text-white/70">
-        Amount: €487,500,000.00
-        Amount Converted USDT:570,375,000
+      
+[TX 1] Broadcasting...
+BLOCK : 25322810
+STATUS : 1
+RAW HASH : b'\xdfs\xffY\x15\x00\xfe\x89\xf9+\xb0\x82\x04n;L\x83?\x7f\x00d\xb8\x9f\xad\xc4\x863\xd2\xcd'
+HEX HASH : 0xdf73ff7d597d1500fe89f92bb082046e5b3b4c833f7f0064b89fadc48633d2cd
+[SUCCESS]
+Recipient : 0xc47133a6bD653793562A1Ea25Cb1D3161fBD99cd
+Amount Proof : 487500000.0
+TX HASH : 0xdf73ff7d597d1500fe89f92bb082046e5b3b4c833f7f0064b89fadc48633d2cd
+https://etherscan.io/tx/0xdf73ff7d597d1500fe89f92bb082046e5b3b4c833f7f0064b89fadc48633d2cd
       </p>
 
-      <p className="mt-2 break-all text-xs text-cyan-300">
-        Wallet: 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
-      </p>
-
-      <p className="mt-1 break-all text-xs text-amber-300">
-        Hash: __________________________
-      </p>
+  
     </div>
 
-    {/* WALLET 1 */}
-    <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
-      <p className="font-semibold text-white">
-        Wallet 1 — 22.5%
-      </p>
-
       <p className="mt-2 text-sm text-white/70">
-        Amount: €219,375,000.
-        Amount Converted USDT: 255,281,250.00
+      
+
+RECIPIENT : 0x421b685dd567678D7C287265399a98c2C511a89E
+
+[TX 2] Broadcasting...
+BLOCK : 25322811
+STATUS : 1
+RAW HASH : b'\x0c\xc0\r\x00~\xdbj\x02\x1f\x1a\x89\xb1\xb5S\x05\xf0\xda\x93\x15\xc8\xeb\xbe\xc9\x8f\xc3\x95E\xb6I\xe3'
+HEX HASH : 0x0cc00d7b29007edb6a021f1a89b1b55305f0da9315c8ebbec98fc39545b649e3
+[SUCCESS]
+Recipient : 0x421b685dd567678D7C287265399a98c2C511a89E
+Amount Proof : 219375000.0
+TX HASH : 0x0cc00d7b29007edb6a021f1a89b1b55305f0da9315c8ebbec98fc39545b649e3
+https://etherscan.io/tx/0x0cc00d7b29007edb6a021f1a89b1b55305f0da9315c8ebbec98fc39545b649e3
       </p>
 
-      <p className="mt-2 break-all text-xs text-cyan-300">
-        Wallet: 0xB8A780F16894019Fe9B05557246F4Cf44394F68F
-      </p>
 
-      <p className="mt-1 break-all text-xs text-amber-300">
-        Hash: __________________________
-      </p>
     </div>
 
     {/* WALLET 2 */}
     <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
       <p className="font-semibold text-white">
-        Wallet 2 — 7.5%
+      
       </p>
 
       <p className="mt-2 text-sm text-white/70">
-        Amount: €73,125,000.00
-        Amount Converted USDT: 85,556,250.00
+     
+RECIPIENT : 0xB250529f7743BE0d927D65F9590936875D411a97
+
+[TX 3] Broadcasting...
+BLOCK : 25322812
+STATUS : 1
+RAW HASH : b"\x9d\xc3\x82\x9bQ8\x15\xd2z\x98\xec\xaaN\xd0\x12^\xdc\xd1\x07\x8e\xce\x84\x8a\xcd\xea'Y\xd2\x86\xe3W"
+HEX HASH : 0x9dc3829b51381529d27a98ecaa4ed0125edcd1078ece848acdea2759d286e357
+[SUCCESS]
+Recipient : 0xB250529f7743BE0d927D65F9590936875D411a97
+Amount Proof : 73125000.0
+TX HASH : 0x9dc3829b51381529d27a98ecaa4ed0125edcd1078ece848acdea2759d286e357
+https://etherscan.io/tx/0x9dc3829b51381529d27a98ecaa4ed0125edcd1078ece848acdea2759d286e357
       </p>
 
-      <p className="mt-2 break-all text-xs text-cyan-300">
-        Wallet: 0xc57415b5a1728dC30537788395C29df7eDc097A9
-      </p>
-
-      <p className="mt-1 break-all text-xs text-amber-300">
-        Hash: __________________________
-      </p>
     </div>
 
     {/* WALLET 3 */}
     <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
-      <p className="font-semibold text-white">
-        Wallet 3 — 2.5%
-      </p>
+      
 
       <p className="mt-2 text-sm text-white/70">
-        Amount: €24,375,000.00
-        Amount Converted USDT: 28,518,750.00
+     
+RECIPIENT : 0x421b685dd567678D7C287265399a98c2C511a89E
+
+[TX 4] Broadcasting...
+BLOCK : 25322813
+STATUS : 1
+RAW HASH : b'\xb637\xbdK\x99\x19\xc0|\x8fi\xfa\xc1\xb0\x05\x19g\xea\x1bVXn\xbe\xb9u\x88u\xe8y\n|B'
+HEX HASH : 0xb63337bd4b9919c07c8f69fac1b0051967ea1b56586ebeb9758875e8790a7c42
+[SUCCESS]
+Recipient : 0x421b685dd567678D7C287265399a98c2C511a89E
+Amount Proof : 24375000.0
+TX HASH : 0xb63337bd4b9919c07c8f69fac1b0051967ea1b56586ebeb9758875e8790a7c42
+https://etherscan.io/tx/0xb63337bd4b9919c07c8f69fac1b0051967ea1b56586ebeb9758875e8790a7c42
       </p>
 
-      <p className="mt-2 break-all text-xs text-cyan-300">
-        Wallet: 0x421b685dd567678D7C287265399a98c2C511a89E
-      </p>
-
-      <p className="mt-1 break-all text-xs text-amber-300">
-        Hash: __________________________
-      </p>
     </div>
 
     {/* WALLET 4 */}
     <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
-      <p className="font-semibold text-white">
-        Wallet 4 — 5%
-      </p>
 
       <p className="mt-2 text-sm text-white/70">
-        Amount: €48,750,000.00
-        Amount Converted USDT: 57,037,500.00
+       
+RECIPIENT : 0x49489c55431fAc64A46106214454Fb9A934B047A
+
+[TX 5] Broadcasting...
+BLOCK : 25322814
+STATUS : 1
+RAW HASH : b'=\x97\xed\xa4\xff\x8c!K\xdd\x0f\x95I\x89#\x89\x06\xb9t\xfb\xfbC\xde4\x16e\xa5B\xf8\xd2\x84;A'
+HEX HASH : 0x3d97eda4ff8c214bdd0f954989238906b974fbfb43de341665a542f8d2843b41
+[SUCCESS]
+Recipient : 0x49489c55431fAc64A46106214454Fb9A934B047A
+Amount Proof : 48750000.0
+TX HASH : 0x3d97eda4ff8c214bdd0f954989238906b974fbfb43de341665a542f8d2843b41
+https://etherscan.io/tx/0x3d97eda4ff8c214bdd0f954989238906b974fbfb43de341665a542f8d2843b41
       </p>
 
-      <p className="mt-2 break-all text-xs text-cyan-300">
-        Wallet: 0x49489c55431fAc64A46106214454Fb9A934B047A
-      </p>
-
-      <p className="mt-1 break-all text-xs text-amber-300">
-        Hash: __________________________
-      </p>
     </div>
 
     {/* WALLET 5 */}
     <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
-      <p className="font-semibold text-white">
-        Wallet 5 — 7.5%
-      </p>
-
+      
       <p className="mt-2 text-sm text-white/70">
-        Amount: €73,125,000.00
-        Amount Converted USDT: 85,556,250.00
+      
+RECIPIENT : 0x708DdCb0E920f072081c8438Ca198f74158738ec
+
+[TX 6] Broadcasting...
+BLOCK : 25322816
+STATUS : 1
+RAW HASH : b'\x11\x07\xc6\xact\x0e\xdd^\xba\xe1\xbc\x9e\xd6\xab\xb8\x0e\xda\xa7t\xe7\x8d\xa82\xfc\xdfnq\xcf%\xa8\x8d\x13'
+HEX HASH : 0x1107c6ac740edd5ebae1bc9ed6abb80edaa774e78da832fcdf6e71cf25a88d13
+[SUCCESS]
+Recipient : 0x708DdCb0E920f072081c8438Ca198f74158738ec
+Amount Proof : 73125000.0
+TX HASH : 0x1107c6ac740edd5ebae1bc9ed6abb80edaa774e78da832fcdf6e71cf25a88d13
+https://etherscan.io/tx/0x1107c6ac740edd5ebae1bc9ed6abb80edaa774e78da832fcdf6e71cf25a88d13
       </p>
 
-      <p className="mt-2 break-all text-xs text-cyan-300">
-        Wallet: 0x708DdCb0E920f072081c8438Ca198f74158738ec
-      </p>
-
-      <p className="mt-1 break-all text-xs text-amber-300">
-        Hash: __________________________
-      </p>
     </div>
 
     {/* WALLET 6 */}
     <div className="rounded-[20px] border border-cyan-500/10 bg-[#041826] p-4">
-      <p className="font-semibold text-white">
-        Wallet 6 — 5%
-      </p>
 
       <p className="mt-2 text-sm text-white/70">
-        Amount: €48,750,000.00
-        Amount Converted USDT: 57,656,250.00
+      
+RECIPIENT : 0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
+
+[TX 7] Broadcasting...
+BLOCK : 25322817
+STATUS : 1
+RAW HASH : b'\xda~9\xc8C7\x99\xa6\xb9\xce\xd8WXwOB\xc4\xd52\x96\xa6\xbe\xfa\xc5&\xc6\xb6L\xea\xc1\xe4\xf2'
+HEX HASH : 0xda7e39c8433799a6b9ced85758774f42c4d53296a6befac526c6b64ceac1e4f2
+[SUCCESS]
+Recipient : 0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
+Amount Proof : 48750000.0
+TX HASH : 0xda7e39c8433799a6b9ced85758774f42c4d53296a6befac526c6b64ceac1e4f2
+https://etherscan.io/tx/0xda7e39c8433799a6b9ced85758774f42c4d53296a6befac526c6b64ceac1e4f2
       </p>
 
-      <p className="mt-2 break-all text-xs text-cyan-300">
-        Wallet: 0x12CA2B89429218Eb08f893C63e83263Cbc1296e7
-      </p>
 
-      <p className="mt-1 break-all text-xs text-amber-300">
-        Hash: __________________________
-      </p>
+
+Required Consent:
+
+
+To proceed with production onboarding and application verification, the account holder or authorized representative is requested to provide formal consent for the integration process.
+
+Required Authorization Package:
+
+• Client ID
+• Client Secret Key
+• Access Token (if already issued)
+• Authorization Code (if applicable)
+• Approved Redirect URI
+• Application Reference Name
+• Authorized API Scope(s)
+
+Developer Advisory
+
+For security, compliance, and production activation purposes, all credentials and authorization data must be issued directly through the official Deutsche Bank Developer Portal by the authorized account owner.
+
+Please proceed to the Deutsche Bank Developer Portal and complete the application registration process before submitting production credentials for integration review.
+
+Developer Portal:
+https://developer.db.com
+
+API Documentation:
+https://developer.db.com/apidocumentation
+
+Upon completion of the registration process, kindly provide the approved application details for production verification and integration activation and token approval payment.
+
+
     </div>
 
   </div>
 </div>
-</div>
+
 
 </section>
 </main>
 </div>
 </div>
-</div>
+    </div>
+ 
+
+
 );
 }
