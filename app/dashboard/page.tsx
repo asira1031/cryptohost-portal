@@ -68,6 +68,12 @@ if (userEmail === "ceo@kerogenresource.com") {
 
 }
 
+// 👉 ROYAL BANK
+if (userEmail === "Yuinpin96@gmail.com") {
+  router.push("/dashboard/reports/royal-bank");
+  return;
+}
+
 // 👉 YUINPIN
 if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");
