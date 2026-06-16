@@ -163,23 +163,23 @@ useEffect(() => {
                 <div className="rounded-[30px] border border-cyan-500/15 bg-[#041826] p-6 shadow-[0_0_50px_rgba(0,180,255,0.05)]">
                   <div className="mb-4 flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-[11px] uppercase tracking-[0.35em] text-cyan-400/80">
-                        DEUTSCHE BANK AG
-                      </p>
-                      <h2 className="mt-3 text-3xl font-semibold text-white">
-                        Current Account Status
-                      </h2>
-                      
+                     <p className="text-[11px] uppercase tracking-[0.35em] text-cyan-400/80">
+  DEUTSCHE BANK AG
+</p>
+
+                    <h2 className="mt-3 text-3xl font-semibold text-white">
+  Current Account Status
+</h2>
                     </div>
 
-                    <div className="rounded-full border border-amber-400/35 bg-amber-500/12 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-amber-300">
-                       Bank Locator Engine
-                    </div>
+                   <div className="rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">
+  EXECUTED
+</div>
                   </div>
 <div className="mt-4 rounded-[20px] border border-cyan-500/30 bg-cyan-500/10 p-5">
   <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
-    Swift Global Engine
-  </p>
+  Swift Global Engine
+</p>
 <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
   <p>NODE STATUS: ONLINE</p>
   <p>HASH VALIDATION: ACTIVE</p>
