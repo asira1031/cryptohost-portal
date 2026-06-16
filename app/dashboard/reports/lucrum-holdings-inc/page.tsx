@@ -173,12 +173,12 @@ useEffect(() => {
                     </div>
 
                     <div className="rounded-full border border-amber-400/35 bg-amber-500/12 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-amber-300">
-                      Admin Review Required
+                       Bank Locator Engine
                     </div>
                   </div>
 <div className="mt-4 rounded-[20px] border border-cyan-500/30 bg-cyan-500/10 p-5">
   <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
-    Network Validation Engine
+    Swift Global Engine
   </p>
 <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
   <p>NODE STATUS: ONLINE</p>
