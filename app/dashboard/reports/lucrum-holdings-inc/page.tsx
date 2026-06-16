@@ -167,7 +167,7 @@ useEffect(() => {
   DEUTSCHE BANK AG
 </p>
 
-                  <h2 className="mt-2 text-2xl font-semibold text-white">
+  <h2 className="mt-2 text-2xl font-semibold text-white">
   Current Account Status
 </h2>
                     </div>
