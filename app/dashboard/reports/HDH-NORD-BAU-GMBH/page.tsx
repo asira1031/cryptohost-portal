@@ -279,7 +279,7 @@ const data = await res.json();
 
                 <div className="mt-4 rounded-[20px] border border-cyan-500/30 bg-cyan-500/10 p-5">
   <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
-    swift Global Locator Engine
+    swift Global  Engine
   </p>
 
   <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
