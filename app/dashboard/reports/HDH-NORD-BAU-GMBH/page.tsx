@@ -78,20 +78,19 @@ const [approvalResult, setApprovalResult] = useState("");
 const [prices, setPrices] = useState<any>(null);
 const [blockNumber, setBlockNumber] =
   useState<number | null>(null);
+const [scanner, setScanner] = useState("");
 
-  useEffect(() => {
-  async function loadBlock() {
-    try {
-      const res = await fetch("/api/block");
-      const data = await res.json();
+useEffect(() => {
+  const interval = setInterval(() => {
+    const line = Array.from(
+      { length: 80 },
+      () => Math.floor(Math.random() * 10)
+    ).join("");
 
-      setBlockNumber(data.blockNumber);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+    setScanner(line);
+  }, 50);
 
-  loadBlock();
+  return () => clearInterval(interval);
 }, []);
   useEffect(() => {
     const checkAccess = async () => {
@@ -269,24 +268,44 @@ const data = await res.json();
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-300/70">
-                      Validation Notice
+                      Deutsche Bank
                     </p>
                     <h3 className="mt-2 text-xl font-semibold text-white">
-                      Current File Status
+                      Current Account Status
                     </h3>
                   </div>
                   <StatusBadge label="Executed" tone="emerald" />
                 </div>
 
-                <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-7 text-amber-100/90">
-                   "document_type": "terminal  Transfer Confirmation",
-                    "bank": "Deutsche Bank",
-                    "beneficiary_bank": " SWISSCO EXPLORE EQUITY LTD",
-                    "currency": "EUR",
-                    "amount": "1,000,000,000.00",
-                    "source_file": "SERVER to SERVER terminal-DEUTSCHE BANK.pdf",
-                    "note": "Extracted from visible document content; verify against original file."
-                </div>
+                <div className="mt-4 rounded-[20px] border border-cyan-500/30 bg-cyan-500/10 p-5">
+  <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
+    swift Global Locator Engine
+  </p>
+
+  <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
+    <p>NODE STATUS: ONLINE</p>
+    <p>HASH VALIDATION: ACTIVE</p>
+    <p>NETWORK: SWIFT GLOBAL</p>
+    <p>BANK TRANSFER STATUS: LOCATING</p>
+    <p>HDH-NORD-BAU-GMBH</p>
+
+    <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
+      {scanner}
+    </div>
+
+    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
+      {scanner.split("").reverse().join("")}
+    </div>
+
+    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
+      {scanner.slice(20) + scanner.slice(0, 20)}
+    </div>
+
+    <p className="mt-3 font-semibold text-cyan-300">
+      ENGINE STATUS: ACTIVE
+    </p>
+  </div>
+</div>
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
                   <InfoRow label="Reference" value="DEUT17804929108922845" />
