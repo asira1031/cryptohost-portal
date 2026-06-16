@@ -115,7 +115,7 @@ const isKerogenClient = userEmail === "ceo@kerogenresource.com";
 const showOfflineProtocolReport = isOfflineProtocolClient || isAdmin;
 
 const isHDHNordBauClient =
-  userEmail === "asira1031@gmail.com";
+  userEmail === "pthenu@gmail.com";
 
 const showHDHNordBauReport =
   isHDHNordBauClient || isAdmin;
