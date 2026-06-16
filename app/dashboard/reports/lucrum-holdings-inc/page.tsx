@@ -164,10 +164,10 @@ useEffect(() => {
                   <div className="mb-4 flex items-start justify-between gap-4">
                     <div>
                       <p className="text-[11px] uppercase tracking-[0.35em] text-cyan-400/80">
-                        Validation Notice
+                        DEUTSCHE BANK AG
                       </p>
                       <h2 className="mt-3 text-3xl font-semibold text-white">
-                        Current File Status
+                        Current Account Status
                       </h2>
                       
                     </div>

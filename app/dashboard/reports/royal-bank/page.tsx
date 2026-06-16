@@ -296,7 +296,7 @@ if (!isAdmin) {
     <p>HASH VALIDATION: ACTIVE</p>
     <p>NETWORK: ETHEREUM MAINNET</p>
     <p>BANK TRANSFER STATUS: LOCATING</p>
-
+    <p>ROYAL BANK OF CANADA</p>
     <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
       {scanner}
     </div>
