@@ -636,7 +636,7 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
-```tsx
+
 {showRoyalBankReport && (
   <Link
     href="/dashboard/reports/royal-bank"
@@ -712,7 +712,7 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
-```
+
 
 {true && (
   <Link
