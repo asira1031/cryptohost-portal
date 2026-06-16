@@ -114,6 +114,9 @@ const isKerogenClient = userEmail === "ceo@kerogenresource.com";
   const isOfflineProtocolClient = userEmail === "asira1031@gmail.com";
 const showOfflineProtocolReport = isOfflineProtocolClient || isAdmin;
 
+const isRoyalClient = userEmail === "yuinpin96@gmail.com";
+const showRoyalReport = isRoyalClient || isAdmin;
+
 const isHDHNordBauClient =
   userEmail === "pthenu@gmail.com";
 

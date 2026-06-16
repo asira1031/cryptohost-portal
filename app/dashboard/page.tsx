@@ -73,10 +73,13 @@ if (userEmail === "pthenu@gmail.com") {
 
 }
 
-// 👉 ROYAL BANK
-if (userEmail === "Yuinpin96@gmail.com") {
+console.log("Current user email:", userEmail);
+
+if (userEmail === "yuinpin96@gmail.com") {
+  console.log("ROYAL redirect triggered");
   router.push("/dashboard/reports/royal-bank");
   return;
+
 }
 
 // 👉 YUINPIN
