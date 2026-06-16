@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
 
 const checkpoints = [
   {
@@ -45,6 +47,20 @@ function toneClasses(tone: "green" | "amber") {
 }
 
 export default function LucrumHoldingsIncPage() {
+  const [scanner, setScanner] = useState("");
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    const line = Array.from(
+      { length: 80 },
+      () => Math.floor(Math.random() * 10)
+    ).join("");
+
+    setScanner(line);
+  }, 50);
+
+  return () => clearInterval(interval);
+}, []);
   return (
     <div className="min-h-screen bg-[#03111c] text-white">
       <div className="mx-auto max-w-[1600px] px-6 py-5">
@@ -160,28 +176,32 @@ export default function LucrumHoldingsIncPage() {
                       Admin Review Required
                     </div>
                   </div>
-<div className="mt-4 rounded-[20px] border border-red-500/30 bg-red-500/10 p-5">
-  <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-300">
-    System Notice
+<div className="mt-4 rounded-[20px] border border-cyan-500/30 bg-cyan-500/10 p-5">
+  <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
+    Network Validation Engine
   </p>
+<div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
+  <p>NODE STATUS: ONLINE</p>
+  <p>HASH VALIDATION: ACTIVE</p>
+  <p>NETWORK: ETHEREUM MAINNET</p>
+  <p>BANK TRANSFER STATUS: LOCATING</p>
 
-  <p className="mt-3 text-white">
-    System Notice
+  <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
+    {scanner}
+  </div>
 
-The Ethereum smart contract currently blocks all conversion and internal transfer operations associated with this transmission.
+  <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
+    {scanner.split("").reverse().join("")}
+  </div>
 
-Conversion services through the primary contract are temporarily unavailable.
+  <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
+    {scanner.slice(20) + scanner.slice(0, 20)}
+  </div>
 
-Users may proceed using an independent smart contract, subject to their own verification, authorization, and compliance procedures.
-
-Status: PRIMARY CONTRACT CONVERSION DISABLED
-Network: Ethereum
-Transfer Mode: Independent Smart Contract Required
+  <p className="mt-3 font-semibold text-cyan-300">
+    ENGINE STATUS: ACTIVE
   </p>
-
-  <p className="mt-3 text-red-300 font-semibold">
-    Status: SUSPENDED 
-  </p>
+</div>
 </div>
                   <div className="rounded-[24px] border border-amber-500/30 bg-amber-500/10 p-5 text-[17px] leading-8 text-amber-100">
                     This file contains a structured M1 funds transmission record with
@@ -197,7 +217,7 @@ Transfer Mode: Independent Smart Contract Required
 
     {[
       ["Reference", "DE25418963745838726"],
-      ["File Name", "975MEUR_LUCRUM_DBSSSGSG_04.06.2026.pdf"],
+      ["File Name", "975MEUR_LUCRUM_DBSSSGSG_04.06.2026.ff"],
       ["Funds Type", "EURO FUNDS"],
       ["Upload Format", "SERVER TO SERVER"],
       ["File Format", "ISO 20022"],
@@ -233,18 +253,18 @@ Transfer Mode: Independent Smart Contract Required
       ["Category", "SYSTEM"],
       ["Status", "MESSAGE TRANSMITTED SUCCESSFULLY"],
     ].map(([label, value], index) => (
-      <div
-        key={index}
-        className="grid gap-3 bg-[#03111c]/40 px-5 py-4 md:grid-cols-[240px_1fr]"
-      >
-        <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-cyan-300/55">
-          {label}
-        </div>
+  <div
+  key={index}
+  className="bg-[#03111c]/40 px-5 py-4"
+>
+  <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-cyan-300/55">
+    {label}
+  </div>
 
-        <div className="break-all text-base text-white">
-          {value}
-        </div>
-      </div>
+  <div className="mt-2 break-all text-sm text-white">
+    {value}
+  </div>
+</div>
     ))}
 
   </div>
@@ -270,7 +290,7 @@ Transfer Mode: Independent Smart Contract Required
 <p><span className="text-white/55">SWIFT Code:</span> DEUTDEFFXXX</p>
 <p><span className="text-white/55">IBAN:</span> DE91 5007 0010 0925 9938 12</p>
 <p><span className="text-white/55">Address:</span> Frankfurt, Germany</p>
-<p><span className="text-white/55">City:</span> Frankfurt</p>
+<p><span className="text-white/55">City:</span> Frankfurt</p>        
 <p><span className="text-white/55">Postal Code:</span> 60314</p>
 <p><span className="text-white/55">Country:</span> Germany</p>
                       </div>
