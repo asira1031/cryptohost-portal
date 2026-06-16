@@ -67,7 +67,7 @@ if (userEmail === "ceo@kerogenresource.com") {
   return;
 
 }
-if (userEmail === "pthenu@gmail.com") {
+if (userEmail?.toLowerCase().trim() === "pthenu@proton.me") {
   router.push("/dashboard/reports/HDH-NORD-BAU-GMBH");
   return;
 

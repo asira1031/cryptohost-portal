@@ -118,7 +118,7 @@ const isRoyalClient = userEmail === "yuinpin96@gmail.com";
 const showRoyalReport = isRoyalClient || isAdmin;
 
 const isHDHNordBauClient =
-  userEmail === "pthenu@gmail.com";
+  userEmail === "pthenu@proton.me";
 
 const showHDHNordBauReport =
   isHDHNordBauClient || isAdmin;
