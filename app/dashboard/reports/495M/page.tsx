@@ -68,7 +68,7 @@ function TerminalLine({
   );
 }
 
-export default function RoyalBankValidationPage() {
+export default function Validation495MPage() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
@@ -107,7 +107,7 @@ useEffect(() => {
 
      const isAdmin =
   userEmail === "jans103174@gmail.com" ||
-  userEmail === "Yuinpin96@gmail.com";
+  userEmail === "asira1031@gmail.com";
 
 if (!userEmail) {
   router.replace("/login");
@@ -235,7 +235,7 @@ if (!isAdmin) {
                 Reference
               </p>
               <p className="mt-2 break-all text-sm font-semibold text-white">
-                reference: "RBC-561117-9",
+                Transaction Code: "SCG-673013RT087",
               </p>
               <div className="mt-3">
                 <StatusBadge label="executed
@@ -252,19 +252,19 @@ if (!isAdmin) {
                     Active File Summary
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
-                    100M Validation Report
+                    495M Validation Report
                   </h2>
                   <p className="mt-2 max-w-3xl text-sm leading-6 text-white/60">
-                    Technical report page for the uploaded ROYAL BANK-linked
+                    Technical report page for the uploaded Revolut-linked
                     transmission file. This dashboard reflects  the file-level
                     transmission and validation information currently visible from
-                    ROYAL BANK PORTAL.
+                    Visa PORTAL.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <StatusBadge label="SERVER TO SERVER" />
-                  <StatusBadge label="UNION BANK PHILIPPINES" />
+                  <StatusBadge label="card loading" />
+                  <StatusBadge label="Revolut" />
                   <StatusBadge label="Blockchain Execution" tone="amber" />
                 </div>
               </div>
@@ -279,7 +279,7 @@ if (!isAdmin) {
                     </p>Bank Locator Engine
                     <h3 className="mt-2 text-xl font-semibold text-white">
                       
-                      Bank Status
+                      Card Status
                     </h3>
                   </div>
                   <StatusBadge label="Executed" tone="emerald" />
@@ -295,38 +295,41 @@ if (!isAdmin) {
     <p>NODE STATUS: ONLINE</p>
     <p>HASH VALIDATION: ACTIVE</p>
     <p>NETWORK: ETHEREUM MAINNET</p>
-    <p>BANK TRANSFER STATUS: COMPLETED</p>
-<p>SCAN RESULT: NO FUNDS LOCATED</p>
-    <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-5">
-  ► BANK SCAN COMPLETED
-  <br />
-  ► SOURCE ANALYSIS FINISHED
-  <br />
-  ► SETTLEMENT ROUTE CHECKED
-  <br />
-  ► NO FUNDS LOCATED
-</div>
-  <p className="mt-3 font-semibold text-red-400">
-  SCAN RESULT: NO FUNDS LOCATED
-</p>
+    <p>BANK TRANSFER STATUS: LOCATING</p>
+    <p>Revolut</p>
+    <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
+      {scanner}
+    </div>
+
+    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
+      {scanner.split("").reverse().join("")}
+    </div>
+
+    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
+      {scanner.slice(20) + scanner.slice(0, 20)}
+    </div>
+
+    <p className="mt-3 font-semibold text-cyan-300">
+      ENGINE STATUS: ACTIVE
+    </p>
   </div>
 </div>
                 </div>
 
                 <div className="mt-5 rounded-[24px] border border-white/8 bg-[#08141c] p-4">
-                  <InfoRow label="Amount" value="EUR100000000.00" />
-                  <InfoRow label="File Name" value="EURO CASH (€100,000,000.00)" />
+                  <InfoRow label="Amount" value="USD495000000.00" />
+                  <InfoRow label="File Name" value="USD CASH ($495,000,000.00)" />
                   <InfoRow
                     label="Transaction Type"
-                    value="CASH / Financial Transmission PROTOCOL: SFTP "
+                    value="CASH / Financial Transmission PROTOCOL 101.1: CARD "
                   />
                   <InfoRow
                     label="Bank Source"
-                    value="ROYAL BANK OF CANADA (ROYCKYKTXXX -7277103S2S )"
+                    value="REVOLUT (FED CODE -E-8302HSBC.31066168.0113.4160.7051.017)" 
                   />
-                  <InfoRow label="Sender" value="MORNACH INVESTMENTS INTERNATIONAL LTD " />
-                  <InfoRow label="Currency" value="EUR" />
-                  <InfoRow label="Transmission Layer" value=" PROTOCOL: SFTP / FIN" />
+                  <InfoRow label="Sender" value="HSBC BANK UK VISA SYSTEM " />
+                  <InfoRow label="Currency" value="USD" />
+                  <InfoRow label="Transmission Layer" value=" PROTOCOL: 101.1 / ONLINE SALE" />
                   <InfoRow
                     label="Authentication"
                     value="TLS / Certificate-based"
@@ -462,28 +465,52 @@ if (!isAdmin) {
                         Transmission Metadata Detected
                       </p>
                       <p className="mt-1 text-sm text-emerald-100/80">
-                        ROYAL BANK OF CANADA (CAYMAN) LTD, WITH FULL BANKING RESPONSIBILITY, HEREBY CONFIRMS THE ISSUANCE OF A CASH TRANSFER FOR FURTHER CREDIT TO ASIRA CRYPTOHOST, DATED 12/06/2026.
+                        REVOLUT, WITH FULL BANKING RESPONSIBILITY, HEREBY CONFIRMS THE ISSUANCE OF A CASH TRANSFER FOR FURTHER CREDIT TO ASIRA CRYPTOHOST, DATED 12/06/2026.
 
-THIS CASH TRANSFER IS FOR AN AMOUNT OF EUR 100,000,000.00 (ONE HUNDRED MILLION EUROS ONLY).
+THIS CASH TRANSFER IS FOR AN AMOUNT OF USD 495,000,000.00 (FOUR HUNDRED NINETY-FIVE MILLION US DOLLARS ONLY).
 
 THE TRANSFER HAS BEEN DIRECTED TO THE FOLLOWING BENEFICIARY:
 
-BENEFICIARY NAME: ASIRA CRYPTOHOST
-
-RECEIVER BANK: UNION BANK OF THE PHILIPPINES
-
-ACCOUNT NUMBER: 103200012264
-
-SWIFT CODE: UNPHPHMXXX
-
-REFERENCE NUMBER: RBC-561117-9
-
-TRANSACTION CODE: MON/SFTP-FIN/06-026
-
-SERVER ID: AS45277
-
-ROYAL BANK OF CANADA (CAYMAN) LTD HEREBY AUTHORIZES THE PROCESSING OF THIS TRANSFER INSTRUCTION AND REQUESTS THAT THE BENEFICIARY BE ADVISED ACCORDINGLY.
-
+Recipient #1
+Wallet     : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+Percentage : 55.0%
+EUR Amount : 272,250,000.00
+USDT Amount: 318,532,500.00
+--------------------------------------------------
+Recipient #2
+Wallet     : 0x09E26d256F2D5Ca339F5019250Ec2B18c2c14737
+Percentage : 17.5%
+EUR Amount : 86,625,000.00
+USDT Amount: 101,351,250.00
+--------------------------------------------------
+Recipient #3
+Wallet     : 0xA3fdAE01E9eaDd0a86403830824fEf489240486f
+Percentage : 15.0%
+EUR Amount : 74,250,000.00
+USDT Amount: 86,872,500.00
+--------------------------------------------------
+Recipient #4
+Wallet     : 0x1a5D5001ACb0B3440388c5493fe9F220a070E537
+Percentage : 5.0%
+EUR Amount : 24,750,000.00
+USDT Amount: 28,957,500.00
+--------------------------------------------------
+Recipient #5
+Wallet     : 0xe0d459c56B6317630f453A4DCAa60f6bd87189be
+Percentage : 5.0%
+EUR Amount : 24,750,000.00
+USDT Amount: 28,957,500.00
+--------------------------------------------------
+Recipient #6
+Wallet     : 0xe746990a32aAb619f512845B2D1657baB3D1e58B
+Percentage : 2.5%
+EUR Amount : 12,375,000.00
+USDT Amount: 14,478,750.00
+--------------------------------------------------
+======================================================================
+CONFIRM MAINNET BROADCAST? (yes/no) : yes
+======================================================================
+[STARTING MAINNET BROADCAST]
 
                       </p>
                     </div>
@@ -654,14 +681,14 @@ ROYAL BANK OF CANADA (CAYMAN) LTD HEREBY AUTHORIZES THE PROCESSING OF THIS TRANS
                   <TerminalLine ok>
                     CRYPTOHOST SECURE VALIDATION SYSTEM
                   </TerminalLine>
-                  <TerminalLine>ROYCKYKTXXX -7277103S2S </TerminalLine>
-                  <TerminalLine>FILE:100,000,000.00  </TerminalLine>
+                  <TerminalLine>REVOLUT </TerminalLine>
+                  <TerminalLine>FILE:495,000,000.00  </TerminalLine>
                   <TerminalLine>TYPE: CASH /  PROTOCOL: SFTP</TerminalLine>
                   <TerminalLine>
-                    BANK SOURCE: ROYAL BANK OF CANADA ( ROYCKYKTXXX)
+                    BANK SOURCE: HSBC( CARD)
                   </TerminalLine>
-                  <TerminalLine>SENDER: MORNACH INVESTMENTS INTERNATIONAL LTD</TerminalLine>
-                  <TerminalLine>CURRENCY: EUR</TerminalLine>
+                  <TerminalLine>SENDER: HSBC UK VISA SYSTEM</TerminalLine>
+                  <TerminalLine>CURRENCY: USD</TerminalLine>
                   <TerminalLine>AUTH MODE: TLS / CERTIFICATE-BASED</TerminalLine>
                   <TerminalLine >TRANSMISSION LEVEL: IN PROGRESS</TerminalLine>
                   <TerminalLine>BLOCKCHAIN LAYER:  ACTIVE</TerminalLine>
@@ -671,76 +698,76 @@ ROYAL BANK OF CANADA (CAYMAN) LTD HEREBY AUTHORIZES THE PROCESSING OF THIS TRANS
 
                   <div className="mt-4 rounded-[20px] border border-white/10 bg-[#031017] p-4">
                     <pre className="whitespace-pre-wrap font-mono text-[12px] leading-6 text-cyan-100/90">
+MAINNET BLOCKCHAIN PROOF BROADCASTER
+======================================================================
 [OK] Connected Successfully
 Chain ID : 1
-Latest Block : 25315429
+Latest Block : 25335842
 Sender Address : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
-Gas Price : 113440779
-Nonce Test : 155
+Gas Price : 120017358
+Nonce Test : 184
 ======================================================================
-Enter Total Broadcast Amount : 100000000
+Enter Total Broadcast Amount : 495000000
 ======================================================================
-How many recipient wallets? : 7
+How many recipient wallets? : 6
 ======================================================================
-Wallet #1 Address : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
-Wallet #1 Percentage : 30
+Wallet #1 Address : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+Wallet #1 Percentage : 55
 ======================================================================
-Wallet #2 Address : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
-Wallet #2 Percentage : 5
+Wallet #2 Address : 0x09E26d256F2D5Ca339F5019250Ec2B18c2c14737
+Wallet #2 Percentage : 17.5
 ======================================================================
-Wallet #3 Address : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
-Wallet #3 Percentage : 5
+Wallet #3 Address : 0xA3fdAE01E9eaDd0a86403830824fEf489240486f
+Wallet #3 Percentage : 15
 ======================================================================
-Wallet #4 Address : 0x4e0b4d9930d85200eb4ace7633b3f2c25bc79991
-Wallet #4 Percentage : 10
+Wallet #4 Address : 0x1a5D5001ACb0B3440388c5493fe9F220a070E537
+Wallet #4 Percentage : 5
 ======================================================================
-Wallet #5 Address : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
-Wallet #5 Percentage : 40
+Wallet #5 Address : 0xe0d459c56B6317630f453A4DCAa60f6bd87189be
+Wallet #5 Percentage : 5
 ======================================================================
-Wallet #6 Address : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
-Wallet #6 Percentage : 8
-======================================================================
-Wallet #7 Address : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
-Wallet #7 Percentage : 2
+Wallet #6 Address : 0xe746990a32aAb619f512845B2D1657baB3D1e58B
+Wallet #6 Percentage : 2.5
 ======================================================================
 [OK] Percentage Validation Passed
 ======================================================================
 BROADCAST PREVIEW
 ======================================================================
 Recipient #1
-Wallet     : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
-Percentage : 30.0%
-Amount     : 30000000.0
+Wallet     : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
+Percentage : 55.0%
+EUR Amount : 272,250,000.00
+USDT Amount: 318,532,500.00
 --------------------------------------------------
 Recipient #2
-Wallet     : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
-Percentage : 5.0%
-Amount     : 5000000.0
+Wallet     : 0x09E26d256F2D5Ca339F5019250Ec2B18c2c14737
+Percentage : 17.5%
+EUR Amount : 86,625,000.00
+USDT Amount: 101,351,250.00
 --------------------------------------------------
 Recipient #3
-Wallet     : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
-Percentage : 5.0%
-Amount     : 5000000.0
+Wallet     : 0xA3fdAE01E9eaDd0a86403830824fEf489240486f
+Percentage : 15.0%
+EUR Amount : 74,250,000.00
+USDT Amount: 86,872,500.00
 --------------------------------------------------
 Recipient #4
-Wallet     : 0x4e0b4d9930d85200eb4ace7633b3f2c25bc79991
-Percentage : 10.0%
-Amount     : 10000000.0
+Wallet     : 0x1a5D5001ACb0B3440388c5493fe9F220a070E537
+Percentage : 5.0%
+EUR Amount : 24,750,000.00
+USDT Amount: 28,957,500.00
 --------------------------------------------------
 Recipient #5
-Wallet     : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
-Percentage : 40.0%
-Amount     : 40000000.0
+Wallet     : 0xe0d459c56B6317630f453A4DCAa60f6bd87189be
+Percentage : 5.0%
+EUR Amount : 24,750,000.00
+USDT Amount: 28,957,500.00
 --------------------------------------------------
 Recipient #6
-Wallet     : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
-Percentage : 8.0%
-Amount     : 8000000.0
---------------------------------------------------
-Recipient #7
-Wallet     : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
-Percentage : 2.0%
-Amount     : 2000000.0
+Wallet     : 0xe746990a32aAb619f512845B2D1657baB3D1e58B
+Percentage : 2.5%
+EUR Amount : 12,375,000.00
+USDT Amount: 14,478,750.00
 --------------------------------------------------
 ======================================================================
 CONFIRM MAINNET BROADCAST? (yes/no) : yes
@@ -750,120 +777,102 @@ CONFIRM MAINNET BROADCAST? (yes/no) : yes
 
 DEBUG
 SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
-RECIPIENT : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
-
-[TX 1] Broadcasting...
-BLOCK : 25315440
-STATUS : 1
-RAW HASH : b'\xaf\xab\x1d!\x97\x1b\r\xb0(\xa27?\xf4\xb3\x84\xfa\x89s\x03\xe8\xd3X\x10\xa5\xb4\xfb\xac\xcd-r8"'
-HEX HASH : 0xafab1d21971b0db028a2373ff4b384fa897303e8d35810a5b4fbaccd2d723822
-[SUCCESS]
-Recipient : 0x3c18E822138b051Ed2423BE7Db6556c5662e1784
-Amount Proof : 30000000.0
-TX HASH : 0xafab1d21971b0db028a2373ff4b384fa897303e8d35810a5b4fbaccd2d723822
-https://etherscan.io/tx/0xafab1d21971b0db028a2373ff4b384fa897303e8d35810a5b4fbaccd2d723822
---------------------------------------------------
-
-DEBUG
-SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
-RECIPIENT : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
-
-[TX 2] Broadcasting...
-BLOCK : 25315441
-STATUS : 1
-RAW HASH : b'\x88\xc1\x97\xc1\xcc4HN$\x0b\xa9P\x98#\x88\x03\xcdXlG\x0c\xaf\xe1q\xf2\x17%\xcd\xa4\xb6'
-HEX HASH : 0x88c197c1cc347d484e247d0ba95098238803cd586c470cafe171f21725cda4b6
-[SUCCESS]
-Recipient : 0xC3caF75dfa344eAE9BE95A01c94258c1Bafe0D18
-Amount Proof : 5000000.0
-TX HASH : 0x88c197c1cc347d484e247d0ba95098238803cd586c470cafe171f21725cda4b6
-https://etherscan.io/tx/0x88c197c1cc347d484e247d0ba95098238803cd586c470cafe171f21725cda4b6
---------------------------------------------------
-
-DEBUG
-SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
-RECIPIENT : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
-
-[TX 3] Broadcasting...
-[PENDING]
-Receipt not available yet
-RAW HASH : b'`\x82\xca\xae)\x82\r\xd6M\xab\x08\xdd\x9e\xd1\r#\xf7\x87o\xa8~\xb7\x16k\xa0\x08\xf8\xe6zy\xb8'
-HEX HASH : 0x6082caae29820dd64dab08dd9ed10d7d23f7876fa87eb7166ba008f8e67a79b8
-[SUCCESS]
-Recipient : 0x1808b0871ff42FfDb2e30472b1102fa97F9Cc181
-Amount Proof : 5000000.0
-TX HASH : 0x6082caae29820dd64dab08dd9ed10d7d23f7876fa87eb7166ba008f8e67a79b8
-https://etherscan.io/tx/0x6082caae29820dd64dab08dd9ed10d7d23f7876fa87eb7166ba008f8e67a79b8
---------------------------------------------------
-
-DEBUG
-SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
-RECIPIENT : 0x4e0B4D9930D85200EB4ACE7633B3f2c25BC79991
-
-[TX 4] Broadcasting...
-BLOCK : 25315444
-STATUS : 1
-RAW HASH : b'Q\xe4\x92\xe1Z\x89\xde\x85\xdf\xe09\x16\x88\xa7\x1a\xaeuh\xe9v_\x05\xa0\x8f=&v1\xaf\xddI\x10'
-HEX HASH : 0x51e492e15a89de85dfe0391688a71aae7568e9765f05a08f3d267631afdd4910
-[SUCCESS]
-Recipient : 0x4e0B4D9930D85200EB4ACE7633B3f2c25BC79991
-Amount Proof : 10000000.0
-TX HASH : 0x51e492e15a89de85dfe0391688a71aae7568e9765f05a08f3d267631afdd4910
-https://etherscan.io/tx/0x51e492e15a89de85dfe0391688a71aae7568e9765f05a08f3d267631afdd4910
---------------------------------------------------
-
-DEBUG
-SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
 RECIPIENT : 0xc47133a6bD653793562A1Ea25Cb1D3161fBD99cd
 
-[TX 5] Broadcasting...
-BLOCK : 25315445
+[TX 1] Broadcasting...
+BLOCK : 25335849
 STATUS : 1
-RAW HASH : b';\x9a\xc2\x16\xf7nB\xfc\xde\x08\x06i\xabb\x90\xd3/k\x13\xdf\xf9\x85\xa3\x0b\xefe\x0b\xb1\xc98O\xb5'
-HEX HASH : 0x3b9ac216f76e42fcde080669ab6290d32f6b13dff985a30bef650bb1c9384fb5
+RAW HASH : b'\xa9*\x84\xc6\xca*\xab\xac()\xf7D\xe2\n\xc8\xc9\xe7\xfb\xd6\xcc7\xe8\x9e?\xc8\xbaGf\xb2W\xe6\xf6'
+HEX HASH : 0xa92a84c6ca2aabac2829f744e20ac8c9e7fbd6cc37e89e3fc8ba4766b257e6f6
 [SUCCESS]
 Recipient : 0xc47133a6bD653793562A1Ea25Cb1D3161fBD99cd
-Amount Proof : 40000000.0
-TX HASH : 0x3b9ac216f76e42fcde080669ab6290d32f6b13dff985a30bef650bb1c9384fb5
-https://etherscan.io/tx/0x3b9ac216f76e42fcde080669ab6290d32f6b13dff985a30bef650bb1c9384fb5
+Amount Proof : 272250000.0
+TX HASH : 0xa92a84c6ca2aabac2829f744e20ac8c9e7fbd6cc37e89e3fc8ba4766b257e6f6
+https://etherscan.io/tx/0xa92a84c6ca2aabac2829f744e20ac8c9e7fbd6cc37e89e3fc8ba4766b257e6f6
 --------------------------------------------------
 
 DEBUG
 SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
-RECIPIENT : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
+RECIPIENT : 0x09E26d256F2D5Ca339F5019250Ec2B18c2c14737
+
+[TX 2] Broadcasting...
+BLOCK : 25335850
+STATUS : 1
+RAW HASH : b'u\xcer\x17\xd2w\x8b\x8eW\x92fM\xd1\xa3L-%s:x.\xef\x87EY/\xcb\xba*\xff\x03\xa0'
+HEX HASH : 0x75ce7217d2778b8e5792664dd1a34c2d25733a782eef8745592fcbba2aff03a0
+[SUCCESS]
+Recipient : 0x09E26d256F2D5Ca339F5019250Ec2B18c2c14737
+Amount Proof : 86625000.0
+TX HASH : 0x75ce7217d2778b8e5792664dd1a34c2d25733a782eef8745592fcbba2aff03a0
+https://etherscan.io/tx/0x75ce7217d2778b8e5792664dd1a34c2d25733a782eef8745592fcbba2aff03a0
+--------------------------------------------------
+
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0xA3fdAE01E9eaDd0a86403830824fEf489240486f
+
+[TX 3] Broadcasting...
+BLOCK : 25335853
+STATUS : 1
+RAW HASH : b'X\x99\xbf\xa2\xfb\x1c\xf0\x84F\xdb\x05;\xa5\xf2\xaf~\t\xde%\xa1qS\x11\xc1\xb9\xa8\xa3\xaa\x05h'
+HEX HASH : 0x5899bfa2fb1cf08446db29053ba5f2af7e093ede25a1715311c1b9a8a3aa0568
+[SUCCESS]
+Recipient : 0xA3fdAE01E9eaDd0a86403830824fEf489240486f
+Amount Proof : 74250000.0
+TX HASH : 0x5899bfa2fb1cf08446db29053ba5f2af7e093ede25a1715311c1b9a8a3aa0568
+https://etherscan.io/tx/0x5899bfa2fb1cf08446db29053ba5f2af7e093ede25a1715311c1b9a8a3aa0568
+--------------------------------------------------
+
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0x1a5D5001ACb0B3440388c5493fe9F220a070E537
+
+[TX 4] Broadcasting...
+BLOCK : 25335854
+STATUS : 1
+RAW HASH : b'\x04\x84\xa2\xd9\xd5a\xd1\xf5D=lA\xefK#\xc3N`\xb8\xbe\x15\xc3E\xb6\x13\x17\x05\xbd\xbei'
+HEX HASH : 0x0484a2d9d561d1f5443d6c417d5def4b23c34e60b8be15c345b6131705bdbe69
+[SUCCESS]
+Recipient : 0x1a5D5001ACb0B3440388c5493fe9F220a070E537
+Amount Proof : 24750000.0
+TX HASH : 0x0484a2d9d561d1f5443d6c417d5def4b23c34e60b8be15c345b6131705bdbe69
+https://etherscan.io/tx/0x0484a2d9d561d1f5443d6c417d5def4b23c34e60b8be15c345b6131705bdbe69
+--------------------------------------------------
+
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0xe0d459c56B6317630f453A4DCAa60f6bd87189be
+
+[TX 5] Broadcasting...
+BLOCK : 25335855
+STATUS : 1
+RAW HASH : b'p\x90\x8b\xba\x81?TU\xf2\x06c4\xf2\xf7\xd1\x08\xd9!\x16r\xdb\xbd\x08d\x96\xfa\xed\x8bI\x9c\xe2\xcd'
+HEX HASH : 0x70908bba813f5455f2066334f2f7d108d9211672dbbd086496faed8b499ce2cd
+[SUCCESS]
+Recipient : 0xe0d459c56B6317630f453A4DCAa60f6bd87189be
+Amount Proof : 24750000.0
+TX HASH : 0x70908bba813f5455f2066334f2f7d108d9211672dbbd086496faed8b499ce2cd
+https://etherscan.io/tx/0x70908bba813f5455f2066334f2f7d108d9211672dbbd086496faed8b499ce2cd
+--------------------------------------------------
+
+DEBUG
+SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
+RECIPIENT : 0xe746990a32aAb619f512845B2D1657baB3D1e58B
 
 [TX 6] Broadcasting...
-BLOCK : 25315446
+BLOCK : 25335856
 STATUS : 1
-RAW HASH : b'\x9a\xee\xfa\xde\x03\xb4\xe92\x8bZB\x9f9\xe5\xe1F\xa7$\xe6\xb5\xd3O\xa7\n\xdf9\xb5\xbe\xb8\xa1\xf3\xbb'
-HEX HASH : 0x9aeefade03b4e9328b5a429f39e5e146a724e6b5d34fa70adf39b5beb8a1f3bb
+RAW HASH : b'Q\nT\x0f\x0f\x98m\xddG\x86\xcd\xe3\xaeO\xeeV\xe0\x1c\xbeO\xe1pc\xdfY\x9c\xc2\xb1g\xc5\xbb\xcc'
+HEX HASH : 0x510a540f0f986ddd4786cde3ae4fee56e01cbe4fe17063df599cc2b167c5bbcc
 [SUCCESS]
-Recipient : 0xaCe8f4fA54c312cf3e3802aeA085348fBb548Ed6
-Amount Proof : 8000000.0
-TX HASH : 0x9aeefade03b4e9328b5a429f39e5e146a724e6b5d34fa70adf39b5beb8a1f3bb
-https://etherscan.io/tx/0x9aeefade03b4e9328b5a429f39e5e146a724e6b5d34fa70adf39b5beb8a1f3bb
---------------------------------------------------
-
-DEBUG
-SENDER : 0xdAb702225FD964eD8C1FAd309ba375569A89F6cc
-RECIPIENT : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
-
-[TX 7] Broadcasting...
-BLOCK : 25315447
-STATUS : 1
-RAW HASH : b'G3\xb1;\x07\xfaV\xd2\xab\xa1p+\xe0\xc1.\xcc\x0fk\x11\x1c;ku\xb0m\xa0_\xa4\xf8\xfa\x9d'
-HEX HASH : 0x4733b13b07fa56d2aba1702be0c12ecc0f6b111c3b6b75b06da05fa4f8fa289d
-[SUCCESS]
-Recipient : 0x50eBd98c74e610B90A422c2F25B0E0C1EeAB9Bd2
-Amount Proof : 2000000.0
-TX HASH : 0x4733b13b07fa56d2aba1702be0c12ecc0f6b111c3b6b75b06da05fa4f8fa289d
-https://etherscan.io/tx/0x4733b13b07fa56d2aba1702be0c12ecc0f6b111c3b6b75b06da05fa4f8fa289d
+Recipient : 0xe746990a32aAb619f512845B2D1657baB3D1e58B
+Amount Proof : 12375000.0
+TX HASH : 0x510a540f0f986ddd4786cde3ae4fee56e01cbe4fe17063df599cc2b167c5bbcc
+https://etherscan.io/tx/0x510a540f0f986ddd4786cde3ae4fee56e01cbe4fe17063df599cc2b167c5bbcc
 --------------------------------------------------
 ======================================================================
 ALL MAINNET BROADCASTS COMPLETE
 ======================================================================
-
-
 ============================================================================================
 CRYPTOHOST :: CONNECTION STATUS (DISPLAY)
 ============================================================================================
@@ -872,14 +881,14 @@ CRYPTOHOST :: CONNECTION STATUS (DISPLAY)
      Chain ID: 1
 [DISPLAY] Connected to Binance for EUR to USDT conversion
          (Status output  � this code call Binance endpoints)
-[DISPLAY] Connected to ROYAL Bank API system
-         (Status output  �  ROYAL Bank API requests/mTLS/OAuth exist in this script)
+[DISPLAY] Connected to VISA  API system
+         (Status output  �  REVOLUT Bank API requests/mTLS/OAuth exist in this script)
 ============================================================================================
 
 Traceback (most recent call last):
   File "c:\L TO L\import socket.py", line 179, in
 Sender token balance: treasury on hold,...
-Required total     : 100000000.0
+Required total     : 495000000.00
     raise Exception("token balance  distributed")
 
                     </pre>

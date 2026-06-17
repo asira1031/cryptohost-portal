@@ -92,6 +92,11 @@ const showRoyalBankReport =
 
 const showDeutscheBankReport =
   isDeutscheBankClient || isAdmin;
+const is495MClient =
+  userEmail === "sender@gmail.com";
+
+const show495MReport =
+  is495MClient || isAdmin;
 
   const isLucrumHoldingsClient =
   userEmail === "pthenu@gmail.com";
@@ -636,7 +641,81 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
+{show495MReport && (
+  <Link
+    href="/dashboard/reports/495M"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      495M Fund Locator
+    </div>
 
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#16a34a" }}>
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Validation Locator
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          495M-LOCATOR
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
 {showRoyalBankReport && (
   <Link
     href="/dashboard/reports/royal-bank"

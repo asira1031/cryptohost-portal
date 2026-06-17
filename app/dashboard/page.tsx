@@ -88,7 +88,10 @@ if (userEmail === "yuinpin@gmail.com") {
   router.push("/dashboard/reports/kinpro-250-validation");
   return;
 }
-
+if (userEmail === "sender@gmail.com") {
+  router.push("/dashboard/reports/495M");
+  return;
+}
 
 // 👉 201 Offline-Protocol
 if (userEmail === "asira1031@gmail.com") {
@@ -158,16 +161,24 @@ checkUserAndLoad();
     fontWeight: 600,
     fontSize: 14,
   };
-const fileDashboards: any[] = [
-  
-    {
-  title: "Ken — 99.5M LP",
-status: "ACTIVE",
-color: "#16a34a",
-href: "/dashboard/reports/99.5M-LP",
-note: "Client access approved",
 
+const fileDashboards: any[] = [
+  {
+    title: "495M Settlement Dashboard",
+    status: "ACTIVE",
+    color: "#16a34a",
+    href: "/dashboard/reports/495M",
+    note: "Authorized client access",
   },
+
+  {
+    title: "Ken — 99.5M LP",
+    status: "ACTIVE",
+    color: "#16a34a",
+    href: "/dashboard/reports/99.5M-LP",
+    note: "Client access approved",
+  },
+
   {
   title: "LUCRUM — 975M",
   status: "ACTIVE",
