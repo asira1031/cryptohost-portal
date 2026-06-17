@@ -284,26 +284,28 @@ const data = await res.json();
 
   <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
     <p>NODE STATUS: ONLINE</p>
-    <p>HASH VALIDATION: ACTIVE</p>
-    <p>NETWORK: SWIFT GLOBAL</p>
-    <p>BANK TRANSFER STATUS: LOCATING</p>
-    <p>HDH-NORD-BAU-GMBH</p>
+<p>HASH VALIDATION: ACTIVE</p>
+<p>NETWORK: ETHEREUM MAINNET</p>
+<p>BANK TRANSFER STATUS: COMPLETED</p>
+<p>SCAN RESULT: TRANSACTION LIMIT REVIEW REQUIRED</p>
 
-    <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner}
-    </div>
+   <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-5">
+  ► VALIDATION COMPLETED
+  <br />
+  ► TRANSACTION RETURNED TO ORIGINATING BANK
+  <br />
+  ► THRESHOLD LIMIT REVIEW REQUIRED
+  <br />
+  ► SCAN RESULT: REVERTED
+</div>
 
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.split("").reverse().join("")}
-    </div>
+<p className="mt-3 font-semibold text-cyan-300">
+  ENGINE STATUS: ACTIVE
+</p>
 
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.slice(20) + scanner.slice(0, 20)}
-    </div>
-
-    <p className="mt-3 font-semibold text-cyan-300">
-      ENGINE STATUS: ACTIVE
-    </p>
+<p className="mt-3 font-semibold text-cyan-300">
+  ENGINE STATUS: ACTIVE
+</p>
   </div>
 </div>
 
