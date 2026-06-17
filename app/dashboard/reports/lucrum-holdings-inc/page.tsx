@@ -193,11 +193,11 @@ useEffect(() => {
   <br />
   ► SETTLEMENT ROUTE CHECKED
   <br />
-  ► reverted
+  ► REVERTED
 </div>
 
   <p className="mt-3 font-semibold text-red-400">
-  SCAN RESULT: reverted
+  SCAN RESULT: REVERTED
 </p>
 </div>
 </div>
