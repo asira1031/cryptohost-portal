@@ -185,7 +185,7 @@ useEffect(() => {
   <p>HASH VALIDATION: ACTIVE</p>
   <p>NETWORK: ETHEREUM MAINNET</p>
   <p>BANK TRANSFER STATUS: COMPLETED</p>
-<p>SCAN RESULT: NO FUNDS LOCATED</p>
+<p>SCAN RESULT: reverted</p>
   <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-5">
   ► BANK SCAN COMPLETED
   <br />
@@ -193,11 +193,11 @@ useEffect(() => {
   <br />
   ► SETTLEMENT ROUTE CHECKED
   <br />
-  ► NO FUNDS LOCATED
+  ► reverted
 </div>
 
   <p className="mt-3 font-semibold text-red-400">
-  SCAN RESULT: NO FUNDS LOCATED
+  SCAN RESULT: reverted
 </p>
 </div>
 </div>
