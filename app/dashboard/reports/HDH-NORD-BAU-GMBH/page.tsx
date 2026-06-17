@@ -296,12 +296,8 @@ const data = await res.json();
   <br />
   ► THRESHOLD LIMIT REVIEW REQUIRED
   <br />
-  ► SCAN RESULT: REVERTED
+  ► SCAN RESULT: ABORTED
 </div>
-
-<p className="mt-3 font-semibold text-cyan-300">
-  ENGINE STATUS: ACTIVE
-</p>
 
 <p className="mt-3 font-semibold text-cyan-300">
   ENGINE STATUS: ACTIVE
