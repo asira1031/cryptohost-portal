@@ -184,23 +184,21 @@ useEffect(() => {
   <p>NODE STATUS: ONLINE</p>
   <p>HASH VALIDATION: ACTIVE</p>
   <p>NETWORK: ETHEREUM MAINNET</p>
-  <p>BANK TRANSFER STATUS: LOCATING</p>
-  <p>LUCRUM HOLDINGS INC</p>
-  <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
-    {scanner}
-  </div>
+  <p>BANK TRANSFER STATUS: COMPLETED</p>
+<p>SCAN RESULT: NO FUNDS LOCATED</p>
+  <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-5">
+  ► BANK SCAN COMPLETED
+  <br />
+  ► SOURCE ANALYSIS FINISHED
+  <br />
+  ► SETTLEMENT ROUTE CHECKED
+  <br />
+  ► NO FUNDS LOCATED
+</div>
 
-  <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-    {scanner.split("").reverse().join("")}
-  </div>
-
-  <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-    {scanner.slice(20) + scanner.slice(0, 20)}
-  </div>
-
-  <p className="mt-3 font-semibold text-cyan-300">
-    ENGINE STATUS: ACTIVE
-  </p>
+  <p className="mt-3 font-semibold text-red-400">
+  SCAN RESULT: NO FUNDS LOCATED
+</p>
 </div>
 </div>
                   <div className="rounded-[24px] border border-amber-500/30 bg-amber-500/10 p-5 text-[17px] leading-8 text-amber-100">
