@@ -107,7 +107,7 @@ useEffect(() => {
 
      const isAdmin =
   userEmail === "jans103174@gmail.com" ||
-  userEmail === "asira1031@gmail.com";
+  userEmail === "tjaslan09@gmail.com";
 
 if (!userEmail) {
   router.replace("/login");
