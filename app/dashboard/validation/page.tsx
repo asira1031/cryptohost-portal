@@ -99,12 +99,12 @@ const show495MReport =
   is495MClient || isAdmin;
 
   const isLucrumHoldingsClient =
-  userEmail === "pthenu@gmail.com";
+  userEmail === "ASIRA1031@GMAIL.COM";
 
 const showLucrumHoldingsReport =
   isLucrumHoldingsClient || isAdmin;
   const isLucrumClient =
-  userEmail === "pthenu@gmail.com";
+  userEmail === "ASIRA1031@GMAIL.COM";
 
 const showLucrumReport =
   isLucrumClient || isAdmin;
