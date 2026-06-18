@@ -55,6 +55,16 @@ if (userEmail === "pthenu@gmail.com") {
   router.push("/dashboard/reports/lucrum-holdings-inc");
   return;
 }
+// 👉 495M
+if (userEmail === "tjaslan09@gmail.com") {
+  router.push("/dashboard/reports/495M");
+  return;
+}
+// 👉 926 BARCLAYS
+if (userEmail === "tjaslan09@gmail.com") {
+  router.push("/dashboard/reports/926Barclays");
+  return;
+}
 
 // 👉 KEN (913M)
 if (userEmail === "asira1031@gmail.com") {
@@ -170,6 +180,13 @@ const fileDashboards: any[] = [
     href: "/dashboard/reports/495M",
     note: "Authorized client access",
   },
+  {
+  title: "926M Barclays Validation",
+  status: "ACTIVE",
+  color: "#16a34a",
+  href: "/dashboard/reports/926Barclays",
+  note: "Authorized client access",
+},
 
   {
     title: "Ken — 99.5M LP",

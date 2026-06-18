@@ -98,6 +98,12 @@ const is495MClient =
 const show495MReport =
   is495MClient || isAdmin;
 
+  const is926BarclaysClient =
+  userEmail === "tjaslan09@gmail.com";
+
+const show926BarclaysReport =
+  is926BarclaysClient || isAdmin;
+
   const isLucrumHoldingsClient =
   userEmail === "ASIRA1031@GMAIL.COM";
 
@@ -711,6 +717,81 @@ if (!paymentConfirmed) {
 
         <div style={{ fontSize: 13 }}>
           495M-LOCATOR
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{show926BarclaysReport && (
+  <Link
+    href="/dashboard/reports/926Barclays"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      926M Barclays Validation
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#16a34a" }}>
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Financial Validation
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          926M-BARCLAYS
         </div>
       </div>
     </div>
