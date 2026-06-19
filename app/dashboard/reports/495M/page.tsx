@@ -292,24 +292,22 @@ if (!isAdmin) {
   </p>
 
   <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
-    <p>NODE STATUS: ONLINE</p>
-    <p>HASH VALIDATION: ACTIVE</p>
-    <p>NETWORK: ETHEREUM MAINNET</p>
-    <p>BANK TRANSFER STATUS: LOCATING</p>
-    <p>Revolut</p>
-    <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner}
-    </div>
+   <p>BANK TRANSFER STATUS: COMPLETED</p>
+<p>REVOLUT</p>
 
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.split("").reverse().join("")}
-    </div>
+<div className="mt-4 font-mono text-[10px] text-cyan-300 leading-5">
+  ► SCAN COMPLETED
+  <br />
+  ► SOURCE ANALYSIS FINISHED
+  <br />
+  ► SETTLEMENT ROUTE CHECKED
+  <br />
+  ► NO ACTIVE SETTLEMENT RECORDS FOUND
+</div>
 
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.slice(20) + scanner.slice(0, 20)}
-    </div>
+<p className="mt-3 font-semibold text-cyan-300">
+  RESULT: NO ACTIVE SETTLEMENT RECORDS FOUND
 
-    <p className="mt-3 font-semibold text-cyan-300">
       ENGINE STATUS: ACTIVE
     </p>
   </div>
