@@ -157,12 +157,26 @@ export default function DashboardLayout({
               Bank API
             </Link>
 
-            <Link
-              href="/dashboard/security"
-              style={getStyle("/dashboard/security", pathname)}
-            >
-              Security
-            </Link>
+           <Link
+  href="/dashboard/security"
+  style={getStyle("/dashboard/security", pathname)}
+>
+  Security
+</Link>
+
+<Link
+  href="/dashboard/customer-support"
+  style={getStyle("/dashboard/customer-support", pathname)}
+>
+  Customer Support
+</Link>
+<Link
+  href="/dashboard/support-admin"
+  style={getStyle("/dashboard/support-admin", pathname)}
+>
+  Support Admin
+</Link>
+            
           </div>
         </div>
 
