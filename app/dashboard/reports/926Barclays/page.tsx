@@ -303,28 +303,29 @@ if (!isAdmin) {
     Swift Global Engine
   </p>
 
-  <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
-    <p>NODE STATUS: ONLINE</p>
-    <p>HASH VALIDATION: ACTIVE</p>
-    <p>NETWORK: ETHEREUM MAINNET</p>
-    <p>BANK TRANSFER STATUS: LOCATING</p>
-    <p>BARCLAYS BANK</p>
-    <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner}
-    </div>
+ <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
+  <p>NODE STATUS: ONLINE</p>
+  <p>HASH VALIDATION: ACTIVE</p>
+  <p>NETWORK: ETHEREUM MAINNET</p>
 
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.split("").reverse().join("")}
-    </div>
+  <div className="mt-4 p-3 border border-green-500/40 rounded bg-green-950/20">
+    <p className="text-green-400 font-semibold">
+      FUND STATUS: ACTIVE
+    </p>
 
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.slice(20) + scanner.slice(0, 20)}
-    </div>
+    <p className="text-cyan-300 mt-2">
+      VALIDATION COMPLETE
+    </p>
 
-    <p className="mt-3 font-semibold text-cyan-300">
-      ENGINE STATUS: ACTIVE
+    <p className="text-yellow-300 mt-2 font-semibold">
+      PLEASE ENTER 12-DIGIT APPROVAL CODE
     </p>
   </div>
+
+  <p className="mt-3 font-semibold text-cyan-300">
+    APPROVAL ENGINE: READY
+  </p>
+</div>
 </div>
                 </div>
 
