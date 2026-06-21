@@ -297,7 +297,7 @@ const data = await res.json();
                     Active File Summary
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
-                    825M Validation Report
+                    825M Validation Report Suspended
                   </h2>
                   <p className="mt-2 max-w-3xl text-sm leading-6 text-white/60">
                     Technical report page for the uploaded UNION BANK-linked
