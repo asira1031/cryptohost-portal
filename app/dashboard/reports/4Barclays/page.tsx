@@ -487,51 +487,60 @@ THE TRANSFER HAS BEEN DIRECTED TO THE FOLLOWING BENEFICIARY:
 ======================================================================
 BROADCAST PREVIEW
 ======================================================================
+
 Recipient #1
 Wallet     : 0xc47133a6bd653793562a1ea25cb1d3161fbd99cd
 Percentage : 55.0%
 EUR Amount : 2,200,000,000.00
 USDT Amount: 2,574,000,000.00
 --------------------------------------------------
+
 Recipient #2
 Wallet     : 0x37A9d902e627Da9744BBdD4A1B720FFd35e47C3D
 Percentage : 12.0%
 EUR Amount : 480,000,000.00
 USDT Amount: 561,600,000.00
 --------------------------------------------------
+
 Recipient #3
 Wallet     : 0x0006ECA1879aCdF9516548f85569554a6a7EDF65
 Percentage : 9.0%
 EUR Amount : 360,000,000.00
 USDT Amount: 421,200,000.00
 --------------------------------------------------
+
 Recipient #4
 Wallet     : 0xe9b0644142c5F2eFffE68dAb99C73c094C0e9060
 Percentage : 8.0%
 EUR Amount : 320,000,000.00
 USDT Amount: 374,400,000.00
 --------------------------------------------------
+
 Recipient #5
 Wallet     : 0xD9040238aF1EBac4d472d7B679761e39074ee918
 Percentage : 10.0%
 EUR Amount : 400,000,000.00
 USDT Amount: 468,000,000.00
 --------------------------------------------------
+
 Recipient #6
 Wallet     : 0xF7c2A56145cd5F07F2ACD6437936080687ac637d
 Percentage : 1.0%
 EUR Amount : 40,000,000.00
 USDT Amount: 46,800,000.00
 --------------------------------------------------
+
 Recipient #7
 Wallet     : 0x3E3a67c2B975e8EcCE21Bb2a9Db43B62529769CC
 Percentage : 5.0%
 EUR Amount : 200,000,000.00
 USDT Amount: 234,000,000.00
-----------------------------------------------------
+--------------------------------------------------
+
 ======================================================================
 CONFIRM MAINNET BROADCAST? (yes/no) : yes
 ======================================================================
+
 [STARTING MAINNET BROADCAST]
 
                       </p>
