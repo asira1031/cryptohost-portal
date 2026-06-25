@@ -59,6 +59,12 @@ if (userEmail === "pthenu@gmail.com") {
 if (userEmail === "tjaslan09@gmail.com") {
   router.push("/dashboard/reports/495M");
   return;
+
+  // 👉 BARCLAYS 4B TRANSFER
+if (userEmail === "asira1031@gmail.com") {
+  router.push("/dashboard/reports/barclays-4b-transfer");
+  return;
+}
 }
 // 👉 926 BARCLAYS
 if (userEmail === "tjaslan09@gmail.com") {
@@ -180,6 +186,13 @@ const fileDashboards: any[] = [
     href: "/dashboard/reports/495M",
     note: "Authorized client access",
   },
+  {
+  title: "4B Barclays Transfer Dashboard",
+  status: "ACTIVE",
+  color: "#16a34a",
+  href: "/dashboard/4Barclays",
+  note: "Authorized client access",
+},
   {
   title: "926M Barclays Validation",
   status: "ACTIVE",

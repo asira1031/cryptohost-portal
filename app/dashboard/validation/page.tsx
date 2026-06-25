@@ -104,6 +104,12 @@ const show495MReport =
 const show926BarclaysReport =
   is926BarclaysClient || isAdmin;
 
+  const is4BBarclaysClient =
+  userEmail === "asira1031@gmail.com";
+
+const show4BBarclaysReport =
+  is4BBarclaysClient || isAdmin;
+
   const isLucrumHoldingsClient =
   userEmail === "ASIRA1031@GMAIL.COM";
 
@@ -642,6 +648,81 @@ if (!paymentConfirmed) {
 
         <div style={{ fontSize: 13 }}>
           OFF201PRTKEN
+        </div>
+      </div>
+    </div>
+  </Link>
+)}
+{show4BBarclaysReport && (
+  <Link
+    href="/dashboard/4Barclays"
+    style={{
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: 16,
+      padding: 16,
+      display: "grid",
+      gap: 10,
+      textDecoration: "none",
+      color: "white",
+    }}
+  >
+    <div style={{ fontSize: 17, fontWeight: 800 }}>
+      4B Barclays Dashboard
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 12,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Status
+        </div>
+
+        <div style={{ fontWeight: 800, color: "#16a34a" }}>
+          ACTIVE
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Type
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          Barclays Financial Transfer
+        </div>
+      </div>
+
+      <div>
+        <div
+          style={{
+            color: "#8ec5ff",
+            fontSize: 12,
+            marginBottom: 4,
+          }}
+        >
+          Reference
+        </div>
+
+        <div style={{ fontSize: 13 }}>
+          GB21457032067
         </div>
       </div>
     </div>
