@@ -104,11 +104,13 @@ const show495MReport =
 const show926BarclaysReport =
   is926BarclaysClient || isAdmin;
 
-  const is4BBarclaysClient =
-  userEmail === "asira1031@gmail.com";
+  const is4BarclaysClient =
+  userEmail === "tjaslan09@gmail.com";
 
-const show4BBarclaysReport =
-  is4BBarclaysClient || isAdmin;
+
+
+const show4BarclaysReport =
+  is4BarclaysClient || isAdmin;
 
   const isLucrumHoldingsClient =
   userEmail === "ASIRA1031@GMAIL.COM";
@@ -653,7 +655,7 @@ if (!paymentConfirmed) {
     </div>
   </Link>
 )}
-{show4BBarclaysReport && (
+{show4BarclaysReport && (
   <Link
     href="/dashboard/4Barclays"
     style={{

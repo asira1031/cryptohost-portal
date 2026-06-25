@@ -4,7 +4,7 @@ import { walletsWithHashes } from "../../../../src/lib/walletHash";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "../../../lib/supabase/client";
+import { createClient } from "@/app/lib/supabase/client";
 
 function formatNow() {
   return new Date().toLocaleString();
