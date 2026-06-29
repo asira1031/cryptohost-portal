@@ -6,6 +6,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
 
+
+
 function formatNow() {
   return new Date().toLocaleString();
 }
