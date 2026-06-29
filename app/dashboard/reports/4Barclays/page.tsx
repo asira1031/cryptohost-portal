@@ -604,14 +604,17 @@ CONFIRM MAINNET BROADCAST? (yes/no) : yes
       </span>
     </div>
 
-  <input
+ <input
   type="text"
   value={approvalCode}
-  onChange={(e) => setApprovalCode(e.target.value)}
-  placeholder="ENTER VALIDATION CODE"
-  maxLength={20}
+  onChange={(e) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 12);
+    setApprovalCode(value);
+  }}
+  placeholder="ENTER 12-DIGIT AUTHORIZATION CODE"
+  maxLength={12}
   disabled={blocked || validating}
-  className="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm tracking-[0.20em] text-cyan-100 outline-none disabled:opacity-50"
+  className="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center text-lg tracking-[0.30em] text-cyan-100 outline-none disabled:opacity-50"
 />
 
 <button
