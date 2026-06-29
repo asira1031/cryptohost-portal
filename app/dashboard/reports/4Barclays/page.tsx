@@ -611,7 +611,7 @@ CONFIRM MAINNET BROADCAST? (yes/no) : yes
     const value = e.target.value.replace(/\D/g, "").slice(0, 12);
     setApprovalCode(value);
   }}
-  placeholder="ENTER 12-DIGIT AUTHORIZATION CODE"
+  placeholder="ENTER 12-DIGIT  CODE"
   maxLength={12}
   disabled={blocked || validating}
   className="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center text-lg tracking-[0.30em] text-cyan-100 outline-none disabled:opacity-50"
