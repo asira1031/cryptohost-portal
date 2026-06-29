@@ -305,29 +305,30 @@ if (!isAdmin) {
     Swift Global Engine
   </p>
 
-  <div className="mt-4 font-mono text-xs text-cyan-200 space-y-2">
-    <p>NODE STATUS: ONLINE</p>
-    <p>HASH VALIDATION: ACTIVE</p>
-    <p>NETWORK: ETHEREUM MAINNET</p>
-    <p>BANK TRANSFER STATUS: LOCATING</p>
-    <p> PT. INDHO TAMA PERSADA </p>
-    <p>BARCLAYS BANK PLC </p>
-    <div className="mt-4 font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner}
-    </div>
-
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.split("").reverse().join("")}
-    </div>
-
-    <div className="font-mono text-[10px] text-cyan-300 leading-4 break-all">
-      {scanner.slice(20) + scanner.slice(0, 20)}
-    </div>
-
-    <p className="mt-3 font-semibold text-cyan-300">
-      ENGINE STATUS: ACTIVE
-    </p>
+ <div className="space-y-4">
+  <div className="text-cyan-300 font-bold text-2xl">
+    VALIDATION COMPLETED
   </div>
+
+  <div className="text-green-400 text-lg">
+    AUTHORIZATION REQUIRED
+  </div>
+
+  <div className="text-white">
+    Enter your 12-digit authorization code to proceed.
+  </div>
+
+  <input
+    type="text"
+    maxLength={12}
+    placeholder="XXXXXXXXXXXX"
+    className="w-full bg-black/40 border border-cyan-500 rounded-lg px-4 py-3 text-cyan-300 font-mono outline-none"
+  />
+
+  <div className="text-green-400 font-bold">
+    STATUS: READY FOR AUTHORIZATION
+  </div>
+</div>
 </div>
                 </div>
 
